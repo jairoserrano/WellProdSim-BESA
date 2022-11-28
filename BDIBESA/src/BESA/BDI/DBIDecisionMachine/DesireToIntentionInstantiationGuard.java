@@ -44,7 +44,7 @@ public class DesireToIntentionInstantiationGuard extends GuardBESA {
                 paramsBDI.getPyramidGoals().callGarbageCollector(believes, paramsBDI);
             }
             */            
-            /** detect each potencial goal*/
+            /** detect each potential goal*/
             /** duties*/
             for (GoalBDI dutyGoal : potencialGoalStructure.getDutyGoalsList()) {
                 dutyGoal.setDetectionValue(dutyGoal.detectGoal(believes));

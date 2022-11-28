@@ -1,0 +1,30 @@
+2022-11-28 04:13:17.537 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 04:13:17.579 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.437801257008013
+2022-11-28 04:13:17.580 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.058575103416945
+2022-11-28 04:13:17.581 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 3.9864042587555693
+2022-11-28 04:13:17.583 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 04:13:17.585 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 04:13:17.586 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 04:13:17.586 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 04:13:17.586 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 04:13:17.586 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 04:14:29.382 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 04:14:29.419 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.239022230737147
+2022-11-28 04:14:29.421 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.752833652750017
+2022-11-28 04:14:29.422 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.155554016283615
+2022-11-28 04:14:29.423 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 04:14:29.425 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 04:14:29.425 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 04:14:29.425 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 04:14:29.425 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 04:14:29.425 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 04:22:25.950 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 04:22:25.986 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.146524719156295
+2022-11-28 04:22:25.987 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.57334795806757
+2022-11-28 04:22:25.989 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 3.9698572191709154
+2022-11-28 04:22:25.990 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 04:22:25.991 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 04:22:25.991 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 04:22:25.992 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 04:22:25.992 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 04:22:25.992 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
