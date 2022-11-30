@@ -27,7 +27,7 @@ public class WorldConfiguration {
         try (InputStream in = new FileInputStream(CONF_NAME)) {
 
             if (in == null) {
-                System.out.println("Sorry, unable to find app.properties");
+                ReportBESA.error("Sorry, unable to find app.properties");
                 return;
             }
 

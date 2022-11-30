@@ -126,7 +126,7 @@ public class DesireToIntentionInstantiationGuard extends GuardBESA {
 
             }
             
-            /** AttentionCycle*/
+            /** AttentionCycle */
             for (GoalBDI attentionCycle : potencialGoalStructure.getAttentionCycleGoalsList()) {
                 attentionCycle.setDetectionValue(attentionCycle.detectGoal(believes));
                 if (attentionCycle.getDetectionValue() > paramsBDI.getAttentionCycleThreshold()) {

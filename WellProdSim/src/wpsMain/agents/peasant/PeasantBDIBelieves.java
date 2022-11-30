@@ -5,6 +5,7 @@ import rational.mapping.Believes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import wpsMain.util.ReportBESA;
 
 public class PeasantBDIBelieves implements Believes {
 
@@ -109,7 +110,7 @@ public class PeasantBDIBelieves implements Believes {
                 stateName = nombreYEstado.get(1);
             }
         }
-        System.out.println("Cambia Estado Meta " + alias + " " + goalName + " " + stateName);
+        ReportBESA.info("Cambia Estado Meta " + alias + " " + goalName + " " + stateName);
         goalState.put(goal, state);
     }
 
@@ -157,6 +158,7 @@ public class PeasantBDIBelieves implements Believes {
         this.emotionalComponent = new EmotionalComponent();
 
         emotionalComponent.addEmotionalAxis(Const.Semantica.Emociones.Felicidad, Const.Semantica.Emociones.Tristeza, 0.0f, 0.0f, 0.05f);
+        
         emotionalComponent.configureEventInfluence(Const.Semantica.Emociones.Felicidad, Const.Semantica.Emociones.Tristeza, Const.Semantica.Eventos.ObservaCompra, 0.1f);
         emotionalComponent.configureEventInfluence(Const.Semantica.Emociones.Felicidad, Const.Semantica.Emociones.Tristeza, Const.Semantica.Eventos.RecibePublicidad, 0.8f);
         emotionalComponent.configureEventInfluence(Const.Semantica.Emociones.Felicidad, Const.Semantica.Emociones.Tristeza, Const.Semantica.Eventos.ObservaSuciedad, 0.5f);

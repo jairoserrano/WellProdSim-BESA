@@ -17,13 +17,18 @@ import rational.mapping.Plan;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import wpsMain.util.ReportBESA;
 
 /**
  * BESA BDI: Peasant Agent
  */
 public class PeasantBDIAgent extends AgentBDI {
+    
     public PeasantBDIAgent(String alias, StructBESA structAgent, double passwd) throws KernelAgentExceptionBESA, ExceptionBESA {
         super(alias, createBelieves(alias), createGoals(), passwd, createStruct(new StructBESA()));
+        ReportBESA.info(this.state.toString());
     }
 
     private static PeasantBDIBelieves createBelieves(String alias) {
@@ -39,7 +44,7 @@ public class PeasantBDIAgent extends AgentBDI {
         // Set first arraylist of interests
         ArrayList<Interest> randomInterest = new ArrayList();
         randomInterest.add(new Interest(peasantResources, 1));
-        System.out.println("Creating Peasant Believes" + peasantResources);
+        ReportBESA.info("Creating Peasant Believes" + peasantResources);
         return new PeasantBDIBelieves(alias, randomInterest);
     }
 
@@ -88,7 +93,7 @@ public class PeasantBDIAgent extends AgentBDI {
             EventBESA eventBesa = new EventBESA(InformationFlowGuard.class.getName(), productiveSuggestion);
             agHandler.sendEvent(eventBesa);
         } catch (Exception e) {
-            System.out.println(this.getClass().getName() + " " + this.getAlias() + " " + e.getMessage());
+            ReportBESA.error(this.getClass().getName() + " " + this.getAlias() + " " + e.getMessage());
         }
     }
 

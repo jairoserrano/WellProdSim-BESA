@@ -9,11 +9,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import wpsMain.util.ReportBESA;
 
 public class MonthlyDataLoader {
 
     public static List<MonthData> loadMonthlyDataFile(String dataFileLocation) throws IOException {
-        System.out.println(dataFileLocation);
+        ReportBESA.info(dataFileLocation);
         InputStream in = new FileInputStream(dataFileLocation);
         //ClassLoader classLoader = MonthlyDataLoader.class.getClassLoader();
         //File jsonFile = new File(classLoader.getResource(dataFileLocation).getFile());
@@ -24,9 +25,8 @@ public class MonthlyDataLoader {
     private static List<MonthData> jsonToMonthlyData(String jsonContent) {
         JSONArray radiationJson = new JSONArray(jsonContent);
         ArrayList<MonthData> monthlyData = new ArrayList<>();
-        System.out.print("Cargando datos");
+        ReportBESA.info("Cargando datos");
         radiationJson.forEach(item -> {
-            System.out.print(".");
             JSONObject currentObject = (JSONObject) item;
             MonthData monthData = new MonthData();
             monthData.setAverage(currentObject.getDouble("average"));
@@ -35,7 +35,6 @@ public class MonthlyDataLoader {
             monthData.setStandardDeviation(currentObject.getDouble("standardDeviation"));
             monthlyData.add(monthData);
         });
-        System.out.println("");
         return monthlyData;
     }
 }

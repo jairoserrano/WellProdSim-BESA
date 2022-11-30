@@ -7,8 +7,13 @@ import rational.RationalRole;
 import rational.mapping.Believes;
 
 import java.util.ArrayList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import wpsMain.util.ReportBESA;
 
 public class NeedsSatisfactionGoalBDI extends GoalBDI {
+
+    private static final Logger logger = LogManager.getLogger(PeasantGuard.class);
     public static final int ESTADO_SIN_INICIAR = 0;
     public static final int ESTADO_FINALIZADA = 1;
     public static final int ESTADO_EJECUCION_ASIGNANDO_NECESIDAD = 2;
@@ -33,13 +38,12 @@ public class NeedsSatisfactionGoalBDI extends GoalBDI {
 
     @Override
     public double detectGoal(Believes believes) {
-        System.out.println("Detecting Goal...");
-        Need currentNeed = ((PeasantBDIBelieves) believes).getCurrentNeed();
-        if (currentNeed != null) {
-            System.out.println("believes is not null");
+        ReportBESA.info("Detecting Goal...");
+        try {
+            Need currentNeed = ((PeasantBDIBelieves) believes).getCurrentNeed();
             return 1;
-        } else {
-            System.out.println("believes is null");
+        } catch (NullPointerException e) {
+            ReportBESA.info("believes is null");
             ArrayList unsatisfiedNeeds = ((PeasantBDIBelieves) believes).getUnsatisfiedNeeds();
             if (unsatisfiedNeeds != null) {
                 if (unsatisfiedNeeds.size() > 0) {

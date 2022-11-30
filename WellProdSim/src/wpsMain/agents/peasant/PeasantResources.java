@@ -45,14 +45,14 @@ public class PeasantResources {
     private String toStringRecursive(PeasantResources peasantResources, int level) {
         String response = "";
         for (int i = 0; i < level; i++) {
-            response += "\n";
+            response += "\t";
         }
 
-        response += "\n" + peasantResources.getId() + " - " + peasantResources.getName();
+        response += "|" + peasantResources.getId() + " - " + peasantResources.getName();
 
         for (Resource resource : peasantResources.resources) {
             for (int i = 0; i < level + 1; i++) {
-                response += "\n";
+                response += "|";
             }
             response += resource;
         }

@@ -1,13 +1,12 @@
 package wpsMain;
 
+import wpsMain.util.DateSingleton;
 import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.StructBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import BESA.Log.ReportBESA;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import wpsMain.util.ReportBESA;
 import wpsMain.agents.messages.peasant.PeasantMessage;
 import wpsMain.agents.messages.world.WorldMessage;
 import wpsMain.agents.messages.world.WorldMessageType;
@@ -28,16 +27,15 @@ import wpsMain.world.layer.rainfall.RainfallLayer;
 import wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationLayer;
 import wpsMain.world.layer.temperature.TemperatureLayer;
 
-
 /**
  * Hello world!
  */
 public class wpsMain {
+
     private static final double PASSWORD = 0.91;
-    private static final Logger logger = LogManager.getLogger(wpsMain.class);
 
     public static void main(String[] args) {
-        
+
         // Set default values of Peasant
         WPSExperimentConfig wpsExperimentConfig = new WPSExperimentConfig(args);
 
@@ -51,23 +49,23 @@ public class wpsMain {
         AdmBESA adm = AdmBESA.getInstance();
         PeasantBDIAgent peasantBDIAgent = getPeasant(wpsExperimentConfig.getPeasantType());
         peasantBDIAgent.start();
-        System.out.println("peasantBDI started");
+        ReportBESA.info("peasantBDI started");
 
         WorldAgent worldAgent = buildWorld(getRainfallFile(wpsExperimentConfig.getRainfallConditions()), peasantBDIAgent.getAid());
         worldAgent.start();
-        System.out.println("worldAgent started");
+        ReportBESA.info("worldAgent started");
 
         // Init world layers state message
         initialWorldStateInitialization(worldAgent);
-        System.out.println("worldAgent initialized");
+        ReportBESA.info("worldAgent initialized");
 
         try {
             AgHandlerBESA ah = adm.getHandlerByAid(peasantBDIAgent.getAid());
             EventBESA ev = new EventBESA(StartGoalCompletionGuard.class.getName(), new PeasantMessage("hello"));
             ah.sendEvent(ev);
-            System.out.println("Simulation Start");
+            ReportBESA.info("Simulation Start");
         } catch (ExceptionBESA e) {
-            System.out.println("Simulation Start Error");
+            ReportBESA.error("Simulation Start Error");
         }
 
         // Initialize periodic guard for World agent, every 8 days crop information and notify peasant
@@ -79,7 +77,6 @@ public class wpsMain {
         } catch (ExceptionBESA exceptionBESA) {
             exceptionBESA.printStackTrace();
         }*/
-
     }
 
     // Triggers an event in order to initialize all the crop and weather layers
@@ -151,20 +148,13 @@ public class wpsMain {
         PeasantBDIAgent peasantBDIAgent = null;
         peasantBDIAgent = buildNormalPeasantAgent();
         /**
-         switch (arg) {
-         case "normal":
-         peasantBDIAgent = buildNormalPeasantAgent();
-         break;
-         case "lazy":
-         peasantBDIAgent = buildLazyPeasantAgent();
-         break;
-         case "pro":
-         peasantBDIAgent = buildProPeasantAgent();
-         break;
-         default:
-         peasantBDIAgent = buildNormalPeasantAgent();
-         break;
-         }*/
+         * switch (arg) { case "normal": peasantBDIAgent =
+         * buildNormalPeasantAgent(); break; case "lazy": peasantBDIAgent =
+         * buildLazyPeasantAgent(); break; case "pro": peasantBDIAgent =
+         * buildProPeasantAgent(); break; default: peasantBDIAgent =
+         * buildNormalPeasantAgent(); break;
+         }
+         */
         return peasantBDIAgent;
     }
 

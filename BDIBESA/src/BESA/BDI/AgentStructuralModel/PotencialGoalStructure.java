@@ -11,11 +11,13 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * <p>Class that represents the Structure with the potencial Goals</p>
- * @author  SIDRe - Pontificia Universidad Javeriana
- * @author  Takina  - Pontificia Universidad Javeriana
+ * <p>
+ * Class that represents the Structure with the potencial Goals</p>
+ *
+ * @author SIDRe - Pontificia Universidad Javeriana
+ * @author Takina - Pontificia Universidad Javeriana
  * @version 2.0, 11/01/11
- * @since   JDK1.0
+ * @since JDK1.0
  */
 public class PotencialGoalStructure implements Serializable {
 
@@ -83,6 +85,5 @@ public class PotencialGoalStructure implements Serializable {
     public void setAttentionCycleGoalsList(SortedSet<GoalBDI> attentionCycleGoalsList) {
         this.attentionCycleGoalsList = attentionCycleGoalsList;
     }
-    
-    
+
 }

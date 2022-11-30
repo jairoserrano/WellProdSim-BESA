@@ -28,3 +28,322 @@
 2022-11-28 04:22:25.992 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
 2022-11-28 04:22:25.992 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
 2022-11-28 04:22:25.992 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 04:26:32.873 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - Detecting Goal...
+2022-11-28 04:26:32.873 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 04:26:32.908 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 8.855563691614849
+2022-11-28 04:26:32.910 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.567043471197
+2022-11-28 04:26:32.912 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 3.993095677871506
+2022-11-28 04:26:32.913 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 66.21575564582643
+2022-11-28 04:26:32.915 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 04:26:32.915 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 04:26:32.916 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 04:26:32.916 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 04:26:32.916 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 04:28:32.981 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - Detecting Goal...
+2022-11-28 04:28:32.981 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 04:28:32.983 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - believes is null
+2022-11-28 04:28:32.983 [Thread-10] ERROR wpsMain.agents.peasant.PeasantGuard - null
+2022-11-28 04:28:33.026 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.202195832883177
+2022-11-28 04:28:33.028 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.83042601920824
+2022-11-28 04:28:33.030 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.068200281210808
+2022-11-28 04:28:33.032 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 04:28:33.034 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 04:28:33.034 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 04:28:33.035 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 04:28:33.035 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 04:28:33.035 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 04:28:59.273 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - Detecting Goal...
+2022-11-28 04:28:59.273 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 04:28:59.274 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - believes is null
+2022-11-28 04:28:59.310 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.701835834996565
+2022-11-28 04:28:59.312 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.023333204002697
+2022-11-28 04:28:59.314 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.10683763076679
+2022-11-28 04:28:59.316 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 74.965375482681
+2022-11-28 04:28:59.318 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 04:28:59.318 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 04:28:59.319 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 04:28:59.319 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 04:28:59.319 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:12:59.461 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - Detecting Goal...
+2022-11-28 05:12:59.461 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:12:59.462 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - believes is null
+2022-11-28 05:12:59.501 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 8.976223680697707
+2022-11-28 05:12:59.504 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.219323108553414
+2022-11-28 05:12:59.505 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.042901580162823
+2022-11-28 05:12:59.506 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:12:59.508 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:12:59.509 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:12:59.509 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:12:59.509 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:12:59.509 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:16:38.870 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - Creating Peasant Believes
+1 - production
+Resource: arroz
+Resource: dinero
+2022-11-28 05:16:38.928 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:16:38.929 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - Detecting Goal...
+2022-11-28 05:16:38.930 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - believes is null
+2022-11-28 05:16:38.964 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.640844271135208
+2022-11-28 05:16:38.966 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.88978505757443
+2022-11-28 05:16:38.968 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.2427985959553105
+2022-11-28 05:16:38.969 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:16:38.970 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:16:38.971 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:16:38.971 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:16:38.971 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:16:38.971 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:24:42.845 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - Creating Peasant Believes
+1 - production
+Resource: arroz
+Resource: dinero
+2022-11-28 05:24:42.857 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - BESA.BDI.AgentStructuralModel.StateBDI@4bdeaabb
+2022-11-28 05:24:42.897 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:24:42.898 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - Detecting Goal...
+2022-11-28 05:24:42.898 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - believes is null
+2022-11-28 05:24:42.942 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 8.85789198008213
+2022-11-28 05:24:42.943 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.645630880731048
+2022-11-28 05:24:42.944 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.209721437752455
+2022-11-28 05:24:42.945 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:24:42.947 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:24:42.947 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:24:42.947 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:24:42.947 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:24:42.948 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:30:28.379 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - Creating Peasant Believes
+1 - production
+Resource: arroz
+Resource: dinero
+2022-11-28 05:30:28.392 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - BESA.BDI.AgentStructuralModel.StateBDI@4bdeaabb
+2022-11-28 05:30:28.437 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:30:28.438 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - Detecting Goal...
+2022-11-28 05:30:28.438 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - believes is null
+2022-11-28 05:30:28.478 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.408077292245267
+2022-11-28 05:30:28.479 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.781699049713705
+2022-11-28 05:30:28.481 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.150041541827375
+2022-11-28 05:30:28.483 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:30:28.485 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:30:28.485 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:30:28.485 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:30:28.486 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:30:28.487 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:32:36.790 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - Creating Peasant Believes
+1 - production
+Resource: arroz
+Resource: dinero
+2022-11-28 05:32:36.802 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - BESA.BDI.AgentStructuralModel.StateBDI@4bdeaabb
+2022-11-28 05:32:36.847 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:32:36.850 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - Detecting Goal...
+2022-11-28 05:32:36.850 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - believes is null
+2022-11-28 05:32:36.890 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 8.68420656219677
+2022-11-28 05:32:36.892 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.57612268220678
+2022-11-28 05:32:36.895 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.321976594496379
+2022-11-28 05:32:36.896 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:32:36.899 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:32:36.899 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:32:36.899 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:32:36.900 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:32:36.900 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:34:10.250 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - Creating Peasant Believes
+1 - production
+Resource: arroz
+Resource: dinero
+2022-11-28 05:34:10.263 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - BESA.BDI.AgentStructuralModel.StateBDI@4bdeaabb
+2022-11-28 05:34:10.307 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:34:10.344 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.657385415145093
+2022-11-28 05:34:10.346 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.018654391502736
+2022-11-28 05:34:10.347 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.17695031975377
+2022-11-28 05:34:10.348 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 70.30005392782994
+2022-11-28 05:34:10.350 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:34:10.350 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:34:10.351 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:34:10.351 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:34:10.351 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:40:39.680 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - Creating Peasant Believes
+1 - production
+Resource: arroz
+Resource: dinero
+2022-11-28 05:40:39.691 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - BESA.BDI.AgentStructuralModel.StateBDI@4bdeaabb
+2022-11-28 05:40:39.732 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:40:39.770 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 8.918448355632608
+2022-11-28 05:40:39.772 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.523324814813304
+2022-11-28 05:40:39.775 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.100776277219286
+2022-11-28 05:40:39.777 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:40:39.779 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:40:39.780 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:40:39.780 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:40:39.780 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:40:39.781 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:41:56.514 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - Creating Peasant Believes
+1 - production
+Resource: arroz
+Resource: dinero
+2022-11-28 05:41:56.527 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - BESA.BDI.AgentStructuralModel.StateBDI@4bdeaabb
+2022-11-28 05:41:56.584 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:41:56.624 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.809325825335328
+2022-11-28 05:41:56.626 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.62277793157313
+2022-11-28 05:41:56.627 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 3.7818897532248203
+2022-11-28 05:41:56.628 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:41:56.629 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:41:56.629 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:41:56.630 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:41:56.630 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:41:56.630 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:42:08.037 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - Creating Peasant Believes
+1 - production
+Resource: arroz
+Resource: dinero
+2022-11-28 05:42:08.051 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - BESA.BDI.AgentStructuralModel.StateBDI@4bdeaabb
+2022-11-28 05:42:08.111 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:42:08.151 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.753780228182123
+2022-11-28 05:42:08.153 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.71616043264232
+2022-11-28 05:42:08.155 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 3.807966616802565
+2022-11-28 05:42:08.157 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 65.65140463703777
+2022-11-28 05:42:08.160 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:42:08.160 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:42:08.161 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:42:08.161 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:42:08.161 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:42:45.910 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - Creating Peasant Believes
+1 - production
+Resource: arroz
+Resource: dinero
+2022-11-28 05:42:45.922 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - BESA.BDI.AgentStructuralModel.StateBDI@4bdeaabb
+2022-11-28 05:42:45.971 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:42:46.012 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.577710790203197
+2022-11-28 05:42:46.014 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.004313404658944
+2022-11-28 05:42:46.016 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.020997757007387
+2022-11-28 05:42:46.017 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:42:46.018 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:42:46.019 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:42:46.019 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:42:46.019 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:42:46.019 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:43:28.110 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - Creating Peasant Believes
+1 - production
+Resource: arroz
+Resource: dinero
+2022-11-28 05:43:28.122 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - BESA.BDI.AgentStructuralModel.StateBDI@673fdbce
+2022-11-28 05:43:28.162 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:43:28.200 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.462851203373928
+2022-11-28 05:43:28.202 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.239606319012378
+2022-11-28 05:43:28.203 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.234410054478808
+2022-11-28 05:43:28.204 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:43:28.206 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:43:28.207 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:43:28.207 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:43:28.207 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:43:28.208 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:45:05.524 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:45:05.562 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.17495988888439
+2022-11-28 05:45:05.566 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.920185811144247
+2022-11-28 05:45:05.567 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 3.874950590681131
+2022-11-28 05:45:05.570 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 81.19288998365093
+2022-11-28 05:45:05.572 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:45:05.572 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:45:05.572 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:45:05.573 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:45:05.573 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:45:44.856 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:45:44.891 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.435492411357151
+2022-11-28 05:45:44.893 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.75943246061653
+2022-11-28 05:45:44.894 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.261070481490777
+2022-11-28 05:45:44.897 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:45:44.899 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:45:44.899 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:45:44.899 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:45:44.900 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:45:44.900 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:45:57.105 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:45:57.172 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 8.692880276780638
+2022-11-28 05:45:57.174 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.209467801182655
+2022-11-28 05:45:57.175 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.056525230522956
+2022-11-28 05:45:57.177 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:45:57.178 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:45:57.179 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:45:57.179 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:45:57.179 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:45:57.180 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:46:09.571 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:46:09.606 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.536562082786698
+2022-11-28 05:46:09.608 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.99288685619644
+2022-11-28 05:46:09.609 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.007906832978303
+2022-11-28 05:46:09.610 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:46:09.612 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:46:09.612 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:46:09.613 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:46:09.613 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:46:09.613 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:47:12.596 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:47:12.642 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.00598124402149
+2022-11-28 05:47:12.645 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.884299982599465
+2022-11-28 05:47:12.647 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.134052382476516
+2022-11-28 05:47:12.650 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:47:12.651 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:47:12.652 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:47:12.652 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:47:12.652 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:47:12.652 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:47:31.986 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:47:32.021 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 8.90439208798492
+2022-11-28 05:47:32.023 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.36439553787628
+2022-11-28 05:47:32.025 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 3.7060472765518755
+2022-11-28 05:47:32.026 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:47:32.028 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:47:32.028 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:47:32.028 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:47:32.029 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:47:32.029 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:44:12.743 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:44:12.782 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 8.737483782211088
+2022-11-28 05:44:12.785 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.903830903694185
+2022-11-28 05:44:12.786 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.250480498712309
+2022-11-28 05:44:12.788 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:44:12.790 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:44:12.790 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:44:12.791 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:44:12.791 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:44:12.792 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:31:09.005 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - Creating Peasant Believes
+1 - production
+Resource: arroz
+Resource: dinero
+2022-11-28 05:31:09.018 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - BESA.BDI.AgentStructuralModel.StateBDI@4bdeaabb
+2022-11-28 05:31:09.066 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:31:09.068 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - Detecting Goal...
+2022-11-28 05:31:09.069 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - believes is null
+2022-11-28 05:31:09.104 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.432563053589789
+2022-11-28 05:31:09.106 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 27.492435771358114
+2022-11-28 05:31:09.107 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 3.836573210714623
+2022-11-28 05:31:09.108 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:31:09.109 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:31:09.109 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:31:09.110 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:31:09.110 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:31:09.110 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 05:29:16.188 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - Creating Peasant Believes
+1 - production
+Resource: arroz
+Resource: dinero
+2022-11-28 05:29:16.201 [main] INFO  wpsMain.agents.peasant.PeasantBDIAgent - BESA.BDI.AgentStructuralModel.StateBDI@4bdeaabb
+2022-11-28 05:29:16.240 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 05:29:16.240 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - Detecting Goal...
+2022-11-28 05:29:16.241 [Thread-10] INFO  wpsMain.agents.peasant.PeasantGuard - believes is null
+2022-11-28 05:29:16.278 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.246538532451503
+2022-11-28 05:29:16.279 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.700197217638845
+2022-11-28 05:29:16.281 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.163618270993134
+2022-11-28 05:29:16.282 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 05:29:16.283 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 05:29:16.283 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 05:29:16.283 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 05:29:16.284 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 05:29:16.284 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
+2022-11-28 10:48:01.297 [Thread-13] INFO  wpsMain.agents.world.WorldGuard - Start event, initialize first layers state
+2022-11-28 10:48:01.337 [Thread-13] INFO  wpsMain.world.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 8.813065344837332
+2022-11-28 10:48:01.339 [Thread-13] INFO  wpsMain.world.layer.temperature.TemperatureCell - New temperature state: 28.648282997300992
+2022-11-28 10:48:01.341 [Thread-13] INFO  wpsMain.world.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 3.74843891634418
+2022-11-28 10:48:01.342 [Thread-13] INFO  wpsMain.world.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-11-28 10:48:01.344 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-11-28 10:48:01.345 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-11-28 10:48:01.345 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - infected: false
+2022-11-28 10:48:01.346 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-11-28 10:48:01.346 [Thread-13] INFO  wpsMain.world.layer.disease.DiseaseLayer - -------------------
