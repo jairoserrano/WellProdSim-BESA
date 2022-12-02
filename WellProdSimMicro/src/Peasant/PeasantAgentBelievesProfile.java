@@ -15,11 +15,10 @@ import rational.mapping.Believes;
  *
  * @author jairo
  */
-public class PeasantAgentBelievesPurpose implements Believes {
+public class PeasantAgentBelievesProfile implements Believes {
 
     private PeasantAgentBelieves blvs;
     private PeasantProfile profile;
-    private Purpose purpose;
 
     public PeasantProfile getProfile() {
         return profile;
@@ -29,15 +28,7 @@ public class PeasantAgentBelievesPurpose implements Believes {
         this.profile = profile;
     }
 
-    public Purpose getPurpose() {
-        return purpose;
-    }
-
-    public void setPurpose(Purpose purpose) {
-        this.purpose = purpose;
-    }
-
-    public PeasantAgentBelievesPurpose(PeasantAgentBelieves blvs) {
+    public PeasantAgentBelievesProfile(PeasantAgentBelieves blvs) {
         this.blvs = blvs;
     }
 

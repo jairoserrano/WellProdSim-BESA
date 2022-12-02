@@ -50,7 +50,6 @@ public class PeasantAgroGoal extends GoalBDI {
 
     @Override
     public double evaluateViability(Believes believes) throws KernellAgentEventExceptionBESA {
-        //System.out.println("Meta MusicoTerapia evaluateViability");
         return 1;
     }
 
@@ -58,34 +57,28 @@ public class PeasantAgroGoal extends GoalBDI {
     public double detectGoal(Believes believes) throws KernellAgentEventExceptionBESA {
         System.out.println("Meta peasantFarmingRole detectGoal");
         PeasantAgentBelieves blvs = (PeasantAgentBelieves) believes;
-        System.out.println("EmocionPredominante: " + blvs.getbEstadoEmocionalPwA().getEmocionPredominante());
+        System.out.println("EmocionPredominante: " + blvs.getPeasantAgentBelieveEmotionalState().getEmocionPredominante());
 
-        if (blvs.getPeasantAgentBelieveEmotionalState().getEmocionPredominante() < 0 && blvs.getbPerfilPwA().getPerfil().getPerfilMedico().getFast() <= 5) {
+        if (blvs.getPeasantAgentBelieveEmotionalState().getEmocionPredominante() < 0 && blvs.getPeasantProfile().getProfile().getFarmerProfile().getFast() <= 5) {
             return 0.4 + (blvs.getPeasantAgentBelieveActivityState().getGustoActividad(PeasantActivity.FARMING) * 0.6);
-
         }
-
         return 0;
     }
 
     @Override
     public double evaluatePlausibility(Believes believes) throws KernellAgentEventExceptionBESA {
-        //System.out.println("Meta MusicoTerapia evaluatePlausibility");
         return 1;
     }
 
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //System.out.println("Meta MusicoTerapia evaluateContribution");
-        PeasantAgentBelieves blvs = (PeasantAgentBelieves) stateBDI.getBelieves();
-        List<Actxpreferencia> listaAct = blvs.getbPerfilPwA().getPerfil().getPerfilPreferencia().getActxpreferenciaList();
-        double valor = 0;
+        double valor = 1;
 
-        for (Actxpreferencia act : listaAct) {
+        /*for (Actxpreferencia act : listaAct) {
             if (act.getActividadpwa().getNombre().equalsIgnoreCase(ResPwAActivity.MUSICOTERAPIA.toString())) {
                 valor = act.getGusto();
             }
-        }
+        }*/
         return valor;
 
     }
@@ -98,9 +91,8 @@ public class PeasantAgroGoal extends GoalBDI {
 
     @Override
     public boolean goalSucceeded(Believes believes) throws KernellAgentEventExceptionBESA {
-        //System.out.println("Meta MusicoTerapia evaluateViability");
         PeasantAgentBelieves blvs = (PeasantAgentBelieves) believes;
-        if ((System.currentTimeMillis() - blvs.getbEstadoActividad().calcTiempoActividad()) >= 300 && blvs.getbEstadoEmocionalPwA().getEmocionPredominante() > 0) {
+        if ((System.currentTimeMillis() - blvs.getPeasantAgentBelieveActivityState().calcTiempoActividad()) >= 300 && blvs.getPeasantAgentBelieveEmotionalState().getEmocionPredominante() > 0) {
             return true;
         }
         return false;

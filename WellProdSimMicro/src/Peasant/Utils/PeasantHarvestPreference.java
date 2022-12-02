@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author jairo
  */
-public class PeasantCropPreference implements Serializable  {
+public class PeasantHarvestPreference implements Serializable  {
     
     private Crop crop;
     
@@ -25,10 +25,10 @@ public class PeasantCropPreference implements Serializable  {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PeasantCropPreference)) {
+        if (!(object instanceof PeasantHarvestPreference)) {
             return false;
         }
-        PeasantCropPreference other = (PeasantCropPreference) object;
+        PeasantHarvestPreference other = (PeasantHarvestPreference) object;
         if ((this.crop == null && other.crop != null) || (this.crop != null && !this.crop.equals(other.crop))) {
             return false;
         }

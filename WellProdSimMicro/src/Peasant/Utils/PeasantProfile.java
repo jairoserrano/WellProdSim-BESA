@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class PeasantProfile implements Serializable  {
     
     private String name;
+    private FarmerProfile farmerProfile;
     
     public PeasantProfile(String name) {
         this.name = name;
@@ -41,6 +42,14 @@ public class PeasantProfile implements Serializable  {
     @Override
     public String toString() {
         return "Perfil[ name=" + name + " ]";
+    }
+    
+    public FarmerProfile getFarmerProfile() {
+        return farmerProfile;
+    }
+
+    public void setFarmerProfile(FarmerProfile farmerProfile) {
+        this.farmerProfile = farmerProfile;
     }
 
 }

@@ -4,13 +4,14 @@
  */
 package Peasant;
 
-import Peasant.Utils.EmotionPwA;
-import static Peasant.Utils.EmotionPwA.ANGER;
-import static Peasant.Utils.EmotionPwA.SADNESS;
+import Peasant.EmotionalModel.PeasantEmotions;
+import static Peasant.EmotionalModel.PeasantEmotions.ANGER;
+import static Peasant.EmotionalModel.PeasantEmotions.SADNESS;
 import Peasant.Utils.SensorData;
-import Peasant.Utils.EmotionalData;
+import Peasant.EmotionalModel.EmotionalData;
 import Peasant.Utils.PeasantActivity;
-import Peasant.Utils.PeasantCropPreference;
+import Peasant.Utils.PeasantFarmingPreference;
+import Peasant.Utils.PeasantHarvestPreference;
 import Peasant.Utils.PeasantProfile;
 import Peasant.Utils.Purpose;
 import java.util.ArrayList;
@@ -28,17 +29,15 @@ public class PeasantAgentBelieves implements Believes {
     private PeasantAgentBelieveEmotionalState peasantAgentBelieveEmotionalState;
     private PeasantAgentBelieveActivityState peasantAgentBelieveActivityState;
     private PeasantAgentBelieveInteractionState peasantAgentBelieveInteractionState;
-    private PeasantAgentBelievesPurpose peasantPurpose;
+    private PeasantAgentBelievesProfile peasantAgentBelievesProfile;
 
     public PeasantAgentBelieves(String purpose) {
         peasantAgentBelieveEmotionalState = new PeasantAgentBelieveEmotionalState();
         peasantAgentBelieveState = new PeasantAgentBelieveState();
         peasantAgentBelieveInteractionState = new PeasantAgentBelieveInteractionState();
         peasantAgentBelieveActivityState = new PeasantAgentBelieveActivityState("Agricultor", this);
-        peasantPurpose = new PeasantAgentBelievesPurpose(this);
-        peasantPurpose.setPurpose(new Purpose("Agricultor"));
-
-        System.out.println("V: " + peasantPurpose.getProfile());
+        peasantAgentBelievesProfile = new PeasantAgentBelievesProfile(this);
+        System.out.println("V: " + peasantAgentBelievesProfile.getProfile());
     }
 
     //AQUI SE MANDA LO DE INFORMATIONFLOW
@@ -66,7 +65,7 @@ public class PeasantAgentBelieves implements Believes {
                     peasantAgentBelieveState.update(si);
                     break;
                 case PURPOSE:
-                    peasantPurpose.update(si);
+                    peasantAgentBelievesProfile.update(si);
                     break;
                 default:
                     break;
@@ -144,45 +143,16 @@ public class PeasantAgentBelieves implements Believes {
 
         switch (activity) {
             case FARMING:
-                activityInCourse = (PeasantCropPreference) peasantAgentBelieveActivityState.getCurrentCrop();
+                activityInCourse = (PeasantFarmingPreference) peasantAgentBelieveActivityState.getCurrentFarming();
                 break;
 
             case HARVEST:
-                activityInCourse = (PeasantCropPreference) peasantAgentBelieveActivityState.getCurrentCrop();
+                activityInCourse = (PeasantHarvestPreference) peasantAgentBelieveActivityState.getCurrentHarvest();
                 break;
         }
 
         return activityInCourse;
 
-    }
-
-    public double getEmocionPredominante() {
-        double aux = getFeedbackEmotion();
-        if (aux > 0 && valencia != 1) {
-            valencia = 1;
-            tiempoEmocionPredominante = System.currentTimeMillis();
-        } else if (aux < 0 && valencia != -1) {
-            valencia = -1;
-            tiempoEmocionPredominante = System.currentTimeMillis();
-        }
-        return aux;
-    }
-
-    public double getFeedbackEmotion() {
-        double emotionFeedback = 0.0;
-        double auxEmotionAverage = 0.0;
-        for (EmotionPwA entry : emoMap.keySet()) {
-
-            auxEmotionAverage = getEmotionAverage(emoMap.get(entry));
-            if (entry.equals(ANGER) || entry.equals(SADNESS)) {
-
-                auxEmotionAverage *= -1;
-            }
-            if (Math.abs(auxEmotionAverage) > Math.abs(emotionFeedback)) {
-                emotionFeedback = auxEmotionAverage;
-            }
-        }
-        return emotionFeedback;
     }
 
     public PeasantAgentBelieveInteractionState getPeasantAgentBelieveInteractionState() {
@@ -209,12 +179,12 @@ public class PeasantAgentBelieves implements Believes {
         this.peasantAgentBelieveActivityState = peasantAgentBelieveActivityState;
     }
 
-    public BPerfilPwA getbPerfilPwA() {
-        return bPerfilPwA;
+    public PeasantAgentBelievesProfile getPeasantProfile() {
+        return peasantAgentBelievesProfile;
     }
 
-    public void setbPerfilPwA(BPerfilPwA bPerfilPwA) {
-        this.bPerfilPwA = bPerfilPwA;
+    public void setPeasantProfile(PeasantAgentBelievesProfile peasantAgentBelievesProfile) {
+        this.peasantAgentBelievesProfile = peasantAgentBelievesProfile;
     }
 
     public PeasantAgentBelieveState getPeasantAgentBelieveState() {

@@ -17,8 +17,9 @@ import java.util.List;
  * @author jairo
  */
 public class SimulatorMicro {
-    
+
     private static int PLANID = 0;
+    public static String aliasPeasantAgent = "JUAN";
 
     /**
      * @param args the command line arguments
@@ -27,12 +28,8 @@ public class SimulatorMicro {
         try {
             AdmBESA.getInstance();
             System.out.println("Iniciando WellProdSim-Micro");
-            PeasantAgent Peasant = new PeasantAgent("Juan", createPeasantAgentGoals(), "Agricultor");
+            PeasantAgent Peasant = new PeasantAgent(aliasPeasantAgent, createPeasantAgentGoals(), "Agricultor");
             Peasant.start();
-//            HashMap<String, Object> hm1 = new HashMap<>();
-//            hm1.put("TAGSDANCE", "MACARENA");
-//            ServiceDataRequest data = ServiceRequestBuilder.buildRequest(ActivityServiceRequestType.RUNANIMATION, hm1);
-//            p.sendRequest(data);
         } catch (ExceptionBESA ex) {
             System.out.println(ex);
         } catch (Exception ex) {
@@ -44,7 +41,6 @@ public class SimulatorMicro {
         List<GoalBDI> PeasantGoals = new ArrayList<>();
         PeasantAgroGoal peasantAgroGoal = PeasantAgroGoal.buildGoal();
         PeasantGoals.add(peasantAgroGoal);
-
         return PeasantGoals;
     }
 

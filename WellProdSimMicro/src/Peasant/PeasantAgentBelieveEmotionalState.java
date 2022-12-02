@@ -4,11 +4,11 @@
  */
 package Peasant;
 
-import Peasant.Utils.Emotion;
-import Peasant.Utils.EmotionPwA;
-import static Peasant.Utils.EmotionPwA.ANGER;
-import static Peasant.Utils.EmotionPwA.SADNESS;
-import Peasant.Utils.EmotionalData;
+import Peasant.EmotionalModel.Emotion;
+import Peasant.EmotionalModel.PeasantEmotions;
+import static Peasant.EmotionalModel.PeasantEmotions.ANGER;
+import static Peasant.EmotionalModel.PeasantEmotions.SADNESS;
+import Peasant.EmotionalModel.EmotionalData;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,13 +22,13 @@ import rational.mapping.Believes;
  */
 public class PeasantAgentBelieveEmotionalState implements Believes {
 
-    private Map<EmotionPwA, List<Emotion>> emoMap;
+    private Map<PeasantEmotions, List<Emotion>> emoMap;
     private long tiempoEmocionPredominante;
     private float valencia;
 
     public PeasantAgentBelieveEmotionalState() {
         emoMap = new HashMap<>();
-        for (EmotionPwA epwa : EmotionPwA.values()) {
+        for (PeasantEmotions epwa : PeasantEmotions.values()) {
             emoMap.put(epwa, new ArrayList<>());
         }
     }
@@ -47,11 +47,11 @@ public class PeasantAgentBelieveEmotionalState implements Believes {
         }*/
 
         if (infoRecibida.getInfo().containsKey("emotions")) {
-            Map<EmotionPwA, Float> emo = (Map<EmotionPwA, Float>) infoRecibida.getInfo().get("emotions");
+            Map<PeasantEmotions, Float> emo = (Map<PeasantEmotions, Float>) infoRecibida.getInfo().get("emotions");
             Emotion e;
             float val;
             if (emo != null) {
-                for (EmotionPwA epwa : emo.keySet()) {
+                for (PeasantEmotions epwa : emo.keySet()) {
                     val = emo.get(epwa);
                     e = new Emotion(val);
                     emoMap.get(epwa).add(e);
@@ -76,7 +76,7 @@ public class PeasantAgentBelieveEmotionalState implements Believes {
     public double getFeedbackEmotion() {
         double emotionFeedback = 0.0;
         double auxEmotionAverage = 0.0;
-        for (EmotionPwA entry : emoMap.keySet()) {
+        for (PeasantEmotions entry : emoMap.keySet()) {
             auxEmotionAverage = getEmotionAverage(emoMap.get(entry));
             if (entry.equals(ANGER) || entry.equals(SADNESS)) {
                 auxEmotionAverage *= -1;
@@ -88,11 +88,11 @@ public class PeasantAgentBelieveEmotionalState implements Believes {
         return emotionFeedback;
     }
 
-    public Map<EmotionPwA, List<Emotion>> getEmoMap() {
+    public Map<PeasantEmotions, List<Emotion>> getEmoMap() {
         return emoMap;
     }
 
-    public void setEmoMap(Map<EmotionPwA, List<Emotion>> emoMap) {
+    public void setEmoMap(Map<PeasantEmotions, List<Emotion>> emoMap) {
         this.emoMap = emoMap;
     }
 

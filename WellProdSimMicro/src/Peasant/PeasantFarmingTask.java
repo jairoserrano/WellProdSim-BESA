@@ -4,10 +4,10 @@
  */
 package Peasant;
 
+import Peasant.Utils.PeasantActivity;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 
@@ -15,7 +15,7 @@ import rational.mapping.Task;
  *
  * @author jairo
  */
-public class PeasantFarmingTask extends Task  {
+public class PeasantFarmingTask extends Task {
 
     private HashMap<String, Object> infoServicio = new HashMap<>();
 
@@ -25,35 +25,18 @@ public class PeasantFarmingTask extends Task  {
 
     @Override
     public void executeTask(Believes parameters) {
-        System.out.println("--- Execute Task Seleccionar Cancion ---");
+        System.out.println("--- Execute Task Siembra ---");
 
         PeasantAgentBelieves believes = (PeasantAgentBelieves) parameters;
-        believes.getbEstadoActividad().setActividadActual(ResPwAActivity.MUSICOTERAPIA);
-        Timestamp ts = Timestamp.valueOf(LocalDateTime.now());
-        believes.getbEstadoActividad().setTiempoInicioActividad(ts.getTime());
-        HashMap<String, Object> hm = new HashMap<>();
-        hm.put("SAY", "Estoy seleccionando una cancion, quiero que cantes conmigo.");
-        ServiceDataRequest data = ServiceRequestBuilder.buildRequest(VoiceServiceRequestType.SAY, hm);
-        ResPwaUtils.requestService(data, believes);
-
-        List<Preferenciaxcancion> canciones = believes.getbPerfilPwA().getPerfil().getPerfilPreferencia().getPreferenciaxcancionList();
-        ModeloSeleccion<Preferenciaxcancion> modeloCancion = new ModeloSeleccion<Preferenciaxcancion>(canciones);
-        Preferenciaxcancion cancionSelected = null;
-        CromosomaCancion cromosoma = null;
-        cromosoma = (CromosomaCancion) modeloCancion.selectCromosoma();
-
-        if (cromosoma != null) {
-            cancionSelected = cromosoma.getCancion();
-            believes.getbEstadoActividad().setCancionActual(cancionSelected);
+        believes.getPeasantAgentBelieveActivityState().setCurrentActivity(PeasantActivity.FARMING);
+        Timestamp ts = Timestamp.valueOf(LocalDateTime.now()); 
+        believes.getPeasantAgentBelieveActivityState().setStartedActivityTime(ts.getTime());
+        
+        //TODO: CONEXION CON EL MUNDO
+        
+        if (!believes.getPeasantAgentBelieveState().isRestMode()) {
+            believes.getPeasantAgentBelieveState().setRestMode(true);
         }
-
-        if (!believes.getbEstadoRobot().isStoryMode()) {
-            believes.getbEstadoRobot().setStoryMode(true);
-        }
-        hm = new HashMap<>();
-        hm.put("SAY", "La canción seleccionada es " + cancionSelected.getCancion().getNombre());
-        data = ServiceRequestBuilder.buildRequest(VoiceServiceRequestType.SAY, hm);
-        ResPwaUtils.requestService(data, believes);
     }
 
     @Override
@@ -61,7 +44,7 @@ public class PeasantFarmingTask extends Task  {
         System.out.println("--- Interrupt Task Seleccionar Cancion ---");
         PeasantAgentBelieves blvs = (PeasantAgentBelieves) believes;
 
-        blvs.getbEstadoRobot().setStoryMode(true);
+        blvs.getPeasantAgentBelieveState().setRestMode(true);
     }
 
     @Override
@@ -69,15 +52,15 @@ public class PeasantFarmingTask extends Task  {
         System.out.println("--- Cancel Task Seleccionar Cancion ---");
         PeasantAgentBelieves blvs = (PeasantAgentBelieves) believes;
 
-        blvs.getbEstadoActividad().setCancionActual(null);
-        blvs.getbEstadoRobot().setStoryMode(true);
+        blvs.getPeasantAgentBelieveActivityState().setCurrentFarming(null);
+        blvs.getPeasantAgentBelieveState().setRestMode(true);
     }
 
     @Override
     public boolean checkFinish(Believes believes) {
 
         PeasantAgentBelieves blvs = (PeasantAgentBelieves) believes;
-        if (blvs.getbEstadoActividad().getCancionActual() != null) {
+        if (blvs.getPeasantAgentBelieveActivityState().getCurrentFarming() != null) {
             return true;
         }
         return false;
