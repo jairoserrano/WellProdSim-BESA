@@ -6,6 +6,7 @@ import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
 import BESA.Kernel.Agent.PeriodicGuardBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
+import BESA.Log.ReportBESA;
 import BESA.Util.PeriodicDataBESA;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,7 +25,7 @@ import BESA.World.layer.disease.DiseaseCellState;
  * BESA world's guard, holds the actions that receive from the peasant agent
  */
 public class WorldGuard extends GuardBESA {
-    private static final Logger logger = LogManager.getLogger(WorldGuard.class);
+
     private WorldConfiguration worldConfig = WorldConfiguration.getPropsInstance();
 
     @Override
@@ -33,12 +34,12 @@ public class WorldGuard extends GuardBESA {
         WorldState worldState = (WorldState) this.agent.getState();
         switch (worldMessage.getWorldMessageType()) {
             case CROP_INIT:
-                logger.info("Start event, initialize first layers state");
+                ReportBESA.info("Start event, initialize first layers state");
                 worldState.lazyUpdateCropsForDate(worldMessage.getDate());
                 DateSingleton.getInstance().getDatePlusOneDayAndUpdate();
                 break;
             case CROP_INFORMATION:
-                logger.info("Message received: Crop - " + worldMessage.getCropId() + " information " + worldMessage.getPayload() + " date: " + worldMessage.getDate());
+                ReportBESA.info("Message received: Crop - " + worldMessage.getCropId() + " information " + worldMessage.getPayload() + " date: " + worldMessage.getDate());
                 worldState.lazyUpdateCropsForDate(worldMessage.getDate());
                 CropCellState cropCellState = worldState.getCropLayer().getCropStateById(worldMessage.getCropId());
                 CropCell cropCellInfo = worldState.getCropLayer().getCropCellById(worldMessage.getCropId());
@@ -51,7 +52,7 @@ public class WorldGuard extends GuardBESA {
                 this.replyToPeasantAgent(worldMessage.getPeasantAgentId(), peasantMessage);
                 break;
             case CROP_OBSERVE:
-                logger.info("Observing crops (lazy mode).... on date: " + worldMessage.getDate());
+                ReportBESA.info("Observing crops (lazy mode).... on date: " + worldMessage.getDate());
                 worldState.getCropLayer().getAllCrops().forEach(cropCell -> {
                     if (((CropCellState) cropCell.getCellState()).isWaterStress()) {
                         this.notifyPeasantCropProblem(ExternalCommMessageType.NOTIFY_CROP_WATER_STRESS, cropCell.getAgentPeasantId(), worldMessage.getDate());
@@ -66,14 +67,14 @@ public class WorldGuard extends GuardBESA {
                 break;
             case CROP_IRRIGATION:
                 // Adding the event of irrigation, will be reflected in the next layers execution
-                logger.info("Irrigation on the crop, date: " + worldMessage.getDate());
+                ReportBESA.info("Irrigation on the crop, date: " + worldMessage.getDate());
                 String cropIdToIrrigate = worldMessage.getCropId();
                 String defaultWaterQuantity = this.worldConfig.getProperty("crop.defaultValuePerIrrigation");
                 worldState.getCropLayer().addIrrigationEvent(cropIdToIrrigate, defaultWaterQuantity, worldMessage.getDate());
                 break;
             case CROP_PESTICIDE:
                 // Adding the event of pesticide, will be reflected in the next layers execution
-                logger.info("Adding pesticide to the crop, date: " + worldMessage.getDate());
+                ReportBESA.info("Adding pesticide to the crop, date: " + worldMessage.getDate());
                 String cropIdToAddPesticide = worldMessage.getCropId();
                 String defaultCropInsecticideCoverage = this.worldConfig.getProperty("disease.insecticideDefaultCoverage");
                 String diseaseCellId = worldState.getCropLayer().getCropCellById(cropIdToAddPesticide).getDiseaseCell().getId();

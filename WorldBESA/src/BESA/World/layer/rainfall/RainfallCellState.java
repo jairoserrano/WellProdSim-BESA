@@ -1,5 +1,6 @@
 package BESA.World.layer.rainfall;
 
+import BESA.Log.ReportBESA;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import BESA.World.automata.core.cell.LayerCellState;
@@ -9,11 +10,10 @@ import BESA.World.automata.core.cell.LayerCellState;
  */
 public class RainfallCellState implements LayerCellState {
 
-    private static final Logger logger = LogManager.getLogger(RainfallCellState.class);
     private double rainfall;
 
     public RainfallCellState(double rainfall) {
-        logger.info("New rainfall state: " + rainfall);
+        ReportBESA.info("New rainfall state: " + rainfall);
         this.rainfall = rainfall;
     }
 

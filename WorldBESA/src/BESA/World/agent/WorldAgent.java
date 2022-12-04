@@ -9,8 +9,11 @@ import BESA.Kernel.Agent.StructBESA;
  * AgentBESA implementation for the world agent
  */
 public class WorldAgent extends AgentBESA {
-    public WorldAgent(String alias, StateBESA state, StructBESA structAgent, double passwd) throws KernelAgentExceptionBESA {
-        super(alias, state, structAgent, passwd);
+    
+    private static final double TH = 0.91;
+    
+    public WorldAgent(String alias, StateBESA state, StructBESA structAgent) throws KernelAgentExceptionBESA {
+        super(alias, state, structAgent, TH);
     }
 
     @Override

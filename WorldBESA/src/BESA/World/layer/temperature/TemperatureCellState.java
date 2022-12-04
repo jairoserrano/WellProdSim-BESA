@@ -1,5 +1,6 @@
 package BESA.World.layer.temperature;
 
+import BESA.Log.ReportBESA;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import BESA.World.automata.core.cell.LayerCellState;
@@ -9,13 +10,11 @@ import BESA.World.automata.core.cell.LayerCellState;
  */
 public class TemperatureCellState implements LayerCellState {
 
-    private static final Logger logger = LogManager.getLogger(TemperatureCell.class);
-
     private double temperature;
 
 
     public TemperatureCellState(double temperature) {
-        logger.info("New temperature state: " + temperature);
+        ReportBESA.info("New temperature state: " + temperature);
         this.temperature = temperature;
     }
 

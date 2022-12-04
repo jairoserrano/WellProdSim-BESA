@@ -1,0 +1,61 @@
+2022-12-04 10:28:58.891 [Thread-11] INFO  BESA.World.agent.WorldGuard - Start event, initialize first layers state
+2022-12-04 10:28:58.948 [Thread-11] INFO  BESA.World.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 8.614214007758651
+2022-12-04 10:28:58.949 [Thread-11] INFO  BESA.World.layer.temperature.TemperatureCell - New temperature state: 28.14474543592877
+2022-12-04 10:28:58.950 [Thread-11] INFO  BESA.World.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 3.9000102864142234
+2022-12-04 10:28:58.951 [Thread-11] INFO  BESA.World.layer.rainfall.RainfallCellState - New rainfall state: 65.54351123538817
+2022-12-04 10:28:58.953 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-12-04 10:28:58.953 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-12-04 10:28:58.953 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - infected: false
+2022-12-04 10:28:58.954 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-12-04 10:28:58.954 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - -------------------
+2022-12-04 10:26:29.955 [main] ERROR BESA.World.helper.WorldConfiguration - No app config file found!!
+2022-12-04 10:43:06.075 [Thread-11] INFO  BESA.World.agent.WorldGuard - Start event, initialize first layers state
+2022-12-04 10:43:06.113 [Thread-11] INFO  BESA.World.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 8.841173525977723
+2022-12-04 10:43:06.115 [Thread-11] INFO  BESA.World.layer.temperature.TemperatureCell - New temperature state: 27.324193114812
+2022-12-04 10:43:06.116 [Thread-11] INFO  BESA.World.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.080730067496517
+2022-12-04 10:43:06.118 [Thread-11] INFO  BESA.World.layer.rainfall.RainfallCellState - New rainfall state: 74.4922439964804
+2022-12-04 10:43:06.119 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-12-04 10:43:06.119 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-12-04 10:43:06.120 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - infected: false
+2022-12-04 10:43:06.120 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-12-04 10:43:06.120 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - -------------------
+2022-12-04 10:53:58.222 [Thread-11] INFO  BESA.World.agent.WorldGuard - Start event, initialize first layers state
+2022-12-04 10:53:58.254 [Thread-11] INFO  BESA.World.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.792723352355535
+2022-12-04 10:53:58.255 [Thread-11] INFO  BESA.World.layer.temperature.TemperatureCell - New temperature state: 27.90696173882069
+2022-12-04 10:53:58.256 [Thread-11] INFO  BESA.World.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.115206622113964
+2022-12-04 10:53:58.257 [Thread-11] INFO  BESA.World.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-12-04 10:53:58.258 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-12-04 10:53:58.259 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-12-04 10:53:58.259 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - infected: false
+2022-12-04 10:53:58.259 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-12-04 10:53:58.259 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - -------------------
+2022-12-04 10:48:05.192 [Thread-11] INFO  BESA.World.agent.WorldGuard - Start event, initialize first layers state
+2022-12-04 10:48:05.234 [Thread-11] INFO  BESA.World.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 8.570010651355293
+2022-12-04 10:48:05.236 [Thread-11] INFO  BESA.World.layer.temperature.TemperatureCell - New temperature state: 28.233852373716502
+2022-12-04 10:48:05.237 [Thread-11] INFO  BESA.World.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 3.9546187434538935
+2022-12-04 10:48:05.239 [Thread-11] INFO  BESA.World.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-12-04 10:48:05.240 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-12-04 10:48:05.241 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-12-04 10:48:05.241 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - infected: false
+2022-12-04 10:48:05.241 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-12-04 10:48:05.242 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - -------------------
+2022-12-04 10:54:20.707 [Thread-11] INFO  BESA.World.agent.WorldGuard - Start event, initialize first layers state
+2022-12-04 10:54:20.740 [Thread-11] INFO  BESA.World.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 9.1070432626673
+2022-12-04 10:54:20.741 [Thread-11] INFO  BESA.World.layer.temperature.TemperatureCell - New temperature state: 27.796358731397
+2022-12-04 10:54:20.742 [Thread-11] INFO  BESA.World.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 3.869136182200332
+2022-12-04 10:54:20.743 [Thread-11] INFO  BESA.World.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-12-04 10:54:20.745 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-12-04 10:54:20.745 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-12-04 10:54:20.745 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - infected: false
+2022-12-04 10:54:20.746 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-12-04 10:54:20.746 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - -------------------
+2022-12-04 10:55:09.568 [Thread-11] INFO  BESA.World.agent.WorldGuard - Start event, initialize first layers state
+2022-12-04 10:55:09.632 [Thread-11] INFO  BESA.World.layer.shortWaveRadiation.ShortWaveRadiationCellState - New short wave radiation state: 10.09123852728642
+2022-12-04 10:55:09.634 [Thread-11] INFO  BESA.World.layer.temperature.TemperatureCell - New temperature state: 27.86432815049687
+2022-12-04 10:55:09.635 [Thread-11] INFO  BESA.World.layer.evapotranspiration.EvapotranspirationCellState - Next evapotranspiration state: 4.242639249521442
+2022-12-04 10:55:09.636 [Thread-11] INFO  BESA.World.layer.rainfall.RainfallCellState - New rainfall state: 0.0
+2022-12-04 10:55:09.637 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - For Date: 15/03/2022
+2022-12-04 10:55:09.638 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - Cell: rice1DiseaseCell
+2022-12-04 10:55:09.638 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - infected: false
+2022-12-04 10:55:09.638 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - current probability of infection: 0.02
+2022-12-04 10:55:09.638 [Thread-11] INFO  BESA.World.layer.disease.DiseaseLayer - -------------------

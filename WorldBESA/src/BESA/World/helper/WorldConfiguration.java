@@ -1,5 +1,6 @@
 package BESA.World.helper;
 
+import BESA.Log.ReportBESA;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,7 +15,7 @@ import java.util.Properties;
 public class WorldConfiguration {
 
     private static final Logger logger = LogManager.getLogger(WorldConfiguration.class);
-    private static final String CONF_NAME = "src/main/resources/app.properties";
+    private static final String CONF_NAME = "resources/app.properties";
     private static WorldConfiguration instance = null;
     private Properties appProperties;
     private boolean diseasePerturbation = false;
@@ -28,7 +29,7 @@ public class WorldConfiguration {
         try (InputStream in = new FileInputStream(CONF_NAME)) {
 
             if (in == null) {
-                System.out.println("Sorry, unable to find app.properties");
+                ReportBESA.error("Sorry, unable to find app.properties");
                 return;
             }
 
@@ -37,7 +38,7 @@ public class WorldConfiguration {
             this.appProperties.load(in);
 
         } catch (IOException ex) {
-            logger.error("No app config file found!!");
+            ReportBESA.error("No app config file found!!");
             ex.printStackTrace();
         }
 

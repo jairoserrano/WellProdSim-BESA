@@ -1,5 +1,6 @@
 package BESA.World.layer.shortWaveRadiation;
 
+import BESA.Log.ReportBESA;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import BESA.World.automata.core.cell.LayerCellState;
@@ -9,12 +10,11 @@ import BESA.World.automata.core.cell.LayerCellState;
  */
 public class ShortWaveRadiationCellState implements LayerCellState {
 
-    private static final Logger logger = LogManager.getLogger(ShortWaveRadiationCellState.class);
     private double shortWaveRadiation;
 
 
     public ShortWaveRadiationCellState(double shortWaveRadiation) {
-        logger.info("New short wave radiation state: " + shortWaveRadiation);
+        ReportBESA.info("New short wave radiation state: " + shortWaveRadiation);
         this.shortWaveRadiation = shortWaveRadiation;
     }
 

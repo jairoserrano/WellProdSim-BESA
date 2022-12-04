@@ -1,5 +1,6 @@
 package BESA.World.layer.evapotranspiration;
 
+import BESA.Log.ReportBESA;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import BESA.World.automata.core.cell.LayerCellState;
@@ -9,11 +10,10 @@ import BESA.World.automata.core.cell.LayerCellState;
  */
 public class EvapotranspirationCellState implements LayerCellState {
 
-    private static final Logger logger = LogManager.getLogger(EvapotranspirationCellState.class);
     private double evapotranspirationReference;
 
     public EvapotranspirationCellState(double evapotranspirationReference) {
-        logger.info("Next evapotranspiration state: " + evapotranspirationReference);
+        ReportBESA.info("Next evapotranspiration state: " + evapotranspirationReference);
         this.evapotranspirationReference = evapotranspirationReference;
     }
 
