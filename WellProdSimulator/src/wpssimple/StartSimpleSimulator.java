@@ -2,6 +2,7 @@ package wpssimple;
 
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.ExceptionBESA;
+import BESA.Kernel.Agent.AgentBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.StructBESA;
 import BESA.Kernel.System.AdmBESA;
@@ -12,10 +13,10 @@ import BESA.World.agent.WorldGuard;
 import BESA.World.agent.WorldState;
 import BESA.World.agents.messages.world.WorldMessage;
 import BESA.World.agents.messages.world.WorldMessageType;
+import static BESA.World.agents.messages.world.WorldMessageType.CROP_INIT;
 import BESA.World.helper.DateSingleton;
 import BESA.World.helper.Hemisphere;
 import BESA.World.helper.Soil;
-import BESA.World.helper.WPSExperimentConfig;
 import BESA.World.helper.WorldConfiguration;
 import BESA.World.layer.crop.CropLayer;
 import BESA.World.layer.crop.cell.rice.RiceCell;
@@ -46,7 +47,7 @@ public class StartSimpleSimulator {
      */
     public static void main(String[] args) {
 
-        // Set default values of Peasant
+        // Set default values of peasant
         WPSExperimentConfig wpsExperimentConfig = new WPSExperimentConfig(args);
 
         // Set world perturbation
@@ -57,26 +58,25 @@ public class StartSimpleSimulator {
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
-            ReportBESA.info("Iniciando WellProdSim Simple");
+            ReportBESA.info("Inicializando WellProdSimulator");
 
-            PeasantAgent Peasant = new PeasantAgent(aliasPeasantAgent, createPeasantAgentGoals(), new PeasantPurpose(PeasantPurposeType.FARMER));
-            Peasant.start();
-            ReportBESA.info("Iniciando Agente Campesino Simple");
+            PeasantAgent peasant = new PeasantAgent(aliasPeasantAgent, createPeasantAgentGoals(), new PeasantPurpose(PeasantPurposeType.FARMER));
+            ReportBESA.info("Inicializando Agente Campesino");
 
-            WorldAgent worldAgent = buildWorld(getRainfallFile(wpsExperimentConfig.getRainfallConditions()), Peasant.getAid());
-            worldAgent.start();
-            ReportBESA.info("Iniciando Mundo Simple");
+            WorldAgent worldAgent = buildWorld(getRainfallFile(wpsExperimentConfig.getRainfallConditions()), peasant.getAid());
+            ReportBESA.info("Inicializando Mundo");
 
             // Init world layers state message
             initialWorldStateInitialization(worldAgent);
             ReportBESA.info("Configurado Mundo Simple");
-            
-            // Simulation Start
-            //AgHandlerBESA ah = adm.getHandlerByAid(Peasant.getAid());
-            //EventBESA ev = new EventBESA(StartGoalCompletionGuard.class.getName(), new PeasantMessage("hello"));
-            //ah.sendEvent(ev);
-            
 
+            // Simulation Start
+            startAllAgents(peasant, worldAgent);
+
+            AgHandlerBESA ah = adm.getHandlerByAid(worldAgent.getAid());
+            WorldMessage worldMessage = new WorldMessage(CROP_INIT, "rice_1", "20/05/2022", peasant.getAid());
+            EventBESA ev = new EventBESA(WorldGuard.class.getName(), worldMessage);
+            ah.sendEvent(ev);
         } catch (ExceptionBESA ex) {
             ReportBESA.error(ex);
         } catch (Exception ex) {
@@ -115,7 +115,7 @@ public class StartSimpleSimulator {
 
     private static String getRainfallFile(String arg) {
         WorldConfiguration worldConfiguration = WorldConfiguration.getPropsInstance();
-        String rainfallFile = "";
+        String rainfallFile;
         switch (arg) {
             case "wet":
                 rainfallFile = worldConfiguration.getProperty("data.rainfall.wet");
@@ -195,6 +195,15 @@ public class StartSimpleSimulator {
         } catch (Exception e) {
             ReportBESA.error(e);
         }
+    }
+
+    private static void startAllAgents(AgentBESA... A) throws ExceptionBESA {
+
+        for (AgentBESA agent : A) {
+            agent.start();
+            ReportBESA.info(agent.getAlias() + " Started");
+        }
+
     }
 
 }

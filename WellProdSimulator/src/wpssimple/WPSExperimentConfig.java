@@ -1,4 +1,4 @@
-package BESA.World.helper;
+package wpssimple;
 
 public class WPSExperimentConfig {
 
@@ -12,7 +12,6 @@ public class WPSExperimentConfig {
 
     public WPSExperimentConfig(String[] args) {
         // Simulation parameters
-
         if (args.length == 7) {
             peasantType = args[0];
             rainfallConditions = args[1];

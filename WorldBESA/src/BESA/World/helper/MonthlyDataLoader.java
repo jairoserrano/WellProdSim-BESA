@@ -14,18 +14,17 @@ import java.util.List;
 public class MonthlyDataLoader {
 
     public static List<MonthData> loadMonthlyDataFile(String dataFileLocation) throws IOException {
-        ReportBESA.info(dataFileLocation);
+        //ReportBESA.info(dataFileLocation);
         InputStream in = new FileInputStream(dataFileLocation);
         //ClassLoader classLoader = MonthlyDataLoader.class.getClassLoader();
         //File jsonFile = new File(classLoader.getResource(dataFileLocation).getFile());
         String jsonContent = new String(in.readAllBytes());//Files.readAllBytes(Paths.get(jsonFile.toURI())), StandardCharsets.UTF_8);
-        return jsonToMonthlyData(jsonContent);
+        return jsonToMonthlyData(jsonContent, dataFileLocation);
     }
 
-    private static List<MonthData> jsonToMonthlyData(String jsonContent) {
+    private static List<MonthData> jsonToMonthlyData(String jsonContent, String dataFileLocation) {
         JSONArray radiationJson = new JSONArray(jsonContent);
         ArrayList<MonthData> monthlyData = new ArrayList<>();
-        ReportBESA.info("Cargando datos");
         radiationJson.forEach(item -> {
             JSONObject currentObject = (JSONObject) item;
             MonthData monthData = new MonthData();
@@ -35,7 +34,7 @@ public class MonthlyDataLoader {
             monthData.setStandardDeviation(currentObject.getDouble("standardDeviation"));
             monthlyData.add(monthData);
         });
-        ReportBESA.info("OK");
+        ReportBESA.info("Cargando " + dataFileLocation + " ... OK");
         return monthlyData;
     }
 }

@@ -58,7 +58,7 @@ public class PeasantAgroGoal extends GoalBDI {
     public double detectGoal(Believes believes) throws KernellAgentEventExceptionBESA {
         ReportBESA.info("Meta peasantFarmingRole detectGoal");
         PeasantAgentBelieves blvs = (PeasantAgentBelieves) believes;
-        ReportBESA.info("EmocionPredominante: " + blvs.getPeasantAgentBelieveEmotionalState().getEmocionPredominante());
+        ReportBESA.debug("EmocionPredominante: " + blvs.getPeasantAgentBelieveEmotionalState().getEmocionPredominante());
 
         if (blvs.getPeasantAgentBelieveEmotionalState().getEmocionPredominante() < 0 && blvs.getPeasantProfile().getProfile().getFarmerProfile().getFast() <= 5) {
             return 0.4 + (blvs.getPeasantAgentBelieveActivityState().getGustoActividad(PeasantActivityType.FARMING) * 0.6);
