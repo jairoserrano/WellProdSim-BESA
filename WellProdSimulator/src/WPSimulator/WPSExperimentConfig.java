@@ -1,4 +1,4 @@
-package wpssimple;
+package WPSimulator;
 
 public class WPSExperimentConfig {
 

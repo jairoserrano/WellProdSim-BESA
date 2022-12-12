@@ -17,8 +17,8 @@ public class WorldPeriodicGuard extends PeriodicGuardBESA {
     public void funcPeriodicExecGuard(EventBESA eventBESA) {
         try {
             AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAid(this.agent.getAid());
-            DateSingleton singleton = DateSingleton.getInstance();
-            WorldMessage worldMessage = new WorldMessage(WorldMessageType.CROP_OBSERVE, null, singleton.getCurrentDate(), null);
+            DateSingleton currentDate = DateSingleton.getInstance();
+            WorldMessage worldMessage = new WorldMessage(WorldMessageType.CROP_OBSERVE, null, currentDate.getCurrentDate(), null);
             EventBESA eventBESASend = new EventBESA(WorldGuard.class.getName(), worldMessage);
             ah.sendEvent(eventBESASend);
         } catch (ExceptionBESA exceptionBESA) {

@@ -8,16 +8,19 @@ package BESA.BDI.AgentStructuralModel;
 
 import BESA.BDI.AgentStructuralModel.Functions.ContributionComparator;
 import BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA;
+import BESA.Log.ReportBESA;
 import rational.RationalRole;
 import rational.mapping.Believes;
 import java.io.Serializable;
 
 /**
- * <p>Class that represents the goals in the BDI flow</p>
- * @author  SIDRe - Pontificia Universidad Javeriana
- * @author  Takina  - Pontificia Universidad Javeriana
+ * <p>
+ * Class that represents the goals in the BDI flow</p>
+ *
+ * @author SIDRe - Pontificia Universidad Javeriana
+ * @author Takina - Pontificia Universidad Javeriana
  * @version 2.0, 11/01/11
- * @since   JDK1.0
+ * @since JDK1.0
  */
 public abstract class GoalBDI implements BDIEvaluable, Serializable, Comparable<GoalBDI> {
 
@@ -28,17 +31,15 @@ public abstract class GoalBDI implements BDIEvaluable, Serializable, Comparable<
     private double detectionValue;
     private RationalRole role;
     private String description;
-    private GoalBDITypes type;    
+    private GoalBDITypes type;
     private boolean succeed;
-    
+
     public GoalBDI(long id, RationalRole role, String description, GoalBDITypes type) {
         this.id = id;
         this.role = role;
         this.description = description;
         this.type = type;
     }
-    
-    
 
     public boolean isSucceed() {
         return succeed;
@@ -110,25 +111,26 @@ public abstract class GoalBDI implements BDIEvaluable, Serializable, Comparable<
 
     public void setViabilityValue(double viabilityValue) {
         this.viabilityValue = viabilityValue;
-    }   
+    }
 
     /**
-     * <p>evaluate viability for a mapping proccess using the believes</p>
+     * <p>
+     * evaluate viability for a mapping proccess using the believes</p>
+     *
      * @param machineParams
      * @param believes
-     * @return 
+     * @return
      */
     public boolean evaluateMappingViability(BDIMachineParams machineParams, Believes believes) throws KernellAgentEventExceptionBESA {
         boolean returnValue = false;
         double viabilityEvaluation = this.evaluateViability(believes);
         switch (this.getType()) {
             case DUTY:
-                if (viabilityEvaluation > machineParams.getDutyThreshold() ) {
+                if (viabilityEvaluation > machineParams.getDutyThreshold()) {
                     returnValue = true;
                 }
-
             case NEED:
-                if (viabilityEvaluation > machineParams.getNeedThreshold() ) {
+                if (viabilityEvaluation > machineParams.getNeedThreshold()) {
                     returnValue = true;
                 }
             case OPORTUNITY:
@@ -148,7 +150,7 @@ public abstract class GoalBDI implements BDIEvaluable, Serializable, Comparable<
                     returnValue = true;
                 }
         }
-
+        //ReportBESA.debug(this.getType() + " " + returnValue);
         return returnValue;
     }
 
@@ -156,15 +158,15 @@ public abstract class GoalBDI implements BDIEvaluable, Serializable, Comparable<
     public int compareTo(GoalBDI o) {
         ContributionComparator contributionComparator = new ContributionComparator();
         return contributionComparator.compare(this, o);
-    }    
+    }
 
     @Override
     public boolean equals(Object goal) {
-        if(goal == null){
+        if (goal == null) {
             return false;
-        }else if(!(goal instanceof GoalBDI)){
+        } else if (!(goal instanceof GoalBDI)) {
             return false;
-        }else{
+        } else {
             GoalBDI g = (GoalBDI) goal;
             return this.getId() == g.getId();
         }
@@ -176,7 +178,5 @@ public abstract class GoalBDI implements BDIEvaluable, Serializable, Comparable<
         hash = 79 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
-    
-    
-    
+
 }

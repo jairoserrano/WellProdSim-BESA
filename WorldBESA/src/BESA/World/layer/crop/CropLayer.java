@@ -1,6 +1,7 @@
 package BESA.World.layer.crop;
 
 
+import BESA.Log.ReportBESA;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
@@ -226,7 +227,7 @@ public class CropLayer extends GenericWorldLayer {
         for (CropCell cropCell : this.cropCellMap.values()) {
             String diseaseEnabled = this.config.isDiseasePerturbation() ? "_disease_" : "";
             String waterStressEnabled = Boolean.parseBoolean(this.config.getProperty("waterStress.enabled")) ? "_water_stress_" : "";
-            String filename = fileDirection + "\\" + cropCell.getId() + diseaseEnabled + waterStressEnabled + ".csv";
+            String filename = fileDirection + cropCell.getId() + diseaseEnabled + waterStressEnabled + ".csv";
             List<String[]> dataLines = new ArrayList<>();
             dataLines.add(new String[]{"date", "disease", "evapotranspiration", "agb", "cumulatedTemperature", "cumulatedEvapotranspiration"});
             cropCell.getHistoricalData().keySet().stream().forEach(dateKey -> {
@@ -267,6 +268,7 @@ public class CropLayer extends GenericWorldLayer {
     }
 
     public List<CropCell> getAllCrops() {
-        return (List<CropCell>) this.cropCellMap.values();
+        //ReportBESA.debug(this.cropCellMap.values());
+        return (List<CropCell>) new ArrayList<CropCell>(this.cropCellMap.values());
     }
 }

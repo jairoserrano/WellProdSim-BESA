@@ -9,8 +9,10 @@ package Peasant.Utils;
  * @author jairo
  */
 public enum PeasantActivityType {
-    HARVEST("harvest"),
-    FARMING("farmin");
+    FARMING("farming"),
+    IRRIGATING("irrigating"),
+    HARVESTING("harvesting"),
+    RESTING("resting");
 
     private String type;
 

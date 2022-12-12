@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rational.guards.InformationFlowGuard;
-import wpssimple.StartSimpleSimulator;
+import WPSimulator.StartSimpleSimulator;
 
 /**
  *

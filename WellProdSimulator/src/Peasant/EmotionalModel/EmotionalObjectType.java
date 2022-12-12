@@ -11,6 +11,8 @@ package Peasant.EmotionalModel;
 public enum EmotionalObjectType {
     PEASANT("PEASANT", EmotionalConfig.Objects.Valioso),
     LAND("LAND", EmotionalConfig.Objects.Valioso),
+    FARMING("FARMING", EmotionalConfig.Objects.Valioso),
+    HARVEST("HARVEST", EmotionalConfig.Objects.Importante),
     CROP("CROP", EmotionalConfig.Objects.Importante),
     BUGS("BUGS", EmotionalConfig.Objects.Repulsivo),
     NULL("",EmotionalConfig.Objects.Indiferente);

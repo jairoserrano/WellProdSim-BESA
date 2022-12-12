@@ -5,8 +5,6 @@
  */
 package rational.tasks;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 
@@ -14,7 +12,7 @@ import rational.mapping.Task;
  *
  * @author Andres
  */
-public class VoidTask extends Task{
+public class VoidTask extends Task {
 
     @Override
     public void executeTask(Believes parameters) {
@@ -22,14 +20,16 @@ public class VoidTask extends Task{
     }
 
     @Override
-    public void interruptTask(Believes believes) {}
+    public void interruptTask(Believes believes) {
+    }
 
     @Override
-    public void cancelTask(Believes believes) {}
+    public void cancelTask(Believes believes) {
+    }
 
     @Override
     public boolean checkFinish(Believes believes) {
         return true;
     }
-    
+
 }

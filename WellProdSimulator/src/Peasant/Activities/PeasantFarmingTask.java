@@ -1,14 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Peasant;
+package Peasant.Activities;
 
+import BESA.ExceptionBESA;
+import BESA.Kernel.Agent.Event.EventBESA;
+import BESA.Kernel.System.AdmBESA;
+import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Log.ReportBESA;
+import BESA.World.agent.WorldGuard;
+import BESA.World.agents.messages.world.WorldMessage;
+import static BESA.World.agents.messages.world.WorldMessageType.CROP_INIT;
+import static BESA.World.agents.messages.world.WorldMessageType.CROP_IRRIGATION;
+import static BESA.World.agents.messages.world.WorldMessageType.CROP_OBSERVE;
+import BESA.World.helper.DateSingleton;
+import Peasant.PeasantBDIAgentBelieves;
 import Peasant.Utils.PeasantActivityType;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 
@@ -18,52 +24,69 @@ import rational.mapping.Task;
  */
 public class PeasantFarmingTask extends Task {
 
-    private HashMap<String, Object> infoServicio = new HashMap<>();
+    private boolean finished;
 
     public PeasantFarmingTask() {
-        ReportBESA.info("--- Task Siembra Iniciada ---");
+        ReportBESA.info("--- Task Siembra inicializada ---");
+        this.finished = false;
     }
 
     @Override
     public void executeTask(Believes parameters) {
-        ReportBESA.info("--- Execute Task Siembra ---");
+        ReportBESA.info("--- Execute Task PeasantFarmingTask ---");
 
-        PeasantAgentBelieves believes = (PeasantAgentBelieves) parameters;
-        believes.getPeasantAgentBelieveActivityState().setCurrentActivity(PeasantActivityType.FARMING);
-        Timestamp ts = Timestamp.valueOf(LocalDateTime.now()); 
-        believes.getPeasantAgentBelieveActivityState().setStartedActivityTime(ts.getTime());
-        
-        //TODO: CONEXION CON EL MUNDO
-        
-        if (!believes.getPeasantAgentBelieveState().isRestMode()) {
-            believes.getPeasantAgentBelieveState().setRestMode(true);
+        PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
+        believes.setCurrentActivity(PeasantActivityType.FARMING);
+
+        try {
+            AdmBESA adm = AdmBESA.getInstance();
+            AgHandlerBESA ah = adm.getHandlerByAlias("MariaLaBaja");
+
+            WorldMessage worldMessage = new WorldMessage(CROP_INIT, "rice_1", "01/04/2022", "Campesino");
+            EventBESA ev = new EventBESA(WorldGuard.class.getName(), worldMessage);
+            ah.sendEvent(ev);
+
+            believes.setCurrentActivity(PeasantActivityType.IRRIGATING);
+            this.setFinished(true);
+
+        } catch (ExceptionBESA ex) {
+            Logger.getLogger(PeasantFarmingTask.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     @Override
     public void interruptTask(Believes believes) {
-        ReportBESA.info("--- Interrupt Task Seleccionar Cancion ---");
-        PeasantAgentBelieves blvs = (PeasantAgentBelieves) believes;
-
-        blvs.getPeasantAgentBelieveState().setRestMode(true);
+        ReportBESA.info("--- Interrupt Task PeasantFarmingTask ---");
+        PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
+        blvs.setCurrentActivity(PeasantActivityType.RESTING);
+        this.finished = true;
     }
 
     @Override
     public void cancelTask(Believes believes) {
-        ReportBESA.info("--- Cancel Task Seleccionar Cancion ---");
-        PeasantAgentBelieves blvs = (PeasantAgentBelieves) believes;
+        ReportBESA.info("--- Cancel Task PeasantFarmingTask ---");
+        PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
+        blvs.setCurrentActivity(PeasantActivityType.RESTING);
+        this.finished = true;
+    }
 
-        blvs.getPeasantAgentBelieveActivityState().setCurrentFarming(null);
-        blvs.getPeasantAgentBelieveState().setRestMode(true);
+    public boolean isExecuted() {
+        ReportBESA.info("--- isExecuted Task PeasantFarmingTask ---");
+        return finished;
     }
 
     @Override
     public boolean checkFinish(Believes believes) {
-
-        PeasantAgentBelieves blvs = (PeasantAgentBelieves) believes;
-        if (blvs.getPeasantAgentBelieveActivityState().getCurrentFarming() != null) {
-            return true;
-        }
-        return false;
+        ReportBESA.info("--- checkFinish Task PeasantFarmingTask ---");
+        return isExecuted();
     }
 }

@@ -1,19 +1,19 @@
-package wpssimple;
+package WPSimulator;
 
-import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.AgentBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
+import BESA.Kernel.Agent.PeriodicGuardBESA;
 import BESA.Kernel.Agent.StructBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Log.ReportBESA;
+import BESA.Util.PeriodicDataBESA;
 import BESA.World.agent.WorldAgent;
 import BESA.World.agent.WorldGuard;
 import BESA.World.agent.WorldState;
 import BESA.World.agents.messages.world.WorldMessage;
 import BESA.World.agents.messages.world.WorldMessageType;
-import static BESA.World.agents.messages.world.WorldMessageType.CROP_INIT;
 import BESA.World.helper.DateSingleton;
 import BESA.World.helper.Hemisphere;
 import BESA.World.helper.Soil;
@@ -26,12 +26,10 @@ import BESA.World.layer.evapotranspiration.EvapotranspirationLayer;
 import BESA.World.layer.rainfall.RainfallLayer;
 import BESA.World.layer.shortWaveRadiation.ShortWaveRadiationLayer;
 import BESA.World.layer.temperature.TemperatureLayer;
-import Peasant.PeasantAgent;
-import Peasant.PeasantAgroGoal;
-import Peasant.Utils.PeasantPurposeType;
+import Peasant.PeasantBDIAgent;
 import Peasant.Utils.PeasantPurpose;
-import java.util.ArrayList;
-import java.util.List;
+import Peasant.Utils.PeasantPurposeType;
+import Peasant.startReachingGoalsGuard;
 
 /**
  *
@@ -60,7 +58,7 @@ public class StartSimpleSimulator {
             AdmBESA adm = AdmBESA.getInstance();
             ReportBESA.info("Inicializando WellProdSimulator");
 
-            PeasantAgent peasant = new PeasantAgent(aliasPeasantAgent, createPeasantAgentGoals(), new PeasantPurpose(PeasantPurposeType.FARMER));
+            PeasantBDIAgent peasant = new PeasantBDIAgent(aliasPeasantAgent, new PeasantPurpose(PeasantPurposeType.FARMER));
             ReportBESA.info("Inicializando Agente Campesino");
 
             WorldAgent worldAgent = buildWorld(getRainfallFile(wpsExperimentConfig.getRainfallConditions()), peasant.getAid());
@@ -73,22 +71,11 @@ public class StartSimpleSimulator {
             // Simulation Start
             startAllAgents(peasant, worldAgent);
 
-            AgHandlerBESA ah = adm.getHandlerByAid(worldAgent.getAid());
-            WorldMessage worldMessage = new WorldMessage(CROP_INIT, "rice_1", "20/05/2022", peasant.getAid());
-            EventBESA ev = new EventBESA(WorldGuard.class.getName(), worldMessage);
-            ah.sendEvent(ev);
         } catch (ExceptionBESA ex) {
             ReportBESA.error(ex);
         } catch (Exception ex) {
             ReportBESA.error(ex);
         }
-    }
-
-    private static List<GoalBDI> createPeasantAgentGoals() {
-        List<GoalBDI> PeasantGoals = new ArrayList<>();
-        PeasantAgroGoal peasantAgroGoal = PeasantAgroGoal.buildGoal();
-        PeasantGoals.add(peasantAgroGoal);
-        return PeasantGoals;
     }
 
     public static int getPlanID() {
@@ -204,6 +191,22 @@ public class StartSimpleSimulator {
             ReportBESA.info(agent.getAlias() + " Started");
         }
 
+        AdmBESA adm = AdmBESA.getInstance();
+        PeriodicDataBESA data = new PeriodicDataBESA(1000, PeriodicGuardBESA.START_PERIODIC_CALL);
+        AgHandlerBESA agHandler = adm.getHandlerByAlias(aliasPeasantAgent);
+        //EventBESA eventBesa = new EventBESA(startReachingGoalsSimpleGuard.class.getName(), data);
+        EventBESA eventBesa = new EventBESA(startReachingGoalsGuard.class.getName(), data);
+        agHandler.sendEvent(eventBesa);
+
+    }
+
+    public static void stopSimulation() throws ExceptionBESA {
+        AdmBESA adm = AdmBESA.getInstance();
+        AgHandlerBESA agHandler;
+        adm.killAgent(adm.getHandlerByAlias("Campesino").getAgId(), 0.91);
+        adm.killAgent(adm.getHandlerByAlias("MariaLaBaja").getAgId(), 0.91);
+        adm.kill(0.09);
+        System.exit(0);
     }
 
 }

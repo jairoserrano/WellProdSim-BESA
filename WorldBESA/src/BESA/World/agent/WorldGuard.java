@@ -1,6 +1,5 @@
 package BESA.World.agent;
 
-import BESA.World.agents.ExternalComm.ExternalCommGuard;
 import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
@@ -8,18 +7,17 @@ import BESA.Kernel.Agent.PeriodicGuardBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Log.ReportBESA;
 import BESA.Util.PeriodicDataBESA;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.json.JSONObject;
-import BESA.World.helper.DateSingleton;
+import BESA.World.agents.ExternalComm.ExternalCommGuard;
 import BESA.World.agents.ExternalComm.ExternalCommMessage;
 import BESA.World.agents.ExternalComm.ExternalCommMessageType;
 import BESA.World.agents.messages.world.WorldMessage;
+import BESA.World.helper.DateSingleton;
 import BESA.World.helper.WorldConfiguration;
 import BESA.World.layer.crop.CropLayer;
 import BESA.World.layer.crop.cell.CropCell;
 import BESA.World.layer.crop.cell.CropCellState;
 import BESA.World.layer.disease.DiseaseCellState;
+import org.json.JSONObject;
 
 /**
  * BESA world's guard, holds the actions that receive from the peasant agent
