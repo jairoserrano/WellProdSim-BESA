@@ -56,7 +56,7 @@ public class StartSimpleSimulator {
 
     private static int PLANID = 0;
     public static String aliasPeasantAgent = "FamiliaCampesina";
-    public static String aliasWorldAgent   = "MontesDeMaria";
+    public static String aliasWorldAgent = "MontesDeMaria";
     public static String aliasSocietyAgent = "MariaLabaja";
 
     /**
@@ -77,9 +77,11 @@ public class StartSimpleSimulator {
             AdmBESA adm = AdmBESA.getInstance();
             ReportBESA.info("Inicializando WellProdSimulator");
 
+            // Peasant Agent
             PeasantBDIAgent peasant = new PeasantBDIAgent(aliasPeasantAgent, new PeasantPurpose(PeasantPurposeType.FARMER));
             ReportBESA.info("Inicializando Agente Campesino");
 
+            // World Agent
             WorldAgent worldAgent = buildWorld(getRainfallFile(wpsExperimentConfig.getRainfallConditions()), peasant.getAid());
             ReportBESA.info("Inicializando Mundo");
 
@@ -87,6 +89,7 @@ public class StartSimpleSimulator {
             initialWorldStateInitialization(worldAgent);
             ReportBESA.info("Configurado Mundo Simple");
 
+            // Society Agent
             StructBESA societyAgentStruct = new StructBESA();
             try {
                 societyAgentStruct.bindGuard("ComportamientoJugador", SocietyAgentGuardCreation.class);
@@ -174,21 +177,7 @@ public class StartSimpleSimulator {
         DiseaseCell diseaseCellRice = new DiseaseCell("rice1DiseaseCell");
         diseaseLayer.addVertex(diseaseCellRice);
         CropLayer cropLayer = new CropLayer();
-        cropLayer.addCrop(new RiceCell(
-                1.05,
-                1.2,
-                0.7,
-                1512,
-                3330,
-                100,
-                0.9,
-                0.2,
-                Soil.SAND,
-                true,
-                diseaseCellRice,
-                "rice_1",
-                agentId
-        ));
+        cropLayer.addCrop(new RiceCell(1.05, 1.2, 0.7, 1512, 3330, 100, 0.9, 0.2, Soil.SAND, true, diseaseCellRice, "rice_1", agentId));
         cropLayer.bindLayer("radiation", radiationLayer);
         cropLayer.bindLayer("rainfall", rainfallLayer);
         cropLayer.bindLayer("temperature", temperatureLayer);

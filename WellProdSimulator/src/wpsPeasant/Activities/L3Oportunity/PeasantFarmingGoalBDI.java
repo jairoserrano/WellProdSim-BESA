@@ -35,6 +35,9 @@ public class PeasantFarmingGoalBDI extends GoalBDI {
     }
 
     @Override
+    /**
+     * Evaluar si se tienen los recursos
+     */
     public double evaluateViability(Believes believes) throws KernellAgentEventExceptionBESA {
         PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
         ReportBESA.debug(">>>>>>>> Evaluando " + this.getId() + " " + this.getType() + " Current Activity " + blvs.getCurrentActivity());
@@ -45,7 +48,12 @@ public class PeasantFarmingGoalBDI extends GoalBDI {
         }
     }
 
-    @Override
+    /** validar si el goal se activa con un test sencillo, 
+    *   por ejemplo epoca de siembra, recoger cosecha etc
+    *   cambiar posiblemente a activateGoal
+    *   qué se debe mirar en los belives para saber si puede activar la meta
+    */
+    @Override  
     public double detectGoal(Believes believes) throws KernellAgentEventExceptionBESA {
         /*PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
         if (blvs.getCurrentActivity() == PeasantActivityType.IRRIGATING) {
@@ -62,10 +70,18 @@ public class PeasantFarmingGoalBDI extends GoalBDI {
     }
 
     @Override
+    /**
+     * Revisar aquí si es de verdad evalua la contribución, 
+     * Medir o evaluar la contribución, solo se llama despues de que la meta fue activada
+     */
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
         return 1;
     }
 
+    /**
+     * Cumple con la normatividad el agente
+     * 
+     */
     @Override
     public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA {
         return true;
