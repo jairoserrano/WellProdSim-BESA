@@ -13,13 +13,33 @@ import java.util.Map;
  */
 public class Personality {
 
+    /**
+     *
+     */
     public enum EmotionElementType {
-        Object, Person, Event
+
+        /**
+         *
+         */
+        Object,
+
+        /**
+         *
+         */
+        Person,
+
+        /**
+         *
+         */
+        Event
     }
     private final Map<String, String> objectRelationships;
     private final Map<String, String> personRelationships;
     private final Map<String, String> eventDesirability;
 
+    /**
+     *
+     */
     public Personality() {
         personRelationships = new HashMap<>();
         objectRelationships = new HashMap<>();
@@ -40,18 +60,39 @@ public class Personality {
         return null;
     }
 
+    /**
+     *
+     * @param person
+     * @param relationship
+     */
     public void setPersonRelationship(String person, String relationship) {
         personRelationships.put(person, relationship);
     }
 
+    /**
+     *
+     * @param object
+     * @param relationship
+     */
     public void setObjectRelationship(String object, String relationship) {
         objectRelationships.put(object, relationship);
     }
 
+    /**
+     *
+     * @param event
+     * @param desirability
+     */
     public void setEventDesirability(String event, String desirability) {
         eventDesirability.put(event, desirability);
     }
 
+    /**
+     *
+     * @param t
+     * @param name
+     * @return
+     */
     public Float getElementSemanticValue(EmotionElementType t, String name) {
         String val = (String) getList(t).get(name);
         if (val != null) {
@@ -60,6 +101,10 @@ public class Personality {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         String str = "Objects" + " -> " + objectRelationships.toString()

@@ -24,24 +24,43 @@ public class Emotion {
     private LocalTime time;
     private float valence;
 
+    /**
+     *
+     * @param valence
+     */
     public Emotion(float valence) {
         this.valence = valence;
         this.time= LocalTime.now();
     }
     
-
+    /**
+     *
+     * @return
+     */
     public LocalTime getTime() {
         return time;
     }
 
+    /**
+     *
+     * @param time
+     */
     public void setTime(LocalTime time) {
         this.time = time;
     }
 
+    /**
+     *
+     * @return
+     */
     public float getValence() {
         return valence;
     }
 
+    /**
+     *
+     * @param valence
+     */
     public void setValence(float valence) {
         this.valence = valence;
     }

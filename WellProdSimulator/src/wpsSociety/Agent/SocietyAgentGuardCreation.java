@@ -24,6 +24,10 @@ import BESA.Log.ReportBESA;
  */
 public class SocietyAgentGuardCreation extends GuardBESA  {
 
+    /**
+     *
+     * @param event
+     */
     @Override
     public void funcExecGuard(EventBESA event) {
         ReportBESA.debug("Hice Punto con " + event.getSource());

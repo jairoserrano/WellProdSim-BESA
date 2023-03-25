@@ -34,27 +34,32 @@ import rational.mapping.Believes;
 
     /**
      * <p>evaluate the plausibility (legal) for the goal</p>
+     * @param believes
      * @return 
+     * @throws BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA 
      */
     public double evaluatePlausibility(Believes believes) throws KernellAgentEventExceptionBESA;
 
     /**
      * <p>evaluate the contribution value for a Goal</p>
      * @return
+     * @throws BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA
      */
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA;
 
     /**
      * <p>evaluate the unlegality result prediction</p>
-     * @param worldModelPredicted
+     * @param agentStatus
      * @return 
+     * @throws BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA 
      */
     public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA;
 
     /**
      * <p>evaluate if the Goal was accomplished</p>
-     * @param rst
+     * @param believes
      * @return 
+     * @throws BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA 
      */
     public boolean goalSucceeded(Believes believes) throws KernellAgentEventExceptionBESA;
 

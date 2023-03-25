@@ -9,7 +9,16 @@ package wpsPeasant.EmotionalModel;
  * @author jairo
  */
 public enum EmotionalSubjectType {
-    PEASANT("PEASANT", EmotionalConfig.People.Amigo), FAMILIA("FAMILIA", EmotionalConfig.People.Amigo);
+
+    /**
+     *
+     */
+    PEASANT("PEASANT", EmotionalConfig.People.Amigo),
+
+    /**
+     *
+     */
+    FAMILIA("FAMILIA", EmotionalConfig.People.Amigo);
 
     private final String emoType;
     private EmotionalConfig.People config;
@@ -19,14 +28,27 @@ public enum EmotionalSubjectType {
         this.config = config;
     }
 
+    /**
+     *
+     * @return
+     */
     public EmotionalConfig.People getConfigEnum() {
         return config;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getConfig() {
         return config.toString();
     }
 
+    /**
+     *
+     * @param ident
+     * @return
+     */
     public static EmotionalSubjectType getFromId(String ident) {
         EmotionalSubjectType ret = null;
         for (EmotionalSubjectType sdt : values()) {
@@ -38,6 +60,10 @@ public enum EmotionalSubjectType {
         return ret;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEmoType() {
         return emoType;
     }

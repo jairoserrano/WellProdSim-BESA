@@ -25,14 +25,28 @@ import BESA.Kernel.Agent.StructBESA;
  */
 public class ControlAgent extends AgentBESA {
 
+    /**
+     *
+     * @param alias
+     * @param state
+     * @param structAgent
+     * @param passwd
+     * @throws KernelAgentExceptionBESA
+     */
     public ControlAgent(String alias, StateBESA state, StructBESA structAgent, double passwd) throws KernelAgentExceptionBESA {
         super(alias, state, structAgent, passwd);
     }
 
+    /**
+     *
+     */
     @Override
     public void setupAgent() {
     }
 
+    /**
+     *
+     */
     @Override
     public void shutdownAgent() {
     }

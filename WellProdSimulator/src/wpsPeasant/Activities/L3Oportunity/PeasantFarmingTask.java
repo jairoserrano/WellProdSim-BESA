@@ -28,7 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import rational.mapping.Believes;
 import rational.mapping.Task;
-import wpsSimulator.StartSimpleSimulator;
+import wpsSimulator.wpsControl;
 
 /**
  *
@@ -38,27 +38,34 @@ public class PeasantFarmingTask extends Task {
 
     private boolean finished;
 
+    /**
+     *
+     */
     public PeasantFarmingTask() {
         ReportBESA.info("--- Task Siembra inicializada ---");
         this.finished = false;
     }
 
+    /**
+     *
+     * @param parameters
+     */
     @Override
     public void executeTask(Believes parameters) {
         ReportBESA.info("--- Execute Task PeasantFarmingTask ---");
 
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        believes.setCurrentActivity(PeasantActivityType.CULTIVATE);
+        //believes.setCurrentActivity(PeasantActivityType.CULTIVATE);
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA ah = adm.getHandlerByAlias(StartSimpleSimulator.aliasWorldAgent);
+            AgHandlerBESA ah = adm.getHandlerByAlias(wpsControl.aliasWorldAgent);
 
-            WorldMessage worldMessage = new WorldMessage(CROP_INIT, "rice_1", "01/04/2022", StartSimpleSimulator.aliasPeasantAgent);
+            WorldMessage worldMessage = new WorldMessage(CROP_INIT, "rice_1", "01/04/2022", wpsControl.aliasPeasantAgent);
             EventBESA ev = new EventBESA(WorldGuard.class.getName(), worldMessage);
             ah.sendEvent(ev);
 
-            believes.setCurrentActivity(PeasantActivityType.IRRIGATE);
+            //believes.setCurrentActivity(PeasantActivityType.IRRIGATE);
             this.setFinished(true);
 
         } catch (ExceptionBESA ex) {
@@ -67,35 +74,60 @@ public class PeasantFarmingTask extends Task {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isFinished() {
         return finished;
     }
 
+    /**
+     *
+     * @param finished
+     */
     public void setFinished(boolean finished) {
         this.finished = finished;
     }
 
+    /**
+     *
+     * @param believes
+     */
     @Override
     public void interruptTask(Believes believes) {
         ReportBESA.info("--- Interrupt Task PeasantFarmingTask ---");
         PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
-        blvs.setCurrentActivity(PeasantActivityType.REST);
+        //blvs.setCurrentActivity(PeasantActivityType.REST);
         this.finished = true;
     }
 
+    /**
+     *
+     * @param believes
+     */
     @Override
     public void cancelTask(Believes believes) {
         ReportBESA.info("--- Cancel Task PeasantFarmingTask ---");
         PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
-        blvs.setCurrentActivity(PeasantActivityType.REST);
+        //blvs.setCurrentActivity(PeasantActivityType.REST);
         this.finished = true;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isExecuted() {
         ReportBESA.info("--- isExecuted Task PeasantFarmingTask ---");
         return finished;
     }
 
+    /**
+     *
+     * @param believes
+     * @return
+     */
     @Override
     public boolean checkFinish(Believes believes) {
         ReportBESA.info("--- checkFinish Task PeasantFarmingTask ---");

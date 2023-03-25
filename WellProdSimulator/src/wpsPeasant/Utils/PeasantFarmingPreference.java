@@ -24,7 +24,10 @@ public class PeasantFarmingPreference implements Serializable  {
     
     private Crop crop;
     
-    
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -32,6 +35,11 @@ public class PeasantFarmingPreference implements Serializable  {
         return hash;
     }
 
+    /**
+     *
+     * @param object
+     * @return
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -45,6 +53,10 @@ public class PeasantFarmingPreference implements Serializable  {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "PeasantFarmingPreference[ Preference=" + crop + " ]";

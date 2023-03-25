@@ -24,6 +24,10 @@ import BESA.Log.ReportBESA;
  */
 public class startReachingGoalsGuard extends PeriodicGuardBESA{
     
+    /**
+     *
+     * @param event
+     */
     @Override
     public void funcPeriodicExecGuard(EventBESA event) {
         //ReportBESA.debug("------------------------------------------------> startReachingGoalsGuard --");

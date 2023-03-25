@@ -9,9 +9,25 @@ package wpsPeasant.EmotionalModel;
  * @author jairo
  */
 public enum EmotionalEventType {
+
+    /**
+     *
+     */
     HARVEST("HARVEST", EmotionalConfig.Events.Deseable),
+
+    /**
+     *
+     */
     FARMING("FARMING", EmotionalConfig.Events.Deseable),
+
+    /**
+     *
+     */
     RESTING("RESTING", EmotionalConfig.Events.Deseable),
+
+    /**
+     *
+     */
     BURN("BURN", EmotionalConfig.Events.Indeseable);
 
     private final String emoType;
@@ -22,6 +38,11 @@ public enum EmotionalEventType {
         this.config = config;
     }
 
+    /**
+     *
+     * @param ident
+     * @return
+     */
     public static EmotionalEventType getFromId(String ident) {
         EmotionalEventType ret = null;
         for (EmotionalEventType sdt : values()) {
@@ -33,14 +54,26 @@ public enum EmotionalEventType {
         return ret;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEmoType() {
         return emoType;
     }
 
+    /**
+     *
+     * @return
+     */
     public EmotionalConfig.Events getConfigEnum() {
         return config;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getConfig() {
         return config.toString();
     }

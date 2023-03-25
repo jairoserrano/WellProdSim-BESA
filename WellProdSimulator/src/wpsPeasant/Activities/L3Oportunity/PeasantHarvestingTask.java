@@ -26,7 +26,7 @@ import static BESA.World.agents.messages.world.WorldMessageType.CROP_HARVEST;
 import BESA.World.helper.DateSingleton;
 import wpsPeasant.Agent.PeasantBDIAgentBelieves;
 import wpsPeasant.Utils.PeasantActivityType;
-import wpsSimulator.StartSimpleSimulator;
+import wpsSimulator.wpsControl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rational.mapping.Believes;
@@ -40,11 +40,18 @@ public class PeasantHarvestingTask extends Task {
 
     private boolean finished;
 
+    /**
+     *
+     */
     public PeasantHarvestingTask() {
         ReportBESA.info("--- Task Recolecta Iniciada ---");
         this.finished = false;
     }
 
+    /**
+     *
+     * @param parameters
+     */
     @Override
     public void executeTask(Believes parameters) {
         ReportBESA.info("--- Execute Task Recolecta ---");
@@ -53,18 +60,18 @@ public class PeasantHarvestingTask extends Task {
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA ah = adm.getHandlerByAlias(StartSimpleSimulator.aliasWorldAgent);
+            AgHandlerBESA ah = adm.getHandlerByAlias(wpsControl.aliasWorldAgent);
 
-            WorldMessage worldMessage = new WorldMessage(CROP_HARVEST, "rice_1", "01/06/2022", StartSimpleSimulator.aliasPeasantAgent);
+            WorldMessage worldMessage = new WorldMessage(CROP_HARVEST, "rice_1", "01/06/2022", wpsControl.aliasPeasantAgent);
             EventBESA ev = new EventBESA(WorldGuard.class.getName(), worldMessage);
             ah.sendEvent(ev);
 
             ReportBESA.warn(" ------------- TERMINÓ! -------------");
             
-            believes.setCurrentActivity(PeasantActivityType.REST);
+            //believes.setCurrentActivity(PeasantActivityType.REST);
             this.setFinished(true);
             ReportBESA.debug("Actual " + DateSingleton.getInstance().getCurrentDate());
-            StartSimpleSimulator.stopSimulation();
+            wpsControl.stopSimulation();
 
         } catch (ExceptionBESA ex) {
             Logger.getLogger(PeasantFarmingTask.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,35 +79,60 @@ public class PeasantHarvestingTask extends Task {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isFinished() {
         return finished;
     }
 
+    /**
+     *
+     * @param finished
+     */
     public void setFinished(boolean finished) {
         this.finished = finished;
     }
 
+    /**
+     *
+     * @param believes
+     */
     @Override
     public void interruptTask(Believes believes) {
         ReportBESA.info("--- Interrupt Task PeasantHarvestingTask ---");
         PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
-        blvs.setCurrentActivity(PeasantActivityType.REST);
+        //blvs.setCurrentActivity(PeasantActivityType.REST);
         this.finished = true;
     }
 
+    /**
+     *
+     * @param believes
+     */
     @Override
     public void cancelTask(Believes believes) {
         ReportBESA.info("--- Cancel Task PeasantHarvestingTask ---");
         PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
-        blvs.setCurrentActivity(PeasantActivityType.REST);
+        //blvs.setCurrentActivity(PeasantActivityType.REST);
         this.finished = true;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isExecuted() {
         ReportBESA.info("--- isExecuted Task PeasantHarvestingTask ---");
         return finished;
     }
 
+    /**
+     *
+     * @param believes
+     * @return
+     */
     @Override
     public boolean checkFinish(Believes believes) {
         ReportBESA.info("--- checkFinish Task PeasantHarvestingTask ---");

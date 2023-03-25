@@ -16,10 +16,17 @@ public class EmotionalState {
 
     private final List<EmotionAxis> emotions;
 
+    /**
+     *
+     */
     public EmotionalState() {
         emotions = new ArrayList<>();
     }
 
+    /**
+     *
+     * @param ea
+     */
     protected void addEmotionAxis(EmotionAxis ea) {
         EmotionAxis x = getEmotion(ea.getPositiveName(), ea.getNegativeName());
         if (x == null) {
@@ -32,12 +39,23 @@ public class EmotionalState {
         }
     }
 
+    /**
+     *
+     * @param event
+     * @param intensity
+     */
     protected void updateEmotions(String event, float intensity) {
         for (EmotionAxis e : emotions) {
             e.updateIntensity(event, intensity);
         }
     }
 
+    /**
+     *
+     * @param positiveName
+     * @param negativeName
+     * @return
+     */
     protected EmotionAxis getEmotion(String positiveName, String negativeName) {
         EmotionAxis ea = null;
         Iterator itr = emotions.iterator();
@@ -54,11 +72,20 @@ public class EmotionalState {
         return ea;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return emotions.toString();
     }
 
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
     protected EmotionAxis getMostActivatedEmotion() throws CloneNotSupportedException {
         EmotionAxis ea = null;
         Iterator itr = emotions.iterator();
@@ -77,6 +104,11 @@ public class EmotionalState {
         }
     }
 
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
     protected List<EmotionAxis> getEmotionsListCopy() throws CloneNotSupportedException {
         List<EmotionAxis> list = new ArrayList<>();
         Iterator itr = emotions.iterator();
@@ -88,6 +120,10 @@ public class EmotionalState {
         return list;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<EmotionAxis> getEmotions() {
         return emotions;
     }

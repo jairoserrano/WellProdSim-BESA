@@ -9,7 +9,19 @@ package wpsPeasant.EmotionalModel;
  * @author jairo
  */
 public enum PeasantEmotions {
+
+    /**
+     *
+     */
     ANGER(),
+
+    /**
+     *
+     */
     SADNESS(),
+
+    /**
+     *
+     */
     HAPPINESS();
 }

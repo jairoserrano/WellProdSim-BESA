@@ -23,6 +23,9 @@ import java.io.Serializable;
  */
 public class SocietyAgentState extends StateBESA implements Serializable {
 
+    /**
+     *
+     */
     public SocietyAgentState() {
         super();
 

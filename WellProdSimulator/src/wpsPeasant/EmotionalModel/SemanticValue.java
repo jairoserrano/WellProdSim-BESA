@@ -12,19 +12,36 @@ public class SemanticValue {
     private final String name;
     private final float value;
     
+    /**
+     *
+     * @param name
+     * @param value
+     */
     public SemanticValue(String name, float value) {
         this.name = name;
         this.value = Utils.checkNegativeOneToOneLimits(value);
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @return
+     */
     public float getValue() {
         return value;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return name + ": " + value;

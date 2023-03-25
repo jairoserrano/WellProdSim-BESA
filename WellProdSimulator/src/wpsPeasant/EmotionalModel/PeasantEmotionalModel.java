@@ -14,10 +14,16 @@ import java.util.List;
  */
 public abstract class PeasantEmotionalModel extends EmotionalModel {
 
+    /**
+     *
+     */
     public PeasantEmotionalModel() {
         super();
     }
 
+    /**
+     *
+     */
     @Override
     public void loadSemanticDictionary() {
 
@@ -36,6 +42,9 @@ public abstract class PeasantEmotionalModel extends EmotionalModel {
 
     }
 
+    /**
+     *
+     */
     @Override
     public void loadCharacterDescriptor() {
 
@@ -55,6 +64,9 @@ public abstract class PeasantEmotionalModel extends EmotionalModel {
 
     }
 
+    /**
+     *
+     */
     @Override
     public void loadEmotionalAxes() {
         List<EmotionAxis> emoax = new ArrayList<>();

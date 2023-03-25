@@ -9,12 +9,40 @@ package wpsPeasant.EmotionalModel;
  * @author jairo
  */
 public enum EmotionalObjectType {
+
+    /**
+     *
+     */
     PEASANT("PEASANT", EmotionalConfig.Objects.Valioso),
+
+    /**
+     *
+     */
     LAND("LAND", EmotionalConfig.Objects.Valioso),
+
+    /**
+     *
+     */
     FARMING("FARMING", EmotionalConfig.Objects.Valioso),
+
+    /**
+     *
+     */
     HARVEST("HARVEST", EmotionalConfig.Objects.Importante),
+
+    /**
+     *
+     */
     CROP("CROP", EmotionalConfig.Objects.Importante),
+
+    /**
+     *
+     */
     BUGS("BUGS", EmotionalConfig.Objects.Repulsivo),
+
+    /**
+     *
+     */
     NULL("",EmotionalConfig.Objects.Indiferente);
 
     private final String emoType;
@@ -25,6 +53,11 @@ public enum EmotionalObjectType {
         this.config = config;
     }
 
+    /**
+     *
+     * @param ident
+     * @return
+     */
     public static EmotionalObjectType getFromId(String ident) {
         EmotionalObjectType ret = null;
         for (EmotionalObjectType sdt : values()) {
@@ -36,14 +69,26 @@ public enum EmotionalObjectType {
         return ret;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEmoType() {
         return emoType;
     }
 
+    /**
+     *
+     * @return
+     */
     public EmotionalConfig.Objects getConfigEnum() {
         return config;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getConfig() {
         return config.toString();
     }

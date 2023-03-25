@@ -15,9 +15,10 @@
 package wpsPeasant.Agent;
 
 import BESA.Log.ReportBESA;
-import wpsPeasant.Utils.PeasantActivityType;
 import rational.data.InfoData;
 import rational.mapping.Believes;
+import wpsPeasant.EmotionalModel.EmotionalState;
+import wpsPeasant.Utils.PeasantProfile;
 
 /**
  *
@@ -25,30 +26,60 @@ import rational.mapping.Believes;
  */
 public class PeasantBDIAgentBelieves implements Believes {
 
-    private PeasantActivityType currentActivity;
+    private PeasantProfile peasantProfile;
+    private EmotionalState peasantEmotionalState;
 
-    public PeasantBDIAgentBelieves(String alias) {
-        //ReportBESA.debug(">>>>>>>> Nuevo " + alias);
-        this.setCurrentActivity(PeasantActivityType.REST);
+
+    /**
+     *
+     * @param peasantProfile
+     */
+    public PeasantBDIAgentBelieves(PeasantProfile peasantProfile) {
+        ReportBESA.debug(">>>>>>>> Nuevo Campesino perfil " + peasantProfile.getProfileName());
+        this.setPeasantProfile(peasantProfile);
+        this.peasantEmotionalState = new EmotionalState();
+    }
+    public EmotionalState getPeasantEmotionalState() {
+        ReportBESA.info("");
+        return peasantEmotionalState;
     }
 
+    /**
+     *
+     * @return
+     */
+    public PeasantProfile getPeasantProfile() {
+        //ReportBESA.info("");
+        return peasantProfile;
+    }
+
+    /**
+     *
+     * @param peasantProfile
+     */
+    private void setPeasantProfile(PeasantProfile peasantProfile) {
+        this.peasantProfile = peasantProfile;
+    }
+
+    /**
+     *
+     * @param infoData
+     * @return
+     */
     @Override
     public boolean update(InfoData infoData) {
-        //ReportBESA.debug(">>>>>>>> Nuevo update");
+        ReportBESA.info("");
         return true;
     }
 
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
     @Override
     public Believes clone() throws CloneNotSupportedException {
         return this;
-    }
-
-    public PeasantActivityType getCurrentActivity() {
-        return currentActivity;
-    }
-
-    public void setCurrentActivity(PeasantActivityType currentActivity) {
-        this.currentActivity = currentActivity;
     }
 
 }

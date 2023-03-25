@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rational.guards.InformationFlowGuard;
-import wpsSimulator.StartSimpleSimulator;
+import wpsSimulator.wpsControl;
 
 /**
  *
@@ -22,38 +22,76 @@ import wpsSimulator.StartSimpleSimulator;
  */
 public abstract class EmotionalModel {
 
+    /**
+     *
+     */
     protected final EmotionalState emotionalState;
+
+    /**
+     *
+     */
     protected final Personality personality;
 
+    /**
+     *
+     */
     public EmotionalModel() {
         this.emotionalState = new EmotionalState();
         this.personality = new Personality();
         this.configureEmotionalModel();
     }
 
+    /**
+     *
+     * @param ea
+     */
     public void addEmotionAxis(EmotionAxis ea) {
         try {
             emotionalState.addEmotionAxis(ea.clone());
-        } catch (CloneNotSupportedException ex) {
+        } catch (CloneNotSupportedException ex)    /**
+     *
+     * @param person
+     * @param relationship
+     */
+ {
             Logger.getLogger(EmotionalModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     *
+     * @param person
+     * @param relationship
+     */
     public void setPersonRelationship(String person, String relationship) {
         checkItemInSemanticDictionary(EmotionElementType.Person, relationship);
         personality.setPersonRelationship(person, relationship);
     }
 
+    /**
+     *
+     * @param object
+     * @param relationship
+     */
     public void setObjectRelationship(String object, String relationship) {
         checkItemInSemanticDictionary(EmotionElementType.Object, relationship);
         personality.setObjectRelationship(object, relationship);
     }
 
+    /**
+     *
+     * @param event
+     * @param desirability
+     */
     public void setEventDesirability(String event, String desirability) {
         checkItemInSemanticDictionary(EmotionElementType.Event, desirability);
         personality.setEventDesirability(event, desirability);
     }
 
+    /**
+     *
+     * @param ev
+     */
     public void processEmotionalEvent(EmotionalEvent ev) {
         float i = estimateEmotionIntensity(ev);
         if (ev.getPerson() != null) {
@@ -103,16 +141,33 @@ public abstract class EmotionalModel {
         return v;
     }
 
+    /**
+     *
+     */
     public abstract void emotionalStateChanged();
 
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
     public EmotionAxis getMostActivatedEmotion() throws CloneNotSupportedException {
         return this.emotionalState.getMostActivatedEmotion();
     }
 
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
     public List<EmotionAxis> getEmotionsListCopy() throws CloneNotSupportedException {
         return this.emotionalState.getEmotionsListCopy();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return personality.toString()
@@ -134,8 +189,13 @@ public abstract class EmotionalModel {
         }
     }
 
+    /**
+     *
+     * @param ed
+     * @throws ExceptionBESA
+     */
     protected void sendAct(EmotionalData ed) throws ExceptionBESA {
-        AgHandlerBESA handler = AdmBESA.getInstance().getHandlerByAlias(StartSimpleSimulator.aliasPeasantAgent);
+        AgHandlerBESA handler = AdmBESA.getInstance().getHandlerByAlias(wpsControl.aliasPeasantAgent);
         EventBESA sensorEvtA = new EventBESA(InformationFlowGuard.class.getName(), ed);
         handler.sendEvent(sensorEvtA);
     }
@@ -146,6 +206,11 @@ public abstract class EmotionalModel {
         loadEmotionalAxes();
     }
 
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
     protected EmotionAxis getTopEmotionAxis() throws CloneNotSupportedException {
         EmotionAxis maxAx = null;
         double val = Double.NEGATIVE_INFINITY;
@@ -160,10 +225,19 @@ public abstract class EmotionalModel {
         return maxAx;
     }
 
+    /**
+     *
+     */
     public abstract void loadSemanticDictionary();
 
+    /**
+     *
+     */
     public abstract void loadCharacterDescriptor();
 
+    /**
+     *
+     */
     public abstract void loadEmotionalAxes();
 
 }

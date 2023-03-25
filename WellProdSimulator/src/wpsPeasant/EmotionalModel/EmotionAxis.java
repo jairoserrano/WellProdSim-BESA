@@ -33,6 +33,14 @@ public class EmotionAxis {
     private Float forgetFactor = 0.0f;
     private Date lastForgetUpdateTime;
 
+    /**
+     *
+     * @param positiveName
+     * @param negativeName
+     * @param currentValue
+     * @param baseValue
+     * @param forgetFactor
+     */
     public EmotionAxis(String positiveName, String negativeName, float currentValue, float baseValue, Float forgetFactor) {
         this.positiveName = positiveName;
         this.negativeName = negativeName;
@@ -42,49 +50,94 @@ public class EmotionAxis {
         eventInfluence = new HashMap<>();
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPositiveName() {
         return positiveName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNegativeName() {
         return negativeName;
     }
 
+    /**
+     *
+     * @return
+     */
     public float getCurrentValue() {
         float newValue = applyForgetFactor(getBaseValue(), currentValue, lastForgetUpdateTime, forgetFactor);
         this.setCurrentValue(newValue);
         return currentValue;
     }
 
+    /**
+     *
+     * @return
+     */
     public float getBaseValue() {
         return baseValue;
     }
 
+    /**
+     *
+     * @return
+     */
     public float getActivationValue() {
         return Math.abs(baseValue - getCurrentValue());
     }
 
+    /**
+     *
+     * @return
+     */
     public Float getForgetFactor() {
         return forgetFactor;
     }
 
+    /**
+     *
+     * @param forgetFactor
+     */
     public void setForgetFactor(Float forgetFactor) {
         this.forgetFactor = forgetFactor;
     }
 
+    /**
+     *
+     * @param value
+     */
     public final void setCurrentValue(float value) {
         this.currentValue = Utils.checkNegativeOneToOneLimits(value);
         this.lastForgetUpdateTime = new Date();
     }
 
+    /**
+     *
+     * @param value
+     */
     public final void setBaseValue(float value) {
         this.baseValue = Utils.checkNegativeOneToOneLimits(value);
     }
 
+    /**
+     *
+     * @param eventName
+     * @param influence
+     */
     public void setEventInfluence(String eventName, float influence) {
         eventInfluence.put(eventName, Utils.checkZeroToOneLimits(influence));
     }
 
+    /**
+     *
+     * @param evInfluences
+     */
     public void setEventInfluences(Map<String, Float> evInfluences) {
         if (evInfluences != null) {
             Iterator itr = evInfluences.keySet().iterator();
@@ -98,19 +151,37 @@ public class EmotionAxis {
         }
     }
 
+    /**
+     *
+     * @param eventName
+     * @return
+     */
     public Float getEventInfluence(String eventName) {
         return eventInfluence.get(eventName);
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<String, Float> getEventInfluences() {
         return eventInfluence;
     }
+
+    /**
+     *
+     */
     public void printEventInfluences(){
         for (String object : eventInfluence.keySet()) {
 //            ReportBESA.info("Event: "+object+" Object: "+eventInfluence.get(object));
         }
     }
 
+    /**
+     *
+     * @param event
+     * @param intensity
+     */
     public void updateIntensity(String event, float intensity) {
         Float influence = getEventInfluence(event);
         if (influence != null) {
@@ -119,6 +190,10 @@ public class EmotionAxis {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         String str = this.positiveName + "/" + this.negativeName
@@ -127,6 +202,11 @@ public class EmotionAxis {
         return str;
     }
 
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
     @Override
     public EmotionAxis clone() throws CloneNotSupportedException {
         EmotionAxis e = new EmotionAxis(this.positiveName, this.negativeName, this.getCurrentValue(), this.baseValue, this.forgetFactor);

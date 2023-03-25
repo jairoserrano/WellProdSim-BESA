@@ -19,10 +19,30 @@ package wpsPeasant.Utils;
  * @author jairo
  */
 public enum SensorDataType {
+
+    /**
+     *
+     */
     ACTIVITY("activity"),
+
+    /**
+     *
+     */
     EMOTIONS("emotions"),
+
+    /**
+     *
+     */
     INTERACTION("interaction"),
+
+    /**
+     *
+     */
     PEASANT("peasant"),
+
+    /**
+     *
+     */
     PURPOSE("purpose");
     private final String identif;
 
@@ -30,6 +50,11 @@ public enum SensorDataType {
         identif = i;
     }
 
+    /**
+     *
+     * @param ident
+     * @return
+     */
     public static SensorDataType getFromId(String ident) {
         SensorDataType ret = null;
         for (SensorDataType sdt : values()) {

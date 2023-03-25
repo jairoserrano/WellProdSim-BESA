@@ -24,6 +24,10 @@ import BESA.World.agents.ExternalComm.ExternalCommGuard;
  */
 public class ReceiveMessagesFromWorldGuard extends ExternalCommGuard {
 
+    /**
+     *
+     * @param event
+     */
     @Override
     public void funcExecGuard(EventBESA event) {
         ReportBESA.debug(" >>> " + event.getSenderAgId());

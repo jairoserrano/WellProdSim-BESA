@@ -10,16 +10,41 @@ package wpsPeasant.EmotionalModel;
  */
 public final class Utils {
 
+    /**
+     *
+     */
     public static class Config {
+
+        /**
+         *
+         */
         public static final float PersonWeight = 0.3f;
+
+        /**
+         *
+         */
         public static final float EventWeight = 0.4f;
+
+        /**
+         *
+         */
         public static final float ObjectWeight = 0.3f;
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     public static float checkZeroToOneLimits(float value) {
         return checkLimits(value, 0f, 1f);
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     public static float checkNegativeOneToOneLimits(float value) {
         return checkLimits(value, -1f, 1f);
     }
@@ -34,6 +59,11 @@ public final class Utils {
         return value;
     }
 
+    /**
+     *
+     * @param str
+     * @return
+     */
     public static String formatKeyString(String str) {
         return str.toLowerCase().trim();
     }

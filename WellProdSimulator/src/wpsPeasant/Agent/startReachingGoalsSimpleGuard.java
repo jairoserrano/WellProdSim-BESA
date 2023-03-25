@@ -24,6 +24,10 @@ import BESA.Log.ReportBESA;
  */
 public class startReachingGoalsSimpleGuard extends GuardBESA {
 
+    /**
+     *
+     * @param event
+     */
     @Override
     public void funcExecGuard(EventBESA event) {
         ReportBESA.debug("------------------------> startReachingGoalsSimpleGuard --");

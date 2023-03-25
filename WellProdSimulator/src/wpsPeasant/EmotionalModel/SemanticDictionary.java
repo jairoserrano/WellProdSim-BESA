@@ -26,6 +26,10 @@ public class SemanticDictionary {
         eventDesirability = new HashMap<>();
     }
 
+    /**
+     *
+     * @return
+     */
     public synchronized static SemanticDictionary getInstance() {
         if (instance == null) {
             instance = new SemanticDictionary();
@@ -47,14 +51,30 @@ public class SemanticDictionary {
         return null;
     }
 
+    /**
+     *
+     * @param t
+     * @param s
+     */
     public void addSemanticItem(EmotionElementType t, SemanticValue s) {
         getList(t).put(s.getName(), s);
     }
 
+    /**
+     *
+     * @param t
+     * @return
+     */
     public Collection getSemanticItemList(EmotionElementType t) {
         return getList(t).values();
     }
 
+    /**
+     *
+     * @param t
+     * @param name
+     * @return
+     */
     public Float getSemanticValue(EmotionElementType t, String name) {
         Object o = getList(t).get(name);
         if (o != null) {
@@ -63,6 +83,10 @@ public class SemanticDictionary {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         String str = "Objects" + " -> " + objectRelationships.toString()

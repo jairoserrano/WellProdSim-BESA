@@ -30,21 +30,41 @@ import rational.mapping.Believes;
  */
 public class PeasantHarvestingGoalBDI extends GoalBDI {
 
+    /**
+     *
+     * @param id
+     * @param role
+     * @param description
+     * @param type
+     */
     public PeasantHarvestingGoalBDI(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
     }
 
+    /**
+     *
+     * @param believes
+     * @return
+     * @throws KernellAgentEventExceptionBESA
+     */
     @Override
     public double evaluateViability(Believes believes) throws KernellAgentEventExceptionBESA {
         PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
-        ReportBESA.debug(">>>>>>>> Evaluando " + this.getId() + " " + this.getType() + " Current Activity " + blvs.getCurrentActivity());
-        if (blvs.getCurrentActivity() == PeasantActivityType.HARVEST) {
+        //ReportBESA.debug(">>>>>>>> Evaluando " + this.getId() + " " + this.getType() + " Current Activity " + blvs.getCurrentActivity());
+        /*if (blvs.getPeasantProfile().getCurrentActivity() == PeasantActivityType.HARVEST) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
+        return 1;
     }
 
+    /**
+     *
+     * @param believes
+     * @return
+     * @throws KernellAgentEventExceptionBESA
+     */
     @Override
     public double detectGoal(Believes believes) throws KernellAgentEventExceptionBESA {
         /*PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
@@ -56,21 +76,45 @@ public class PeasantHarvestingGoalBDI extends GoalBDI {
         return 1;
     }
 
+    /**
+     *
+     * @param believes
+     * @return
+     * @throws KernellAgentEventExceptionBESA
+     */
     @Override
     public double evaluatePlausibility(Believes believes) throws KernellAgentEventExceptionBESA {
         return 1;
     }
 
+    /**
+     *
+     * @param stateBDI
+     * @return
+     * @throws KernellAgentEventExceptionBESA
+     */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
         return 1;
     }
 
+    /**
+     *
+     * @param agentStatus
+     * @return
+     * @throws KernellAgentEventExceptionBESA
+     */
     @Override
     public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA {
         return true;
     }
 
+    /**
+     *
+     * @param believes
+     * @return
+     * @throws KernellAgentEventExceptionBESA
+     */
     @Override
     public boolean goalSucceeded(Believes believes) throws KernellAgentEventExceptionBESA {
         return false;

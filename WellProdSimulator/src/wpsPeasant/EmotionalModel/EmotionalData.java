@@ -18,6 +18,12 @@ public class EmotionalData extends InfoData {
 
     private Map<String, Object> info;
     private List<EmotionalEvent> emoEv;
+
+    /**
+     *
+     * @param infoRecibida
+     * @return
+     */
     public static EmotionalData fromSensorData(SensorData infoRecibida) {
         EmotionalData em = new EmotionalData();
         em.info = infoRecibida.getDataP();
@@ -25,6 +31,10 @@ public class EmotionalData extends InfoData {
         return em;
     }
 
+    /**
+     *
+     * @return
+     */
     public static EmotionalData getPeriodicData() {
         EmotionalData em = new EmotionalData();
         em.info = new HashMap<>();
@@ -32,23 +42,42 @@ public class EmotionalData extends InfoData {
 
     }
 
+    /**
+     *
+     */
     public EmotionalData() {
         super("emodata");
         info = new HashMap<>();
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<String, Object> getInfo() {
         return info;
     }
 
+    /**
+     *
+     * @param info
+     */
     public void setInfo(Map<String, Object> info) {
         this.info = info;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<EmotionalEvent> getEmoEv() {
         return emoEv;
     }
 
+    /**
+     *
+     * @param emoEv
+     */
     public void setEmoEv(List<EmotionalEvent> emoEv) {
         this.emoEv = emoEv;
     }

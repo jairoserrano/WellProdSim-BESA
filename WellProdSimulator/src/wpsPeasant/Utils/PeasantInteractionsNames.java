@@ -19,7 +19,16 @@ package wpsPeasant.Utils;
  * @author jairo
  */
 public enum PeasantInteractionsNames {
-    FARMING("farming"), HARVEST("harvest");
+
+    /**
+     *
+     */
+    FARMING("farming"),
+
+    /**
+     *
+     */
+    HARVEST("harvest");
 
     private String interactionName;
 
@@ -27,6 +36,10 @@ public enum PeasantInteractionsNames {
         interactionName = interactionName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getInteractionName() {
         return interactionName;
     }

@@ -14,78 +14,94 @@
  */
 package wpsPeasant.Activities.L6Attention;
 
-import wpsPeasant.Activities.L5Needs.*;
-import wpsPeasant.Activities.L2Duty.*;
-import wpsPeasant.Activities.L1Survival.*;
-import BESA.ExceptionBESA;
-import BESA.Kernel.Agent.Event.EventBESA;
-import BESA.Kernel.System.AdmBESA;
-import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Log.ReportBESA;
-import BESA.World.agent.WorldGuard;
-import BESA.World.agents.messages.world.WorldMessage;
-import static BESA.World.agents.messages.world.WorldMessageType.CROP_INIT;
-import wpsPeasant.Agent.PeasantBDIAgentBelieves;
-import wpsPeasant.Utils.PeasantActivityType;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import rational.mapping.Believes;
 import rational.mapping.Task;
+import wpsPeasant.Agent.PeasantBDIAgentBelieves;
 
 /**
  *
  * @author jairo
  */
-public class PeasantRestTask extends Task {
+public class LeisureTask extends Task {
 
     private boolean finished;
 
-    public PeasantRestTask() {
-        ReportBESA.info("--- Task Propósito inicializada ---");
+    /**
+     *
+     */
+    public LeisureTask() {
+        ReportBESA.info("");
         this.finished = false;
     }
 
+    /**
+     *
+     * @param parameters
+     */
     @Override
     public void executeTask(Believes parameters) {
-        ReportBESA.info("--- Execute Task PeasantRestTask ---");
-
+        ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        believes.setCurrentActivity(PeasantActivityType.REST);
-
+        believes.getPeasantProfile().increaseHealth();
+        this.setFinished(true);
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isFinished() {
+        ReportBESA.info("");
         return finished;
     }
 
+    /**
+     *
+     * @param finished
+     */
     public void setFinished(boolean finished) {
+        ReportBESA.info("");
         this.finished = finished;
     }
 
+    /**
+     *
+     * @param parameters
+     */
     @Override
-    public void interruptTask(Believes believes) {
-        ReportBESA.info("--- Interrupt Task PeasantRestTask ---");
-        PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
-        blvs.setCurrentActivity(PeasantActivityType.REST);
-        this.finished = true;
+    public void interruptTask(Believes parameters) {
+        ReportBESA.info("");
+        this.setFinished(true);
     }
 
+    /**
+     *
+     * @param parameters
+     */
     @Override
-    public void cancelTask(Believes believes) {
-        ReportBESA.info("--- Cancel Task PeasantRestTask ---");
-        PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
-        blvs.setCurrentActivity(PeasantActivityType.REST);
-        this.finished = true;
+    public void cancelTask(Believes parameters) {
+        ReportBESA.info("");
+        this.setFinished(true);
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isExecuted() {
-        ReportBESA.info("--- isExecuted Task PeasantRestTask ---");
+        ReportBESA.info("");
         return finished;
     }
 
+    /**
+     *
+     * @param believes
+     * @return
+     */
     @Override
     public boolean checkFinish(Believes believes) {
-        ReportBESA.info("--- checkFinish Task PeasantRestTask ---");
+        ReportBESA.info("");
         return isExecuted();
     }
 }

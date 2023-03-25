@@ -6,6 +6,7 @@ import BESA.Kernel.Agent.GuardBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Log.ReportBESA;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,22 +25,25 @@ public class ChangeRationalRoleGuard extends GuardBESA {
     public void funcExecGuard(EventBESA ebesa) {
         RationalState state = (RationalState) this.getAgent().getState();
         RationalRole newrole = (RationalRole) ebesa.getData();
-        //ReportBESA.debug("MainRole " + state.getMainRole());
-        //ReportBESA.debug("Intentando cambiar de rol a " + newrole.getRoleName());
+        ReportBESA.debug("MainRole " + state.getMainRole());
+        ReportBESA.debug("Intentando cambiar de rol a " + newrole.getRoleName());
         if (state.getMainRole() != null && !state.getMainRole().getRoleName().equals(((RationalRole) ebesa.getData()).getRoleName())) {
             if (state.getMainRole() != null) {
                 Plan plan = state.getMainRole().getRolePlan();
                 //System.out.println(plan);
                 if (plan != null) {
-                    for (Task task : plan.getTasksInExecution()) {
+                    Iterator<Task> it = plan.getTasksInExecution().iterator();
+                    while (it.hasNext()) {
+                        Task task = it.next();
                         if (task.isInExecution()) {
                             task.cancelTask(state.getBelieves());
-                            plan.getTasksInExecution().remove(task);
+                            it.remove();
                         } else if (task.isFinalized()) {
-                            plan.getTasksInExecution().remove(task);
+                            it.remove();
                         }
                         task.setTaskFinalized();
                     }
+
                 }
             }
             newrole.resetPlan();

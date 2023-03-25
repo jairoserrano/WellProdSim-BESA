@@ -30,28 +30,44 @@ import rational.mapping.Believes;
  */
 public class PeasantFarmingGoalBDI extends GoalBDI {
 
+    /**
+     *
+     * @param id
+     * @param role
+     * @param description
+     * @param type
+     */
     public PeasantFarmingGoalBDI(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
     }
 
+    /**
+     *
+     * @param believes
+     * @return
+     * @throws KernellAgentEventExceptionBESA
+     */
     @Override
     /**
      * Evaluar si se tienen los recursos
      */
     public double evaluateViability(Believes believes) throws KernellAgentEventExceptionBESA {
         PeasantBDIAgentBelieves blvs = (PeasantBDIAgentBelieves) believes;
-        ReportBESA.debug(">>>>>>>> Evaluando " + this.getId() + " " + this.getType() + " Current Activity " + blvs.getCurrentActivity());
-        if (blvs.getCurrentActivity() == PeasantActivityType.REST) {
+        //ReportBESA.debug(">>>>>>>> Evaluando " + this.getId() + " " + this.getType() + " Current Activity " + blvs.getCurrentActivity());
+        /*if (blvs.getCurrentActivity() == PeasantActivityType.REST) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
+        return 1;
     }
 
     /** validar si el goal se activa con un test sencillo, 
     *   por ejemplo epoca de siembra, recoger cosecha etc
     *   cambiar posiblemente a activateGoal
     *   qué se debe mirar en los belives para saber si puede activar la meta
+     * @param believes
+     * @throws BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA
     */
     @Override  
     public double detectGoal(Believes believes) throws KernellAgentEventExceptionBESA {
@@ -64,11 +80,23 @@ public class PeasantFarmingGoalBDI extends GoalBDI {
         return 1;
     }
 
+    /**
+     *
+     * @param believes
+     * @return
+     * @throws KernellAgentEventExceptionBESA
+     */
     @Override
     public double evaluatePlausibility(Believes believes) throws KernellAgentEventExceptionBESA {
         return 1;
     }
 
+    /**
+     *
+     * @param stateBDI
+     * @return
+     * @throws KernellAgentEventExceptionBESA
+     */
     @Override
     /**
      * Revisar aquí si es de verdad evalua la contribución, 
@@ -81,12 +109,20 @@ public class PeasantFarmingGoalBDI extends GoalBDI {
     /**
      * Cumple con la normatividad el agente
      * 
+     * @param agentStatus
+     * @throws BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA
      */
     @Override
     public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA {
         return true;
     }
 
+    /**
+     *
+     * @param believes
+     * @return
+     * @throws KernellAgentEventExceptionBESA
+     */
     @Override
     public boolean goalSucceeded(Believes believes) throws KernellAgentEventExceptionBESA {
         return false;
