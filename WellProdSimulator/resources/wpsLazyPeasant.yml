@@ -1,0 +1,88 @@
+## * ======================================================================== *
+## * __      __ _ __   ___  *    WellProdSim Lazzy Peasant                  *
+## * \ \ /\ / /| '_ \ / __| *    @version 1.0                                 *
+## *  \ V  V / | |_) |\__ \ *    @since 2023                                  *
+## *   \_/\_/  | .__/ |___/ *                                                 *
+## *           | |          *    @author Jairo Serrano                        *
+## *           |_|          *    @author Enrique Gonzalez                     *
+## * ======================================================================== *
+## * Social Simulator used to estimate productivity and well-being of peasant *
+## * families. It is event oriented, high concurrency, heterogeneous time     *
+## * management and emotional reasoning BDI.                                  *
+## * ======================================================================== *
+---
+LazzyPeasant:
+  purpose: ""
+  health: 1.0
+  productivity: 0.7
+  wellBeging: 0.7
+  worker: true
+  employee: false
+  peasantQualityFactor: 0.7
+  liveStockAffinity: 0.7
+  #farm:
+  farm: true
+  farmName: ""
+  farmSize: 1.0
+  farmDistance: 1.0
+  farmReady: 0.0
+  seeds: 1.0
+  cropHealth: 0.0
+  irrigation: 0.0
+  waterAvailable: 0.0
+  irrigationTime: 1.0
+  pestControl: 0.0
+  diseasedCrop: 0.0
+  weedControl: 0.0
+  infestedCrop: 0.0
+  plantingSeason: false
+  growingSeason: false
+  harverstSeason: false
+  harvestedWeight: 0.0
+  harvestedWeightExpected: 1.0
+  processedCrop: false
+  cropEficiency: 00
+  processedWeight: 0.0
+  processingTime: 1.0
+  #toolsAndSupplies:
+  tools: 1.0
+  toolsAvailability: 1.0
+  toolsCost: 1.0
+  supplies: 1.0
+  suppliesAvailability: 1.0
+  suppliesCost: 1.0
+  #housing:
+  housing: 1.0
+  servicesPresence: 1.0
+  housingSize: 1.0
+  housingCondition: 1.0
+  housingLocation: 1.0
+  housingQuailty: 1.0
+  timeSpentOnMaintenance: 1.0
+  #finance:
+  money: 1.0
+  totalIncome: 0.0
+  debtPayment: 0.0
+  #training:
+  trainingLevel: 0.7
+  trainingAvailability: 0.7
+  trainingRelevance: 0.7
+  trainingCost: 1.0
+  #social:
+  associated: false
+  neighbors: 0
+  collaborationValue: 0.0
+  communications: 0.0
+  socialCompatibility: 0.7
+  #healthAndWellness:
+  healthProgramsAvailability: 1.0
+  familyTime: 0.7
+  peasantFamilyAffinity: 0.7
+  familyTimeAvailability: 0.7
+  restingTimeAvailibility: 0.7
+  peasantRestAffinity: 0.7
+  leisureOptions: 0.7
+  #livestock:
+  livestockFarming: false
+  livestockHealth: 1.0
+  livestockNumber: 0

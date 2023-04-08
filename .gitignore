@@ -4,3 +4,6 @@
 /RationalBESA/nbproject/private/
 /WellProdSimMicro/nbproject/private/
 /WellProdSimulator/nbproject/private/
+*.log
+WellProdSimulator/.DS_Store
+.DS_Store
