@@ -16,7 +16,6 @@ package wpsPeasant.Agent;
 
 import BESA.BDI.AgentStructuralModel.Agent.AgentBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
-import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.StructBESA;
@@ -25,24 +24,15 @@ import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Log.ReportBESA;
 import java.util.ArrayList;
 import java.util.List;
-import rational.RationalRole;
 import rational.guards.InformationFlowGuard;
-import rational.mapping.Plan;
-import wpsPeasant.Activities.L1Survival.HaveAJobGoalBDI;
-import wpsPeasant.Activities.L1Survival.HaveAJobTask;
-import wpsPeasant.Activities.L1Survival.HaveAPurposeGoalBDI;
-import wpsPeasant.Activities.L1Survival.HaveAPurposeTask;
-import wpsPeasant.Activities.L1Survival.HaveLandGoalBDI;
-import wpsPeasant.Activities.L1Survival.HaveLandTask;
-import wpsPeasant.Activities.L2Duty.GenerateIncomeGoalBDI;
-import wpsPeasant.Activities.L2Duty.GenerateIncomeTask;
-import wpsPeasant.Activities.L2Duty.PayDebtsGoalBDI;
-import wpsPeasant.Activities.L2Duty.PayDebtsTask;
-import wpsPeasant.Activities.L6Attention.LeisureGoalBDI;
-import wpsPeasant.Activities.L6Attention.LeisureTask;
+import wpsPeasant.Goals.L1Survival.*;
+import wpsPeasant.Goals.L2Duty.*;
+import wpsPeasant.Goals.L3Oportunity.*;
+import wpsPeasant.Goals.L4requirement.*;
+import wpsPeasant.Goals.L5Needs.*;
+import wpsPeasant.Goals.L6Attention.*;
 import wpsPeasant.Utils.PeasantProfile;
 import wpsPeasant.Utils.ReceiveMessagesFromWorldGuard;
-import wpsSimulator.wpsControl;
 
 /**
  *
@@ -55,108 +45,44 @@ public class PeasantBDIAgent extends AgentBDI {
 
     private static List<GoalBDI> createGoals() {
         ReportBESA.info("");
-        List<GoalBDI> goals = new ArrayList();
-
-        HaveAPurposeTask peasantHaveAPurposeTask = new HaveAPurposeTask();
-        Plan PeasantHaveAPurposePlan = new Plan();
-        PeasantHaveAPurposePlan.addTask(peasantHaveAPurposeTask);
-        RationalRole HaveAPurposeRole = new RationalRole(
-                "PeasantHaveAPurposeTask",
-                PeasantHaveAPurposePlan);
-        HaveAPurposeGoalBDI peasantHaveAPurposeGoalBDI = new HaveAPurposeGoalBDI(
-                wpsControl.getPlanID(),
-                HaveAPurposeRole,
-                "PeasantHaveAPurposeTask",
-                GoalBDITypes.SURVIVAL);
-        goals.add(peasantHaveAPurposeGoalBDI);
-
-        HaveAJobTask peasantHaveAJobTask = new HaveAJobTask();
-        Plan peasantHaveAJobPlan = new Plan();
-        peasantHaveAJobPlan.addTask(peasantHaveAJobTask);
-        RationalRole peasantHaveAJobRole = new RationalRole(
-                "PeasantHaveAJobTask",
-                peasantHaveAJobPlan);
-        HaveAJobGoalBDI peasantHaveAJobGoalBDI = new HaveAJobGoalBDI(
-                wpsControl.getPlanID(),
-                peasantHaveAJobRole,
-                "PeasantHaveAJobTask",
-                GoalBDITypes.SURVIVAL);
-        goals.add(peasantHaveAJobGoalBDI);
-
-        HaveLandTask peasantHaveLandTask = new HaveLandTask();
-        Plan peasantHaveLandPlan = new Plan();
-        peasantHaveLandPlan.addTask(peasantHaveLandTask);
-        RationalRole peasantHaveLandRole = new RationalRole(
-                "peasantHaveLandTask",
-                peasantHaveLandPlan);
-        HaveLandGoalBDI peasantHaveLandGoalBDI = new HaveLandGoalBDI(
-                wpsControl.getPlanID(),
-                peasantHaveLandRole,
-                "PeasantHaveLandTask",
-                GoalBDITypes.SURVIVAL);
-        goals.add(peasantHaveLandGoalBDI);
-
-        GenerateIncomeTask peasantGenerateIncomeTask = new GenerateIncomeTask();
-        Plan peasantGenerateIncomePlan = new Plan();
-        peasantHaveLandPlan.addTask(peasantGenerateIncomeTask);
-        RationalRole peasantGenerateIncomeRole = new RationalRole(
-                "peasantGenerateIncomeTask",
-                peasantGenerateIncomePlan);
-        GenerateIncomeGoalBDI peasantGenerateIncomeGoalBDI = new GenerateIncomeGoalBDI(
-                wpsControl.getPlanID(),
-                peasantGenerateIncomeRole,
-                "peasantGenerateIncomeTask",
-                GoalBDITypes.DUTY);
-        goals.add(peasantGenerateIncomeGoalBDI);
-
-        PayDebtsTask peasantPayDebtsTask = new PayDebtsTask();
-        Plan peasantPayDebtsPlan = new Plan();
-        peasantHaveLandPlan.addTask(peasantPayDebtsTask);
-        RationalRole peasantPayDebtsRole = new RationalRole(
-                "peasantPayDebtsTaks",
-                peasantPayDebtsPlan);
-        PayDebtsGoalBDI peasantPayDebtsGoalBDI = new PayDebtsGoalBDI(
-                wpsControl.getPlanID(),
-                peasantPayDebtsRole,
-                "peasantPayDebtsTaks",
-                GoalBDITypes.DUTY);
-        goals.add(peasantPayDebtsGoalBDI);
-
-        LeisureTask peasantLeisureTask = new LeisureTask();
-        Plan peasantLeisurePlan = new Plan();
-        peasantHaveLandPlan.addTask(peasantLeisureTask);
-        RationalRole peasantLeisureRole = new RationalRole(
-                "peasantLeisureTask",
-                peasantLeisurePlan);
-        LeisureGoalBDI peasantLeisureGoalBDI = new LeisureGoalBDI(
-                wpsControl.getPlanID(),
-                peasantLeisureRole,
-                "peasantLeisureTask",
-                GoalBDITypes.ATTENTION_CYCLE);
-        goals.add(peasantLeisureGoalBDI);
-
-        /*PeasantFarmingTask peasantFarmingTask = new PeasantFarmingTask();
-        Plan FarmingPlan = new Plan();
-        FarmingPlan.addTask(peasantFarmingTask);
-        RationalRole FarmingPlanRole = new RationalRole("peasantFarmingTask", FarmingPlan);
-        PeasantFarmingGoalBDI peasantFarmingGoalBDI = new PeasantFarmingGoalBDI(wpsControl.getPlanID(), FarmingPlanRole, "peasantFarmingTask", GoalBDITypes.SURVIVAL);
-        goals.add(peasantFarmingGoalBDI);
-
-        PeasantHarvestingTask peasantHarvestingTask = new PeasantHarvestingTask();
-        Plan HarvestingPlan = new Plan();
-        HarvestingPlan.addTask(peasantHarvestingTask);
-        RationalRole HarvestingPlanRole = new RationalRole("peasantHarvestingTask", HarvestingPlan);
-        PeasantHarvestingGoalBDI peasantHarvestingGoalBDI = new PeasantHarvestingGoalBDI(wpsControl.getPlanID(), HarvestingPlanRole, "peasantHarvestingTask", GoalBDITypes.NEED);
-        goals.add(peasantHarvestingGoalBDI);
-
-        PeasantIrrigatingTask peasantIrrigatingTask = new PeasantIrrigatingTask();
-        Plan IrrigatingPlan = new Plan();
-        IrrigatingPlan.addTask(peasantIrrigatingTask);
-        RationalRole IrrigatingPlanRole = new RationalRole("peasantIrrigatingTask", IrrigatingPlan);
-        PeasantIrrigatingGoalBDI peasantIrrigatingGoalBDI = new PeasantIrrigatingGoalBDI(wpsControl.getPlanID(), IrrigatingPlanRole, "PeasantIrrigatingTask", GoalBDITypes.OPORTUNITY);
-        goals.add(peasantIrrigatingGoalBDI);
-         */
-        ReportBESA.info("Meta Inicial PeasantHarvestingGoal created");
+        
+        List<GoalBDI> goals = new ArrayList();  
+        
+        //Survival
+        goals.add(HaveAPurposeGoalBDI.buildGoal());
+        goals.add(HaveAJobGoalBDI.buildGoal());
+        goals.add(HaveLandGoalBDI.buildGoal());
+        
+        //Duty
+        goals.add(GenerateIncomeGoalBDI.buildGoal());
+        goals.add(PayDebtsGoalBDI.buildGoal());
+        goals.add(MaintainHouseGoalBDI.buildGoal());
+        goals.add(SellProductsGoalBDI.buildGoal());
+        
+        //Oportunity
+        goals.add(PrepareLandGoalBDI.buildGoal());
+        goals.add(PlantCropsGoalBDI.buildGoal());
+        goals.add(HarvestCropsGoalBDI.buildGoal());
+        goals.add(ProcessProductsGoalBDI.buildGoal());
+        goals.add(TrainingGoalBDI.buildGoal());
+        
+        //Requirements
+        goals.add(IrrigateCropsGoalBDI.buildGoal());
+        goals.add(ObtainToolsGoalBDI.buildGoal());
+        goals.add(ObtainSuppliesGoalBDI.buildGoal());
+        goals.add(ControlWeedsGoalBDI.buildGoal());
+        goals.add(ManagePestsGoalBDI.buildGoal());
+        
+        //Needs
+        goals.add(FamilyTimeGoalBDI.buildGoal());
+        goals.add(AttendToHealthGoalBDI.buildGoal());
+        goals.add(AttendToLivestockGoalBDI.buildGoal());
+        goals.add(CollaborateGoalBDI.buildGoal());
+        
+        // Attention
+        goals.add(LeisureGoalBDI.buildGoal());
+        goals.add(CommunicateGoalBDI.buildGoal());
+        
         return goals;
     }
 

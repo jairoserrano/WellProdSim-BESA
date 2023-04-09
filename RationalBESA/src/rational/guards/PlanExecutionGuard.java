@@ -19,7 +19,7 @@ public class PlanExecutionGuard extends GuardBESA {
         RationalState rst = (RationalState) this.getAgent().getState();
         if (rst.getMainRole() != null) {
             Plan plan = rst.getMainRole().getRolePlan();
-            ReportBESA.debug(plan.getTasks());
+            //ReportBESA.debug(plan.getTasks());
             Iterator<Task> it1 = plan.getTasksInExecution().iterator();
             while (it1.hasNext()) {
                 Task task = it1.next();

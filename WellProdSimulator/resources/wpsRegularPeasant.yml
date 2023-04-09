@@ -56,7 +56,7 @@ RegularPeasant:
   housing: 1.0
   servicesPresence: 1.0
   housingSize: 1.0
-  housingCondition: 1.0
+  housingCondition: 0.5
   housingLocation: 1.0
   housingQuailty: 1.0
   timeSpentOnMaintenance: 1.0

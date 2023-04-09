@@ -25,22 +25,24 @@ public class ChangeRationalRoleGuard extends GuardBESA {
     public void funcExecGuard(EventBESA ebesa) {
         RationalState state = (RationalState) this.getAgent().getState();
         RationalRole newrole = (RationalRole) ebesa.getData();
-        ReportBESA.debug("MainRole " + state.getMainRole());
-        ReportBESA.debug("Intentando cambiar de rol a " + newrole.getRoleName());
+        ReportBESA.debug("MainRole " + state.getMainRole() + " - Intentando cambiar de rol a " + newrole.getRoleName());
         if (state.getMainRole() != null && !state.getMainRole().getRoleName().equals(((RationalRole) ebesa.getData()).getRoleName())) {
             if (state.getMainRole() != null) {
                 Plan plan = state.getMainRole().getRolePlan();
-                //System.out.println(plan);
+                ReportBESA.debug("C " + plan.getTasks().size() + " planes " + plan.getTasks());
                 if (plan != null) {
                     Iterator<Task> it = plan.getTasksInExecution().iterator();
                     while (it.hasNext()) {
                         Task task = it.next();
                         if (task.isInExecution()) {
                             task.cancelTask(state.getBelieves());
+                            ReportBESA.debug("Cancelar tarea " + task);
                             it.remove();
                         } else if (task.isFinalized()) {
+                            ReportBESA.debug("Tarea finalizada " + it);
                             it.remove();
                         }
+                        ReportBESA.debug("Finalizando tarea " + task);
                         task.setTaskFinalized();
                     }
 
