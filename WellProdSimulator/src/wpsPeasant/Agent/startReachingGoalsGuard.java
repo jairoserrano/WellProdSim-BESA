@@ -30,7 +30,6 @@ public class startReachingGoalsGuard extends PeriodicGuardBESA{
      */
     @Override
     public void funcPeriodicExecGuard(EventBESA event) {
-        //ReportBESA.debug("------------------------------------------------> startReachingGoalsGuard --");
         ((PeasantBDIAgent)this.getAgent()).BDIPulse();
     }
     

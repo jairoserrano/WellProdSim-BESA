@@ -160,7 +160,7 @@ public class DesireToIntentionInstantiationGuard extends GuardBESA {
             paramsBDI.setIntention(paramsBDI.getPyramidGoals().getCurrentIntentionGoal());
             if (paramsBDI.getIntention() != null) {
                 if (paramsBDI.getIntention().evaluateMappingViability(paramsBDI, believes)) {
-                    if (paramsBDI.getIntention().predictResultUnlegality(stateBDI)) {
+                    if (paramsBDI.getIntention().evaluateLegality(stateBDI)) {
                         EventBESA eventBesa = new EventBESA(ChangeRationalRoleGuard.class.getName(), paramsBDI.getIntention().getRole());
                         AgHandlerBESA agHandlerBESA = agentBDI.getAdmLocal().getHandlerByAlias(agentBDI.getAlias());
                         //ReportBESA.debug("--- Detectado cambio de "+ agentBDI.getAlias() + " con " + paramsBDI.getIntention().getRole());

@@ -28,7 +28,7 @@ RegularPeasant:
   farmDistance: 1.0
   farmReady: 0.0
   seeds: 1.0
-  cropHealth: 0.0
+  cropHealth: 1
   irrigation: 0.0
   waterAvailable: 0.0
   irrigationTime: 1.0
@@ -42,7 +42,7 @@ RegularPeasant:
   harvestedWeight: 0.0
   harvestedWeightExpected: 1.0
   processedCrop: false
-  cropEficiency: 00
+  cropEficiency: 0
   processedWeight: 0.0
   processingTime: 1.0
   #toolsAndSupplies:
@@ -56,7 +56,7 @@ RegularPeasant:
   housing: 1.0
   servicesPresence: 1.0
   housingSize: 1.0
-  housingCondition: 0.5
+  housingCondition: 1.0
   housingLocation: 1.0
   housingQuailty: 1.0
   timeSpentOnMaintenance: 1.0
@@ -67,7 +67,7 @@ RegularPeasant:
   #training:
   trainingLevel: 0.7
   trainingAvailability: 0.7
-  trainingRelevance: 0.7
+  trainingRelevance: 1
   trainingCost: 1.0
   #social:
   associated: false
@@ -76,10 +76,10 @@ RegularPeasant:
   communications: 0.0
   socialCompatibility: 0.7
   #healthAndWellness:
-  healthProgramsAvailability: 1.0
-  familyTime: 0.7
+  healthProgramsAvailability: 1
+  familyTime: 0
   peasantFamilyAffinity: 0.7
-  familyTimeAvailability: 0.7
+  familyTimeAvailability: 1
   restingTimeAvailibility: 0.7
   peasantRestAffinity: 0.7
   leisureOptions: 1.0

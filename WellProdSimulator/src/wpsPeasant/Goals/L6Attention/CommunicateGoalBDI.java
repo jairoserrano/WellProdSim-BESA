@@ -14,6 +14,7 @@
  */
 package wpsPeasant.Goals.L6Attention;
 
+import wpsPeasant.Tasks.CommunicateTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -87,8 +88,8 @@ public class CommunicateGoalBDI extends GoalBDI {
      */
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
+        ReportBESA.info("isBusy=" + believes.getPeasantProfile().isBusy());
         if (believes.getPeasantProfile().isBusy()) {
             return 0;
         } else {
@@ -106,11 +107,12 @@ public class CommunicateGoalBDI extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getHealth() > 0.0) {
+        return 1;
+        /*if (believes.getPeasantProfile().getHealth() > 0.0) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
     }
 
     /**
@@ -127,14 +129,15 @@ public class CommunicateGoalBDI extends GoalBDI {
 
     /**
      *
-     * @param agentStatus
+     * @param stateBDI
      * @return
      * @throws KernellAgentEventExceptionBESA
      */
     @Override
-    public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
-        return true;
+    public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
+        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) stateBDI.getBelieves();
+        return believes.getPeasantProfile().getHealth() > 0;
     }
 
     /**

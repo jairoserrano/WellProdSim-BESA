@@ -14,7 +14,7 @@ public class TemperatureCellState implements LayerCellState {
 
 
     public TemperatureCellState(double temperature) {
-        ReportBESA.info("New temperature state: " + temperature);
+        //ReportBESA.info("New temperature state: " + temperature);
         this.temperature = temperature;
     }
 

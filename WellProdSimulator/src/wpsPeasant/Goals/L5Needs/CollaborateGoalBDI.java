@@ -14,6 +14,7 @@
  */
 package wpsPeasant.Goals.L5Needs;
 
+import wpsPeasant.Tasks.CollaborateTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -59,7 +60,7 @@ public class CollaborateGoalBDI extends GoalBDI {
      */
     public CollaborateGoalBDI(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        ReportBESA.info("");
+        //ReportBESA.info("");
     }
 
     /**
@@ -70,7 +71,7 @@ public class CollaborateGoalBDI extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        ReportBESA.info("");
+        //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().getFamilyTimeAvailability() > 0
                 && believes.getPeasantProfile().getHealth() > 0) {
@@ -89,12 +90,13 @@ public class CollaborateGoalBDI extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        ReportBESA.info("FamilyTimeAvailability=" + believes.getPeasantProfile().getFamilyTimeAvailability());
-        if (believes.getPeasantProfile().getFamilyTimeAvailability() > 0) {
+        //ReportBESA.info("FamilyTimeAvailability=" + believes.getPeasantProfile().getFamilyTimeAvailability());
+        /*if (believes.getPeasantProfile().getFamilyTimeAvailability() > 0) {
             return 0;
         } else {
             return 1;
-        }
+        }*/
+        return 0;
     }
 
     /**
@@ -105,13 +107,14 @@ public class CollaborateGoalBDI extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        ReportBESA.info("");
+        //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getHealth() > 0.0) {
+        return 1;
+        /*if (believes.getPeasantProfile().getHealth() > 0.0) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
     }
 
     /**
@@ -122,20 +125,21 @@ public class CollaborateGoalBDI extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        ReportBESA.info("");
-        return 0.2;
+        //ReportBESA.info("");
+        return 1;
     }
 
     /**
      *
-     * @param agentStatus
+     * @param stateBDI
      * @return
      * @throws KernellAgentEventExceptionBESA
      */
     @Override
-    public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
-        return true;
+    public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
+        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) stateBDI.getBelieves();
+        return believes.getPeasantProfile().getHealth() > 0;
     }
 
     /**
@@ -146,7 +150,7 @@ public class CollaborateGoalBDI extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        ReportBESA.info("");
+        //ReportBESA.info("");
         return false;
     }
 

@@ -35,12 +35,12 @@ public class PeasantBDIAgentBelieves implements Believes {
      * @param peasantProfile
      */
     public PeasantBDIAgentBelieves(PeasantProfile peasantProfile) {
-        ReportBESA.debug(">>>>>>>> Nuevo Campesino perfil " + peasantProfile.getProfileName());
+        ReportBESA.debug(">> New Peasant " + peasantProfile.getProfileName());
         this.setPeasantProfile(peasantProfile);
         this.peasantEmotionalState = new EmotionalState();
     }
     public EmotionalState getPeasantEmotionalState() {
-        ReportBESA.info("");
+        //ReportBESA.info("");
         return peasantEmotionalState;
     }
 
@@ -68,7 +68,7 @@ public class PeasantBDIAgentBelieves implements Believes {
      */
     @Override
     public boolean update(InfoData infoData) {
-        ReportBESA.info("");
+        //ReportBESA.info("");
         return true;
     }
 

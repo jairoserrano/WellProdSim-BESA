@@ -14,6 +14,7 @@
  */
 package wpsPeasant.Goals.L5Needs;
 
+import wpsPeasant.Tasks.HealthCareTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -36,7 +37,7 @@ public class AttendToLivestockGoalBDI extends GoalBDI {
      * @return
      */
     public static AttendToLivestockGoalBDI buildGoal() {
-        AttendToHealthTask attendToLivestockTask = new AttendToHealthTask();
+        HealthCareTask attendToLivestockTask = new HealthCareTask();
         Plan attendToLivestockPlan = new Plan();
         attendToLivestockPlan.addTask(attendToLivestockTask);
         RationalRole attendToLivestockRole = new RationalRole(
@@ -70,7 +71,7 @@ public class AttendToLivestockGoalBDI extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        ReportBESA.info("");
+        //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().getLiveStockAffinity() > 0) {
             return 1;
@@ -88,11 +89,11 @@ public class AttendToLivestockGoalBDI extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        //ReportBESA.info("FamilyTimeAvailability=" + believes.getPeasantProfile().getFamilyTimeAvailability());
+        ReportBESA.info("getLivestockNumber=" + believes.getPeasantProfile().getLivestockNumber());
         if (believes.getPeasantProfile().getLivestockNumber() > 0) {
-            return 0;
-        } else {
             return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -106,11 +107,12 @@ public class AttendToLivestockGoalBDI extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getHealth() > 0.0) {
+        return 1;
+        /*if (believes.getPeasantProfile().getHealth() > 0.0) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
     }
 
     /**
@@ -127,14 +129,15 @@ public class AttendToLivestockGoalBDI extends GoalBDI {
 
     /**
      *
-     * @param agentStatus
+     * @param stateBDI
      * @return
      * @throws KernellAgentEventExceptionBESA
      */
     @Override
-    public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
-        return true;
+    public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
+        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) stateBDI.getBelieves();
+        return believes.getPeasantProfile().getHealth() > 0;
     }
 
     /**

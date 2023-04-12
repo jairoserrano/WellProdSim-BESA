@@ -14,6 +14,7 @@
  */
 package wpsPeasant.Goals.L3Oportunity;
 
+import wpsPeasant.Tasks.TrainingTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -59,7 +60,7 @@ public class TrainingGoalBDI extends GoalBDI {
      */
     public TrainingGoalBDI(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        ReportBESA.info("");
+        //ReportBESA.info("");
     }
 
     /**
@@ -72,7 +73,8 @@ public class TrainingGoalBDI extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getTrainingRelevance() > 0) {
+        if (believes.getPeasantProfile().getTrainingRelevance() > 0
+                && believes.getPeasantProfile().getTrainingAvailability() > 0) {
             return 1;
         } else {
             return 0;
@@ -88,8 +90,8 @@ public class TrainingGoalBDI extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        //ReportBESA.info("PlantingSeason=" + believes.getPeasantProfile().isPlantingSeason());
-        if (believes.getPeasantProfile().getTrainingAvailability() > 0) {
+        ReportBESA.info("getTrainingLevel=" + believes.getPeasantProfile().getTrainingLevel());
+        if (believes.getPeasantProfile().getTrainingLevel() < 1) {
             return 1;
         } else {
             return 0;
@@ -106,9 +108,8 @@ public class TrainingGoalBDI extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        if (!believes.getPeasantProfile().isBusy()
-                && believes.getPeasantProfile().getHealth() > 0) {
-            return 1;
+        if (believes.getPeasantProfile().isBusy()) {
+            return 0;
         } else {
             return 1;
         }
@@ -128,14 +129,15 @@ public class TrainingGoalBDI extends GoalBDI {
 
     /**
      *
-     * @param agentStatus
+     * @param stateBDI
      * @return
      * @throws KernellAgentEventExceptionBESA
      */
     @Override
-    public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
-        return true;
+    public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
+        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) stateBDI.getBelieves();
+        return believes.getPeasantProfile().getHealth() > 0;
     }
 
     /**

@@ -23,6 +23,7 @@ import rational.RationalRole;
 import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasant.Agent.PeasantBDIAgentBelieves;
+import wpsPeasant.Tasks.HaveAJobTask;
 import wpsSimulator.wpsControl;
 
 /**
@@ -88,7 +89,7 @@ public class HaveAJobGoalBDI extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        //ReportBESA.info("isAWorker=" + believes.getPeasantProfile().isAWorker());
+        ReportBESA.info("isAWorker=" + believes.getPeasantProfile().isAWorker());
         if (believes.getPeasantProfile().isAWorker()) {
             return 0;
         } else {
@@ -106,11 +107,12 @@ public class HaveAJobGoalBDI extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getHealth() > 0.0) {
+        /*if (believes.getPeasantProfile().getHealth() > 0.0) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
+        return 1;
     }
 
     /**
@@ -127,14 +129,15 @@ public class HaveAJobGoalBDI extends GoalBDI {
 
     /**
      *
-     * @param agentStatus
+     * @param stateBDI
      * @return
      * @throws KernellAgentEventExceptionBESA
      */
     @Override
-    public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
-        return true;
+    public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
+        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) stateBDI.getBelieves();
+        return believes.getPeasantProfile().getHealth() > 0;
     }
 
     /**

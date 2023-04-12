@@ -36,6 +36,8 @@ import wpsSociety.Agent.SocietyAgentState;
 public class wpsControl {
 
     private static int PLANID = 0;
+    final private static double PASSWD = 0.91;
+    final private static int BEAT = 500;
 
     public static String aliasSocietyAgent = "MariaLabaja";
     public static String aliasPeasantAgent;
@@ -73,7 +75,8 @@ public class wpsControl {
             SocietyAgent societyAgent = new SocietyAgent(
                     aliasSocietyAgent,
                     societyAgentState,
-                    societyAgentStruct, 0.91);
+                    societyAgentStruct,
+                    PASSWD);
 
             // Simulation Start
             startAllAgents(peasant, societyAgent);
@@ -103,10 +106,9 @@ public class wpsControl {
 
         AdmBESA adm = AdmBESA.getInstance();
         PeriodicDataBESA data = new PeriodicDataBESA(
-                1000,
+                BEAT,
                 PeriodicGuardBESA.START_PERIODIC_CALL);
         AgHandlerBESA agHandler = adm.getHandlerByAlias(aliasPeasantAgent);
-        //EventBESA eventBesa = new EventBESA(startReachingGoalsSimpleGuard.class.getName(), data);
         EventBESA eventBesa = new EventBESA(
                 startReachingGoalsGuard.class.getName(),
                 data);
@@ -121,9 +123,9 @@ public class wpsControl {
     public static void stopSimulation() throws ExceptionBESA {
         AdmBESA adm = AdmBESA.getInstance();
         //AgHandlerBESA agHandler;
-        adm.killAgent(adm.getHandlerByAlias(aliasPeasantAgent).getAgId(), 0.91);
-        //adm.killAgent(adm.getHandlerByAlias(aliasWorldAgent).getAgId(), 0.91);
-        adm.killAgent(adm.getHandlerByAlias(aliasSocietyAgent).getAgId(), 0.91);
+        adm.killAgent(adm.getHandlerByAlias(aliasPeasantAgent).getAgId(), PASSWD);
+        //adm.killAgent(adm.getHandlerByAlias(aliasWorldAgent).getAgId(), PASSWD);
+        adm.killAgent(adm.getHandlerByAlias(aliasSocietyAgent).getAgId(), PASSWD);
         adm.kill(0.09);
         System.exit(0);
     }

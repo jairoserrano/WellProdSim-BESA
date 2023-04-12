@@ -253,7 +253,11 @@ public class LocalDirectoryBESA {
     }
 
     public AgHandlerBESA getHandlerByAlias(String alias) {
+        try {
         return agAliasTable.get(alias);
+        } catch (NullPointerException e){
+            return null;
+        }
     }
 
     public boolean thereAreAgent(String alias) {

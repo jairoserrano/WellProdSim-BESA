@@ -50,10 +50,10 @@ import rational.mapping.Believes;
     /**
      * <p>evaluate the unlegality result prediction</p>
      * @param agentStatus
-     * @return 
+     * @return true if all is legal
      * @throws BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA 
      */
-    public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA;
+    public boolean evaluateLegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA;
 
     /**
      * <p>evaluate if the Goal was accomplished</p>

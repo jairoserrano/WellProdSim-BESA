@@ -16,6 +16,11 @@ public class WorldMessage extends DataBESA {
         this.peasantAgentId = peasantAgentId;
     }
 
+    @Override
+    public String toString() {
+        return "---> WorldMessage{" + "worldMessageType=" + worldMessageType + ", cropId=" + cropId + ", peasantAgentId=" + peasantAgentId + ", payload=" + payload + ", date=" + date + "}";
+    }
+
     public String getPeasantAgentId() {
         return peasantAgentId;
     }

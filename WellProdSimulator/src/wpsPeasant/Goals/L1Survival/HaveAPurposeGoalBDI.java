@@ -14,6 +14,7 @@
  */
 package wpsPeasant.Goals.L1Survival;
 
+import wpsPeasant.Tasks.HaveAPurposeTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -55,7 +56,7 @@ public class HaveAPurposeGoalBDI extends GoalBDI {
      */
     public HaveAPurposeGoalBDI(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        ReportBESA.info("");
+        //ReportBESA.info("");
     }
 
     /**
@@ -66,7 +67,7 @@ public class HaveAPurposeGoalBDI extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        ReportBESA.info("");
+        //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().getPurpose().isEmpty()) {
             return 1;
@@ -84,7 +85,7 @@ public class HaveAPurposeGoalBDI extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        //ReportBESA.info("Purpose=" + believes.getPeasantProfile().getPurpose());
+        ReportBESA.info("Purpose=" + believes.getPeasantProfile().getPurpose());
         if (believes.getPeasantProfile().getPurpose().isBlank()) {
             return 1;
         } else {
@@ -100,13 +101,14 @@ public class HaveAPurposeGoalBDI extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        ReportBESA.info("");
+        //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getHealth() >= 0.5) {
+        /*if (believes.getPeasantProfile().getHealth() >= 0.5) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
+        return 1;
     }
 
     /**
@@ -130,9 +132,10 @@ public class HaveAPurposeGoalBDI extends GoalBDI {
      * @throws KernellAgentEventExceptionBESA
      */
     @Override
-    public boolean predictResultUnlegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
-        return true;
+    public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
+        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) stateBDI.getBelieves();
+        return believes.getPeasantProfile().getHealth() > 0;
     }
 
     /**

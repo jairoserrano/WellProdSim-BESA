@@ -30,7 +30,6 @@ public class startReachingGoalsSimpleGuard extends GuardBESA {
      */
     @Override
     public void funcExecGuard(EventBESA event) {
-        ReportBESA.debug("------------------------> startReachingGoalsSimpleGuard --");
         ((PeasantBDIAgent) this.getAgent()).BDIPulse();
     }
 

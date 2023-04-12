@@ -30,7 +30,7 @@ public class ReceiveMessagesFromWorldGuard extends ExternalCommGuard {
      */
     @Override
     public void funcExecGuard(EventBESA event) {
-        ReportBESA.debug(" >>> " + event.getSenderAgId());
+        ReportBESA.debug(" >>> " + event.getSenderAgId() + " data=" +  event.getData());
     }
     
 }

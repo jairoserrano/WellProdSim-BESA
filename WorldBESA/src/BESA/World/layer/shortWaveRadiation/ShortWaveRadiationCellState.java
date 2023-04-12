@@ -14,7 +14,7 @@ public class ShortWaveRadiationCellState implements LayerCellState {
 
 
     public ShortWaveRadiationCellState(double shortWaveRadiation) {
-        ReportBESA.info("New short wave radiation state: " + shortWaveRadiation);
+        //ReportBESA.info("New short wave radiation state: " + shortWaveRadiation);
         this.shortWaveRadiation = shortWaveRadiation;
     }
 

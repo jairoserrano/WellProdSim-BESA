@@ -14,6 +14,7 @@
  */
 package wpsPeasant.Goals.L2Duty;
 
+import wpsPeasant.Tasks.GenerateIncomeTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -55,7 +56,7 @@ public class GenerateIncomeGoalBDI extends GoalBDI {
      */
     public GenerateIncomeGoalBDI(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        ReportBESA.info("");
+        //ReportBESA.info("");
     }
 
     /**
@@ -66,7 +67,7 @@ public class GenerateIncomeGoalBDI extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        ReportBESA.info("");
+        //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().getPurpose().isBlank()
                 && believes.getPeasantProfile().getHealth() > 0) {
@@ -85,8 +86,7 @@ public class GenerateIncomeGoalBDI extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        //ReportBESA.info("HarvestedWeight" + believes.getPeasantProfile().getHarvestedWeight());
-        //ReportBESA.info("ProcessedWeight" + believes.getPeasantProfile().getProcessedWeight());
+        ReportBESA.info("HarvestedWeight=" + believes.getPeasantProfile().getHarvestedWeight()+" ProcessedWeight=" + believes.getPeasantProfile().getProcessedWeight());
         if (believes.getPeasantProfile().getHarvestedWeight() > 0
                 || believes.getPeasantProfile().getProcessedWeight() > 0) {
             return 1;
@@ -103,7 +103,7 @@ public class GenerateIncomeGoalBDI extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        ReportBESA.info("");
+        //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().getHealth() > 0.0) {
             return 1;
@@ -126,14 +126,15 @@ public class GenerateIncomeGoalBDI extends GoalBDI {
 
     /**
      *
-     * @param agentStatus
+     * @param stateBDI
      * @return
      * @throws KernellAgentEventExceptionBESA
      */
     @Override
-    public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
-        return true;
+    public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
+        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) stateBDI.getBelieves();
+        return believes.getPeasantProfile().getHealth() > 0;
     }
 
     /**

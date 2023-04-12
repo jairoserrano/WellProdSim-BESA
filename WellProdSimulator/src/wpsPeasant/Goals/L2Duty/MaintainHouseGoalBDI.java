@@ -14,6 +14,7 @@
  */
 package wpsPeasant.Goals.L2Duty;
 
+import wpsPeasant.Tasks.MaintainHouseTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -72,6 +73,7 @@ public class MaintainHouseGoalBDI extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
+        ReportBESA.info("getTools=" + believes.getPeasantProfile().getTools());
         if (believes.getPeasantProfile().getTools() > 0) {
             return 1;
         } else {
@@ -88,7 +90,7 @@ public class MaintainHouseGoalBDI extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        //ReportBESA.info("HousingCondition=" + believes.getPeasantProfile().getHousingCondition());
+        ReportBESA.info("getHousingCondition=" + believes.getPeasantProfile().getHousingCondition());
         if (believes.getPeasantProfile().getHousingCondition() < 1) {
             return 1;
         } else {
@@ -106,11 +108,11 @@ public class MaintainHouseGoalBDI extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        if (!believes.getPeasantProfile().isBusy()
-                && believes.getPeasantProfile().getHealth() > 0) {
-            return 1;
-        } else {
+        ReportBESA.info("isBusy=" + believes.getPeasantProfile().isBusy());
+        if (believes.getPeasantProfile().isBusy()) {
             return 0;
+        } else {
+            return 1;
         }
     }
 
@@ -128,14 +130,16 @@ public class MaintainHouseGoalBDI extends GoalBDI {
 
     /**
      *
-     * @param agentStatus
+     * @param stateBDI
      * @return
      * @throws KernellAgentEventExceptionBESA
      */
     @Override
-    public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
-        return true;
+    public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
+        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) stateBDI.getBelieves();
+        //ReportBESA.info("getHealth=" + believes.getPeasantProfile().getHealth());
+        return believes.getPeasantProfile().getHealth() > 0;
     }
 
     /**
@@ -148,7 +152,7 @@ public class MaintainHouseGoalBDI extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().getHousingCondition() == 1;
+        return believes.getPeasantProfile().getHousingCondition() > 0;
     }
 
 }

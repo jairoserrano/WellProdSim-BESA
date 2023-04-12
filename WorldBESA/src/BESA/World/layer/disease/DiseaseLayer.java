@@ -43,7 +43,8 @@ public class DiseaseLayer extends GenericWorldLayerGraphCell<DiseaseCell> {
     }
 
     /**
-     * Joins 2 disease cells in the simple graph, this represents in real life two crops that are neighbors
+     * Joins 2 disease cells in the simple graph, this represents in real life
+     * two crops that are neighbors
      *
      * @param cell1 disease cell 1
      * @param cell2 disease cell 2
@@ -53,10 +54,12 @@ public class DiseaseLayer extends GenericWorldLayerGraphCell<DiseaseCell> {
     }
 
     /**
-     * Adds insecticide of a specified crop in the next layer run this will affect probabilities
+     * Adds insecticide of a specified crop in the next layer run this will
+     * affect probabilities
      *
-     * @param cellId                   id of the cell
-     * @param percentageOfCropCoverage percentage of coverage of the crop that was cover with insecticide
+     * @param cellId id of the cell
+     * @param percentageOfCropCoverage percentage of coverage of the crop that
+     * was cover with insecticide
      */
     public void addInsecticideToCell(String cellId, double percentageOfCropCoverage, String date) {
         DiseaseCell diseaseCell = this.cellDirectory.get(cellId);
@@ -79,7 +82,7 @@ public class DiseaseLayer extends GenericWorldLayerGraphCell<DiseaseCell> {
         if (this.currentDateLayerExecution == null) {
             this.iterateGraphForDate(params1.getDate());
             this.currentDateLayerExecution = params1.getDate();
-            ReportBESA.info("For Date: " + params1.getDate());
+            //ReportBESA.info("For Date: " + params1.getDate());
             this.printCellsStates();
         } else {
             DateTimeFormatter dtfOut = DateTimeFormat.forPattern(this.worldConfig.getProperty("date.format"));
@@ -90,14 +93,15 @@ public class DiseaseLayer extends GenericWorldLayerGraphCell<DiseaseCell> {
                 String newDate = dtfOut.print(previousStateDatePlusOneDay);
                 this.iterateGraphForDate(newDate);
                 this.currentDateLayerExecution = newDate;
-                ReportBESA.info("-----------> For Date: " + newDate + " <-----------");
+                //ReportBESA.info("-----------> For Date: " + newDate + " <-----------");
                 this.printCellsStates();
             }
         }
     }
 
     /**
-     * Given a date iterates all the cells and its neighbors executing the transition rules for diseases
+     * Given a date iterates all the cells and its neighbors executing the
+     * transition rules for diseases
      *
      * @param dateExecution date for the layer execution
      */
@@ -160,19 +164,22 @@ public class DiseaseLayer extends GenericWorldLayerGraphCell<DiseaseCell> {
      */
     private void printCellsStates() {
         for (DiseaseCell currentCell : this.allCells) {
-            ReportBESA.info("Cell: " + currentCell.getId());
-            ReportBESA.info("infected: " + ((DiseaseCellState) currentCell.getCellState()).isInfected());
-            ReportBESA.info("current probability of infection: " + ((DiseaseCellState) currentCell.getCellState()).getCurrentProbabilityDisease());
-            ReportBESA.info("-------------------");
+            if (((DiseaseCellState) currentCell.getCellState()).isInfected()) {
+                ReportBESA.info("Cell: " + currentCell.getId());
+                ReportBESA.info("infected: " + ((DiseaseCellState) currentCell.getCellState()).isInfected());
+                ReportBESA.info("current probability of infection: " + ((DiseaseCellState) currentCell.getCellState()).getCurrentProbabilityDisease());
+                ReportBESA.info("-------------------");
+            }
         }
     }
 
     /**
-     * Adds a disease action in this case insecticide, will affect the calculation during the layer execution
+     * Adds a disease action in this case insecticide, will affect the
+     * calculation during the layer execution
      *
-     * @param diseaseCellId  Id of the cell
+     * @param diseaseCellId Id of the cell
      * @param groundCoverage percentage of coverage of the crop
-     * @param date           date of application
+     * @param date date of application
      */
     public void addInsecticideEvent(String diseaseCellId, String groundCoverage, String date) {
         DiseaseCellAction diseaseCellAction = new DiseaseCellAction(groundCoverage, date);

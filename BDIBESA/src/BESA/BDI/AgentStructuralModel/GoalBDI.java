@@ -126,32 +126,32 @@ public abstract class GoalBDI implements BDIEvaluable, Serializable, Comparable<
         double viabilityEvaluation = this.evaluateViability(believes);
         switch (this.getType()) {
             case DUTY:
-                ReportBESA.debug("DUTY v=" + viabilityEvaluation + "t=" + machineParams.getDutyThreshold());
+                //ReportBESA.debug("DUTY v=" + viabilityEvaluation + "t=" + machineParams.getDutyThreshold());
                 if (viabilityEvaluation > machineParams.getDutyThreshold()) {
                     returnValue = true;
                 }
             case NEED:
-                ReportBESA.debug("NEED v=" + viabilityEvaluation + "t=" + machineParams.getNeedThreshold());
+                //ReportBESA.debug("NEED v=" + viabilityEvaluation + "t=" + machineParams.getNeedThreshold());
                 if (viabilityEvaluation > machineParams.getNeedThreshold()) {
                     returnValue = true;
                 }
             case OPORTUNITY:
-                ReportBESA.debug("OPORTUNITY v=" + viabilityEvaluation + "t=" + machineParams.getOportunityThreshold());
+                //ReportBESA.debug("OPORTUNITY v=" + viabilityEvaluation + "t=" + machineParams.getOportunityThreshold());
                 if (viabilityEvaluation > machineParams.getOportunityThreshold()) {
                     returnValue = true;
                 }
             case REQUIREMENT:
-                ReportBESA.debug("REQUIREMENT v=" + viabilityEvaluation + "t=" + machineParams.getRequirementThreshold());
+                //ReportBESA.debug("REQUIREMENT v=" + viabilityEvaluation + "t=" + machineParams.getRequirementThreshold());
                 if (viabilityEvaluation > machineParams.getRequirementThreshold()) {
                     returnValue = true;
                 }
             case SURVIVAL:
-                ReportBESA.debug("SURVIVAL v=" + viabilityEvaluation + "t=" + machineParams.getSurvivalThreshold());
+                //ReportBESA.debug("SURVIVAL v=" + viabilityEvaluation + "t=" + machineParams.getSurvivalThreshold());
                 if (viabilityEvaluation > machineParams.getSurvivalThreshold()) {
                     returnValue = true;
                 }
             case ATTENTION_CYCLE:
-                ReportBESA.debug("ATTENTION_CYCLE v=" + viabilityEvaluation + "t=" + machineParams.getAttentionCycleThreshold());
+                //ReportBESA.debug("ATTENTION_CYCLE v=" + viabilityEvaluation + "t=" + machineParams.getAttentionCycleThreshold());
                 if (viabilityEvaluation > machineParams.getAttentionCycleThreshold()) {
                     returnValue = true;
                 }

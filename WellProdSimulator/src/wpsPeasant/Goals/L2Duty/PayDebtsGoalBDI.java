@@ -14,6 +14,7 @@
  */
 package wpsPeasant.Goals.L2Duty;
 
+import wpsPeasant.Tasks.PayDebtsTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -88,7 +89,7 @@ public class PayDebtsGoalBDI extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) parameters;
-        //ReportBESA.info("DebtPayment=" + believes.getPeasantProfile().getDebtPayment());
+        ReportBESA.info("DebtPayment=" + believes.getPeasantProfile().getDebtPayment());
         if (believes.getPeasantProfile().getDebtPayment() > 0 ) {
             return 1;
         } else {
@@ -127,14 +128,15 @@ public class PayDebtsGoalBDI extends GoalBDI {
 
     /**
      *
-     * @param agentStatus
+     * @param stateBDI
      * @return
      * @throws KernellAgentEventExceptionBESA
      */
     @Override
-    public boolean predictResultUnlegality(StateBDI agentStatus) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
-        return true;
+    public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
+        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        PeasantBDIAgentBelieves believes = (PeasantBDIAgentBelieves) stateBDI.getBelieves();
+        return believes.getPeasantProfile().getHealth() > 0;
     }
 
     /**

@@ -25,6 +25,7 @@ public class PeasantProfile implements Serializable {
 
     private String purpose;
     private String profileName;
+    private String agentID;
     private double health;
     private double productivity;
     private double wellBeging;
@@ -1116,23 +1117,25 @@ public class PeasantProfile implements Serializable {
      */
     public void increaseFamilyTimeAvailability() {
         ReportBESA.info("");
-        if (this.familyTimeAvailability <= 1) {
-            this.familyTimeAvailability = this.familyTimeAvailability + 0.1;
-        } else {
+        /*if (this.familyTimeAvailability == 1) {
             this.familyTimeAvailability = 1;
-        }
+        } else {
+            this.familyTimeAvailability = this.familyTimeAvailability + 0.1;
+        }*/
+        this.familyTimeAvailability = 1;
     }
 
     /**
      *
      */
     public void useFamilyTimeAvailability() {
-        ReportBESA.info("");
-        if (this.familyTimeAvailability > 0) {
+        //ReportBESA.info("");
+        /*if (this.familyTimeAvailability > 0) {
             this.familyTimeAvailability = this.familyTimeAvailability - 0.1;
         } else {
             this.familyTimeAvailability = 0;
-        }
+        }*/
+        this.familyTimeAvailability = 0;
     }
 
     /**
@@ -1219,10 +1222,11 @@ public class PeasantProfile implements Serializable {
      *
      */
     public void useLeisureOptions() {
-        ReportBESA.info("");
+        /*ReportBESA.info("");
         if (this.leisureOptions > 0) {
             this.leisureOptions = this.leisureOptions - 0.1;
-        }
+        }*/
+        this.leisureOptions = 0;
     }
 
     /**
@@ -1230,33 +1234,58 @@ public class PeasantProfile implements Serializable {
      */
     public void increaseLeisureOptions() {
         ReportBESA.info("");
-        if (this.leisureOptions >= 1) {
+        /*if (this.leisureOptions >= 1) {
             this.leisureOptions = 1;
         } else {
             this.leisureOptions = this.leisureOptions + 0.1;
-        }
+        }*/
+        this.leisureOptions = 1;
     }
 
     /**
      *
      */
     public void reduceHouseCondition() {
-        ReportBESA.info("");
-        if (this.housingCondition > 0) {
+        //ReportBESA.info("");
+        /*if (this.housingCondition > 0) {
             this.housingCondition = this.housingCondition - 0.1;
-        }
+        }*/
+        this.housingCondition = 0;
     }
 
     /**
      *
      */
     public void increaseHouseCondition() {
-        ReportBESA.info("");
-        if (this.housingCondition >= 1) {
+        //ReportBESA.info("");
+        /*if (this.housingCondition >= 1) {
             this.housingCondition = 1;
         } else {
             this.housingCondition = this.housingCondition + 0.1;
-        }
+        }*/
+        this.housingCondition = 1;
+    }
+    /**
+     *
+     */
+    public void increaseTools() {
+        //ReportBESA.info("");
+        /*if (this.tools >= 1) {
+            this.tools = 1;
+        } else {
+            this.tools = this.housingCondition + 0.1;
+        }*/
+        this.tools = 1;
+    }
+    
+    /**
+     *
+     */
+    public void useTools() {
+        /*if (this.tools > 0) {
+            this.tools = this.tools - 0.1;
+        }*/
+        this.tools = 0;
     }
 
     /**
@@ -1333,11 +1362,18 @@ public class PeasantProfile implements Serializable {
      *
      */
     public void increaseFarmReady() {
+        /*
         if (this.farmReady == 1) {
             this.farmReady = 1;
         } else {
             this.farmReady = this.farmReady + 0.1;
-        }
+        }*/
+        this.farmReady = 1;
     }
+
+    public void increaseTrainingLevel() {
+        this.trainingLevel = 1;
+    }
+
 
 }
