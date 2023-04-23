@@ -39,6 +39,11 @@ public class PeasantBDIAgentBelieves implements Believes {
         this.setPeasantProfile(peasantProfile);
         this.peasantEmotionalState = new EmotionalState();
     }
+
+    /**
+     *
+     * @return
+     */
     public EmotionalState getPeasantEmotionalState() {
         //ReportBESA.info("");
         return peasantEmotionalState;

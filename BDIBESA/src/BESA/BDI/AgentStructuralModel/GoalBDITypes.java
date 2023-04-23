@@ -16,11 +16,11 @@ package BESA.BDI.AgentStructuralModel;
 public enum GoalBDITypes {
 
     SURVIVAL(1, "Survival"),
-    DUTY(2, "Duty"),
-    OPORTUNITY(3, "Oportunity"),
-    REQUIREMENT(4, "Requirement"),
-    NEED(5, "Need"),
-    ATTENTION_CYCLE(6,"AttentionCycle");
+    OBLIGATION(2, "Duty"),
+    DEVELOPMENT(3, "Oportunity"),
+    SKILLSRESOURCES(4, "Requirement"),
+    SOCIAL(5, "Need"),
+    LEISURE(6,"AttentionCycle");
     private int id;
     private String name;
 

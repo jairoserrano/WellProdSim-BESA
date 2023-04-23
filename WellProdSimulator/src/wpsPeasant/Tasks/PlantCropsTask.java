@@ -19,15 +19,13 @@ import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Log.ReportBESA;
-import BESA.World.agent.WorldGuard;
-import BESA.World.agents.messages.world.WorldMessage;
-import static BESA.World.agents.messages.world.WorldMessageType.CROP_INIT;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import wpsWorld.Agent.WorldGuard;
+import wpsWorld.Messages.WorldMessage;
+import static wpsWorld.Messages.WorldMessageType.CROP_INIT;
 import rational.mapping.Believes;
 import rational.mapping.Task;
+import wpsControl.Agent.DateSingleton;
 import wpsPeasant.Agent.PeasantBDIAgentBelieves;
-import wpsSimulator.wpsControl;
 
 /**
  *
@@ -59,10 +57,11 @@ public class PlantCropsTask extends Task {
             AgHandlerBESA ah = adm.getHandlerByAlias(
                     believes.getPeasantProfile().getFarmName());
 
+            DateSingleton.getInstance().setCurrentDate("01/04/2022");
             WorldMessage worldMessage = new WorldMessage(
                     CROP_INIT,
                     "rice_1",
-                    "01/04/2022",
+                    DateSingleton.getInstance().getCurrentDate(),
                     believes.getPeasantProfile().getProfileName());
             
             ReportBESA.info(worldMessage);

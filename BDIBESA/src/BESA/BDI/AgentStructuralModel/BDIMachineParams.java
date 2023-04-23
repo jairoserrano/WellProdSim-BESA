@@ -160,11 +160,11 @@ public class BDIMachineParams {
     public void addPotentialGoal(GoalBDI goal){
         switch (goal.getType()){
             case SURVIVAL: this.potencialGoals.getSurvivalGoalsList().add(goal); break;
-            case DUTY: this.potencialGoals.getDutyGoalsList().add(goal); break;
-            case OPORTUNITY:  this.potencialGoals.getOportunityGoalsList().add(goal); break;
-            case REQUIREMENT: this.potencialGoals.getRequirementGoalsList().add(goal); break;
-            case NEED: this.potencialGoals.getNeedGoalsList().add(goal); break;
-            case ATTENTION_CYCLE: this.potencialGoals.getAttentionCycleGoalsList().add(goal); break;
+            case OBLIGATION: this.potencialGoals.getDutyGoalsList().add(goal); break;
+            case DEVELOPMENT:  this.potencialGoals.getOportunityGoalsList().add(goal); break;
+            case SKILLSRESOURCES: this.potencialGoals.getRequirementGoalsList().add(goal); break;
+            case SOCIAL: this.potencialGoals.getNeedGoalsList().add(goal); break;
+            case LEISURE: this.potencialGoals.getAttentionCycleGoalsList().add(goal); break;
         }
     }
 }

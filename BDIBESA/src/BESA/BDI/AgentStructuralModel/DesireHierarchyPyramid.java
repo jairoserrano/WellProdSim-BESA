@@ -172,22 +172,22 @@ public class DesireHierarchyPyramid implements Serializable {
                     GoalBDI currentElement = setIterator.next();
                     GoalBDITypes type = currentElement.getType();
                     switch (type) {
-                        case DUTY:
+                        case OBLIGATION:
                             if (currentElement.evaluateViability(believes) <= machineParamsBDI.getDutyThreshold() || currentElement.goalSucceeded(believes)) {
                                 setIterator.remove();
                             }
                             break;
-                        case NEED:
+                        case SOCIAL:
                             if (currentElement.evaluateViability(believes) <= machineParamsBDI.getNeedThreshold() || currentElement.goalSucceeded(believes)) {
                                 setIterator.remove();
                             }
                             break;
-                        case OPORTUNITY:
+                        case DEVELOPMENT:
                             if (currentElement.evaluateViability(believes) <= machineParamsBDI.getOportunityThreshold() || currentElement.goalSucceeded(believes)) {
                                 setIterator.remove();
                             }
                             break;
-                        case REQUIREMENT:
+                        case SKILLSRESOURCES:
                             if (currentElement.evaluateViability(believes) <= machineParamsBDI.getRequirementThreshold() || currentElement.goalSucceeded(believes)) {
                                 setIterator.remove();
                             }
@@ -197,7 +197,7 @@ public class DesireHierarchyPyramid implements Serializable {
                                 setIterator.remove();
                             }
                             break;
-                        case ATTENTION_CYCLE:
+                        case LEISURE:
                             if (currentElement.evaluateViability(believes) <= machineParamsBDI.getAttentionCycleThreshold() || currentElement.goalSucceeded(believes)) {
                                 setIterator.remove();
                             }

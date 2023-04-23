@@ -14,7 +14,29 @@
  */
 package wpsPeasant.Agent;
 
-import wpsPeasant.Goals.L2Duty.FamilyTimeGoalBDI;
+import wpsPeasant.L1SurvivalGoals.SeekPurposeGoal;
+import wpsPeasant.L4SkillsResourcesGoals.LookForALandGoal;
+import wpsPeasant.L1SurvivalGoals.DoHealthCareGoal;
+import wpsPeasant.L6LeisureGoals.EngageInLeisureActivitiesGoal;
+import wpsPeasant.L5SocialGoals.CommunicateGoal;
+import wpsPeasant.L3DevelopmentGoals.AttendToLivestockGoal;
+import wpsPeasant.L5SocialGoals.LookForCollaborationGoal;
+import wpsPeasant.L5SocialGoals.ProvideCollaborationGoal;
+import wpsPeasant.L3DevelopmentGoals.CheckCropsGoal;
+import wpsPeasant.L3DevelopmentGoals.PrepareLandGoal;
+import wpsPeasant.L4SkillsResourcesGoals.ObtainSuppliesGoal;
+import wpsPeasant.L3DevelopmentGoals.PlantCropsGoal;
+import wpsPeasant.L4SkillsResourcesGoals.ObtainToolsGoal;
+import wpsPeasant.L3DevelopmentGoals.HarvestCropsGoal;
+import wpsPeasant.L3DevelopmentGoals.ProcessProductsGoal;
+import wpsPeasant.L4SkillsResourcesGoals.GetTrainingGoal;
+import wpsPeasant.L3DevelopmentGoals.ControlWeedsGoal;
+import wpsPeasant.L3DevelopmentGoals.ManagePestsGoal;
+import wpsPeasant.L3DevelopmentGoals.IrrigateCropsGoal;
+import wpsPeasant.L2ObligationGoals.PayDebtsGoal;
+import wpsPeasant.L3DevelopmentGoals.MaintainHouseGoal;
+import wpsPeasant.L2ObligationGoals.LookForMoneyGoal;
+import wpsPeasant.L6LeisureGoals.SpendFamilyTimeGoal;
 import BESA.BDI.AgentStructuralModel.Agent.AgentBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.ExceptionBESA;
@@ -25,15 +47,18 @@ import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Log.ReportBESA;
 import java.util.ArrayList;
 import java.util.List;
+import jdk.jshell.EvalException;
 import rational.guards.InformationFlowGuard;
-import wpsPeasant.Goals.L1Survival.*;
-import wpsPeasant.Goals.L2Duty.*;
-import wpsPeasant.Goals.L3Oportunity.*;
-import wpsPeasant.Goals.L4Requirement.*;
-import wpsPeasant.Goals.L5Needs.*;
-import wpsPeasant.Goals.L6Attention.*;
+import wpsPeasant.L1SurvivalGoals.DoVitalsGoal;
+import wpsPeasant.L1SurvivalGoals.SelfEvaluationGoal;
+import wpsPeasant.L3DevelopmentGoals.SellCropsGoal;
+import wpsPeasant.L3DevelopmentGoals.SellProductsGoal;
+import wpsPeasant.L4SkillsResourcesGoals.ObtainLivestockGoal;
+import wpsPeasant.L4SkillsResourcesGoals.ObtainSeedsGoal;
+import wpsPeasant.L4SkillsResourcesGoals.ObtainWaterGoal;
+import wpsPeasant.L4SkillsResourcesGoals.ObtainingPesticidesGoal;
 import wpsPeasant.Utils.PeasantProfile;
-import wpsPeasant.Utils.ReceiveMessagesFromWorldGuard;
+import wpsWorld.Guards.PeasantCommGuard;
 
 /**
  *
@@ -49,8 +74,8 @@ public class PeasantBDIAgent extends AgentBDI {
         structBESA.bindGuard("startReachingGoalsSimpleGuard", startReachingGoalsSimpleGuard.class);
         structBESA.addBehavior("startReachingGoalsGuard");
         structBESA.bindGuard("startReachingGoalsGuard", startReachingGoalsGuard.class);
-        structBESA.addBehavior("ReceiveMessagesFromWorldGuard");
-        structBESA.bindGuard("ReceiveMessagesFromWorldGuard", ReceiveMessagesFromWorldGuard.class);
+        structBESA.addBehavior("PeasantCommGuard");
+        structBESA.bindGuard("PeasantCommGuard", PeasantCommGuard.class);
         return structBESA;
     }
 
@@ -74,40 +99,48 @@ public class PeasantBDIAgent extends AgentBDI {
         
         List<GoalBDI> goals = new ArrayList();  
         
-        //Survival
-        goals.add(HaveAPurposeGoalBDI.buildGoal());
-        goals.add(HaveAJobGoalBDI.buildGoal());
-        goals.add(HaveLandGoalBDI.buildGoal());
-        goals.add(HealthCareGoalBD.buildGoal());
+        //Level 1 Goals: Survival        
+        goals.add(DoVitalsGoal.buildGoal());        
+        goals.add(DoHealthCareGoal.buildGoal());
+        goals.add(SeekPurposeGoal.buildGoal());
+        goals.add(SelfEvaluationGoal.buildGoal());        
         
-        //Duty
-        goals.add(GenerateIncomeGoalBDI.buildGoal());
-        goals.add(PayDebtsGoalBDI.buildGoal());
-        goals.add(MaintainHouseGoalBDI.buildGoal());
-        goals.add(FamilyTimeGoalBDI.buildGoal());
+        //Level 2 Goals: Obligations
+        goals.add(LookForMoneyGoal.buildGoal());
+        goals.add(PayDebtsGoal.buildGoal());
         
-        //Oportunity
-        goals.add(ControlWeedsGoalBDI.buildGoal());
-        goals.add(IrrigateCropsGoalBDI.buildGoal());
-        goals.add(ManagePestsGoalBDI.buildGoal());
-        goals.add(ProcessProductsGoalBDI.buildGoal());
-        goals.add(TrainingGoalBDI.buildGoal());
+        //Level 3 Goals: Development        
+        goals.add(AttendToLivestockGoal.buildGoal());
+        goals.add(CheckCropsGoal.buildGoal());
+        goals.add(ControlWeedsGoal.buildGoal());
+        goals.add(HarvestCropsGoal.buildGoal());
+        goals.add(IrrigateCropsGoal.buildGoal());
+        goals.add(MaintainHouseGoal.buildGoal());
+        goals.add(ManagePestsGoal.buildGoal());
+        goals.add(PlantCropsGoal.buildGoal());
+        goals.add(PrepareLandGoal.buildGoal());
+        goals.add(ProcessProductsGoal.buildGoal());
+        goals.add(SellCropsGoal.buildGoal());
+        goals.add(SellProductsGoal.buildGoal());
         
-        //Requirements
-        goals.add(ObtainToolsGoalBDI.buildGoal());
-        goals.add(ObtainSuppliesGoalBDI.buildGoal());
-        goals.add(PrepareLandGoalBDI.buildGoal());
-        goals.add(PlantCropsGoalBDI.buildGoal());
-        goals.add(HarvestCropsGoalBDI.buildGoal());
+        //Level 4 Goals: Skills And Resources
+        goals.add(GetTrainingGoal.buildGoal());
+        goals.add(LookForALandGoal.buildGoal());
+        goals.add(ObtainLivestockGoal.buildGoal());
+        goals.add(ObtainSeedsGoal.buildGoal());
+        goals.add(ObtainSuppliesGoal.buildGoal());
+        goals.add(ObtainToolsGoal.buildGoal());
+        goals.add(ObtainWaterGoal.buildGoal());
+        goals.add(ObtainingPesticidesGoal.buildGoal());
         
-        //Needs
-        goals.add(AttendToLivestockGoalBDI.buildGoal());
-        goals.add(CollaborateGoalBDI.buildGoal());
-        goals.add(AskForCollaborationGoalBDI.buildGoal());
-        
-        // Attention
-        goals.add(LeisureGoalBDI.buildGoal());
-        goals.add(CommunicateGoalBDI.buildGoal());
+        //Level 5 Goals: Social
+        goals.add(CommunicateGoal.buildGoal());        
+        goals.add(LookForCollaborationGoal.buildGoal());
+        goals.add(ProvideCollaborationGoal.buildGoal());
+
+        //Level 6 Goals: Leisure
+        goals.add(EngageInLeisureActivitiesGoal.buildGoal());        
+        goals.add(SpendFamilyTimeGoal.buildGoal());
         
         return goals;
     }

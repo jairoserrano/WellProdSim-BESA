@@ -112,6 +112,10 @@ public class wpsConfig {
         //}
     }
 
+    /**
+     *
+     * @return
+     */
     public static wpsConfig getInstance() {
         if (instance == null) {
             instance = new wpsConfig();

@@ -14,7 +14,6 @@
  */
 package wpsControl.Agent;
 
-import wpsSociety.Agent.*;
 import BESA.Kernel.Agent.Event.DataBESA;
 
 /**

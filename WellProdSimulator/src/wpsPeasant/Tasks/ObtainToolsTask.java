@@ -19,16 +19,16 @@ import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Log.ReportBESA;
-import BESA.World.agent.WorldGuard;
-import BESA.World.agents.messages.world.WorldMessage;
-import static BESA.World.agents.messages.world.WorldMessageType.CROP_IRRIGATION;
-import BESA.World.helper.DateSingleton;
+import wpsWorld.Agent.WorldGuard;
+import wpsWorld.Messages.WorldMessage;
+import static wpsWorld.Messages.WorldMessageType.CROP_IRRIGATION;
+import wpsControl.Agent.DateSingleton;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasant.Agent.PeasantBDIAgentBelieves;
-import wpsSimulator.wpsControl;
+import wpsSimulator.wpsStart;
 
 /**
  *

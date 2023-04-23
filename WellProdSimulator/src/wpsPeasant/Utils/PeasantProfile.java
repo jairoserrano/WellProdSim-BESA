@@ -26,6 +26,7 @@ public class PeasantProfile implements Serializable {
     private String purpose;
     private String profileName;
     private String agentID;
+    private String internalCurrentDate;
     private double health;
     private double productivity;
     private double wellBeging;
@@ -99,10 +100,18 @@ public class PeasantProfile implements Serializable {
     public PeasantProfile() {
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isSellDone() {
         return sellDone;
     }
 
+    /**
+     *
+     * @param sellDone
+     */
     public void setSellDone(boolean sellDone) {
         this.sellDone = sellDone;
     }
@@ -1371,8 +1380,27 @@ public class PeasantProfile implements Serializable {
         this.farmReady = 1;
     }
 
+    /**
+     *
+     */
     public void increaseTrainingLevel() {
         this.trainingLevel = 1;
+    }
+
+    /**
+     *
+     * @param internalCurrentDate
+     */
+    public void setInternalCurrentDate(String internalCurrentDate) {
+        this.internalCurrentDate = internalCurrentDate;
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public String getInternalCurrentDate() {
+        return this.internalCurrentDate;
     }
 
 

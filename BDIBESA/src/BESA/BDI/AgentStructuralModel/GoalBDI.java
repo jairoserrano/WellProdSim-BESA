@@ -125,23 +125,23 @@ public abstract class GoalBDI implements BDIEvaluable, Serializable, Comparable<
         boolean returnValue = false;
         double viabilityEvaluation = this.evaluateViability(believes);
         switch (this.getType()) {
-            case DUTY:
-                //ReportBESA.debug("DUTY v=" + viabilityEvaluation + "t=" + machineParams.getDutyThreshold());
+            case OBLIGATION:
+                //ReportBESA.debug("OBLIGATION v=" + viabilityEvaluation + "t=" + machineParams.getDutyThreshold());
                 if (viabilityEvaluation > machineParams.getDutyThreshold()) {
                     returnValue = true;
                 }
-            case NEED:
-                //ReportBESA.debug("NEED v=" + viabilityEvaluation + "t=" + machineParams.getNeedThreshold());
+            case SOCIAL:
+                //ReportBESA.debug("SOCIAL v=" + viabilityEvaluation + "t=" + machineParams.getNeedThreshold());
                 if (viabilityEvaluation > machineParams.getNeedThreshold()) {
                     returnValue = true;
                 }
-            case OPORTUNITY:
-                //ReportBESA.debug("OPORTUNITY v=" + viabilityEvaluation + "t=" + machineParams.getOportunityThreshold());
+            case DEVELOPMENT:
+                //ReportBESA.debug("DEVELOPMENT v=" + viabilityEvaluation + "t=" + machineParams.getOportunityThreshold());
                 if (viabilityEvaluation > machineParams.getOportunityThreshold()) {
                     returnValue = true;
                 }
-            case REQUIREMENT:
-                //ReportBESA.debug("REQUIREMENT v=" + viabilityEvaluation + "t=" + machineParams.getRequirementThreshold());
+            case SKILLSRESOURCES:
+                //ReportBESA.debug("SKILLSRESOURCES v=" + viabilityEvaluation + "t=" + machineParams.getRequirementThreshold());
                 if (viabilityEvaluation > machineParams.getRequirementThreshold()) {
                     returnValue = true;
                 }
@@ -150,8 +150,8 @@ public abstract class GoalBDI implements BDIEvaluable, Serializable, Comparable<
                 if (viabilityEvaluation > machineParams.getSurvivalThreshold()) {
                     returnValue = true;
                 }
-            case ATTENTION_CYCLE:
-                //ReportBESA.debug("ATTENTION_CYCLE v=" + viabilityEvaluation + "t=" + machineParams.getAttentionCycleThreshold());
+            case LEISURE:
+                //ReportBESA.debug("LEISURE v=" + viabilityEvaluation + "t=" + machineParams.getAttentionCycleThreshold());
                 if (viabilityEvaluation > machineParams.getAttentionCycleThreshold()) {
                     returnValue = true;
                 }
