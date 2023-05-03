@@ -14,6 +14,7 @@
  */
 package wpsSociety.Agent;
 
+import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.AgentBESA;
 import BESA.Kernel.Agent.KernelAgentExceptionBESA;
 import BESA.Kernel.Agent.StateBESA;
@@ -35,6 +36,23 @@ public class SocietyAgent extends AgentBESA {
      */
     public SocietyAgent(String alias, StateBESA state, StructBESA structAgent, double passwd) throws KernelAgentExceptionBESA {
         super(alias, state, structAgent, passwd);
+    }
+
+    public static SocietyAgent createAgent(String alias, double passwd) throws ExceptionBESA{        
+        SocietyAgent societyAgent = new SocietyAgent(alias, createState(), createStruct(new StructBESA()), passwd);
+        return societyAgent;
+        
+    }
+    
+    private static StructBESA createStruct(StructBESA structBESA) throws ExceptionBESA {
+        structBESA.addBehavior("SocietyAgentGuard");
+        structBESA.bindGuard("SocietyAgentGuard", SocietyAgentGuard.class);
+        return structBESA;
+    }
+    
+    private static SocietyAgentState createState() throws ExceptionBESA {
+        SocietyAgentState societyAgentState = new SocietyAgentState();
+        return societyAgentState;
     }
 
     /**

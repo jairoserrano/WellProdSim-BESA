@@ -22,6 +22,7 @@ RegularPeasant:
   peasantQualityFactor: 0.7
   peasantFamilyConf: 1.0
   peasantConsumption: 1.0
+  peasantFamilyMinimalVital: 4833
   liveStockAffinity: 0.7
   #farm:
   farm: false

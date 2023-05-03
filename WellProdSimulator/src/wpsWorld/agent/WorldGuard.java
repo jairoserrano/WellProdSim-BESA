@@ -11,7 +11,7 @@ import wpsWorld.Guards.PeasantCommGuard;
 import wpsWorld.Guards.PeasantCommMessage;
 import wpsWorld.Guards.PeasantCommMessageType;
 import wpsWorld.Messages.WorldMessage;
-import wpsControl.Agent.DateSingleton;
+import wpsControl.Agent.wpsCurrentDateSingleton;
 import wpsWorld.Helper.WorldConfiguration;
 import wpsWorld.layer.crop.CropLayer;
 import wpsWorld.layer.crop.cell.CropCell;
@@ -40,7 +40,7 @@ public class WorldGuard extends GuardBESA {
             case CROP_INIT:
                 ReportBESA.info("Start event, initialize first layers state");
                 worldState.lazyUpdateCropsForDate(worldMessage.getDate());
-                DateSingleton.getInstance().getDatePlusOneDayAndUpdate();
+                wpsCurrentDateSingleton.getInstance().getDatePlusOneDayAndUpdate();
                 peasantMessage = new PeasantCommMessage(
                         PeasantCommMessageType.CROP_INIT,
                         worldMessage.getPeasantAgentId(),

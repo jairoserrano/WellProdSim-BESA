@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rational.guards.InformationFlowGuard;
-import wpsSimulator.wpsStart;
+import wpsActivator.wpsStart;
 
 /**
  *
@@ -195,7 +195,7 @@ public abstract class EmotionalModel {
      * @throws ExceptionBESA
      */
     protected void sendAct(EmotionalData ed) throws ExceptionBESA {
-        AgHandlerBESA handler = AdmBESA.getInstance().getHandlerByAlias(wpsStart.aliasPeasantAgent);
+        AgHandlerBESA handler = AdmBESA.getInstance().getHandlerByAlias(wpsStart.aliasPeasantFamilyAgent);
         EventBESA sensorEvtA = new EventBESA(InformationFlowGuard.class.getName(), ed);
         handler.sendEvent(sensorEvtA);
     }

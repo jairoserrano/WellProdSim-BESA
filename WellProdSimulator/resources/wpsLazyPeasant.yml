@@ -19,6 +19,7 @@ LazzyPeasant:
   worker: true
   employee: false
   peasantQualityFactor: 0.7
+  peasantFamilyMinimalVital: 4833
   liveStockAffinity: 0.7
   #farm:
   farm: true
