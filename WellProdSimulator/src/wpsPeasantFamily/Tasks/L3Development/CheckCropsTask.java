@@ -77,7 +77,9 @@ public class CheckCropsTask extends Task {
             //believes.getPeasantProfile().setHarverstSeason(true);
             // @TODO: falta calcular el tiempo necesario para el cultivo
             believes.getPeasantProfile().useTime(TimeConsumedBy.CheckCrops);
-            this.setFinished(true);
+            //this.setFinished(true);
+            believes.getPeasantProfile().setCropCheckedToday();
+            this.setTaskWaitingForExecution();
 
         } catch (ExceptionBESA ex) {
             ReportBESA.error(ex);

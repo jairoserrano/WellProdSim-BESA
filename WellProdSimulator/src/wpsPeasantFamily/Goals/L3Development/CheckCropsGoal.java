@@ -108,7 +108,8 @@ public class CheckCropsGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.CheckCrops)) {
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.CheckCrops)
+                && believes.getPeasantProfile().isCropCheckedToday()) {
             return 1;
         } else {
             return 0;

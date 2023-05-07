@@ -47,7 +47,8 @@ public class LookForLoanTask extends Task {
         // @TODO: Cambiar a la venta real con el agente banco
         believes.getPeasantProfile().increaseMoney(1000000);
         believes.getPeasantProfile().useTime(TimeConsumedBy.LookForLoan);
-        this.setFinished(true);
+        believes.getPeasantProfile().setLoanSeason(false);
+        this.setTaskWaitingForExecution();
     }
 
     /**

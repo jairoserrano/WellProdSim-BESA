@@ -61,6 +61,7 @@ public class DoVitalsTask extends Task {
         believes.getPeasantProfile().useTime(TimeConsumedBy.DoVitalsTask);
         believes.getPeasantProfile().setNewDayFalse();
         //this.setFinished(true);
+        this.setTaskWaitingForExecution();
     }
 
     /**

@@ -98,11 +98,20 @@ public class PeasantFamilyProfile implements Serializable {
     private boolean growingSeason;
     private boolean harverstSeason;
     private boolean loanSeason;
+    private boolean cropCheckedToday;
 
     // Day Time
     private double timeLeftOnDay;
     private int currentDay;
     private boolean newDay;
+
+    public void setCropCheckedToday() {
+        this.cropCheckedToday = true;
+    }
+    
+    public boolean isCropCheckedToday(){
+        return !this.cropCheckedToday;
+    }
 
     /**
      * Time unit defined by hours spent on activities.
@@ -126,7 +135,7 @@ public class PeasantFamilyProfile implements Serializable {
      */
     public synchronized boolean haveTimeAvailable(TimeConsumedBy time) {
         if (this.timeLeftOnDay - time.getTime() < 0) {
-            ReportBESA.info("⏳🚩⏳🚩⏳ No alcanza le tiempo " + time.getTime() + " tiene "+ this.timeLeftOnDay + " del día " + wpsCurrentDate.getInstance().getCurrentDate());
+            ReportBESA.info("⏳🚩⏳🚩⏳ No alcanza le tiempo " + time.getTime() + " tiene " + this.timeLeftOnDay + " del día " + wpsCurrentDate.getInstance().getCurrentDate());
             return false;
         } else {
             ReportBESA.info("⏳ ⏳ ⏳ Todavía tiene " + this.timeLeftOnDay + " en el día " + wpsCurrentDate.getInstance().getCurrentDate());
@@ -151,11 +160,12 @@ public class PeasantFamilyProfile implements Serializable {
     }
 
     /**
-     *
+     * Make variable reset Every Day
      */
     public synchronized void makeNewDay() {
         this.currentDay++;
         this.timeLeftOnDay = 24;
+        this.cropCheckedToday = false;
         this.newDay = true;
         ReportBESA.info(
                 "\n\n🔆 New Day # "

@@ -46,7 +46,8 @@ public class EngageInLeisureActivitiesTask extends Task {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //believes.getPeasantProfile().useLeisureOptions();
         believes.getPeasantProfile().useTime(TimeConsumedBy.EngageInLeisureActivitiesGoal);
-        this.setFinished(true);
+        this.setTaskWaitingForExecution();
+        //this.setFinished(true);
     }
 
     /**

@@ -15,7 +15,7 @@ public enum TimeConsumedBy {
     DoVitalsTask(12),
     AttendReligiousEvents(2),
     AttendToLivestock(2),
-    CheckCrops(1),
+    CheckCrops(2),
     HarvestCrops(2),
     IrrigateCrops(2),
     MaintainHouse(2),

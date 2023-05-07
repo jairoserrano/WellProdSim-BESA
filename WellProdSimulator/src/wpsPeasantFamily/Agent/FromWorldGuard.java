@@ -32,7 +32,7 @@ public class FromWorldGuard extends GuardBESA {
     @Override
     public void funcExecGuard(EventBESA event) {
         FromWorldMessage peasantCommMessage = (FromWorldMessage) event.getData();
-        ReportBESA.debug("🏆🏆🏆 Recibido: " + peasantCommMessage.getPeasantAlias() + " getType=" + peasantCommMessage.getPayload());
+        ReportBESA.debug("🤖🤖🤖 Recibido: " + peasantCommMessage.getPeasantAlias() + " getType=" + peasantCommMessage.getPayload());
 
         StateBDI state = (StateBDI) this.agent.getState();
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
@@ -60,7 +60,7 @@ public class FromWorldGuard extends GuardBESA {
                     // Código a ejecutar si messageType es REQUEST_CROP_INFORMATION
                     break;
                 case CROP_INIT:
-                    believes.getPeasantProfile().setPlantingSeason(true);
+                    //believes.getPeasantProfile().setPlantingSeason(true);
                     break;
                 case CROP_HARVEST:
                     believes.getPeasantProfile().setHarverstSeason(false);

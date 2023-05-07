@@ -207,6 +207,7 @@ public class LookForALandTask extends Task {
         }
 
         believes.getPeasantProfile().setFarm(true);
+        believes.getPeasantProfile().setPlantingSeason(true);
         ReportBESA.info("🥬 La familia campesina ya tiene tierra.");
         this.setFinished(true);
 

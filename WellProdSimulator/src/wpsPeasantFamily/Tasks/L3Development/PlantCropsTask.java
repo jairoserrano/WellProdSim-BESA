@@ -58,7 +58,6 @@ public class PlantCropsTask extends Task {
             AgHandlerBESA ah = adm.getHandlerByAlias(
                     believes.getPeasantProfile().getFarmName());
 
-            //wpsCurrentDate.getInstance().setCurrentDate("01/04/2022");
             WorldMessage worldMessage = new WorldMessage(
                     CROP_INIT,
                     "rice_1",

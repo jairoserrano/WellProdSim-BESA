@@ -10,10 +10,18 @@ import rational.data.InfoData;
 
 /**
  *
- * @author andres
+ * The InformationFlowGuard class extends GuardBESA and is responsible for
+ *
+ * handling information flow events in the rational agent framework.
  */
 public class InformationFlowGuard extends GuardBESA {
 
+    /**
+     *
+     * Executes the guard functionality when an event is received.
+     *
+     * @param ebesa The event that triggered the guard.
+     */
     @Override
     public void funcExecGuard(EventBESA ebesa) {
         RationalState state = (RationalState) this.getAgent().getState();
@@ -25,7 +33,7 @@ public class InformationFlowGuard extends GuardBESA {
                 handler.sendEvent(new EventBESA(subscriptionsToUpdate));
             }
         } catch (ExceptionBESA ex) {
-            
+
         }
     }
 
