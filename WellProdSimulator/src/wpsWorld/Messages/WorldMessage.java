@@ -9,7 +9,7 @@ import BESA.Kernel.Agent.Event.DataBESA;
 public class WorldMessage extends DataBESA {
     private WorldMessageType worldMessageType;
     private String cropId;
-    private String peasantAgentId;
+    private String peasantAgentAlias;
     private String payload;
     private String date;
 
@@ -24,7 +24,7 @@ public class WorldMessage extends DataBESA {
         this.worldMessageType = worldMessageType;
         this.cropId = cropId;
         this.date = date;
-        this.peasantAgentId = peasantAgentId;
+        this.peasantAgentAlias = peasantAgentId;
     }
 
     /**
@@ -33,23 +33,23 @@ public class WorldMessage extends DataBESA {
      */
     @Override
     public String toString() {
-        return "---> WorldMessage{" + "worldMessageType=" + worldMessageType + ", cropId=" + cropId + ", peasantAgentId=" + peasantAgentId + ", payload=" + payload + ", date=" + date + "}";
+        return "---> WorldMessage{" + "worldMessageType=" + worldMessageType + ", cropId=" + cropId + ", peasantAgentId=" + peasantAgentAlias + ", payload=" + payload + ", date=" + date + "}";
     }
 
     /**
      *
      * @return
      */
-    public String getPeasantAgentId() {
-        return peasantAgentId;
+    public String getPeasantAgentAlias() {
+        return peasantAgentAlias;
     }
 
     /**
      *
-     * @param peasantAgentId
+     * @param peasantAgentAlias
      */
-    public void setPeasantAgentId(String peasantAgentId) {
-        this.peasantAgentId = peasantAgentId;
+    public void setPeasantAgentAlias(String peasantAgentAlias) {
+        this.peasantAgentAlias = peasantAgentAlias;
     }
 
     /**

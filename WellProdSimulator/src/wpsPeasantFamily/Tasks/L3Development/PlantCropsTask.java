@@ -24,7 +24,7 @@ import wpsWorld.Messages.WorldMessage;
 import static wpsWorld.Messages.WorldMessageType.CROP_INIT;
 import rational.mapping.Believes;
 import rational.mapping.Task;
-import wpsControl.Agent.wpsCurrentDateSingleton;
+import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
 
@@ -58,11 +58,11 @@ public class PlantCropsTask extends Task {
             AgHandlerBESA ah = adm.getHandlerByAlias(
                     believes.getPeasantProfile().getFarmName());
 
-            wpsCurrentDateSingleton.getInstance().setCurrentDate("01/04/2022");
+            //wpsCurrentDate.getInstance().setCurrentDate("01/04/2022");
             WorldMessage worldMessage = new WorldMessage(
                     CROP_INIT,
                     "rice_1",
-                    wpsCurrentDateSingleton.getInstance().getCurrentDate(),
+                    wpsCurrentDate.getInstance().getCurrentDate(),
                     believes.getPeasantProfile().getProfileName());
             
             ReportBESA.info(worldMessage);

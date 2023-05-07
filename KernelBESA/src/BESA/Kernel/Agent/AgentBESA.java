@@ -70,20 +70,22 @@ public abstract class AgentBESA {
     private StructBESA structAgent;
 
     /**
-     * Builds a BESA agent. In order to construct an agent BESA is necessary
-     * to provide a structure that contains the associations between behaviors, 
-     * guards and multiguards, in addition to a state in where the internal 
+     * Builds a BESA agent. In order to construct an agent BESA is necessary to
+     * provide a structure that contains the associations between behaviors,
+     * guards and multiguards, in addition to a state in where the internal
      * states of the agent are stored.
-     * 
-     * @param alias Name of the agent with whom it will be identified in the BESA container.
+     *
+     * @param alias Name of the agent with whom it will be identified in the
+     * BESA container.
      * @param state Internal state of the agent, which inherits of StateBESA.
-     * @param structAgent Structure that indicates the associations between guards, multiguards and behaviors.
+     * @param structAgent Structure that indicates the associations between
+     * guards, multiguards and behaviors.
      * @param passwd Password necessary to access to the agent.
      */
     public AgentBESA(String alias, StateBESA state, StructBESA structAgent, double passwd) throws KernelAgentExceptionBESA {
         boolean indMove = true;                                                 //Flag that indicates if the agent is in moving for default.
         String agentID = null;
-        try {                                                                              
+        try {
             this.state = state;                                                 //Sets the state.          
             this.structAgent = structAgent;                                     //Sets the struct.
             this.alias = alias;                                                 //Sets the alias.
@@ -97,7 +99,7 @@ public abstract class AgentBESA {
                 //if (agH instanceof AgLocalHandlerBESA) {                        //Checks if the agent is local.                    
                 if (agH.getClass().getSimpleName().equalsIgnoreCase("AgLocalHandlerBESA")) {                        //Checks if the agent is local.    
                     indMove = false;                                            //Indicates that the agent is not moving.
-                } else {                                                        
+                } else {
                     agentID = AgentBESA.adm.erase(agH);                         //Deletes the local reference the agent. The agent is moving.
                 } //End else.
             } //End if.
@@ -117,8 +119,7 @@ public abstract class AgentBESA {
     }
 
     /**
-     * This method starts the agent behavior.
-     * TODO Verificar las excepciones.
+     * This method starts the agent behavior. TODO Verificar las excepciones.
      */
     public void start() {
         this.state.initGuards();                                                //Starts guards.
@@ -136,17 +137,17 @@ public abstract class AgentBESA {
     }
 
     /**
-     * Sends an event to an agent. This method doesn't have to be invoked by
-     * the user, only must be called by the container to do the events
+     * Sends an event to an agent. This method doesn't have to be invoked by the
+     * user, only must be called by the container to do the events
      * treatment.<BR><BR>
-     * 
+     *
      * EventBESA contains a field to add the sender, which must be filled in
      * explicit form by the programmer.
-     * 
+     *
      * TODO Verificar seguridad.
-     * 
-     * @param ev Event that is deposited in the mailbox. 
-     * @throws BESA.Exception.ExceptionBESA Is generated if some error happens. 
+     *
+     * @param ev Event that is deposited in the mailbox.
+     * @throws BESA.Exception.ExceptionBESA Is generated if some error happens.
      */
     public void sendEvent(EventBESA ev) throws KernelAgentExceptionBESA {
         try {
@@ -161,22 +162,21 @@ public abstract class AgentBESA {
      * Starting routine of the agent. Invoked automatically before the infinite
      * cycle. To consider when implementing this method:
      *
-     * - The state was initialized previously in the constructor of the agent.
-     * - Create the guards (automatic bind).
-     * - Create the behaviors (automatic registry).
-     * - Register agent services.
+     * - The state was initialized previously in the constructor of the agent. -
+     * Create the guards (automatic bind). - Create the behaviors (automatic
+     * registry). - Register agent services.
      *
      * It must be implemented by the user to create an agent.
      */
     abstract public void setupAgent();
 
     /**
-     * Closing routine of the agent. In this resources are freed and behaviors 
+     * Closing routine of the agent. In this resources are freed and behaviors
      * are stopped.
-     * 
+     *
      * It is invoked automatically when leaving the infinite cycle.
-     * 
-     * It must be provided by the user. 
+     *
+     * It must be provided by the user.
      */
     abstract public void shutdownAgent();
 
@@ -185,7 +185,7 @@ public abstract class AgentBESA {
      *
      * @return String that identifies of unique way the agent between the BESA
      * containers.
-     * @uml.property  name="aid"
+     * @uml.property name="aid"
      */
     final public String getAid() {
         return aid;
@@ -195,48 +195,50 @@ public abstract class AgentBESA {
      * Obtains the alias of the agent.
      *
      * @return Alias of the agent.
-     * @uml.property  name="alias"
+     * @uml.property name="alias"
      */
     final public String getAlias() {
         return alias;
     }
 
-    /**     
+    /**
      * Returns the agent internal state.
-     * 
+     *
      * @return Internal state of the agent, which inherits of StateBESA.
      */
     public StateBESA getState() {
         return state;
     }
 
-    /**     
-     * Indicates that the agent is alive. 
+    /**
+     * Indicates that the agent is alive.
      */
     private synchronized void setAlive() {
         this.alive = Boolean.TRUE;
     }
 
     /**
-     * Method used for synchronization in mobility tasks.<BR><BR> 
-     * 
+     * Method used for synchronization in mobility tasks.<BR><BR>
+     *
      * It doesn't have to be called by the user.
      */
     public synchronized void resetAlive() {
         this.alive = Boolean.FALSE;
     }
-    
+
     /**
-     * Invoked routine to stop an agent and move it. It doesn't have to be
-     * called directly by the user, to move an agent, this method must be
-     * invoked from AdmBESA.
-     * 
+     * Invoked routine to stop an agent and move it.It doesn't have to be called
+     * directly by the user, to move an agent, this method must be invoked from
+     * AdmBESA.
+     *
      * @param passwd Password of the agent.
+     * @throws BESA.Kernel.Agent.KernelAgentExceptionBESA
      */
+    @SuppressWarnings("unchecked")
     final public void move(double passwd) throws KernelAgentExceptionBESA {
         if (Math.abs(this.passwd - passwd) < 0.00001) {                         //Checks password.
-            synchronized (alive) {                                              //Synchronized access to the variable alive.
-                if (this.isAlive().booleanValue()) {                            //Checks if is alive.
+            synchronized (this) {                                              //Synchronized access to the variable alive.
+                if (this.isAlive()) {                            //Checks if is alive.
                     this.getChannel().initBehBarrier(this.behaviors.size());    //Synchronization boot - Wait full channel setup.
                     killBehaviors(passwd);                                      //Kills behavioors.
                     this.getChannel().waitBehBarrier();                         //Blocks the behavior while the barrier counter indicates it.
@@ -251,7 +253,7 @@ public abstract class AgentBESA {
                     try {
                         EventBESA ev = new EventBESA(evType, this.getAdmLocal().getPasswd());
                         this.sendEvent(ev);
-                    } catch (Exception e) {
+                    } catch (ExceptionBESA e) {
                         ReportBESA.error("Couldn't move the agent " + this.alias + ": " + e.toString());
                         throw new KernelAgentExceptionBESA("Couldn't move the agent " + this.alias + ": " + e.toString());
                     }
@@ -262,7 +264,7 @@ public abstract class AgentBESA {
 
     /**
      * Starts all the behaviors associated to an agent.
-     * 
+     *
      * @return The number of behaviors initialized.
      */
     final protected int startBehaviors() throws KernelAgentExceptionBESA {
@@ -283,7 +285,7 @@ public abstract class AgentBESA {
 
     /**
      * Finalizes all the behaviors associated to an agent.
-     * 
+     *
      * @param passwd Password of the agent.
      */
     final protected void killBehaviors(double passwd) throws KernelAgentExceptionBESA {
@@ -303,7 +305,7 @@ public abstract class AgentBESA {
 
     /**
      * Synchronizes the death of threads of the behaviors associates.
-     * 
+     *
      * @param passwd Password of the agent.
      */
     final public void joinBehaviors(double passwd) throws KernelAgentExceptionBESA {
@@ -322,8 +324,9 @@ public abstract class AgentBESA {
 
     /**
      * Registers the associated port to a guard. Establishing a port associated
-     * with the guard. Validates that has not been created a port for guard event.
-     * 
+     * with the guard. Validates that has not been created a port for guard
+     * event.
+     *
      * @param guard Guard to being registered in the agent.
      * @return Port associated to the guard for this agent. Returns null if
      * there was already a port for the same event type
@@ -334,7 +337,7 @@ public abstract class AgentBESA {
 
     /**
      * Eliminates the associated port to a guard.
-     * 
+     *
      * @param guard Guard to being unregistered in the agent.
      * @return true if the guard has been eliminated; false otherwise.
      */
@@ -343,15 +346,15 @@ public abstract class AgentBESA {
     }
 
     /**
-     * Registers a behavior. The behavior is including in a vector and the 
+     * Registers a behavior. The behavior is including in a vector and the
      * repetitions are avoided.
-     * 
-     * This list of behaviors is useful for the accomplishment of collective 
+     *
+     * This list of behaviors is useful for the accomplishment of collective
      * synchronizations.
-     * 
-     * Also it is used to kill automatically the behaviors associated to an 
+     *
+     * Also it is used to kill automatically the behaviors associated to an
      * agent when this dies.
-     * 
+     *
      * @param beh Behavior to register.
      */
     final public synchronized void registerBehavior(BehaviorBESA beh) {
@@ -361,25 +364,13 @@ public abstract class AgentBESA {
     }
 
     /**
-     * Eliminates a behavior of the structure. Unregistering automatically
-     * after loop Behavior. Remove vector behavior. Purge ports.
-     * 
-     * @param beh Behavior to eliminate.
-     * @deprecated It's never used within the container. 
-     */
-    final public synchronized void unregisterBehavior(BehaviorBESA beh) {
-        behaviors.remove(beh);
-        channel.purgePorts(beh);
-    }
-
-    /**
-     * Associates a behavior to a guard that handles a type of event. It's 
-     * called internally by AgentBESA and it does not have to be invoked 
+     * Associates a behavior to a guard that handles a type of event. It's
+     * called internally by AgentBESA and it does not have to be invoked
      * directly .
-     * 
+     *
      * @param beh Behavior to register.
      * @param evType Type of event that corresponds to the name of the class
-     * guard. 
+     * guard.
      * @return Created GuardBESA.
      */
     final public synchronized GuardBESA registerGuard(BehaviorBESA beh, String evType) {
@@ -392,23 +383,8 @@ public abstract class AgentBESA {
     }
 
     /**
-     * Eliminates the association of a behavior to a guard that handles a type 
-     * of event.
-     * 
-     * @param beh Behavior associate.
-     * @param evType Type of event.
-     * @deprecated No longer it is used in new projects.
-     */
-    final public synchronized void unregisterGuard(BehaviorBESA beh, String evType) {
-        PortBESA port = channel.findPort(evType);
-        if (port != null) {
-            port.unbindBehavior(beh);                                           //Detachs a behavior to a guard that handles an event type.
-        }
-    }
-
-    /**
      * Indicates if the agent is alive or not.
-     * 
+     *
      * @return true if the agent is alive ; false otherwise.
      */
     final public synchronized Boolean isAlive() {
@@ -446,7 +422,7 @@ public abstract class AgentBESA {
 
     /**
      * Initializes the local BESA container, invoking to the variable singleton.
-     * 
+     *
      * @param adm BESA container to assign.
      */
     public static void initAdmLocal(AdmBESA adm) {
@@ -479,7 +455,7 @@ public abstract class AgentBESA {
 
     /**
      * Verifies if the password given for the agent is valid.
-     * 
+     *
      * @param passwd Password of the agent to validate.
      * @return true if is the agent key; false otherwise.
      */
@@ -492,7 +468,7 @@ public abstract class AgentBESA {
     }
 
     /**
-     * Blocks the channel in logical way. 
+     * Blocks the channel in logical way.
      */
     public synchronized void waitChannel() throws KernelAgentExceptionBESA {
         try {
@@ -507,8 +483,8 @@ public abstract class AgentBESA {
 
     /**
      * Returns the agent internal structure.
-     * 
-     * @return  Description of the agent internal structure.
+     *
+     * @return Description of the agent internal structure.
      */
     public StructBESA getStructAgent() {
         return structAgent;
@@ -516,7 +492,7 @@ public abstract class AgentBESA {
 
     /**
      * Sets the state agent specific.
-     * 
+     *
      * @param stateAgent State agent specific.
      */
     public void setReferenceState(Object stateAgent) {
@@ -525,8 +501,8 @@ public abstract class AgentBESA {
 
     /**
      * Gets the state agent specific.
-     * 
-     * @return  Returns State agent specific.
+     *
+     * @return Returns State agent specific.
      */
     public Object getStateAgentSpecific() {
         return stateAgentSpecific;

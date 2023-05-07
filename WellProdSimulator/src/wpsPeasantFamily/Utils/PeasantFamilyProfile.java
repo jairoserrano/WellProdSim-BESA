@@ -16,6 +16,7 @@ package wpsPeasantFamily.Utils;
 
 import BESA.Log.ReportBESA;
 import java.io.Serializable;
+import wpsControl.Agent.wpsCurrentDate;
 
 /**
  *
@@ -107,18 +108,14 @@ public class PeasantFamilyProfile implements Serializable {
      * Time unit defined by hours spent on activities.
      *
      * @param time
-     * @return true if is time available
      */
-    public boolean useTime(TimeConsumedBy time) {
+    public synchronized void useTime(TimeConsumedBy time) {
         double timeLeft = this.timeLeftOnDay - time.getTime();
-        if (timeLeft > 0) {
-            this.timeLeftOnDay = timeLeft;
-            ReportBESA.info("Le quedan " + timeLeft + " horas del día.");
-            this.newDay = false;
-            return true;
-        } else {
+        this.timeLeftOnDay = timeLeft;
+        if (timeLeft <= 0) {
             this.makeNewDay();
-            return false;
+        } else {
+            ReportBESA.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + wpsCurrentDate.getInstance().getCurrentDate());
         }
     }
 
@@ -127,30 +124,44 @@ public class PeasantFamilyProfile implements Serializable {
      * @param time
      * @return
      */
-    public boolean haveTimeAvailable(TimeConsumedBy time) {
-        return (this.timeLeftOnDay - time.getTime()) > 0;
+    public synchronized boolean haveTimeAvailable(TimeConsumedBy time) {
+        if (this.timeLeftOnDay - time.getTime() < 0) {
+            ReportBESA.info("⏳🚩⏳🚩⏳ No alcanza le tiempo " + time.getTime() + " tiene "+ this.timeLeftOnDay + " del día " + wpsCurrentDate.getInstance().getCurrentDate());
+            return false;
+        } else {
+            ReportBESA.info("⏳ ⏳ ⏳ Todavía tiene " + this.timeLeftOnDay + " en el día " + wpsCurrentDate.getInstance().getCurrentDate());
+            return true;
+        }
     }
 
     /**
      * Check if is a new Day
+     *
      * @return true if is a new day
      */
-    public boolean isNewDay() {
-        if (this.newDay) {
-            this.newDay = false;
-            return true;
-        } else {
-            return false;
-        }
+    public synchronized boolean isNewDay() {
+        return this.newDay;
+    }
+
+    /**
+     * Set a new Day false
+     */
+    public synchronized void setNewDayFalse() {
+        this.newDay = false;
     }
 
     /**
      *
      */
-    public void makeNewDay() {
+    public synchronized void makeNewDay() {
         this.currentDay++;
-        ReportBESA.info("\n\nNew Day # " + this.currentDay + "\n");
+        this.timeLeftOnDay = 24;
         this.newDay = true;
+        ReportBESA.info(
+                "\n\n🔆 New Day # "
+                + this.currentDay + " - 🔆 "
+                + wpsCurrentDate.getInstance().getDatePlusOneDayAndUpdate()
+                + "\n");
     }
 
     /**
@@ -531,6 +542,7 @@ public class PeasantFamilyProfile implements Serializable {
     public void setMoney(double money) {
         this.money = money;
     }
+
     /**
      *
      * @param money
@@ -690,6 +702,7 @@ public class PeasantFamilyProfile implements Serializable {
     public boolean isBusy() {
         return busy;
     }
+
     /**
      *
      * @return

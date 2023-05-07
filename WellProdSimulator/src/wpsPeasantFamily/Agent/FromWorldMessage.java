@@ -1,4 +1,4 @@
-package wpsWorld.Guards;
+package wpsPeasantFamily.Agent;
 
 import BESA.Kernel.Agent.Event.DataBESA;
 
@@ -6,21 +6,21 @@ import BESA.Kernel.Agent.Event.DataBESA;
  *
  * @author jairo
  */
-public class PeasantCommMessage extends DataBESA {
-    private String peasantId;
+public class FromWorldMessage extends DataBESA {
+    private String peasantAlias;
     private String payload;
-    private PeasantCommMessageType peasantMessageType;
+    private FromWorldMessageType peasantMessageType;
     private String date;
     private String simpleMessage;
 
     /**
      *
      * @param peasantMessageType
-     * @param peasantId
+     * @param peasantAlias
      * @param payload
      */
-    public PeasantCommMessage(PeasantCommMessageType peasantMessageType, String peasantId, String payload) {
-        this.peasantId = peasantId;
+    public FromWorldMessage(FromWorldMessageType peasantMessageType, String peasantAlias, String payload) {
+        this.peasantAlias = peasantAlias;
         this.payload = payload;
         this.peasantMessageType = peasantMessageType;
     }
@@ -29,7 +29,7 @@ public class PeasantCommMessage extends DataBESA {
      *
      * @param simpleMessage
      */
-    public PeasantCommMessage(String simpleMessage) {
+    public FromWorldMessage(String simpleMessage) {
         this.simpleMessage = simpleMessage;
     }
 
@@ -45,16 +45,16 @@ public class PeasantCommMessage extends DataBESA {
      *
      * @return
      */
-    public String getPeasantId() {
-        return peasantId;
+    public String getPeasantAlias() {
+        return peasantAlias;
     }
 
     /**
      *
-     * @param peasantId
+     * @param peasantAlias
      */
-    public void setPeasantId(String peasantId) {
-        this.peasantId = peasantId;
+    public void setPeasantAlias(String peasantAlias) {
+        this.peasantAlias = peasantAlias;
     }
 
     /**
@@ -93,7 +93,7 @@ public class PeasantCommMessage extends DataBESA {
      *
      * @return
      */
-    public PeasantCommMessageType getPeasantMessageType() {
+    public FromWorldMessageType getPeasantMessageType() {
         return peasantMessageType;
     }
 
@@ -101,7 +101,7 @@ public class PeasantCommMessage extends DataBESA {
      *
      * @param peasantMessageType
      */
-    public void setPeasantMessageType(PeasantCommMessageType peasantMessageType) {
+    public void setPeasantMessageType(FromWorldMessageType peasantMessageType) {
         this.peasantMessageType = peasantMessageType;
     }
 }

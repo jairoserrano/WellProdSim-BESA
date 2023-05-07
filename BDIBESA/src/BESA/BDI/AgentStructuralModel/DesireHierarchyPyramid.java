@@ -8,6 +8,7 @@ package BESA.BDI.AgentStructuralModel;
 
 import BESA.BDI.AgentStructuralModel.Functions.ContributionComparator;
 import BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA;
+import BESA.Log.ReportBESA;
 import rational.mapping.Believes;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,13 +40,13 @@ public class DesireHierarchyPyramid implements Serializable {
 
     public DesireHierarchyPyramid() {
         comparator = new ContributionComparator();
-        survivalGoalsList = (new TreeSet<GoalBDI>(comparator));
-        dutyGoalsList = (new TreeSet<GoalBDI>(comparator));
-        oportunityGoalsList = (new TreeSet<GoalBDI>(comparator));
-        requirementGoalsList = (new TreeSet<GoalBDI>(comparator));
-        needGoalsList = (new TreeSet<GoalBDI>(comparator));
-        attentionCycleGoalsList = (new TreeSet<GoalBDI>(comparator));
-        generalHerarchyList = Collections.synchronizedList(new ArrayList<SortedSet<GoalBDI>>());
+        survivalGoalsList = (new TreeSet<>(comparator));
+        dutyGoalsList = (new TreeSet<>(comparator));
+        oportunityGoalsList = (new TreeSet<>(comparator));
+        requirementGoalsList = (new TreeSet<>(comparator));
+        needGoalsList = (new TreeSet<>(comparator));
+        attentionCycleGoalsList = (new TreeSet<>(comparator));
+        generalHerarchyList = Collections.synchronizedList(new ArrayList<>());
         generalHerarchyList.add(survivalGoalsList);
         generalHerarchyList.add(dutyGoalsList);
         generalHerarchyList.add(oportunityGoalsList);
@@ -163,6 +164,7 @@ public class DesireHierarchyPyramid implements Serializable {
      * <p>method that dismiss the non feasible or finished goals </p>
      * @param believes
      * @param machineParamsBDI 
+     * @throws BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA 
      */
     public void callGarbageCollector(Believes believes, BDIMachineParams machineParamsBDI) throws KernellAgentEventExceptionBESA {
         synchronized(this){
@@ -171,6 +173,7 @@ public class DesireHierarchyPyramid implements Serializable {
                 while (setIterator.hasNext()) {
                     GoalBDI currentElement = setIterator.next();
                     GoalBDITypes type = currentElement.getType();
+                    //ReportBESA.info("🚩🚩🚩🚩🚩 Eliminada " + currentElement.getClass() + " -- " + currentElement.getType());
                     switch (type) {
                         case OBLIGATION:
                             if (currentElement.evaluateViability(believes) <= machineParamsBDI.getDutyThreshold() || currentElement.goalSucceeded(believes)) {
@@ -216,10 +219,21 @@ public class DesireHierarchyPyramid implements Serializable {
     public String toString() {
         StringBuilder resultValue = new StringBuilder();
         for (Set<GoalBDI> set : this.getGeneralHerarchyList()) {
-            Iterator<GoalBDI> setIterator = set.iterator();
-            while (setIterator.hasNext()) {
-                GoalBDI currentElement = setIterator.next();
-                resultValue.append(currentElement.getDescription()).append(currentElement.getId()).append("   TIPO:   ").append(currentElement.getType().getName()).append("   CONTRIBUTION      ").append(currentElement.getContributionValue()).append("    DETECTION    ").append(currentElement.getDetectionValue()).append("   FEASIBLE   ").append(currentElement.getViabilityValue()).append("   PLAUSIBLE   ").append(currentElement.getPlausibilityLevel()).append("\n");
+            for (GoalBDI currentElement : set) {
+                resultValue.append(
+                        currentElement.getDescription()).append(
+                                currentElement.getId()).append(
+                                        "  \n TIPO:   ").append(
+                                                currentElement.getType().getName()).append(
+                                                        "  \n CONTRIBUTION      ").append(
+                                                                currentElement.getContributionValue()).append(
+                                                                        "   \n DETECTION    ").append(
+                                                                                currentElement.getDetectionValue()).append(
+                                                                                        "  \n FEASIBLE   ").append(
+                                                                                                currentElement.getViabilityValue()).append(
+                                                                                                        "  \n PLAUSIBLE   ").append(
+                                                                                                                currentElement.getPlausibilityLevel()).append(
+                                                                                                                        "\n");
             }
         }
         return resultValue.toString();

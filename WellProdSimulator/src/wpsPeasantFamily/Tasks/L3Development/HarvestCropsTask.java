@@ -22,7 +22,7 @@ import BESA.Log.ReportBESA;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
 import static wpsWorld.Messages.WorldMessageType.CROP_HARVEST;
-import wpsControl.Agent.wpsCurrentDateSingleton;
+import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
@@ -59,21 +59,17 @@ public class HarvestCropsTask extends Task {
             AgHandlerBESA ah = adm.getHandlerByAlias(
                     believes.getPeasantProfile().getFarmName());
             ReportBESA.debug("Actual " +
-                    wpsCurrentDateSingleton.getInstance().getCurrentDate());
+                    wpsCurrentDate.getInstance().getCurrentDate());
             WorldMessage worldMessage = new WorldMessage(
                     CROP_HARVEST,
                     "rice_1",
-                    wpsCurrentDateSingleton.getInstance().getCurrentDate(),
+                    wpsCurrentDate.getInstance().getCurrentDate(),
                     believes.getPeasantProfile().getProfileName());
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
                     worldMessage);
             ah.sendEvent(ev);
 
-            ReportBESA.warn(" ------------- TERMINÓ! -------------");
-            
-            believes.getPeasantProfile().setHarverstSeason(false);
-            believes.getPeasantProfile().setGrowingSeason(false);
             believes.getPeasantProfile().useTime(TimeConsumedBy.HarvestCrops);
 
         } catch (ExceptionBESA ex) {

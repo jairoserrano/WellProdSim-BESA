@@ -38,7 +38,7 @@ public enum TimeConsumedBy {
     Communicate(1),
     LookForCollaboration(1),
     ProvideCollaboration(2),
-    EngageInLeisureActivitiesGoal(2),
+    EngageInLeisureActivitiesGoal(1),
     FindNews(2),
     WasteTimeAndResourcesGoal(1);
     

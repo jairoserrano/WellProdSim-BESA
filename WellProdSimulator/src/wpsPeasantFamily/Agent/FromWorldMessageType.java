@@ -1,10 +1,10 @@
-package wpsWorld.Guards;
+package wpsPeasantFamily.Agent;
 
 /**
  *
  * @author jairo
  */
-public enum PeasantCommMessageType {
+public enum FromWorldMessageType {
 
     /**
      *

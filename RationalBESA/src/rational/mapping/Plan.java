@@ -7,17 +7,19 @@ import java.util.Set;
 import rational.tasks.VoidTask;
 
 /**
- *
- * @author andres
+ * This class represents a plan, containing tasks and their dependencies.
  */
 public class Plan {
 
-    HashMap<Task, List<Task>> graphPlan;
-    HashMap<Task, List<Task>> dependencyGraph;
-    List<Task> tasksInExecution;
-    List<Task> tasksWaitingForExecution;
-    Task initial;
+    private final HashMap<Task, List<Task>> graphPlan;
+    private final HashMap<Task, List<Task>> dependencyGraph;
+    private List<Task> tasksInExecution;
+    private List<Task> tasksWaitingForExecution;
+    private final Task initial;
 
+    /**
+     * Constructs a new Plan object.
+     */
     public Plan() {
         graphPlan = new HashMap<>();
         tasksInExecution = new LinkedList<>();
@@ -26,70 +28,122 @@ public class Plan {
         initial = new VoidTask();
         initial.setTaskFinalized();
         tasksInExecution.add(initial);
-        graphPlan.put(initial, new LinkedList<Task>());
-        dependencyGraph.put(initial, new LinkedList<Task>());
+        graphPlan.put(initial, new LinkedList<>());
+        dependencyGraph.put(initial, new LinkedList<>());
     }
 
-    public HashMap<Task, List<Task>> getGraphPlan() {
+    /**
+     * Returns the graph plan.
+     *
+     * @return the graph plan
+     */
+    public synchronized HashMap<Task, List<Task>> getGraphPlan() {
         return graphPlan;
     }
 
-    public HashMap<Task, List<Task>> getDependencyGraph() {
+    /**
+     * Returns the dependency graph.
+     *
+     * @return the dependency graph
+     */
+    public synchronized HashMap<Task, List<Task>> getDependencyGraph() {
         return dependencyGraph;
     }
 
-    public List<Task> getTasksInExecution() {
+    /**
+     * Returns the list of tasks in execution.
+     *
+     * @return the list of tasks in execution
+     */
+    public synchronized List<Task> getTasksInExecution() {
         return tasksInExecution;
     }
 
-    public List<Task> getTasksWaitingForExecution() {
+    /**
+     * Returns the list of tasks waiting for execution.
+     *
+     * @return the list of tasks waiting for execution
+     */
+    public synchronized List<Task> getTasksWaitingForExecution() {
         return tasksWaitingForExecution;
     }
 
-    public void setTasksWaitingForExecution(List<Task> tasksWaitingForExecution) {
+    /**
+     * Sets the list of tasks waiting for execution.
+     *
+     * @param tasksWaitingForExecution the new list of tasks waiting for
+     * execution
+     */
+    public synchronized void setTasksWaitingForExecution(List<Task> tasksWaitingForExecution) {
         this.tasksWaitingForExecution = tasksWaitingForExecution;
     }
-    
-    public Set<Task> getTasks() {
+
+    /**
+     * Returns the set of tasks in the plan.
+     *
+     * @return the set of tasks in the plan
+     */
+    public synchronized Set<Task> getTasks() {
         return graphPlan.keySet();
     }
-    
-    public void addTask(Task task){
+
+    /**
+     * Adds a task to the plan with the initial task as the previous task.
+     *
+     * @param task the task to be added
+     */
+    public synchronized void addTask(Task task) {
         List<Task> l = new LinkedList<>();
         l.add(initial);
         addTask(task, l);
     }
-    
-    public boolean addTask(Task task, List<Task> previousTask){
+
+    /**
+     * Adds a task to the plan with the specified list of previous tasks.
+     *
+     * @param task the task to be added
+     * @param previousTask the list of previous tasks
+     * @return true if the task is added successfully, false otherwise
+     */
+    public synchronized boolean addTask(Task task, List<Task> previousTask) {
         for (Task prevTask : previousTask) {
-            if(!graphPlan.containsKey(prevTask)){
+            if (!graphPlan.containsKey(prevTask)) {
                 return false;
             }
         }
-        graphPlan.put(task, new LinkedList<Task>());
-        if(!dependencyGraph.containsKey(task)){
-            dependencyGraph.put(task, new LinkedList<Task>());
+        graphPlan.put(task, new LinkedList<>());
+        if (!dependencyGraph.containsKey(task)) {
+            dependencyGraph.put(task, new LinkedList<>());
         }
+
         dependencyGraph.get(task).addAll(previousTask);
+
         for (Task prevTask : previousTask) {
             graphPlan.get(prevTask).add(task);
         }
+
         return true;
     }
 
-    public boolean inExecution() {
+    /**
+     * Checks if there are tasks in execution.
+     *
+     * @return true if there are tasks in execution, false otherwise
+     */
+    public synchronized boolean inExecution() {
         return !tasksInExecution.isEmpty();
     }
 
-    public void reset() {
+    /**
+     * Resets the plan by marking all tasks as waiting for execution and
+     * clearing the lists of tasks in execution and waiting for execution.
+     */
+    public synchronized void reset() {
         tasksInExecution = new LinkedList<>();
         tasksWaitingForExecution = new LinkedList<>();
         for (Task task : this.graphPlan.keySet()) {
             task.setTaskWaitingForExecution();
         }
         tasksInExecution.add(initial);
-//        initial.setTaskFinalized();
     }
-
-    
 }

@@ -23,7 +23,7 @@ import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
 import wpsWorld.Messages.WorldMessageType;
 import static wpsWorld.Messages.WorldMessageType.CROP_PESTICIDE;
-import wpsControl.Agent.wpsCurrentDateSingleton;
+import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
@@ -65,17 +65,17 @@ public class ManagePestsTask extends Task {
             worldMessage = new WorldMessage(
                     CROP_PESTICIDE,
                     "rice_1",
-                    wpsCurrentDateSingleton.getInstance().getDatePlusOneMonthAndUpdate(),
+                    wpsCurrentDate.getInstance().getCurrentDate(),
                     believes.getPeasantProfile().getProfileName());
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
                     worldMessage);
             ah.sendEvent(ev);
-            wpsCurrentDateSingleton.getInstance().setCurrentDate(
+            wpsCurrentDate.getInstance().setCurrentDate(
                     believes.getPeasantProfile().getInternalCurrentDate());
 
             ReportBESA.debug("->Actual Date: " 
-                    + wpsCurrentDateSingleton.getInstance().getCurrentDate());
+                    + wpsCurrentDate.getInstance().getCurrentDate());
 
             // @TODO: falta calcular el tiempo necesario para el cultivo
             believes.getPeasantProfile().useTime(TimeConsumedBy.ManagePests);

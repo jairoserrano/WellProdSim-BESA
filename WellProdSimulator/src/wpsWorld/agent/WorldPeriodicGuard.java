@@ -4,7 +4,7 @@ import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.PeriodicGuardBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import wpsControl.Agent.wpsCurrentDateSingleton;
+import wpsControl.Agent.wpsCurrentDate;
 import wpsWorld.Messages.WorldMessage;
 import wpsWorld.Messages.WorldMessageType;
 
@@ -21,7 +21,7 @@ public class WorldPeriodicGuard extends PeriodicGuardBESA {
     public void funcPeriodicExecGuard(EventBESA eventBESA) {
         try {
             AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAid(this.agent.getAid());
-            wpsCurrentDateSingleton currentDate = wpsCurrentDateSingleton.getInstance();
+            wpsCurrentDate currentDate = wpsCurrentDate.getInstance();
             WorldMessage worldMessage = new WorldMessage(WorldMessageType.CROP_OBSERVE, null, currentDate.getCurrentDate(), null);
             EventBESA eventBESASend = new EventBESA(WorldGuard.class.getName(), worldMessage);
             ah.sendEvent(eventBESASend);

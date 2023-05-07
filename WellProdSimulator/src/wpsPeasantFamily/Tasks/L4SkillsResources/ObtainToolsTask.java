@@ -22,7 +22,7 @@ import BESA.Log.ReportBESA;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
 import static wpsWorld.Messages.WorldMessageType.CROP_IRRIGATION;
-import wpsControl.Agent.wpsCurrentDateSingleton;
+import wpsControl.Agent.wpsCurrentDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rational.mapping.Believes;

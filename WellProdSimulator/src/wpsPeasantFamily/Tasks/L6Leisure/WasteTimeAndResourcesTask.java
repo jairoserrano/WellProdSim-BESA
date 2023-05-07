@@ -44,7 +44,7 @@ public class WasteTimeAndResourcesTask extends Task {
     public void executeTask(Believes parameters) {
         ////ReportBESA.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().useLeisureOptions();
+        //believes.getPeasantProfile().useLeisureOptions();
         believes.getPeasantProfile().useTime(TimeConsumedBy.WasteTimeAndResourcesGoal);
         this.setFinished(true);
     }

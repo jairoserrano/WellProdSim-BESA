@@ -74,10 +74,7 @@ public class DoVitalsGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getMoney() > 0
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.DoVitalsTask
-                )) {
+        if (believes.getPeasantProfile().getMoney() > 0) {
             return 1;
         } else {
             return 0;
@@ -111,7 +108,11 @@ public class DoVitalsGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return 1;
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.DoVitalsTask)) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -122,7 +123,7 @@ public class DoVitalsGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("CONTRIBUTION " + this.getContributionValue());
+        //ReportBESA.debug("🏋️‍♂️🏋️‍♂️🏋️‍♂️ getMainRole " + stateBDI.getMainRole());
         return 1;
     }
 
@@ -134,7 +135,7 @@ public class DoVitalsGoal extends GoalBDI {
      */
     @Override
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        //ReportBESA.debug("🏋️‍♂️🏋️‍♂️🏋️‍♂️ getPyramidGoals \n" + stateBDI.getMachineBDIParams().getPyramidGoals());
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
         return believes.getPeasantProfile().getHealth() > 0;
     }

@@ -22,7 +22,7 @@ import BESA.Log.ReportBESA;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
 import static wpsWorld.Messages.WorldMessageType.CROP_INFORMATION;
-import wpsControl.Agent.wpsCurrentDateSingleton;
+import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
@@ -55,7 +55,6 @@ public class CheckCropsTask extends Task {
     public void executeTask(Believes parameters) {
         ////ReportBESA.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        // @TODO: Cambiar a la venta real con el agente social market
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
@@ -66,19 +65,16 @@ public class CheckCropsTask extends Task {
             worldMessage = new WorldMessage(
                     CROP_OBSERVE,
                     "rice_1",
-                    wpsCurrentDateSingleton.getInstance().getDatePlusOneMonthAndUpdate(),
+                    wpsCurrentDate.getInstance().getCurrentDate(),
                     believes.getPeasantProfile().getProfileName());
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
                     worldMessage);
             ah.sendEvent(ev);
-            wpsCurrentDateSingleton.getInstance().setCurrentDate(
-                    believes.getPeasantProfile().getInternalCurrentDate());
 
-            ReportBESA.debug("->Actual Date: " 
-                    + wpsCurrentDateSingleton.getInstance().getCurrentDate());
+            ReportBESA.debug("🗓️🗓️🗓️ Date: " + wpsCurrentDate.getInstance().getCurrentDate());
 
-            believes.getPeasantProfile().setHarverstSeason(true);
+            //believes.getPeasantProfile().setHarverstSeason(true);
             // @TODO: falta calcular el tiempo necesario para el cultivo
             believes.getPeasantProfile().useTime(TimeConsumedBy.CheckCrops);
             this.setFinished(true);

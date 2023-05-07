@@ -64,11 +64,11 @@ RegularPeasant:
   housingQuailty: 1.0
   timeSpentOnMaintenance: 1.0
   #finance:
-  money: 1.0
+  money: 1000000
   totalIncome: 0.0
   debtPayment: 0.0
   #training:
-  trainingLevel: 0.7
+  trainingLevel: 1.0
   trainingAvailability: 0.7
   trainingRelevance: 1
   trainingCost: 1.0

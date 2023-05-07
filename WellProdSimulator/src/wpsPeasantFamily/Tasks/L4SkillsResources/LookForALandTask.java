@@ -25,7 +25,7 @@ import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Agent.WorldState;
 import wpsWorld.Messages.WorldMessage;
 import wpsWorld.Messages.WorldMessageType;
-import wpsControl.Agent.wpsCurrentDateSingleton;
+import wpsControl.Agent.wpsCurrentDate;
 import wpsWorld.Helper.Hemisphere;
 import wpsWorld.Helper.Soil;
 import wpsWorld.Helper.WorldConfiguration;
@@ -64,7 +64,7 @@ public class LookForALandTask extends Task {
         }
     }
 
-    private static WorldState buildWorldState(String rainfallFile, String agentId) {
+    private static WorldState buildWorldState(String rainfallFile, String agentAlias) {
         WorldConfiguration worldConfiguration = WorldConfiguration.getPropsInstance();
         ShortWaveRadiationLayer radiationLayer = new ShortWaveRadiationLayer(
                 worldConfiguration.getProperty("data.radiation"),
@@ -79,41 +79,40 @@ public class LookForALandTask extends Task {
         DiseaseCell diseaseCellRice = new DiseaseCell("rice1DiseaseCell");
         diseaseLayer.addVertex(diseaseCellRice);
         CropLayer cropLayer = new CropLayer();
-        cropLayer.addCrop(
-                new RiceCell(
-                        1.05, 
-                        1.2, 
-                        0.7, 
-                        1512, 
-                        3330, 
-                        100, 
-                        0.9,
-                        0.2,
-                        Soil.SAND,
-                        true, 
-                        diseaseCellRice, 
-                        "rice_1", 
-                        agentId));
+        cropLayer.addCrop(new RiceCell(
+                1.05,
+                1.2,
+                0.7,
+                1512,
+                3330,
+                100,
+                0.9,
+                0.2,
+                Soil.SAND,
+                true,
+                diseaseCellRice,
+                "rice_1",
+                agentAlias));
         cropLayer.bindLayer("radiation", radiationLayer);
         cropLayer.bindLayer("rainfall", rainfallLayer);
         cropLayer.bindLayer("temperature", temperatureLayer);
         cropLayer.bindLayer("evapotranspiration", evapotranspirationLayer);
         return new WorldState(
-                temperatureLayer, 
-                radiationLayer, 
-                cropLayer, 
-                diseaseLayer, 
+                temperatureLayer,
+                radiationLayer,
+                cropLayer,
+                diseaseLayer,
                 evapotranspirationLayer,
                 rainfallLayer);
     }
 
-    private static void initialWorldStateInitialization(WorldAgent worldAgent) {
+    private static void initialWorldStateInitialization(WorldAgent worldAgent, String agentAlias) {
         AdmBESA adm = AdmBESA.getInstance();
         WorldMessage worldMessage = new WorldMessage(
                 WorldMessageType.CROP_INIT,
                 null,
-                wpsCurrentDateSingleton.getInstance().getCurrentDate(),
-                null);
+                wpsCurrentDate.getInstance().getCurrentDate(),
+                agentAlias);
         try {
             AgHandlerBESA ah = adm.getHandlerByAid(worldAgent.getAid());
             EventBESA eventBesa = new EventBESA(WorldGuard.class.getName(), worldMessage);
@@ -123,8 +122,8 @@ public class LookForALandTask extends Task {
         }
     }
 
-    private static WorldAgent buildWorld(String rainfallFile, String agentId, String aliasWorldAgent) {
-        WorldState worldState = buildWorldState(rainfallFile, agentId);
+    private static WorldAgent buildWorld(String rainfallFile, String agentAlias, String aliasWorldAgent) {
+        WorldState worldState = buildWorldState(rainfallFile, agentAlias);
         StructBESA structBESA = new StructBESA();
         structBESA.bindGuard(WorldGuard.class);
         try {
@@ -170,7 +169,7 @@ public class LookForALandTask extends Task {
         //ReportBESA.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         int uuid = (int) (UUID.randomUUID().getLeastSignificantBits() % 1000);
-        
+
         // @TODO: setFarmName lo cambia el gobierno o el campesino
         believes.getPeasantProfile().setFarmName("Land_" + uuid);
         believes.getPeasantProfile().setFarmSize(2);
@@ -179,15 +178,15 @@ public class LookForALandTask extends Task {
         believes.getPeasantProfile().setHousingSize(1);
         believes.getPeasantProfile().setHousingLocation(1);
         believes.getPeasantProfile().setFarmDistance(1);
+
         // @TODO: setPlantingSeason lo cambia el reloj global
-        believes.getPeasantProfile().setPlantingSeason(true);
-        
+        believes.getPeasantProfile().useTime(TimeConsumedBy.LookForALand);
+
         // Set default values of peasant and world
         wpsConfig config = wpsConfig.getInstance();
         // Set world perturbation
         setPerturbation(config.getPerturbation());
-        // Set init date of simulation
-        wpsCurrentDateSingleton.getInstance().setCurrentDate(config.getStartSimulationDate());
+
         try {
             WorldAgent worldAgent = buildWorld(
                     getRainfallFile(config.getRainfallConditions()),
@@ -195,15 +194,20 @@ public class LookForALandTask extends Task {
                     believes.getPeasantProfile().getFarmName()
             );
             //ReportBESA.info("Inicializando Mundo");
-            initialWorldStateInitialization(worldAgent);
+            initialWorldStateInitialization(
+                    worldAgent,
+                    believes.getPeasantProfile().getProfileName()
+            );
+
             //ReportBESA.info("Configurado Mundo Simple para " + believes.getPeasantProfile().getProfileName());
             worldAgent.start();
-            believes.getPeasantProfile().useTime(TimeConsumedBy.LookForALand);
+
         } catch (Exception ex) {
             ReportBESA.error(ex);
         }
 
         believes.getPeasantProfile().setFarm(true);
+        ReportBESA.info("🥬 La familia campesina ya tiene tierra.");
         this.setFinished(true);
 
     }

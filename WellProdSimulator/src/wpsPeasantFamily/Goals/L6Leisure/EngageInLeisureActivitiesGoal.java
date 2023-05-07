@@ -44,12 +44,12 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
         RationalRole peasantLeisureRole = new RationalRole(
                 "peasantLeisureTask",
                 peasantLeisurePlan);
-        EngageInLeisureActivitiesGoal peasantLeisureGoalBDI = new EngageInLeisureActivitiesGoal(
+        EngageInLeisureActivitiesGoal peasantLeisureGoal = new EngageInLeisureActivitiesGoal(
                 wpsStart.getPlanID(),
                 peasantLeisureRole,
                 "peasantLeisureTask",
                 GoalBDITypes.LEISURE);
-        return peasantLeisureGoalBDI;
+        return peasantLeisureGoal;
     }
 
     /**
@@ -74,11 +74,12 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getLeisureOptions() > 0) {
+        /*if (believes.getPeasantProfile().getLeisureOptions() > 0) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
+        return 1;
     }
 
     /**
@@ -90,11 +91,11 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        ReportBESA.info("isBusy=" + believes.getPeasantProfile().isBusy());
-        if (believes.getPeasantProfile().isBusy()) {
-            return 0;
-        } else {
+        ReportBESA.info("isFree=" + believes.getPeasantProfile().isFree());
+        if (believes.getPeasantProfile().isFree()) {
             return 1;
+        } else {
+            return 0;
         }
     }
 

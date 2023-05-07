@@ -27,19 +27,21 @@ import java.util.Iterator;
 
 /**
  * TODO
- * 
- * @author  SIDRe - Pontificia Universidad Javeriana
- * @author  Takina - Pontificia Universidad Javeriana
+ *
+ * @author SIDRe - Pontificia Universidad Javeriana
+ * @author Takina - Pontificia Universidad Javeriana
  * @version 3.0, 11/09/11
- * @since   JDK1.4
+ * @since JDK1.4
  */
 public class LocalAdmBESA extends AdmBESA {
 
     /**
-     * 
+     *
      */
     protected LocalDirectoryBESA localDirectory;
-    
+
+    private final Object lock = new Object();
+
     public LocalAdmBESA() {
         localDirectory = new LocalDirectoryBESA();
     }
@@ -52,10 +54,10 @@ public class LocalAdmBESA extends AdmBESA {
      * destroy the administrator.
      * @param ipRmiRegistry The IP address of the machine that contains the
      * administrator to be registered.
-     * @param portRmiRegistry The port of the machine that contains the administrator
-     * to be registered.
-     * @param centralized Indicates if the container is going to be executed
-     * in a single machine or if it is going to be used in a distributed way.
+     * @param portRmiRegistry The port of the machine that contains the
+     * administrator to be registered.
+     * @param centralized Indicates if the container is going to be executed in
+     * a single machine or if it is going to be used in a distributed way.
      * @return Reference to the unique/singleton instance of the local
      * administrator.
      * @throws ExceptionBESA If happens an error in the administrator
@@ -92,10 +94,10 @@ public class LocalAdmBESA extends AdmBESA {
      * destroy the administrator.
      * @param ipRmiRegistry The IP address of the machine that contains the
      * administrator to be registered.
-     * @param portRmiRegistry The port of the machine that contains the administrator
-     * to be registered.
-     * @param centralized Indicates if the container is going to be executed
-     * in a single machine or if it is going to be used in a distributed way.
+     * @param portRmiRegistry The port of the machine that contains the
+     * administrator to be registered.
+     * @param centralized Indicates if the container is going to be executed in
+     * a single machine or if it is going to be used in a distributed way.
      * @return Reference to the unique/singleton instance of the local
      * administrator.
      * @throws ExceptionBESA If happens an error in the administrator
@@ -131,9 +133,9 @@ public class LocalAdmBESA extends AdmBESA {
 
     @Override
     public synchronized String registerAgent(AgentBESA ag, String agId, String alias) {
-        if(agId == null){
+        if (agId == null) {
             agId = this.generateAgId(alias);                               //Generates the agent ID. 
-        }        
+        }
         AgLocalHandlerBESA aidHandler = null;
         try {
             aidHandler = new AgLocalHandlerBESA(alias, agId, ag);      //Creates agent handler.
@@ -175,11 +177,12 @@ public class LocalAdmBESA extends AdmBESA {
      *
      * @param containerPassword Container authentication key.
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void kill(double containerPassword) throws ExceptionBESA {
-        if (Math.abs(this.passwd - containerPassword) < 0.0001) {               //Checks if the password is correct.
+        if (Math.abs(this.passwd - containerPassword) < 0.0001) { // Checks if the password is correct.
             ReportBESA.trace("Password Correcto - Iniciando cierre de Threads");
-            synchronized (this.isAlive()) {                                     //Synchronized access to the variable alive.
+            synchronized (this) { // Synchronized access to the container object.
                 //------------------------------------------------------------//
                 // Kills to all agents that are into container.               //
                 //------------------------------------------------------------//
@@ -239,14 +242,14 @@ public class LocalAdmBESA extends AdmBESA {
     }
 
     /**
-     * 
+     *
      * @param agent
      */
     private void killSCAgent(AgentBESA agent) throws KernelAgentExceptionBESA {
-        synchronized (agent.isAlive()) {                                        //Synchronized access to the variable alive.
-            if (agent.isAlive()) {                                              //Checks if is alive.
+        synchronized (agent) { // Synchronized access to the agent.
+            if (agent.isAlive()) { // Checks if is alive.
                 ArrayList<BehaviorBESA> behaviors = agent.getBehaviors();
-                agent.getChannel().initBehBarrier(behaviors.size());            //Synchronization boot - Wait full channel setup.
+                agent.getChannel().initBehBarrier(behaviors.size()); // Synchronization boot - Wait full channel setup.
                 //------------------------------------------------------------//
                 // Kills behavioors.                                          //
                 //------------------------------------------------------------//
@@ -255,24 +258,24 @@ public class LocalAdmBESA extends AdmBESA {
                 }
                 while (agent.getChannel().getbarrierCounter() > 0) {
                     agent.getChannel().signalBehBarrier();
-                } //End while.
-                agent.getChannel().waitBehBarrier();                            //Blocks the behavior while the barrier counter indicates it.
-                for (int i = 0; i < behaviors.size(); i++) {                    //Removes Agent's Behaviors.
-                    behaviors.remove(i);                                        //Removes behavior.
-                } //End for.               
+                } // End while.
+                agent.getChannel().waitBehBarrier(); // Blocks the behavior while the barrier counter indicates it.
+                for (int i = 0; i < behaviors.size(); i++) { // Removes Agent's Behaviors.
+                    behaviors.remove(i); // Removes behavior.
+                } // End for.
                 //------------------------------------------------------------//
                 // Forces the finalization thread channel and behaviors.      //
                 //------------------------------------------------------------//
                 agent.resetAlive();
-                String evType = "KILL_BESA_AGENT";                              //Event type for unlock the chanel.
-                try {                                                           //Starts try.
-                    EventBESA ev = new EventBESA(evType, passwd);               //Creates the event to send.
-                    agent.sendEvent(ev);                                        //Sends the event to unlock the chanel.
-                } catch (Exception e) { //End try.
+                String evType = "KILL_BESA_AGENT"; // Event type for unlock the chanel.
+                try { // Starts try.
+                    EventBESA ev = new EventBESA(evType, passwd); // Creates the event to send.
+                    agent.sendEvent(ev); // Sends the event to unlock the chanel.
+                } catch (ExceptionBESA e) { // End try.
                     ReportBESA.error("No send" + e.toString());
-                } //End catch.
-            } //End if.
-        } //End synchronized.
+                } // End catch.
+            } // End if.
+        } // End synchronized.
     }
 
     //@Override
@@ -368,8 +371,10 @@ public class LocalAdmBESA extends AdmBESA {
 
     /**
      * addService crear un servicio en las paginas amarillas
+     *
      * @param servId nombre/identificador unico del servicio
-     * @param descriptors vector con nombres alternativos/descriptivos del servicio
+     * @param descriptors vector con nombres alternativos/descriptivos del
+     * servicio
      */
     @Override
     public synchronized void addService(String servId, ArrayList<String> descriptors) {
@@ -378,8 +383,10 @@ public class LocalAdmBESA extends AdmBESA {
 
     /**
      * removeService eliminar un servicio en las paginas amarillas
+     *
      * @param servId nombre/identificador unico del servicio
-     **/
+     *
+     */
     @Override
     public void removeService(String servId) {
         localDirectory.removeService(servId);
@@ -387,6 +394,7 @@ public class LocalAdmBESA extends AdmBESA {
 
     /**
      * bindService asociar un agente a un servicio de las paginas amarillas
+     *
      * @param agId id del agente
      * @param servId nombre/identificador unico del servicio
      * @return true si todo bien, false si el servicio no ha sido creado
@@ -397,7 +405,9 @@ public class LocalAdmBESA extends AdmBESA {
     }
 
     /**
-     * unbindService eliminar asociacion de un agente a un servicio de las paginas amarillas
+     * unbindService eliminar asociacion de un agente a un servicio de las
+     * paginas amarillas
+     *
      * @param agId id del agente
      * @param servId nombre/identificador unico del servicio
      * @return true si todo bien, false si el servicio no ha sido creado
@@ -407,11 +417,15 @@ public class LocalAdmBESA extends AdmBESA {
         localDirectory.unbindService(agId, servId);
     }
 
-    /**     
-     * searchAidByService buscar agentes que prestan un servicio - paginas amarillas
-     * @param servId nombre/identificador del servicio que prestan el/los agentes buscados
+    /**
+     * searchAidByService buscar agentes que prestan un servicio - paginas
+     * amarillas
+     *
+     * @param servId nombre/identificador del servicio que prestan el/los
+     * agentes buscados
      * @return un iterator con los ids de los agentes encontrados
-     **/
+     *
+     */
     @Override
     public synchronized Iterator searchAidByService(String servId) {
         return localDirectory.searchAidByService(servId);
@@ -430,5 +444,5 @@ public class LocalAdmBESA extends AdmBESA {
     @Override
     public Enumeration<String> getAdmAliasList() {
         throw new UnsupportedOperationException("Not supported yet.");
-    }    
+    }
 }

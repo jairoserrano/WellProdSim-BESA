@@ -74,10 +74,10 @@ public class CheckCropsGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().isBusy()) {
-            return 0;
-        } else {
+        if (believes.getPeasantProfile().isFree()) {
             return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -91,8 +91,7 @@ public class CheckCropsGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //ReportBESA.info("FamilyTimeAvailability=" + believes.getPeasantProfile().getFamilyTimeAvailability());
-        if (believes.getPeasantProfile().isGrowingSeason()
-                || believes.getPeasantProfile().isHarverstSeason()) {
+        if (believes.getPeasantProfile().isGrowingSeason()) {
             return 1;
         } else {
             return 0;

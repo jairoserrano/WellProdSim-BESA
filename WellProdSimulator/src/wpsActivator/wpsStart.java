@@ -22,8 +22,10 @@ import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Log.ReportBESA;
 import BESA.Util.PeriodicDataBESA;
+import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgent;
-import wpsPeasantFamily.Agent.startReachingGoalsGuard;
+import wpsPeasantFamily.Agent.HeartBeatGuard;
+import wpsPerturbation.Agent.wpsPerturbationAgent;
 import wpsSociety.Agent.SocietyAgent;
 import wpsSocietyBank.Agent.BankAgent;
 import wpsSocietyMarket.MarketAgent;
@@ -64,6 +66,8 @@ public class wpsStart {
         // Set default values of peasant and world
         wpsConfig config = wpsConfig.getInstance();
         aliasPeasantFamilyAgent = config.getRegularFarmerProfile().getProfileName();
+        // Set init date of simulation
+        wpsCurrentDate.getInstance().setCurrentDate(config.getStartSimulationDate());
 
         try {
             ReportBESA.info("Inicializando WellProdSimulator");
@@ -79,14 +83,17 @@ public class wpsStart {
             // Bank Agent
             BankAgent bankAgent = BankAgent.createBankAgent(aliasBankAgent, PASSWD);
             // Markt Agent
-            MarketAgent marketAgent = MarketAgent.createBankAgent(aliasMarketAgent, PASSWD);            
+            MarketAgent marketAgent = MarketAgent.createBankAgent(aliasMarketAgent, PASSWD);
+            // Perturbator Agent
+            wpsPerturbationAgent perturbationAgent = wpsPerturbationAgent.createPerturbationAgent(PASSWD);
 
             // Simulation Start
             startAllAgents(
                     peasantFamilyAgent,
                     societyAgent,
                     bankAgent,
-                    marketAgent
+                    marketAgent,
+                    perturbationAgent
             );
 
         } catch (ExceptionBESA ex) {
@@ -118,7 +125,7 @@ public class wpsStart {
                 PeriodicGuardBESA.START_PERIODIC_CALL);
         AgHandlerBESA agHandler = adm.getHandlerByAlias(aliasPeasantFamilyAgent);
         EventBESA eventBesa = new EventBESA(
-                startReachingGoalsGuard.class.getName(),
+                HeartBeatGuard.class.getName(),
                 data);
         agHandler.sendEvent(eventBesa);
 

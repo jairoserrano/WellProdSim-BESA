@@ -17,6 +17,7 @@ package wpsPeasantFamily.Tasks.L1Survival;
 import BESA.Log.ReportBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
+import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
 
@@ -46,7 +47,7 @@ public class DoVitalsTask extends Task {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         
         // dormir 8 horas y 4 horas de alimentación
-        believes.getPeasantProfile().useTime(TimeConsumedBy.DoVitalsTask);
+        ReportBESA.info("🔆🔆🔆 Despertó el " + wpsCurrentDate.getInstance().getCurrentDate() + ". Hizo sus funciones vitales.");
         
         // Vitals about money and food
         if (believes.getPeasantProfile().getMoney()
@@ -55,9 +56,11 @@ public class DoVitalsTask extends Task {
         } else {
             believes.getPeasantProfile().setLoanSeason(true);
         }
-        // Vitals about 
         
-        this.setFinished(true);
+        // Vitals about
+        believes.getPeasantProfile().useTime(TimeConsumedBy.DoVitalsTask);
+        believes.getPeasantProfile().setNewDayFalse();
+        //this.setFinished(true);
     }
 
     /**

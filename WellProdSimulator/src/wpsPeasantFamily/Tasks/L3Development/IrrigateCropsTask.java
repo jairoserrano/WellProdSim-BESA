@@ -22,7 +22,7 @@ import BESA.Log.ReportBESA;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
 import static wpsWorld.Messages.WorldMessageType.CROP_IRRIGATION;
-import wpsControl.Agent.wpsCurrentDateSingleton;
+import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
@@ -71,11 +71,11 @@ public class IrrigateCropsTask extends Task {
                     WorldGuard.class.getName(),
                     worldMessage);
             ah.sendEvent(ev);
-            wpsCurrentDateSingleton.getInstance().setCurrentDate(
+            wpsCurrentDate.getInstance().setCurrentDate(
                     believes.getPeasantProfile().getInternalCurrentDate());
 
             ReportBESA.debug("!----> Actual "
-                    + wpsCurrentDateSingleton.getInstance().getCurrentDate());
+                    + wpsCurrentDate.getInstance().getCurrentDate());
 
             believes.getPeasantProfile().setHarverstSeason(true);
             believes.getPeasantProfile().useTime(TimeConsumedBy.IrrigateCrops);

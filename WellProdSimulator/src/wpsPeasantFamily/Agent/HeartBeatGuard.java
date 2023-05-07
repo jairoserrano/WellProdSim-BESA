@@ -12,24 +12,25 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsWorld.Guards;
+package wpsPeasantFamily.Agent;
 
 import BESA.Kernel.Agent.Event.EventBESA;
-import BESA.Kernel.Agent.GuardBESA;
+import BESA.Kernel.Agent.PeriodicGuardBESA;
 import BESA.Log.ReportBESA;
 
 /**
  *
  * @author jairo
  */
-public class PeasantCommGuard extends GuardBESA {
+public class HeartBeatGuard extends PeriodicGuardBESA{
+    
     /**
      *
      * @param event
      */
     @Override
-    public void funcExecGuard(EventBESA event) {
-        ReportBESA.debug(" >>> " + event.getSenderAgId() + " getType=" +  event.getData());
+    public void funcPeriodicExecGuard(EventBESA event) {
+        ((PeasantFamilyBDIAgent)this.getAgent()).BDIPulse();
     }
     
 }

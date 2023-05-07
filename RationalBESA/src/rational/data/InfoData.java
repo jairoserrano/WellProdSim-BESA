@@ -20,22 +20,6 @@ public class InfoData extends DataBESA{
     public String getStringFromDataBesa() throws KernellAgentEventExceptionBESA {
         return message;
     }
-    
-    
-    
-//    SensorInfo sensorInfo;
-//
-//    public SensorInfoData(SensorInfo sensorInfo) {
-//        this.sensorInfo = sensorInfo;
-//    }
-//
-//    public SensorInfo getSensorInfo() {
-//        return sensorInfo;
-//    }
-//
-//    public void setSensorInfo(SensorInfo sensorInfo) {
-//        this.sensorInfo = sensorInfo;
-//    }
 
     public String getMessage() {
         return message;

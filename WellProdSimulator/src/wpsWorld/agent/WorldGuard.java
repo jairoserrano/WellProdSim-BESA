@@ -7,11 +7,11 @@ import BESA.Kernel.Agent.PeriodicGuardBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Log.ReportBESA;
 import BESA.Util.PeriodicDataBESA;
-import wpsWorld.Guards.PeasantCommGuard;
-import wpsWorld.Guards.PeasantCommMessage;
-import wpsWorld.Guards.PeasantCommMessageType;
+import wpsPeasantFamily.Agent.FromWorldGuard;
+import wpsPeasantFamily.Agent.FromWorldMessage;
+import wpsPeasantFamily.Agent.FromWorldMessageType;
 import wpsWorld.Messages.WorldMessage;
-import wpsControl.Agent.wpsCurrentDateSingleton;
+import wpsControl.Agent.wpsCurrentDate;
 import wpsWorld.Helper.WorldConfiguration;
 import wpsWorld.layer.crop.CropLayer;
 import wpsWorld.layer.crop.cell.CropCell;
@@ -33,21 +33,21 @@ public class WorldGuard extends GuardBESA {
     @Override
     public void funcExecGuard(EventBESA eventBESA) {
         WorldMessage worldMessage = (WorldMessage) eventBESA.getData();
-        //ReportBESA.info("--->" + worldMessage.toString());
+        //ReportBESA.info("🚩🚩🚩" + worldMessage);
         WorldState worldState = (WorldState) this.agent.getState();
-        PeasantCommMessage peasantMessage;
+        FromWorldMessage peasantMessage;
         switch (worldMessage.getWorldMessageType()) {
             case CROP_INIT:
                 ReportBESA.info("Start event, initialize first layers state");
                 worldState.lazyUpdateCropsForDate(worldMessage.getDate());
-                wpsCurrentDateSingleton.getInstance().getDatePlusOneDayAndUpdate();
-                peasantMessage = new PeasantCommMessage(
-                        PeasantCommMessageType.CROP_INIT,
-                        worldMessage.getPeasantAgentId(),
+                wpsCurrentDate.getInstance().getDatePlusOneDayAndUpdate();
+                peasantMessage = new FromWorldMessage(
+                        FromWorldMessageType.CROP_INIT,
+                        worldMessage.getPeasantAgentAlias(),
                         "CROP_INIT");
                 peasantMessage.setDate(worldMessage.getDate());
                 this.replyToPeasantAgent(
-                        worldMessage.getPeasantAgentId(), 
+                        worldMessage.getPeasantAgentAlias(), 
                         peasantMessage);
                 break;
             case CROP_INFORMATION:
@@ -62,24 +62,24 @@ public class WorldGuard extends GuardBESA {
                 JSONObject cropDataJson = new JSONObject(cropCellState);
                 cropDataJson.put("disease", diseaseCellState.isInfected());
                 cropDataJson.put("cropHarvestReady", cropCellInfo.isHarvestReady());
-                peasantMessage = new PeasantCommMessage(
-                        PeasantCommMessageType.CROP_INFORMATION_NOTIFICATION,
-                        worldMessage.getPeasantAgentId(),
+                peasantMessage = new FromWorldMessage(
+                        FromWorldMessageType.CROP_INFORMATION_NOTIFICATION,
+                        worldMessage.getPeasantAgentAlias(),
                         cropDataJson.toString());
                 peasantMessage.setDate(worldMessage.getDate());
-                this.replyToPeasantAgent(worldMessage.getPeasantAgentId(), peasantMessage);
+                this.replyToPeasantAgent(worldMessage.getPeasantAgentAlias(), peasantMessage);
                 break;
             case CROP_OBSERVE:
                 ReportBESA.info("Observing crops (lazy mode).... on date: " 
                         + worldMessage.getDate());
                 worldState.getCropLayer().getAllCrops().forEach(cropCell -> {
                     if (((CropCellState) cropCell.getCellState()).isWaterStress()) {
-                        this.notifyPeasantCropProblem(PeasantCommMessageType.NOTIFY_CROP_WATER_STRESS,
+                        this.notifyPeasantCropProblem(FromWorldMessageType.NOTIFY_CROP_WATER_STRESS,
                                 cropCell.getAgentPeasantId(),
                                 worldMessage.getDate());
                     }
                     if (((DiseaseCellState) cropCell.getDiseaseCell().getCellState()).isInfected()) {
-                        this.notifyPeasantCropProblem(PeasantCommMessageType.NOTIFY_CROP_DISEASE,
+                        this.notifyPeasantCropProblem(FromWorldMessageType.NOTIFY_CROP_DISEASE,
                                 cropCell.getAgentPeasantId(),
                                 worldMessage.getDate());
                     }
@@ -99,13 +99,13 @@ public class WorldGuard extends GuardBESA {
                         cropIdToIrrigate, 
                         defaultWaterQuantity, 
                         worldMessage.getDate());
-                peasantMessage = new PeasantCommMessage(
-                        PeasantCommMessageType.CROP_INFORMATION_NOTIFICATION, 
-                        worldMessage.getPeasantAgentId(), 
+                peasantMessage = new FromWorldMessage(
+                        FromWorldMessageType.CROP_INFORMATION_NOTIFICATION, 
+                        worldMessage.getPeasantAgentAlias(), 
                         "CROP_IRRIGATION");
                 peasantMessage.setDate(worldMessage.getDate());
                 this.replyToPeasantAgent(
-                        worldMessage.getPeasantAgentId(), 
+                        worldMessage.getPeasantAgentAlias(), 
                         peasantMessage);
                 break;
             case CROP_PESTICIDE:
@@ -118,22 +118,22 @@ public class WorldGuard extends GuardBESA {
                         diseaseCellId,
                         defaultCropInsecticideCoverage, 
                         worldMessage.getDate());
-                peasantMessage = new PeasantCommMessage(
-                        PeasantCommMessageType.CROP_INFORMATION_NOTIFICATION, 
-                        worldMessage.getPeasantAgentId(), 
+                peasantMessage = new FromWorldMessage(
+                        FromWorldMessageType.CROP_INFORMATION_NOTIFICATION, 
+                        worldMessage.getPeasantAgentAlias(), 
                         "CROP_PESTICIDE");
                 peasantMessage.setDate(worldMessage.getDate());
-                this.replyToPeasantAgent(worldMessage.getPeasantAgentId(), peasantMessage);
+                this.replyToPeasantAgent(worldMessage.getPeasantAgentAlias(), peasantMessage);
                 break;
             case CROP_HARVEST:
                 this.harvestCrop(worldState.getCropLayer());
-                peasantMessage = new PeasantCommMessage(
-                        PeasantCommMessageType.CROP_HARVEST,
-                        worldMessage.getPeasantAgentId(),
+                peasantMessage = new FromWorldMessage(
+                        FromWorldMessageType.CROP_HARVEST,
+                        worldMessage.getPeasantAgentAlias(),
                         "CROP_HARVEST");
                 peasantMessage.setDate(worldMessage.getDate());
                 this.replyToPeasantAgent(
-                        worldMessage.getPeasantAgentId(), 
+                        worldMessage.getPeasantAgentAlias(), 
                         peasantMessage);
                 break;
         }
@@ -141,14 +141,14 @@ public class WorldGuard extends GuardBESA {
 
     /**
      *
-     * @param peasantAgentId
+     * @param peasantAgentAlias
      * @param peasantMessage
      */
-    public void replyToPeasantAgent(String peasantAgentId, PeasantCommMessage peasantMessage) {
+    public void replyToPeasantAgent(String peasantAgentAlias, FromWorldMessage peasantMessage) {
         try {
-            AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAlias(peasantAgentId);
+            AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAlias(peasantAgentAlias);
             EventBESA event = new EventBESA(
-                    PeasantCommGuard.class.getName(), 
+                    FromWorldGuard.class.getName(), 
                     peasantMessage);
             ah.sendEvent(event);
             ReportBESA.debug("Sent: " + peasantMessage.getPayload());
@@ -163,17 +163,17 @@ public class WorldGuard extends GuardBESA {
      * @param aid
      * @param date
      */
-    public void notifyPeasantCropProblem(PeasantCommMessageType messageType, String aid, String date) {
+    public void notifyPeasantCropProblem(FromWorldMessageType messageType, String aid, String date) {
         try {
             ReportBESA.debug("AgentID: " + aid);
             AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAid(aid);
-            PeasantCommMessage peasantMessage = new PeasantCommMessage(
+            FromWorldMessage peasantMessage = new FromWorldMessage(
                     messageType,
                     aid,
                     null);
             peasantMessage.setDate(date);
             EventBESA event = new EventBESA(
-                    PeasantCommGuard.class.getName(), 
+                    FromWorldGuard.class.getName(), 
                     peasantMessage);
             ReportBESA.debug("Sent: " + peasantMessage.getSimpleMessage());
             ah.sendEvent(event);
@@ -184,20 +184,20 @@ public class WorldGuard extends GuardBESA {
 
     /**
      *
-     * @param aid
+     * @param agentAlias
      * @param date
      */
-    public void notifyPeasantCropReadyToHarvest(String aid, String date) {
+    public void notifyPeasantCropReadyToHarvest(String agentAlias, String date) {
         try {
-            ReportBESA.debug("AgentID: " + aid);
-            AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAid(aid);
-            PeasantCommMessage peasantMessage = new PeasantCommMessage(
-                    PeasantCommMessageType.NOTIFY_CROP_READY_HARVEST,
-                    aid,
+            ReportBESA.debug("AgentID: " + agentAlias);
+            AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAid(agentAlias);
+            FromWorldMessage peasantMessage = new FromWorldMessage(
+                    FromWorldMessageType.NOTIFY_CROP_READY_HARVEST,
+                    agentAlias,
                     null);
             peasantMessage.setDate(date);
             EventBESA event = new EventBESA(
-                    PeasantCommGuard.class.getName(), 
+                    FromWorldGuard.class.getName(), 
                     peasantMessage);
             ReportBESA.debug("Sent: " + peasantMessage.getSimpleMessage());
             ah.sendEvent(event);
@@ -216,7 +216,7 @@ public class WorldGuard extends GuardBESA {
             AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAid(this.agent.getAid());
             PeriodicDataBESA periodicDataBESA = new PeriodicDataBESA(PeriodicGuardBESA.STOP_CALL);
             EventBESA eventPeriodic = new EventBESA(
-                    PeasantCommGuard.class.getName(), 
+                    FromWorldGuard.class.getName(), 
                     periodicDataBESA);
             ah.sendEvent(eventPeriodic);
         } catch (ExceptionBESA e) {

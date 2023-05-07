@@ -56,7 +56,6 @@ import wpsPeasantFamily.Goals.L4SkillsResources.ObtainSeedsGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainWaterGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainPesticidesGoal;
 import wpsPeasantFamily.Utils.PeasantFamilyProfile;
-import wpsWorld.Guards.PeasantCommGuard;
 
 /**
  *
@@ -68,12 +67,10 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
     private static final double BDITHRESHOLD = 0.5;
 
     private static StructBESA createStruct(StructBESA structBESA) throws ExceptionBESA {
-        structBESA.addBehavior("startReachingGoalsSimpleGuard");
-        structBESA.bindGuard("startReachingGoalsSimpleGuard", startReachingGoalsSimpleGuard.class);
-        structBESA.addBehavior("startReachingGoalsGuard");
-        structBESA.bindGuard("startReachingGoalsGuard", startReachingGoalsGuard.class);
-        structBESA.addBehavior("PeasantCommGuard");
-        structBESA.bindGuard("PeasantCommGuard", PeasantCommGuard.class);
+        structBESA.addBehavior("HeartBeatGuard");
+        structBESA.bindGuard("HeartBeatGuard", HeartBeatGuard.class);
+        structBESA.addBehavior("FromWorldGuard");
+        structBESA.bindGuard("FromWorldGuard", FromWorldGuard.class);
         return structBESA;
     }
 
@@ -164,7 +161,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
             AgHandlerBESA agHandler = AdmBESA.getInstance().getHandlerByAlias(this.getAlias());
             EventBESA eventBesa = new EventBESA(InformationFlowGuard.class.getName(), null);
             agHandler.sendEvent(eventBesa);
-            ReportBESA.info("\n\nPeasant Heart Beat\n");
+            ReportBESA.info("💞 Peasant Family Heart Beat");
         } catch (ExceptionBESA e) {
             ReportBESA.error(e);
         }

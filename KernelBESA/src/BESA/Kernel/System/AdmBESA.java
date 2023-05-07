@@ -175,51 +175,6 @@ public abstract class AdmBESA {
         throw new CloneNotSupportedException();
     }
 
-    /**
-     * Creates a unique instance for the local administrator in a JVM.
-     *
-     * @param admAlias Alias/name of the admnistrador.
-     * @param passwd Security key, it is necessary to be able to create or
-     * destroy the administrator.
-     * @param ipAddress The IP address of the machine that contains the
-     * administrator to be registered.
-     * @param rmiPort The port of the machine that contains the administrator
-     * to be registered.
-     * @param multicastAddr Multicast address used by the administrators in the
-     * same SMA.
-     * @param multicastPort Multicast port used by the administrators in the
-     * same SMA.
-     * @param centralized Indicates if the container is going to be executed
-     * in a single machine or if it is going to be used in a distributed way.
-     * @return Reference to the unique/singleton instance of the local
-     * administrator.
-     * @throws java.lang.Exception If happens an error in the administrator
-     * initialization.
-     * @deprecated
-     */
-//***********************
-    /*
-    public static AdmBESA createInstance(String admAlias, double passwd, String ipAddress, int rmiPort, String multicastAddr, int multicastPort, boolean centralized) throws Exception {
-        if (INSTANCE == null) {                                              //If there is no administrator.
-            if (!centralized) {                                                 //If it is not centralized.
-                INSTANCE = new RemoteAdmBESA(admAlias, passwd, ipAddress, rmiPort, multicastAddr, multicastPort, centralized); //Creates an instance for a distributed administrator.
-            } else { //Is centralized.
-                INSTANCE = new LocalAdmBESA(admAlias, passwd, ipAddress, rmiPort, centralized); //Creates an instance for a centralized administrator.
-            }// End if.
-        }// End if.
-        return INSTANCE;
-    }*/
-
-    /**
-     * Used to obtain a single instance of local container.
-     *
-     * @return The reference to local container, or null if not initialized.
-     * @throws Exception
-     * @deprecated
-     */
-    public static AdmBESA createInstance() throws Exception {
-        return INSTANCE;
-    }
 
     /**
      * This method returns the id of the container.

@@ -74,10 +74,7 @@ public class DoHealthCareGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         ReportBESA.info("getHealthProgramsAvailability=" + believes.getPeasantProfile().getHealthProgramsAvailability());
-        if (believes.getPeasantProfile().getHealthProgramsAvailability() > 0
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.DoHealthCare
-                )) {
+        if (believes.getPeasantProfile().getHealthProgramsAvailability() > 0) {
             return 1;
         } else {
             return 0;
@@ -111,12 +108,11 @@ public class DoHealthCareGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        /*if (believes.getPeasantProfile().getHealth() > 0.0) {
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.DoHealthCare)) {
             return 1;
         } else {
             return 0;
-        }*/
-        return 1;
+        }
     }
 
     /**

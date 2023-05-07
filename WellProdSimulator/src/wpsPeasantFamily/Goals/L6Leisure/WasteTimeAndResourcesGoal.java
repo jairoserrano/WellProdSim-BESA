@@ -25,6 +25,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Tasks.L6Leisure.WasteTimeAndResourcesTask;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
 
 /**
@@ -38,18 +39,18 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
      * @return
      */
     public static WasteTimeAndResourcesGoal buildGoal() {
-        EngageInLeisureActivitiesTask peasantLeisureTask = new EngageInLeisureActivitiesTask();
-        Plan peasantLeisurePlan = new Plan();
-        peasantLeisurePlan.addTask(peasantLeisureTask);
-        RationalRole peasantLeisureRole = new RationalRole(
-                "peasantLeisureTask",
-                peasantLeisurePlan);
-        WasteTimeAndResourcesGoal peasantLeisureGoalBDI = new WasteTimeAndResourcesGoal(
+        WasteTimeAndResourcesTask wasteTimeAndResourcesTask = new WasteTimeAndResourcesTask();
+        Plan wasteTimeAndResourcesPlan = new Plan();
+        wasteTimeAndResourcesPlan.addTask(wasteTimeAndResourcesTask);
+        RationalRole wasteTimeAndResourcesRole = new RationalRole(
+                "wasteTimeAndResourcesTask",
+                wasteTimeAndResourcesPlan);
+        WasteTimeAndResourcesGoal wasteTimeAndResourcesGoal = new WasteTimeAndResourcesGoal(
                 wpsStart.getPlanID(),
-                peasantLeisureRole,
-                "peasantLeisureTask",
+                wasteTimeAndResourcesRole,
+                "wasteTimeAndResourcesTask",
                 GoalBDITypes.LEISURE);
-        return peasantLeisureGoalBDI;
+        return wasteTimeAndResourcesGoal;
     }
 
     /**
@@ -74,11 +75,12 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //ReportBESA.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getLeisureOptions() > 0) {
+        /*if (believes.getPeasantProfile().getLeisureOptions() > 0) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
+        return 1;
     }
 
     /**
@@ -90,7 +92,7 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        ReportBESA.info("isBusy=" + believes.getPeasantProfile().isBusy());
+        ReportBESA.info("isFree=" + believes.getPeasantProfile().isFree());
         if (believes.getPeasantProfile().isFree()
                 && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.WasteTimeAndResourcesGoal)) {
             return 1;
