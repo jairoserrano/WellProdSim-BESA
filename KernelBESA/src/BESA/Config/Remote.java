@@ -6,11 +6,6 @@
  */
 package BESA.Config;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * This class keeps the general configuration information of remote container.
  *
@@ -19,24 +14,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @version 2.0, 11/01/11
  * @since JDK1.4
  */
-@XmlRootElement()
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Remote {
 
     /**
      * RMI Port.
      */
-    @XmlAttribute
     protected int rmiport;
+
+    public void setRmiport(int rmiport) {
+        this.rmiport = rmiport;
+    }
+
+    public void setMcaddress(String mcaddress) {
+        this.mcaddress = mcaddress;
+    }
+
+    public void setMcport(int mcport) {
+        this.mcport = mcport;
+    }
     /**
      * Multicast address.
      */
-    @XmlAttribute
     protected String mcaddress;
     /**
      * Multicast port.
      */
-    @XmlAttribute
     protected int mcport;
 
     /**

@@ -5,20 +5,15 @@
 
 package BESA.Log;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  *
  * @author User
  */
-@XmlRootElement(name = "config")
 public class XMLLogConfig {
 
     /**
      * Represents the log tag.
      */
-    @XmlElement
     protected LogConfig log;
 
     /**

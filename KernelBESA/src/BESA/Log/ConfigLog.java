@@ -1,130 +1,100 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package BESA.Log;
 
 import BESA.Config.ConfigExceptionBESA;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import java.io.IOException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-/**
- *
- * @author User
- */
 public class ConfigLog {
-    //========================================================================//
-    //                             DEFAULT VALUES                             //
-    //========================================================================//
 
-    /**
-     * Configuration file.
-     */
     private String CONFIG_FILE = "confbesa.xml";
-    /**
-     *
-     */
     private boolean trace = false;
-    /**
-     *
-     */
     private boolean debug = true;
-    /**
-     *
-     */
     private boolean info = true;
-    /**
-     *
-     */
     private boolean warn = true;
-    /**
-     *
-     */
     private boolean error = true;
-    /**
-     *
-     */
     private boolean fatal = true;
-    /**
-     *
-     */
     private boolean logmanager = false;
-    /**
-     *
-     */
     private String dateformat = "hh:mm:ss:SS";
 
-    
     public ConfigLog() throws ConfigExceptionBESA {
         loadConfiFile();
     }
-    
+
     public ConfigLog(String path) throws ConfigExceptionBESA {
         CONFIG_FILE = path;
         loadConfiFile();
     }
-    
-    /**
-     *
-     */
+
     public void loadConfiFile() throws ConfigExceptionBESA {
-        XMLLogConfig xMLLogConfig = null;
         try {
-            xMLLogConfig = getProperties();
-        } catch (FileNotFoundException ex) {
-            System.out.println("[WARN]: The \"confbesa.xml\" configuration file isn't into project root directory: " + ex.toString());
-            return;
-        } catch (JAXBException ex) {
-            ReportBESA.error("Couldn't load the \"confbesa.xml\" configuration file: " + ex.toString());
-            throw new ConfigExceptionBESA("Couldn't load the \"confbesa.xml\" configuration file: " + ex.toString());
-        }
-        //--------------------------------------------------------------------//
-        // Gets the information of the container tag and checks if the data   //
-        // are correct.                                                       //
-        //--------------------------------------------------------------------//
-        LogConfig xMLLog = xMLLogConfig.getLog();
-        if (xMLLog != null) {
-            Boolean aux = null;
-            aux = xMLLog.getTrace();
-            if(aux != null)
-                trace = aux;
-            aux = xMLLog.getDebug();
-            if(aux != null)
-                debug = aux;
-            aux = xMLLog.getInfo();
-            if(aux != null)
-                info = aux;
-            aux = xMLLog.getWarn();
-            if(aux != null)
-                warn = aux;
-            aux = xMLLog.getError();
-            if(aux != null)
-                error = aux;
-            aux = xMLLog.getFatal();
-            if(aux != null)
-                fatal = aux;
-            String dateFAux = xMLLog.getDateformat();
-            if(dateFAux != null)
-                dateformat = dateFAux;
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(new FileInputStream(CONFIG_FILE));
+
+            doc.getDocumentElement().normalize();
+
+            NodeList logList = doc.getElementsByTagName("Log");
+            if (logList.getLength() > 0) {
+                Node logNode = logList.item(0);
+
+                if (logNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element logElement = (Element) logNode;
+
+                    updateLogValuesFromXML(logElement);
+                }
+            }
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            throw new ConfigExceptionBESA("Error reading the configuration file: " + e.getMessage());
         }
     }
 
-    /**
-     * Loads the configuration parameters from the configbesa.xml file.
-     *
-     * @return XML config object.
-     * @throws FileNotFoundException File not found exception.
-     * @throws JAXBException JAXB Exception.
-     */
-    private XMLLogConfig getProperties() throws FileNotFoundException, JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(XMLLogConfig.class);
-        Unmarshaller u = jaxbContext.createUnmarshaller();
-        return (XMLLogConfig) u.unmarshal(new FileInputStream(CONFIG_FILE));
+    private void updateLogValuesFromXML(Element logElement) {
+        Boolean aux = null;
+
+        aux = getBooleanAttribute(logElement, "trace");
+        if (aux != null) {
+            trace = aux;
+        }
+        aux = getBooleanAttribute(logElement, "debug");
+        if (aux != null) {
+            debug = aux;
+        }
+        aux = getBooleanAttribute(logElement, "info");
+        if (aux != null) {
+            info = aux;
+        }
+        aux = getBooleanAttribute(logElement, "warn");
+        if (aux != null) {
+            warn = aux;
+        }
+        aux = getBooleanAttribute(logElement, "error");
+        if (aux != null) {
+            error = aux;
+        }
+        aux = getBooleanAttribute(logElement, "fatal");
+        if (aux != null) {
+            fatal = aux;
+        }
+        String dateFAux = logElement.getAttribute("dateformat");
+        if (dateFAux != null && !dateFAux.isEmpty()) {
+            dateformat = dateFAux;
+        }
+    }
+
+    private Boolean getBooleanAttribute(Element element, String attributeName) {
+        String attributeValue = element.getAttribute(attributeName);
+        if (attributeValue != null && !attributeValue.isEmpty()) {
+            return Boolean.parseBoolean(attributeValue);
+        }
+        return null;
     }
 
     public boolean isDebug() {
@@ -190,5 +160,5 @@ public class ConfigLog {
     public void setDateFormat(String dateFormat) {
         this.dateformat = dateFormat;
     }
-    
+
 }

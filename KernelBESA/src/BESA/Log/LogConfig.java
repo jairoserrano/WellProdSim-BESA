@@ -4,55 +4,43 @@
  */
 package BESA.Log;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  *
  * @author User
  */
-@XmlRootElement()
 public class LogConfig {
 
     /**
      *
      */
-    @XmlAttribute
     protected Boolean trace;
     /**
      *
      */
-    @XmlAttribute
     protected Boolean debug;
     /**
      *
      */
-    @XmlAttribute
     protected Boolean info;
     /**
      *
      */
-    @XmlAttribute
     protected Boolean warn;
     /**
      *
      */
-    @XmlAttribute
     protected Boolean error;
     /**
      *
      */
-    @XmlAttribute
     protected Boolean fatal;
     /**
      *
      */
-    @XmlAttribute
     protected Boolean logmanager;
     /**
      * 
      */
-    @XmlAttribute
     protected String dateformat;
 
     public Boolean getDebug() {

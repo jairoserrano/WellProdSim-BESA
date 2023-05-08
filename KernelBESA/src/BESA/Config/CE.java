@@ -7,8 +7,6 @@
 package BESA.Config;
 
 import BESA.Config.*;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This class keeps the general configuration information of mobile container.
@@ -18,43 +16,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @version 2.0, 11/01/11
  * @since JDK1.4
  */
-@XmlRootElement()
 public class CE {
 
     /**
      * RMI Port.
      */
-    @XmlAttribute
     protected int rmiport;
     /**
      * Multicast address.
      */
-    @XmlAttribute
     protected String mcaddress;
     /**
      * Multicast port.
      */
-    @XmlAttribute
     protected int mcport;
     /**
      * BAP port.
      */
-    @XmlAttribute
     protected int bapport;
     /**
      * BAP locator address.
      */
-    @XmlAttribute
     protected String baplocatoradd;
     /**
      * Bap locator port.
      */
-    @XmlAttribute
     protected int bloport;
     /**
      * Mobile port.
      */
-    @XmlAttribute
     protected int bpoport;
 
     /**

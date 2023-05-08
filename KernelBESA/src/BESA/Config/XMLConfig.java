@@ -6,8 +6,6 @@
  */
 package BESA.Config;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This class does load the configuration information of BESA container.
@@ -18,13 +16,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @since   JDK1.0
  * @since   JAXB2.0
  */
-@XmlRootElement(name = "config")
 public class XMLConfig {
 
     /**
      * Represents the container tag.
      */
-    @XmlElement
     protected Container container;
 
     /**

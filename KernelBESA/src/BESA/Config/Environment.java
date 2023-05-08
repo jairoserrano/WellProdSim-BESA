@@ -6,10 +6,6 @@
  */
 package BESA.Config;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * This class keeps the general configuration information of container 
  * environment.
@@ -19,45 +15,37 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @version 2.0, 11/01/11
  * @since JDK1.4
  */
-@XmlRootElement()
 public class Environment {
 
     /**
      * Send event attemps
      * TODO Arreglar Ortografia.
      */
-    @XmlAttribute
     protected int seneventattemps;
     /**
      * Send event timeout.
      */
-    @XmlAttribute
     protected long sendeventtimeout;
     /**
      * RMI timeout.
      */
-    @XmlAttribute
     protected long rmitimeout;
     /**
      * Remote tag.
      */
-    @XmlElement
     protected Remote remote;
     /**
      * External tag.
      * TODO Cambiar nombre de clase.
      */
-    @XmlElement
     protected Interop interop;
     /**
      * Mobile tag.
      */
-    @XmlElement
     protected Mobile mobile;
     /**
      *
      */
-    @XmlElement
     protected CE ce;
 
     /**
@@ -102,6 +90,34 @@ public class Environment {
      */
     public long getRmitimeout() {
         return rmitimeout;
+    }
+
+    public void setSeneventattemps(int seneventattemps) {
+        this.seneventattemps = seneventattemps;
+    }
+
+    public void setSendeventtimeout(long sendeventtimeout) {
+        this.sendeventtimeout = sendeventtimeout;
+    }
+
+    public void setRmitimeout(long rmitimeout) {
+        this.rmitimeout = rmitimeout;
+    }
+
+    public void setRemote(Remote remote) {
+        this.remote = remote;
+    }
+
+    public void setInterop(Interop interop) {
+        this.interop = interop;
+    }
+
+    public void setMobile(Mobile mobile) {
+        this.mobile = mobile;
+    }
+
+    public void setCe(CE ce) {
+        this.ce = ce;
     }
 
     /**
