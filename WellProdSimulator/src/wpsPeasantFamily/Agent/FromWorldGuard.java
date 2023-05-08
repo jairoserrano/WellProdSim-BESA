@@ -37,10 +37,11 @@ public class FromWorldGuard extends GuardBESA {
         StateBDI state = (StateBDI) this.agent.getState();
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
 
-        String worldResponse = peasantCommMessage.getPayload();
+        FromWorldMessageType messageType = peasantCommMessage.getMessageType();// .getPayload();
+        
+        ReportBESA.info("\n\n\n🍙🍙🍙: " + peasantCommMessage.getPayload() + "\n\n");
 
         try {
-            FromWorldMessageType messageType = FromWorldMessageType.valueOf(worldResponse);
 
             switch (messageType) {
                 case NOTIFY_CROP_DISEASE:
@@ -50,14 +51,14 @@ public class FromWorldGuard extends GuardBESA {
                     believes.getPeasantProfile().setCropHealth(0.5);
                     break;
                 case CROP_INFORMATION_NOTIFICATION:
-                    // Código a ejecutar si messageType es CROP_INFORMATION_NOTIFICATION
+                    ReportBESA.info("🍙🍙🍙: " + peasantCommMessage.getPayload());
                     break;
                 case NOTIFY_CROP_READY_HARVEST:
                     believes.getPeasantProfile().setHarverstSeason(true);
                     believes.getPeasantProfile().setGrowingSeason(false);
                     break;
                 case REQUEST_CROP_INFORMATION:
-                    // Código a ejecutar si messageType es REQUEST_CROP_INFORMATION
+                    ReportBESA.info("🍙🍙🍙: " + peasantCommMessage.getPayload());
                     break;
                 case CROP_INIT:
                     //believes.getPeasantProfile().setPlantingSeason(true);

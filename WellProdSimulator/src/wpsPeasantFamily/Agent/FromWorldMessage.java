@@ -93,7 +93,7 @@ public class FromWorldMessage extends DataBESA {
      *
      * @return
      */
-    public FromWorldMessageType getPeasantMessageType() {
+    public FromWorldMessageType getMessageType() {
         return peasantMessageType;
     }
 
@@ -101,7 +101,7 @@ public class FromWorldMessage extends DataBESA {
      *
      * @param peasantMessageType
      */
-    public void setPeasantMessageType(FromWorldMessageType peasantMessageType) {
+    public void setMessageType(FromWorldMessageType peasantMessageType) {
         this.peasantMessageType = peasantMessageType;
     }
 }

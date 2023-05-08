@@ -38,7 +38,7 @@ public class wpsStart {
 
     private static int PLANID = 0;
     final private static double PASSWD = 0.91;
-    final private static int BEAT = 100;
+    final private static int BEAT = 10;
 
     /**
      *

@@ -27,6 +27,8 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsWorld.Messages.WorldMessageType;
+import static wpsWorld.Messages.WorldMessageType.CROP_INFORMATION;
 
 /**
  *
@@ -58,17 +60,29 @@ public class HarvestCropsTask extends Task {
             AdmBESA adm = AdmBESA.getInstance();
             AgHandlerBESA ah = adm.getHandlerByAlias(
                     believes.getPeasantProfile().getFarmName());
+            
             ReportBESA.debug("Actual " +
                     wpsCurrentDate.getInstance().getCurrentDate());
-            WorldMessage worldMessage = new WorldMessage(
-                    CROP_HARVEST,
+            WorldMessage worldMessageInfo = new WorldMessage(
+                    CROP_INFORMATION,
                     "rice_1",
                     wpsCurrentDate.getInstance().getCurrentDate(),
                     believes.getPeasantProfile().getProfileName());
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
+                    worldMessageInfo);
+            ah.sendEvent(ev);
+            
+            WorldMessage worldMessage = new WorldMessage(
+                    CROP_HARVEST,
+                    "rice_1",
+                    wpsCurrentDate.getInstance().getCurrentDate(),
+                    believes.getPeasantProfile().getProfileName());
+            ev = new EventBESA(
+                    WorldGuard.class.getName(),
                     worldMessage);
             ah.sendEvent(ev);
+            
 
             believes.getPeasantProfile().useTime(TimeConsumedBy.HarvestCrops);
 
