@@ -18,7 +18,6 @@ import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import BESA.Log.ReportBESA;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
 import static wpsWorld.Messages.WorldMessageType.CROP_IRRIGATION;
@@ -28,6 +27,7 @@ import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -41,7 +41,7 @@ public class IrrigateCropsTask extends Task {
      *
      */
     public IrrigateCropsTask() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.finished = false;
     }
 
@@ -51,7 +51,7 @@ public class IrrigateCropsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
         //
@@ -74,7 +74,7 @@ public class IrrigateCropsTask extends Task {
             wpsCurrentDate.getInstance().setCurrentDate(
                     believes.getPeasantProfile().getInternalCurrentDate());
 
-            ReportBESA.debug("!----> Actual "
+            wpsReport.debug("!----> Actual "
                     + wpsCurrentDate.getInstance().getCurrentDate());
 
             believes.getPeasantProfile().setHarverstSeason(true);
@@ -82,7 +82,7 @@ public class IrrigateCropsTask extends Task {
             this.setFinished(true);
 
         } catch (ExceptionBESA ex) {
-            ReportBESA.error(ex);
+            wpsReport.error(ex);
         }
     }
 
@@ -91,7 +91,7 @@ public class IrrigateCropsTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -100,7 +100,7 @@ public class IrrigateCropsTask extends Task {
      * @param finished
      */
     public void setFinished(boolean finished) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.finished = finished;
     }
 
@@ -110,7 +110,7 @@ public class IrrigateCropsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -120,7 +120,7 @@ public class IrrigateCropsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -129,7 +129,7 @@ public class IrrigateCropsTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -140,7 +140,7 @@ public class IrrigateCropsTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return isExecuted();
     }
 }

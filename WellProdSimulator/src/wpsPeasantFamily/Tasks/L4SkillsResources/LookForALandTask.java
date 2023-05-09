@@ -19,7 +19,6 @@ import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.StructBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import BESA.Log.ReportBESA;
 import wpsWorld.Agent.WorldAgent;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Agent.WorldState;
@@ -41,8 +40,8 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsConfig;
-import java.util.UUID;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -118,7 +117,7 @@ public class LookForALandTask extends Task {
             EventBESA eventBesa = new EventBESA(WorldGuard.class.getName(), worldMessage);
             ah.sendEvent(eventBesa);
         } catch (ExceptionBESA e) {
-            ReportBESA.error(e);
+            wpsReport.error(e);
         }
     }
 
@@ -130,7 +129,7 @@ public class LookForALandTask extends Task {
             WorldAgent worldAgent = new WorldAgent(aliasWorldAgent, worldState, structBESA);
             return worldAgent;
         } catch (ExceptionBESA ex) {
-            ReportBESA.error(ex);
+            wpsReport.error(ex);
         }
         return null;
     }
@@ -156,7 +155,7 @@ public class LookForALandTask extends Task {
      *
      */
     public LookForALandTask() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.finished = false;
     }
 
@@ -166,12 +165,11 @@ public class LookForALandTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        int uuid = (int) (UUID.randomUUID().getLeastSignificantBits() % 1000);
 
         // @TODO: setFarmName lo cambia el gobierno o el campesino
-        believes.getPeasantProfile().setFarmName("Land_" + uuid);
+        believes.getPeasantProfile().setFarmName("Land_" + believes.getPeasantProfile().getProfileName());
         believes.getPeasantProfile().setFarmSize(2);
         believes.getPeasantProfile().setHousing(1);
         believes.getPeasantProfile().setServicesPresence(1);
@@ -193,22 +191,22 @@ public class LookForALandTask extends Task {
                     believes.getPeasantProfile().getProfileName(),
                     believes.getPeasantProfile().getFarmName()
             );
-            //ReportBESA.info("Inicializando Mundo");
+            //wpsReport.info("Inicializando Mundo");
             initialWorldStateInitialization(
                     worldAgent,
                     believes.getPeasantProfile().getProfileName()
             );
 
-            //ReportBESA.info("Configurado Mundo Simple para " + believes.getPeasantProfile().getProfileName());
+            //wpsReport.info("Configurado Mundo Simple para " + believes.getPeasantProfile().getProfileName());
             worldAgent.start();
 
         } catch (Exception ex) {
-            ReportBESA.error(ex);
+            wpsReport.error(ex);
         }
 
         believes.getPeasantProfile().setFarm(true);
         believes.getPeasantProfile().setPlantingSeason(true);
-        ReportBESA.info("🥬 La familia campesina ya tiene tierra.");
+        wpsReport.info("🥬 La familia campesina ya tiene tierra.");
         this.setFinished(true);
 
     }
@@ -218,7 +216,7 @@ public class LookForALandTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return finished;
     }
 
@@ -227,7 +225,7 @@ public class LookForALandTask extends Task {
      * @param finished
      */
     public void setFinished(boolean finished) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.finished = finished;
     }
 
@@ -237,7 +235,7 @@ public class LookForALandTask extends Task {
      */
     @Override
     public void interruptTask(Believes believes) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.finished = true;
     }
 
@@ -247,7 +245,7 @@ public class LookForALandTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.finished = true;
     }
 
@@ -256,7 +254,7 @@ public class LookForALandTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return finished;
     }
 
@@ -267,7 +265,7 @@ public class LookForALandTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return isExecuted();
     }
 }

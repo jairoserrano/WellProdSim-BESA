@@ -19,7 +19,6 @@ import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
 import BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA;
-import BESA.Log.ReportBESA;
 import rational.RationalRole;
 import rational.mapping.Believes;
 import rational.mapping.Plan;
@@ -61,7 +60,7 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
      */
     public EngageInLeisureActivitiesGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        //ReportBESA.info("");
+        //wpsReport.info("");
     }
 
     /**
@@ -72,7 +71,7 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         /*if (believes.getPeasantProfile().getLeisureOptions() > 0) {
             return 1;
@@ -91,7 +90,7 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        ReportBESA.info("isFree=" + believes.getPeasantProfile().isFree());
+        //wpsReport.info("isFree=" + believes.getPeasantProfile().isFree());
         if (believes.getPeasantProfile().isFree()) {
             return 1;
         } else {
@@ -107,7 +106,7 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().getHealth() > 0
                 && believes.getPeasantProfile().haveTimeAvailable(
@@ -128,7 +127,7 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return 0.6;
     }
 
@@ -140,7 +139,7 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
      */
     @Override
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        //wpsReport.info(stateBDI.getMachineBDIParams().getPyramidGoals());
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
         return believes.getPeasantProfile().getHealth() > 0;
     }
@@ -153,7 +152,7 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         return believes.getPeasantProfile().getLeisureOptions() == 0;
     }

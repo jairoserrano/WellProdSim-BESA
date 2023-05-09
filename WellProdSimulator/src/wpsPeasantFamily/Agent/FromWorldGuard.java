@@ -17,7 +17,7 @@ package wpsPeasantFamily.Agent;
 import BESA.BDI.AgentStructuralModel.StateBDI;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
-import BESA.Log.ReportBESA;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -32,14 +32,14 @@ public class FromWorldGuard extends GuardBESA {
     @Override
     public void funcExecGuard(EventBESA event) {
         FromWorldMessage peasantCommMessage = (FromWorldMessage) event.getData();
-        ReportBESA.debug("🤖🤖🤖 Recibido: " + peasantCommMessage.getPeasantAlias() + " getType=" + peasantCommMessage.getPayload());
+        wpsReport.debug("🤖🤖🤖 Recibido: " + peasantCommMessage.getPeasantAlias() + " getType=" + peasantCommMessage.getPayload());
 
         StateBDI state = (StateBDI) this.agent.getState();
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
 
         FromWorldMessageType messageType = peasantCommMessage.getMessageType();// .getPayload();
         
-        ReportBESA.info("\n\n\n🍙🍙🍙: " + peasantCommMessage.getPayload() + "\n\n");
+        wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload() + ":🍙🍙🍙");
 
         try {
 
@@ -51,14 +51,14 @@ public class FromWorldGuard extends GuardBESA {
                     believes.getPeasantProfile().setCropHealth(0.5);
                     break;
                 case CROP_INFORMATION_NOTIFICATION:
-                    ReportBESA.info("🍙🍙🍙: " + peasantCommMessage.getPayload());
+                    wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload());
                     break;
                 case NOTIFY_CROP_READY_HARVEST:
                     believes.getPeasantProfile().setHarverstSeason(true);
                     believes.getPeasantProfile().setGrowingSeason(false);
                     break;
                 case REQUEST_CROP_INFORMATION:
-                    ReportBESA.info("🍙🍙🍙: " + peasantCommMessage.getPayload());
+                    wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload());
                     break;
                 case CROP_INIT:
                     //believes.getPeasantProfile().setPlantingSeason(true);
@@ -72,7 +72,7 @@ public class FromWorldGuard extends GuardBESA {
                     break;
             }
         } catch (IllegalArgumentException e) {
-            ReportBESA.error("Mensaje no reconocido de FromWorldMessageType");
+            wpsReport.error("Mensaje no reconocido de FromWorldMessageType");
         }
 
     }

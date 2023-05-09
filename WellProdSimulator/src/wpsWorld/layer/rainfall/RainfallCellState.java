@@ -1,6 +1,5 @@
 package wpsWorld.layer.rainfall;
 
-import BESA.Log.ReportBESA;
 import wpsWorld.automata.core.cell.LayerCellState;
 
 /**
@@ -15,7 +14,7 @@ public class RainfallCellState implements LayerCellState {
      * @param rainfall
      */
     public RainfallCellState(double rainfall) {
-        //ReportBESA.info("New rainfall state: " + rainfall);
+        //wpsReport.info("New rainfall state: " + rainfall);
         this.rainfall = rainfall;
     }
 

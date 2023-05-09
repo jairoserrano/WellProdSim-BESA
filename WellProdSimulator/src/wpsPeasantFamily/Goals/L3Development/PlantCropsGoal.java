@@ -19,7 +19,6 @@ import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
 import BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA;
-import BESA.Log.ReportBESA;
 import rational.RationalRole;
 import rational.mapping.Believes;
 import rational.mapping.Plan;
@@ -61,7 +60,7 @@ public class PlantCropsGoal extends GoalBDI {
      */
     public PlantCropsGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        //ReportBESA.info("");
+        //wpsReport.info("");
     }
 
     /**
@@ -73,8 +72,8 @@ public class PlantCropsGoal extends GoalBDI {
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        ReportBESA.info("getTools " + believes.getPeasantProfile().getTools());
-        ReportBESA.info("getSeeds " + believes.getPeasantProfile().getSeeds());
+        //wpsReport.info("getTools " + believes.getPeasantProfile().getTools());
+        //wpsReport.info("getSeeds " + believes.getPeasantProfile().getSeeds());
         //believes.getPeasantProfile().getFarmReady() == 1
         if (believes.getPeasantProfile().getTools() > 0
                 && believes.getPeasantProfile().getSeeds() > 0) {
@@ -93,7 +92,7 @@ public class PlantCropsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        ReportBESA.info("PlantingSeason=" + believes.getPeasantProfile().isPlantingSeason());
+        //wpsReport.info("PlantingSeason=" + believes.getPeasantProfile().isPlantingSeason());
         if (believes.getPeasantProfile().isPlantingSeason()) {
             return 1;
         } else {
@@ -109,7 +108,7 @@ public class PlantCropsGoal extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().isFree()
                 && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PlantCrops)) {
@@ -127,7 +126,7 @@ public class PlantCropsGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return 1;
     }
 
@@ -139,7 +138,7 @@ public class PlantCropsGoal extends GoalBDI {
      */
     @Override
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        //wpsReport.info(stateBDI.getMachineBDIParams().getPyramidGoals());
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
         return believes.getPeasantProfile().getHealth() > 0;
     }
@@ -152,7 +151,7 @@ public class PlantCropsGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         return believes.getPeasantProfile().isGrowingSeason();
     }

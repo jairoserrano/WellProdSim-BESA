@@ -18,7 +18,6 @@ import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import BESA.Log.ReportBESA;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
 import static wpsWorld.Messages.WorldMessageType.CROP_HARVEST;
@@ -27,7 +26,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
-import wpsWorld.Messages.WorldMessageType;
+import wpsViewer.Agent.wpsReport;
 import static wpsWorld.Messages.WorldMessageType.CROP_INFORMATION;
 
 /**
@@ -42,7 +41,7 @@ public class HarvestCropsTask extends Task {
      *
      */
     public HarvestCropsTask() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.finished = false;
     }
 
@@ -52,7 +51,7 @@ public class HarvestCropsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
 
@@ -61,7 +60,7 @@ public class HarvestCropsTask extends Task {
             AgHandlerBESA ah = adm.getHandlerByAlias(
                     believes.getPeasantProfile().getFarmName());
             
-            ReportBESA.debug("Actual " +
+            wpsReport.debug("Actual " +
                     wpsCurrentDate.getInstance().getCurrentDate());
             WorldMessage worldMessageInfo = new WorldMessage(
                     CROP_INFORMATION,
@@ -87,7 +86,7 @@ public class HarvestCropsTask extends Task {
             believes.getPeasantProfile().useTime(TimeConsumedBy.HarvestCrops);
 
         } catch (ExceptionBESA ex) {
-            ReportBESA.error(ex);
+            wpsReport.error(ex);
         }
         this.setFinished(true);
     }
@@ -97,7 +96,7 @@ public class HarvestCropsTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -106,7 +105,7 @@ public class HarvestCropsTask extends Task {
      * @param finished
      */
     public void setFinished(boolean finished) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.finished = finished;
     }
 
@@ -116,7 +115,7 @@ public class HarvestCropsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -126,7 +125,7 @@ public class HarvestCropsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -135,7 +134,7 @@ public class HarvestCropsTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -146,7 +145,7 @@ public class HarvestCropsTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return isExecuted();
     }
 }

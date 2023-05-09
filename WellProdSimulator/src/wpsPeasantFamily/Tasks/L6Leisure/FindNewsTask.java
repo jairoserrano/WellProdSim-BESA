@@ -14,7 +14,6 @@
  */
 package wpsPeasantFamily.Tasks.L6Leisure;
 
-import BESA.Log.ReportBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
@@ -32,7 +31,7 @@ public class FindNewsTask extends Task {
      *
      */
     public FindNewsTask() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.finished = false;
     }
 
@@ -42,7 +41,7 @@ public class FindNewsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().useLeisureOptions();
         believes.getPeasantProfile().useTime(TimeConsumedBy.FindNews);
@@ -54,7 +53,7 @@ public class FindNewsTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -63,7 +62,7 @@ public class FindNewsTask extends Task {
      * @param finished
      */
     public void setFinished(boolean finished) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.finished = finished;
     }
 
@@ -73,7 +72,7 @@ public class FindNewsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -83,7 +82,7 @@ public class FindNewsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -92,7 +91,7 @@ public class FindNewsTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -103,7 +102,7 @@ public class FindNewsTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return isExecuted();
     }
 }

@@ -16,7 +16,7 @@ package wpsPerturbation.Agent;
 
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
-import BESA.Log.ReportBESA;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -30,7 +30,7 @@ public class wpsPerturbationGuard extends GuardBESA  {
      */
     @Override
     public void funcExecGuard(EventBESA event) {
-        ReportBESA.debug("Contacto con perturbación desde  " + event.getSource());
+        wpsReport.debug("Contacto con perturbación desde  " + event.getSource());
     }
     
 }

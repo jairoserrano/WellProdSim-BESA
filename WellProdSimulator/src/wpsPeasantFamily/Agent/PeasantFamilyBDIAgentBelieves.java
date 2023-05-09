@@ -14,11 +14,11 @@
  */
 package wpsPeasantFamily.Agent;
 
-import BESA.Log.ReportBESA;
+import wpsPeasantFamily.Utils.PeasantFamilyProfile;
 import rational.data.InfoData;
 import rational.mapping.Believes;
 import wpsPeasant.EmotionalModel.EmotionalState;
-import wpsPeasantFamily.Utils.PeasantFamilyProfile;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -35,7 +35,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      * @param peasantProfile
      */
     public PeasantFamilyBDIAgentBelieves(PeasantFamilyProfile peasantProfile) {
-        ReportBESA.debug(">> New Peasant " + peasantProfile.getProfileName());
+        wpsReport.debug(">> New Peasant " + peasantProfile.getProfileName());
         this.setPeasantProfile(peasantProfile);
         this.peasantEmotionalState = new EmotionalState();
     }
@@ -45,7 +45,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      * @return
      */
     public EmotionalState getPeasantEmotionalState() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return peasantEmotionalState;
     }
 
@@ -54,7 +54,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      * @return
      */
     public PeasantFamilyProfile getPeasantProfile() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return peasantProfile;
     }
 
@@ -73,7 +73,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      */
     @Override
     public boolean update(InfoData infoData) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return true;
     }
 

@@ -16,7 +16,7 @@ package wpsSociety.Agent;
 
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
-import BESA.Log.ReportBESA;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -30,7 +30,7 @@ public class SocietyAgentGuard extends GuardBESA  {
      */
     @Override
     public void funcExecGuard(EventBESA event) {
-        ReportBESA.debug("Llegada al agente Sociedad desde " + event.getSource());
+        wpsReport.debug("Llegada al agente Sociedad desde " + event.getSource());
     }
     
 }

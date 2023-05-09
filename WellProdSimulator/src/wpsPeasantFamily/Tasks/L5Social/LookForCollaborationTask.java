@@ -14,7 +14,6 @@
  */
 package wpsPeasantFamily.Tasks.L5Social;
 
-import BESA.Log.ReportBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
@@ -32,7 +31,7 @@ public class LookForCollaborationTask extends Task {
      *
      */
     public LookForCollaborationTask() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.finished = false;
     }
 
@@ -42,7 +41,7 @@ public class LookForCollaborationTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         /*believes.getPeasantProfile().increaseHealth();
         believes.getPeasantProfile().increaseLeisureOptions();
@@ -56,7 +55,7 @@ public class LookForCollaborationTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return finished;
     }
 
@@ -65,7 +64,7 @@ public class LookForCollaborationTask extends Task {
      * @param finished
      */
     public void setFinished(boolean finished) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.finished = finished;
     }
 
@@ -75,7 +74,7 @@ public class LookForCollaborationTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -85,7 +84,7 @@ public class LookForCollaborationTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -94,7 +93,7 @@ public class LookForCollaborationTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return finished;
     }
 
@@ -105,7 +104,7 @@ public class LookForCollaborationTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return isExecuted();
     }
 }

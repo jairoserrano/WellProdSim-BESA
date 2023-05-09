@@ -16,13 +16,12 @@ package wpsPeasantFamily.Agent;
 
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.PeriodicGuardBESA;
-import BESA.Log.ReportBESA;
 
 /**
  *
  * @author jairo
  */
-public class HeartBeatGuard extends PeriodicGuardBESA{
+public class PeasantFamilyHeartBeatGuard extends PeriodicGuardBESA{
     
     /**
      *

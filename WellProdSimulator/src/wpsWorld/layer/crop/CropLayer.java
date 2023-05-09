@@ -1,16 +1,21 @@
 package wpsWorld.layer.crop;
 
-
-import BESA.Log.ReportBESA;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import wpsControl.Agent.DateHelper;
+import wpsViewer.Agent.wpsReport;
+import wpsWorld.Helper.WorldConfiguration;
 import wpsWorld.automata.core.layer.GenericWorldLayer;
 import wpsWorld.automata.core.layer.LayerExecutionParams;
-import wpsWorld.Helper.WorldConfiguration;
-import wpsControl.Agent.DateHelper;
 import wpsWorld.layer.LayerFunctionParams;
 import wpsWorld.layer.crop.cell.CropCell;
 import wpsWorld.layer.crop.cell.CropCellState;
@@ -22,21 +27,12 @@ import wpsWorld.layer.shortWaveRadiation.ShortWaveRadiationLayer;
 import wpsWorld.layer.temperature.TemperatureCellState;
 import wpsWorld.layer.temperature.TemperatureLayer;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 /**
  * Crop layer concrete implementation
  */
 public class CropLayer extends GenericWorldLayer {
 
-    private static final Logger logger = LogManager.getLogger(CropLayer.class);
+    //private static final Logger logger = LogManager.getLogger(CropLayer.class);
     private HashMap<String, CropCell> cropCellMap = new HashMap<>();
     private WorldConfiguration config = WorldConfiguration.getPropsInstance();
 
@@ -270,7 +266,7 @@ public class CropLayer extends GenericWorldLayer {
                         .map(this::convertToCSV)
                         .forEach(pw::println);
             } catch (FileNotFoundException fileNotFoundException) {
-                logger.error("File not Found!!!");
+                wpsReport.error("File not Found!!!");
             }
         }
     }
@@ -295,7 +291,7 @@ public class CropLayer extends GenericWorldLayer {
      * @return
      */
     public List<CropCell> getAllCrops() {
-        //ReportBESA.debug(this.cropCellMap.values());
+        //wpsReport.debug(this.cropCellMap.values());
         return (List<CropCell>) new ArrayList<CropCell>(this.cropCellMap.values());
     }
 }

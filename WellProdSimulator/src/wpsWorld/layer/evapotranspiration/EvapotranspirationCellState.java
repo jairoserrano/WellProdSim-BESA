@@ -1,6 +1,5 @@
 package wpsWorld.layer.evapotranspiration;
 
-import BESA.Log.ReportBESA;
 import wpsWorld.automata.core.cell.LayerCellState;
 
 /**
@@ -15,7 +14,7 @@ public class EvapotranspirationCellState implements LayerCellState {
      * @param evapotranspirationReference
      */
     public EvapotranspirationCellState(double evapotranspirationReference) {
-        //ReportBESA.info("Next evapotranspiration state: " + evapotranspirationReference);
+        //wpsReport.info("Next evapotranspiration state: " + evapotranspirationReference);
         this.evapotranspirationReference = evapotranspirationReference;
     }
 

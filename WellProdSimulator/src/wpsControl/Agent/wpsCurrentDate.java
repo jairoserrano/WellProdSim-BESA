@@ -1,6 +1,5 @@
 package wpsControl.Agent;
 
-import BESA.Log.ReportBESA;
 import org.joda.time.DateTime;
 
 /**
@@ -47,7 +46,7 @@ public class wpsCurrentDate {
      * @return
      */
     public synchronized String getDatePlusOneDayAndUpdate() {
-        DateTime date = DateHelper.getDateInJoda(instance.getCurrentDate());
+        DateTime date = DateHelper.getDateInJoda(instance.getCurrentDate());        
         date = date.plusDays(1);
         String newDate = DateHelper.parseDateTimeToString(date);
         this.setCurrentDate(newDate);

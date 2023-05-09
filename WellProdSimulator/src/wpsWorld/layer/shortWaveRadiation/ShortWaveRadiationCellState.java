@@ -1,8 +1,5 @@
 package wpsWorld.layer.shortWaveRadiation;
 
-import BESA.Log.ReportBESA;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import wpsWorld.automata.core.cell.LayerCellState;
 
 /**
@@ -17,7 +14,7 @@ public class ShortWaveRadiationCellState implements LayerCellState {
      * @param shortWaveRadiation
      */
     public ShortWaveRadiationCellState(double shortWaveRadiation) {
-        //ReportBESA.info("New short wave radiation state: " + shortWaveRadiation);
+        //wpsReport.info("New short wave radiation state: " + shortWaveRadiation);
         this.shortWaveRadiation = shortWaveRadiation;
     }
 

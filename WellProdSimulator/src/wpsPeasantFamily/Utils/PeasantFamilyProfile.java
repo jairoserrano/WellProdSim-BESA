@@ -14,9 +14,9 @@
  */
 package wpsPeasantFamily.Utils;
 
-import BESA.Log.ReportBESA;
 import java.io.Serializable;
 import wpsControl.Agent.wpsCurrentDate;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -124,7 +124,7 @@ public class PeasantFamilyProfile implements Serializable {
         if (timeLeft <= 0) {
             this.makeNewDay();
         } else {
-            ReportBESA.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + wpsCurrentDate.getInstance().getCurrentDate());
+            wpsReport.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + wpsCurrentDate.getInstance().getCurrentDate());
         }
     }
 
@@ -135,10 +135,10 @@ public class PeasantFamilyProfile implements Serializable {
      */
     public synchronized boolean haveTimeAvailable(TimeConsumedBy time) {
         if (this.timeLeftOnDay - time.getTime() < 0) {
-            ReportBESA.info("⏳🚩⏳🚩⏳ No alcanza le tiempo " + time.getTime() + " tiene " + this.timeLeftOnDay + " del día " + wpsCurrentDate.getInstance().getCurrentDate());
+            //wpsReport.info("⏳🚩⏳🚩⏳ No alcanza le tiempo " + time.getTime() + " tiene " + this.timeLeftOnDay + " del día " + wpsCurrentDate.getInstance().getCurrentDate());
             return false;
         } else {
-            ReportBESA.info("⏳ ⏳ ⏳ Todavía tiene " + this.timeLeftOnDay + " en el día " + wpsCurrentDate.getInstance().getCurrentDate());
+            //wpsReport.info("⏳ ⏳ ⏳ Todavía tiene " + this.timeLeftOnDay + " en el día " + wpsCurrentDate.getInstance().getCurrentDate());
             return true;
         }
     }
@@ -167,11 +167,10 @@ public class PeasantFamilyProfile implements Serializable {
         this.timeLeftOnDay = 24;
         this.cropCheckedToday = false;
         this.newDay = true;
-        ReportBESA.info(
-                "\n\n🔆 New Day # "
+        wpsReport.info(
+                "🔆 New Day # "
                 + this.currentDay + " - 🔆 "
-                + wpsCurrentDate.getInstance().getDatePlusOneDayAndUpdate()
-                + "\n");
+                + wpsCurrentDate.getInstance().getDatePlusOneDayAndUpdate());
     }
 
     /**
@@ -1245,7 +1244,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      */
     public void increaseFamilyTimeAvailability() {
-        ReportBESA.info("");
+        wpsReport.info("");
         /*if (this.familyTimeAvailability == 1) {
             this.familyTimeAvailability = 1;
         } else {
@@ -1258,7 +1257,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      */
     public void useFamilyTimeAvailability() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         /*if (this.familyTimeAvailability > 0) {
             this.familyTimeAvailability = this.familyTimeAvailability - 0.1;
         } else {
@@ -1351,7 +1350,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      */
     public void useLeisureOptions() {
-        /*ReportBESA.info("");
+        /*wpsReport.info("");
         if (this.leisureOptions > 0) {
             this.leisureOptions = this.leisureOptions - 0.1;
         }*/
@@ -1362,7 +1361,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      */
     public void increaseLeisureOptions() {
-        ReportBESA.info("");
+        wpsReport.info("");
         /*if (this.leisureOptions >= 1) {
             this.leisureOptions = 1;
         } else {
@@ -1375,7 +1374,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      */
     public void reduceHouseCondition() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         /*if (this.housingCondition > 0) {
             this.housingCondition = this.housingCondition - 0.1;
         }*/
@@ -1386,7 +1385,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      */
     public void increaseHouseCondition() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         /*if (this.housingCondition >= 1) {
             this.housingCondition = 1;
         } else {
@@ -1399,7 +1398,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      */
     public void increaseTools() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         /*if (this.tools >= 1) {
             this.tools = 1;
         } else {

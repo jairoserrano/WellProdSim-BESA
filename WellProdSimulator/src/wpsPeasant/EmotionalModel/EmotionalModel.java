@@ -8,13 +8,13 @@ import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import BESA.Log.ReportBESA;
 import wpsPeasant.EmotionalModel.Personality.EmotionElementType;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rational.guards.InformationFlowGuard;
 import wpsActivator.wpsStart;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -95,10 +95,10 @@ public abstract class EmotionalModel {
     public void processEmotionalEvent(EmotionalEvent ev) {
         float i = estimateEmotionIntensity(ev);
         if (ev.getPerson() != null) {
-            ReportBESA.info("XEREVENTO: " + ev + " Valencia" + i);
+            wpsReport.info("XEREVENTO: " + ev + " Valencia" + i);
         }
         emotionalState.updateEmotions(ev.getEvent(), i);
-        ReportBESA.info(ev.toString());
+        wpsReport.info(ev.toString());
         emotionalStateChanged();
     }
 
@@ -115,8 +115,8 @@ public abstract class EmotionalModel {
                 + Utils.Config.EventWeight * Math.abs(event)
                 + Utils.Config.ObjectWeight * Math.abs(object);
         boolean valence = estimateValence(person, event, object);
-//        ReportBESA.info("P:" + person + " E:" + event + " O:" + object);
-//        ReportBESA.info("Val: " + valence);
+//        wpsReport.info("P:" + person + " E:" + event + " O:" + object);
+//        wpsReport.info("Val: " + valence);
         intensity = (valence ? 1 : -1) * intensity;
         return intensity;
     }
@@ -132,7 +132,7 @@ public abstract class EmotionalModel {
         event = event / Math.abs(event);
         object = object / Math.abs(object);
 
-        //ReportBESA.info("Valence P:" + person + " E:" + event + " O:" + object);
+        //wpsReport.info("Valence P:" + person + " E:" + event + " O:" + object);
         if ((person.equals(event) && event.equals(object))
                 || (person.equals(1f) && event.equals(-1f) && object.equals(-1f))) {
             v = true;
@@ -184,7 +184,7 @@ public abstract class EmotionalModel {
                 typeName = "Objetos";
             }
             String msg = "El diccionario semántico de " + typeName + " no contiene un item con el nombre " + key;
-            ReportBESA.info("ERROR: " + msg);
+            wpsReport.info("ERROR: " + msg);
             Logger.getLogger(EmotionalModel.class.getName()).log(Level.WARNING, msg);
         }
     }
@@ -215,7 +215,7 @@ public abstract class EmotionalModel {
         EmotionAxis maxAx = null;
         double val = Double.NEGATIVE_INFINITY;
         List<EmotionAxis> emoList = emotionalState.getEmotionsListCopy();
-//            ReportBESA.info("Ejes de la lista: " + emoList.size());
+//            wpsReport.info("Ejes de la lista: " + emoList.size());
         for (EmotionAxis e : emoList) {
             if (e.getCurrentValue() > val) {
                 maxAx = e;

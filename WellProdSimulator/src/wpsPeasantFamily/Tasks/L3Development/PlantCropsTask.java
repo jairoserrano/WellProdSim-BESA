@@ -18,7 +18,6 @@ import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import BESA.Log.ReportBESA;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
 import static wpsWorld.Messages.WorldMessageType.CROP_INIT;
@@ -27,6 +26,7 @@ import rational.mapping.Task;
 import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -40,7 +40,7 @@ public class PlantCropsTask extends Task {
      *
      */
     public PlantCropsTask() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.finished = false;
     }
 
@@ -50,7 +50,7 @@ public class PlantCropsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
 
         try {
@@ -64,7 +64,7 @@ public class PlantCropsTask extends Task {
                     wpsCurrentDate.getInstance().getCurrentDate(),
                     believes.getPeasantProfile().getProfileName());
             
-            ReportBESA.info(worldMessage);
+            wpsReport.info(worldMessage);
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
                     worldMessage);
@@ -76,7 +76,7 @@ public class PlantCropsTask extends Task {
             believes.getPeasantProfile().useTime(TimeConsumedBy.PlantCrops);
 
         } catch (ExceptionBESA ex) {
-            ReportBESA.error(ex);
+            wpsReport.error(ex);
         }
 
         this.setFinished(true);
@@ -87,7 +87,7 @@ public class PlantCropsTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -96,7 +96,7 @@ public class PlantCropsTask extends Task {
      * @param finished
      */
     public void setFinished(boolean finished) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.finished = finished;
     }
 
@@ -106,7 +106,7 @@ public class PlantCropsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -116,7 +116,7 @@ public class PlantCropsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -125,7 +125,7 @@ public class PlantCropsTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -136,7 +136,7 @@ public class PlantCropsTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return isExecuted();
     }
 }

@@ -1,7 +1,5 @@
 package wpsWorld.layer.shortWaveRadiation;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -19,7 +17,7 @@ import wpsWorld.layer.data.MonthData;
  */
 public class ShortWaveRadiationLayer extends SimWorldSimpleLayer<ShortWaveRadiationCell> {
 
-    private static final Logger logger = LogManager.getLogger(ShortWaveRadiationLayer.class);
+    //private static final Logger logger = LogManager.getLogger(ShortWaveRadiationLayer.class);
     private final double albedoReflection = 0.23;
     private double a_s = 0.25;
     private double b_s = 0.5;

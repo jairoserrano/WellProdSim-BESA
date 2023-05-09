@@ -18,7 +18,6 @@ import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import BESA.Log.ReportBESA;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
 import static wpsWorld.Messages.WorldMessageType.CROP_INFORMATION;
@@ -28,6 +27,7 @@ import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 import wpsWorld.Messages.WorldMessageType;
 import static wpsWorld.Messages.WorldMessageType.CROP_OBSERVE;
 
@@ -43,7 +43,7 @@ public class CheckCropsTask extends Task {
      *
      */
     public CheckCropsTask() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.finished = false;
     }
 
@@ -53,7 +53,7 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
 
         try {
@@ -72,7 +72,7 @@ public class CheckCropsTask extends Task {
                     worldMessage);
             ah.sendEvent(ev);
 
-            ReportBESA.debug("🗓️🗓️🗓️ Date: " + wpsCurrentDate.getInstance().getCurrentDate());
+            wpsReport.debug("🗓️🗓️🗓️ Date: " + wpsCurrentDate.getInstance().getCurrentDate());
 
             //believes.getPeasantProfile().setHarverstSeason(true);
             // @TODO: falta calcular el tiempo necesario para el cultivo
@@ -82,7 +82,7 @@ public class CheckCropsTask extends Task {
             this.setTaskWaitingForExecution();
 
         } catch (ExceptionBESA ex) {
-            ReportBESA.error(ex);
+            wpsReport.error(ex);
         }
     }
 
@@ -91,7 +91,7 @@ public class CheckCropsTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -100,7 +100,7 @@ public class CheckCropsTask extends Task {
      * @param finished
      */
     public void setFinished(boolean finished) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.finished = finished;
     }
 
@@ -110,7 +110,7 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -120,7 +120,7 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -129,7 +129,7 @@ public class CheckCropsTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -140,7 +140,7 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return isExecuted();
     }
 }

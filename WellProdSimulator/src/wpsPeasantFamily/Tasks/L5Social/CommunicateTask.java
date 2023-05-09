@@ -14,7 +14,6 @@
  */
 package wpsPeasantFamily.Tasks.L5Social;
 
-import BESA.Log.ReportBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
@@ -32,7 +31,7 @@ public class CommunicateTask extends Task {
      *
      */
     public CommunicateTask() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.finished = false;
     }
 
@@ -42,14 +41,14 @@ public class CommunicateTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().increaseHealth();
         believes.getPeasantProfile().useLeisureOptions();
         believes.getPeasantProfile().increaseFamilyTimeAvailability();
         believes.getPeasantProfile().useTime(TimeConsumedBy.Communicate);
         this.setFinished(true);
-        //ReportBESA.info("new healt" + believes.getPeasantProfile().getHealth());
+        //wpsReport.info("new healt" + believes.getPeasantProfile().getHealth());
     }
 
     /**
@@ -57,7 +56,7 @@ public class CommunicateTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return finished;
     }
 
@@ -66,7 +65,7 @@ public class CommunicateTask extends Task {
      * @param finished
      */
     public void setFinished(boolean finished) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.finished = finished;
     }
 
@@ -76,7 +75,7 @@ public class CommunicateTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -86,7 +85,7 @@ public class CommunicateTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -95,7 +94,7 @@ public class CommunicateTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return finished;
     }
 
@@ -106,7 +105,7 @@ public class CommunicateTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return isExecuted();
     }
 }

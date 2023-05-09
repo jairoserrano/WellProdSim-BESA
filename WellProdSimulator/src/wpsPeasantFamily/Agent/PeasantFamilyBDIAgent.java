@@ -14,6 +14,7 @@
  */
 package wpsPeasantFamily.Agent;
 
+import wpsPeasantFamily.Utils.PeasantFamilyProfile;
 import wpsPeasantFamily.Goals.L1Survival.SeekPurposeGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.LookForALandGoal;
 import wpsPeasantFamily.Goals.L1Survival.DoHealthCareGoal;
@@ -43,7 +44,6 @@ import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.StructBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import BESA.Log.ReportBESA;
 import java.util.ArrayList;
 import java.util.List;
 import rational.guards.InformationFlowGuard;
@@ -55,7 +55,7 @@ import wpsPeasantFamily.Goals.L4SkillsResources.ObtainLivestockGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainSeedsGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainWaterGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainPesticidesGoal;
-import wpsPeasantFamily.Utils.PeasantFamilyProfile;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -68,7 +68,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
 
     private static StructBESA createStruct(StructBESA structBESA) throws ExceptionBESA {
         structBESA.addBehavior("HeartBeatGuard");
-        structBESA.bindGuard("HeartBeatGuard", HeartBeatGuard.class);
+        structBESA.bindGuard("HeartBeatGuard", PeasantFamilyHeartBeatGuard.class);
         structBESA.addBehavior("FromWorldGuard");
         structBESA.bindGuard("FromWorldGuard", FromWorldGuard.class);
         return structBESA;
@@ -86,11 +86,11 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
      */
     public PeasantFamilyBDIAgent(String alias, PeasantFamilyProfile peasantProfile) throws ExceptionBESA {
         super(alias, createBelieves(peasantProfile), createGoals(), BDITHRESHOLD, createStruct(new StructBESA()));
-        //ReportBESA.info("PeasantAgent Iniciado");
+        //wpsReport.info("PeasantAgent Iniciado");
     }
 
     private static List<GoalBDI> createGoals() {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         
         List<GoalBDI> goals = new ArrayList();  
         
@@ -161,9 +161,9 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
             AgHandlerBESA agHandler = AdmBESA.getInstance().getHandlerByAlias(this.getAlias());
             EventBESA eventBesa = new EventBESA(InformationFlowGuard.class.getName(), null);
             agHandler.sendEvent(eventBesa);
-            ReportBESA.info("💞 Peasant Family Heart Beat");
+            wpsReport.info("💞 Peasant Family Heart Beat");
         } catch (ExceptionBESA e) {
-            ReportBESA.error(e);
+            wpsReport.error(e);
         }
     }
 

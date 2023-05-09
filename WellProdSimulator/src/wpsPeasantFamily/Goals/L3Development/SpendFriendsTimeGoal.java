@@ -14,12 +14,10 @@
  */
 package wpsPeasantFamily.Goals.L3Development;
 
-import wpsPeasantFamily.Tasks.L3Development.MaintainHouseTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
 import BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA;
-import BESA.Log.ReportBESA;
 import rational.RationalRole;
 import rational.mapping.Believes;
 import rational.mapping.Plan;
@@ -27,6 +25,7 @@ import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Tasks.L3Development.SpendFriendsTimeTask;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -62,7 +61,7 @@ public class SpendFriendsTimeGoal extends GoalBDI {
      */
     public SpendFriendsTimeGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        //ReportBESA.info("");
+        //wpsReport.info("");
     }
 
     /**
@@ -73,9 +72,9 @@ public class SpendFriendsTimeGoal extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        ReportBESA.info("getTools=" + believes.getPeasantProfile().getTools());
+        //wpsReport.info("getTools=" + believes.getPeasantProfile().getTools());
         if (believes.getPeasantProfile().getTools() > 0) {
             return 1;
         } else {
@@ -92,7 +91,7 @@ public class SpendFriendsTimeGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        ReportBESA.info("getHousingCondition=" + believes.getPeasantProfile().getHousingCondition());
+        wpsReport.info("getHousingCondition=" + believes.getPeasantProfile().getHousingCondition());
         if (believes.getPeasantProfile().getHousingCondition() < 1) {
             return 1;
         } else {
@@ -108,9 +107,9 @@ public class SpendFriendsTimeGoal extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        ReportBESA.info("isBusy=" + believes.getPeasantProfile().isBusy());
+        wpsReport.info("isBusy=" + believes.getPeasantProfile().isBusy());
         if (believes.getPeasantProfile().isFree()
                 && believes.getPeasantProfile().haveTimeAvailable(
                         TimeConsumedBy.SpendFriendsTime
@@ -129,7 +128,7 @@ public class SpendFriendsTimeGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return 1;
     }
 
@@ -141,9 +140,9 @@ public class SpendFriendsTimeGoal extends GoalBDI {
      */
     @Override
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        //wpsReport.info(stateBDI.getMachineBDIParams().getPyramidGoals());
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
-        //ReportBESA.info("getHealth=" + believes.getPeasantProfile().getHealth());
+        //wpsReport.info("getHealth=" + believes.getPeasantProfile().getHealth());
         return believes.getPeasantProfile().getHealth() > 0;
     }
 
@@ -155,7 +154,7 @@ public class SpendFriendsTimeGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         return believes.getPeasantProfile().getHousingCondition() > 0;
     }

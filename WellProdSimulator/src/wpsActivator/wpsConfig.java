@@ -14,7 +14,6 @@
  */
 package wpsActivator;
 
-import BESA.Log.ReportBESA;
 import org.snakeyaml.engine.v2.api.Load;
 import org.snakeyaml.engine.v2.api.LoadSettings;
 import com.google.gson.Gson;
@@ -22,9 +21,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import wpsPeasantFamily.Utils.PeasantFamilyProfile;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -64,44 +62,33 @@ public class wpsConfig {
 
             yamlContent = new String(Files.readAllBytes(Paths.get("resources/wpsRegularPeasant.yml")));
             data = (Map<String, Object>) load.loadFromString(yamlContent);
-            ReportBESA.info("Configuración RegularPeasant cargada con exito");
+            wpsReport.info("Configuración RegularPeasant cargada con exito");
             Map<String, Object> regularPeasant = (Map<String, Object>) data.get("RegularPeasant");
             jsonData = gson.toJson(regularPeasant);
             regularFarmerProfile = gson.fromJson(jsonData, PeasantFamilyProfile.class);
-
-            //ReportBESA.info(regularFarmerProfile);
+            //wpsReport.info(regularFarmerProfile);
+            
             yamlContent = new String(Files.readAllBytes(Paths.get("resources/wpsLazyPeasant.yml")));
             data = (Map<String, Object>) load.loadFromString(yamlContent);
-            ReportBESA.info("Configuración LazyPeasant cargada con exito");
+            wpsReport.info("Configuración LazyPeasant cargada con exito");
             Map<String, Object> lazyPeasant = (Map<String, Object>) data.get("LazyPeasant");
             jsonData = gson.toJson(lazyPeasant);
             lazyFarmerProfile = gson.fromJson(jsonData, PeasantFamilyProfile.class);
-
-            //ReportBESA.info(lazyFarmerProfile);
+            //wpsReport.info(lazyFarmerProfile);
+            
             yamlContent = new String(Files.readAllBytes(Paths.get("resources/wpsProactivePeasant.yml")));
             data = (Map<String, Object>) load.loadFromString(yamlContent);
-            ReportBESA.info("Configuración ProactivePeasant cargada con exito");
+            wpsReport.info("Configuración ProactivePeasant cargada con exito");
             Map<String, Object> proactivePeasant = (Map<String, Object>) data.get("ProactivePeasant");
             jsonData = gson.toJson(proactivePeasant);
             proactiveFarmerProfile = gson.fromJson(jsonData, PeasantFamilyProfile.class);
-
-            //ReportBESA.info(proactiveFarmerProfile);
+            //wpsReport.info(proactiveFarmerProfile);
+            
         } catch (IOException ex) {
-            Logger.getLogger(wpsConfig.class.getName()).log(Level.SEVERE, null, ex);
-            ReportBESA.error("No hay configuración válida");
+            wpsReport.error("No hay configuración válida");
             System.exit(0);
         }
 
-        /* Simulation parameters
-        if (args.length == 7) {
-            peasantType = args[0];
-            rainfallConditions = args[1];
-            perturbation = args[2];
-            startSimulationDate = args[3];
-            mainRiceCropID = args[4];
-            //dayLength = Long(args[5]);
-            //checkCropStatusPeriodic = args[6];
-        } else {*/
         peasantType = "normal";
         rainfallConditions = "normal";
         perturbation = "none";
@@ -109,7 +96,6 @@ public class wpsConfig {
         mainRiceCropID = "rice_1";
         dayLength = 50;
         checkCropStatusPeriodic = 7;
-        //}
     }
 
     /**

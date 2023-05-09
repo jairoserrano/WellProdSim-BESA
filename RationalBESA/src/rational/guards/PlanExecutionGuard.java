@@ -31,7 +31,7 @@ public class PlanExecutionGuard extends GuardBESA {
                         Iterator<Task> it3 = plan.getDependencyGraph().get(nextTask).iterator();
                         while (it3.hasNext()) {
                             Task dependencyTask = it3.next();
-                            ReportBESA.debug(dependencyTask.toString());
+                            //ReportBESA.debug(dependencyTask.toString());
                             if (!dependencyTask.isFinalized()) {
                                 canExecute = false;
                                 break;

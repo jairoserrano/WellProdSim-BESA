@@ -14,12 +14,12 @@
  */
 package wpsPeasantFamily.Tasks.L1Survival;
 
-import BESA.Log.ReportBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -33,7 +33,7 @@ public class DoVitalsTask extends Task {
      *
      */
     public DoVitalsTask() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.finished = false;
     }
 
@@ -43,11 +43,11 @@ public class DoVitalsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         
         // dormir 8 horas y 4 horas de alimentación
-        ReportBESA.info("🔆🔆🔆 Despertó el " + wpsCurrentDate.getInstance().getCurrentDate() + ". Hizo sus funciones vitales.");
+        wpsReport.info("🔆🔆🔆 Despertó el " + wpsCurrentDate.getInstance().getCurrentDate() + ". Hizo sus funciones vitales.");
         
         // Vitals about money and food
         if (believes.getPeasantProfile().getMoney()
@@ -69,7 +69,7 @@ public class DoVitalsTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -78,7 +78,7 @@ public class DoVitalsTask extends Task {
      * @param finished
      */
     public void setFinished(boolean finished) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.finished = finished;
     }
 
@@ -88,7 +88,7 @@ public class DoVitalsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -98,7 +98,7 @@ public class DoVitalsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -107,7 +107,7 @@ public class DoVitalsTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -118,7 +118,7 @@ public class DoVitalsTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return isExecuted();
     }
 }

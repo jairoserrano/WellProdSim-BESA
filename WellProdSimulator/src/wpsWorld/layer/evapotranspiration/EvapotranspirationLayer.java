@@ -1,8 +1,6 @@
 package wpsWorld.layer.evapotranspiration;
 
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -16,7 +14,7 @@ import wpsWorld.layer.SimWorldSimpleLayer;
  */
 public class EvapotranspirationLayer extends SimWorldSimpleLayer<EvapotranspirationCell> {
 
-    private static final Logger logger = LogManager.getLogger(EvapotranspirationLayer.class);
+    //private static final Logger logger = LogManager.getLogger(EvapotranspirationLayer.class);
 
     /**
      *

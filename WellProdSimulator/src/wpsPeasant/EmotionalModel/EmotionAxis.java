@@ -173,7 +173,7 @@ public class EmotionAxis {
      */
     public void printEventInfluences(){
         for (String object : eventInfluence.keySet()) {
-//            ReportBESA.info("Event: "+object+" Object: "+eventInfluence.get(object));
+//            wpsReport.info("Event: "+object+" Object: "+eventInfluence.get(object));
         }
     }
 

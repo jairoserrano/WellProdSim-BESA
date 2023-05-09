@@ -1,8 +1,5 @@
 package wpsWorld.layer.disease;
 
-import BESA.Log.ReportBESA;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jgrapht.Graphs;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -17,6 +14,7 @@ import wpsWorld.layer.disease.action.DiseaseCellAction;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import wpsViewer.Agent.wpsReport;
 
 /**
  * Concrete disease layer implementation
@@ -86,7 +84,7 @@ public class DiseaseLayer extends GenericWorldLayerGraphCell<DiseaseCell> {
         if (this.currentDateLayerExecution == null) {
             this.iterateGraphForDate(params1.getDate());
             this.currentDateLayerExecution = params1.getDate();
-            //ReportBESA.info("For Date: " + params1.getDate());
+            //wpsReport.info("For Date: " + params1.getDate());
             this.printCellsStates();
         } else {
             DateTimeFormatter dtfOut = DateTimeFormat.forPattern(this.worldConfig.getProperty("date.format"));
@@ -97,7 +95,7 @@ public class DiseaseLayer extends GenericWorldLayerGraphCell<DiseaseCell> {
                 String newDate = dtfOut.print(previousStateDatePlusOneDay);
                 this.iterateGraphForDate(newDate);
                 this.currentDateLayerExecution = newDate;
-                //ReportBESA.info("-----------> For Date: " + newDate + " <-----------");
+                //wpsReport.info("-----------> For Date: " + newDate + " <-----------");
                 this.printCellsStates();
             }
         }
@@ -134,7 +132,7 @@ public class DiseaseLayer extends GenericWorldLayerGraphCell<DiseaseCell> {
                 DiseaseCellState newCellState = new DiseaseCellState();
                 if (this.worldConfig.isDiseasePerturbation()) {
                     double nextRand = this.random.nextDouble();
-                    ReportBESA.info("Current rand for disease " + nextRand);
+                    wpsReport.info("Current rand for disease " + nextRand);
                     this.updateCellInsecticideFromCellEvents(currentCell);
                     if (currentCell.getDateInsecticideApplication() == null || DateHelper.differenceDaysBetweenTwoDates(dateExecution, currentCell.getDateInsecticideApplication()) > insecticideDaysEffectiveness) {
                         newCellState.setCurrentProbabilityDisease(currentCellState.getCurrentProbabilityDisease() + probabilityDiseaseConfigured);
@@ -169,10 +167,10 @@ public class DiseaseLayer extends GenericWorldLayerGraphCell<DiseaseCell> {
     private void printCellsStates() {
         for (DiseaseCell currentCell : this.allCells) {
             if (((DiseaseCellState) currentCell.getCellState()).isInfected()) {
-                ReportBESA.info("Cell: " + currentCell.getId());
-                ReportBESA.info("infected: " + ((DiseaseCellState) currentCell.getCellState()).isInfected());
-                ReportBESA.info("current probability of infection: " + ((DiseaseCellState) currentCell.getCellState()).getCurrentProbabilityDisease());
-                ReportBESA.info("-------------------");
+                wpsReport.info("Cell: " + currentCell.getId());
+                wpsReport.info("infected: " + ((DiseaseCellState) currentCell.getCellState()).isInfected());
+                wpsReport.info("current probability of infection: " + ((DiseaseCellState) currentCell.getCellState()).getCurrentProbabilityDisease());
+                wpsReport.info("-------------------");
             }
         }
     }

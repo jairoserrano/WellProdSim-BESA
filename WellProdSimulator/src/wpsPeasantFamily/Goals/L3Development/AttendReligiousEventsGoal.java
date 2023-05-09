@@ -14,12 +14,10 @@
  */
 package wpsPeasantFamily.Goals.L3Development;
 
-import wpsPeasantFamily.Tasks.L3Development.ProcessProductsTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
 import BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA;
-import BESA.Log.ReportBESA;
 import rational.RationalRole;
 import rational.mapping.Believes;
 import rational.mapping.Plan;
@@ -62,7 +60,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
      */
     public AttendReligiousEventsGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        //ReportBESA.info("");
+        //wpsReport.info("");
     }
 
     /**
@@ -73,7 +71,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().haveTimeAvailable(
                 TimeConsumedBy.AttendReligiousEvents
@@ -93,7 +91,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //ReportBESA.info("getHarvestedWeight=" + believes.getPeasantProfile().getHarvestedWeight());
+        //wpsReport.info("getHarvestedWeight=" + believes.getPeasantProfile().getHarvestedWeight());
         // @TODO: Revisar si la iglesia o templo está abierto
         return 0;
     }
@@ -106,7 +104,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().isBusy()) {
             return 0;
@@ -123,7 +121,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         return 1;
     }
 
@@ -135,7 +133,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
      */
     @Override
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info(stateBDI.getMachineBDIParams().getPyramidGoals());
+        //wpsReport.info(stateBDI.getMachineBDIParams().getPyramidGoals());
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
         return believes.getPeasantProfile().getHealth() > 0;
     }
@@ -148,7 +146,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //ReportBESA.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setGrowingSeason(true);
         return believes.getPeasantProfile().getHarvestedWeight() == 0;

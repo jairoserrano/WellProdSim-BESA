@@ -14,7 +14,6 @@
  */
 package wpsPeasantFamily.Tasks.L1Survival;
 
-import BESA.Log.ReportBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
@@ -31,7 +30,7 @@ public class SeekPurposeTask extends Task {
      *
      */
     public SeekPurposeTask() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
     }
 
     /**
@@ -40,7 +39,7 @@ public class SeekPurposeTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setPurpose("farmer");
         believes.getPeasantProfile().setBusy(false);
@@ -53,7 +52,7 @@ public class SeekPurposeTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -62,7 +61,7 @@ public class SeekPurposeTask extends Task {
      * @param finished
      */
     public void setFinished(boolean finished) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         this.finished = finished;
     }
 
@@ -72,7 +71,7 @@ public class SeekPurposeTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setWorker(false);
         this.setFinished(true);
@@ -84,7 +83,7 @@ public class SeekPurposeTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setWorker(false);
         this.setFinished(true);
@@ -95,7 +94,7 @@ public class SeekPurposeTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -106,7 +105,7 @@ public class SeekPurposeTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes parameters) {
-        ////ReportBESA.info("");
+        ////wpsReport.info("");
         return isExecuted();
     }
 }

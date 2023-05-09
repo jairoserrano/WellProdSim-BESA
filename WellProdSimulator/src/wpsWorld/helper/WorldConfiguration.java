@@ -1,20 +1,16 @@
 package wpsWorld.Helper;
 
-import BESA.Log.ReportBESA;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import wpsViewer.Agent.wpsReport;
 
 /**
  * Singleton pojo of the world configuration keys
  */
 public class WorldConfiguration {
-
-    private static final Logger logger = LogManager.getLogger(WorldConfiguration.class);
+    
     private static final String CONF_NAME = "resources/app.properties";
     private static WorldConfiguration instance = null;
     private Properties appProperties;
@@ -29,7 +25,7 @@ public class WorldConfiguration {
         try (InputStream in = new FileInputStream(CONF_NAME)) {
 
             if (in == null) {
-                ReportBESA.error("Sorry, unable to find app.properties");
+                wpsReport.error("Sorry, unable to find app.properties");
                 return;
             }
 
@@ -38,7 +34,7 @@ public class WorldConfiguration {
             this.appProperties.load(in);
 
         } catch (IOException ex) {
-            ReportBESA.error("No app config file found!!");
+            wpsReport.error("No app config file found!!");
             ex.printStackTrace();
         }
 

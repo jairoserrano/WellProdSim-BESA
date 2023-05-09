@@ -1,15 +1,14 @@
 package wpsWorld.Helper;
 
-import BESA.Log.ReportBESA;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import wpsWorld.layer.data.MonthData;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import wpsViewer.Agent.wpsReport;
+import wpsWorld.layer.data.MonthData;
 
 /**
  *
@@ -24,7 +23,7 @@ public class MonthlyDataLoader {
      * @throws IOException
      */
     public static List<MonthData> loadMonthlyDataFile(String dataFileLocation) throws IOException {
-        //ReportBESA.info(dataFileLocation);
+        //wpsReport.info(dataFileLocation);
         InputStream in = new FileInputStream(dataFileLocation);
         //ClassLoader classLoader = MonthlyDataLoader.class.getClassLoader();
         //File jsonFile = new File(classLoader.getResource(dataFileLocation).getFile());
@@ -44,7 +43,7 @@ public class MonthlyDataLoader {
             monthData.setStandardDeviation(currentObject.getDouble("standardDeviation"));
             monthlyData.add(monthData);
         });
-        ReportBESA.info("Cargando " + dataFileLocation + " ... OK");
+        wpsReport.info("Cargando " + dataFileLocation + " ... OK");
         return monthlyData;
     }
 }

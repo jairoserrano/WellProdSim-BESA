@@ -1,8 +1,5 @@
 package wpsWorld.layer.temperature;
 
-import BESA.Log.ReportBESA;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import wpsWorld.automata.core.cell.LayerCellState;
 
 /**
@@ -17,7 +14,7 @@ public class TemperatureCellState implements LayerCellState {
      * @param temperature
      */
     public TemperatureCellState(double temperature) {
-        //ReportBESA.info("New temperature state: " + temperature);
+        //wpsReport.info("New temperature state: " + temperature);
         this.temperature = temperature;
     }
 

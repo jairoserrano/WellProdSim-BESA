@@ -1,7 +1,5 @@
 package wpsWorld.layer.rainfall;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -15,7 +13,7 @@ import wpsWorld.layer.SimWorldSimpleLayer;
  */
 public class RainfallLayer extends SimWorldSimpleLayer<RainfallCell> {
 
-    private static final Logger logger = LogManager.getLogger(RainfallLayer.class);
+    //private static final Logger logger = LogManager.getLogger(RainfallLayer.class);
 
     /**
      *
