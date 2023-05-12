@@ -29,6 +29,7 @@ public enum TimeConsumedBy {
     SpendFriendsTime(2),
     GetTraining(2),
     LookForALand(8),
+    AskForAPriceList(2),
     ObtainLivestock(4),
     ObtainPesticides(4),
     ObtainSeeds(4),

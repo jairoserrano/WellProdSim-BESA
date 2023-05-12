@@ -1,6 +1,7 @@
 package wpsControl.Agent;
 
 import org.joda.time.DateTime;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -49,7 +50,19 @@ public class wpsCurrentDate {
         DateTime date = DateHelper.getDateInJoda(instance.getCurrentDate());        
         date = date.plusDays(1);
         String newDate = DateHelper.parseDateTimeToString(date);
-        this.setCurrentDate(newDate);
+        this.setCurrentDate(newDate);        
         return newDate;
+    }
+
+    public boolean isFirstDayOfMonth() {
+        DateTime date = DateHelper.getDateInJoda(instance.getCurrentDate());
+        DateTime.Property dayOfMonth = date.dayOfMonth();
+        //wpsReport.debug("------------> " + dayOfMonth.get() + "<-----------");
+        return dayOfMonth.get() == 1;
+    }
+    public boolean isFirstDayOfWeek() {
+        DateTime date = DateHelper.getDateInJoda(instance.getCurrentDate());
+        DateTime.Property dayOfWeek = date.dayOfWeek();
+        return dayOfWeek.get() == 1;
     }
 }

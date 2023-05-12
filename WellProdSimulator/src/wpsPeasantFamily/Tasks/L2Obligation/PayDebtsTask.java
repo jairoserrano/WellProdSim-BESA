@@ -14,9 +14,18 @@
  */
 package wpsPeasantFamily.Tasks.L2Obligation;
 
+import BESA.ExceptionBESA;
+import BESA.Kernel.Agent.Event.EventBESA;
+import BESA.Kernel.System.AdmBESA;
+import BESA.Kernel.System.Directory.AgHandlerBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
+import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsSocietyBank.Agent.BankAgentGuard;
+import wpsSocietyBank.Agent.BankMessage;
+import static wpsSocietyBank.Agent.BankMessageType.PAY_LOAN_TERM;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -42,9 +51,25 @@ public class PayDebtsTask extends Task {
     public void executeTask(Believes parameters) {
         ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        // @TODO: Cambiar a la venta real con el agente social market
-        believes.getPeasantProfile().setHarvestedWeight(
-                believes.getPeasantProfile().getHarvestedWeight() - 0.1);
+
+        try {
+            AdmBESA adm = AdmBESA.getInstance();
+            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasBankAgent);
+
+            BankMessage bankMessage = new BankMessage(
+                    PAY_LOAN_TERM,
+                    believes.getPeasantProfile().getProfileName()
+            );
+
+            EventBESA ev = new EventBESA(
+                    BankAgentGuard.class.getName(),
+                    bankMessage);
+            ah.sendEvent(ev);
+
+        } catch (ExceptionBESA ex) {
+            wpsReport.error(ex);
+        }
+
         this.setFinished(true);
     }
 

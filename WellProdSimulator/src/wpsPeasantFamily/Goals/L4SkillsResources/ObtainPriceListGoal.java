@@ -12,9 +12,8 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Goals.L2Obligation;
+package wpsPeasantFamily.Goals.L4SkillsResources;
 
-import wpsPeasantFamily.Tasks.L2Obligation.PayDebtsTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -24,30 +23,32 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Tasks.L4SkillsResources.ObtainPriceListTask;
+import wpsPeasantFamily.Utils.TimeConsumedBy;
 
 /**
  *
  * @author jairo
  */
-public class PayDebtsGoal extends GoalBDI {
+public class ObtainPriceListGoal extends GoalBDI {
 
     /**
      *
      * @return
      */
-    public static PayDebtsGoal buildGoal() {
-        PayDebtsTask peasantPayDebtsTask = new PayDebtsTask();
-        Plan peasantPayDebtsPlan = new Plan();
-        peasantPayDebtsPlan.addTask(peasantPayDebtsTask);
-        RationalRole peasantPayDebtsRole = new RationalRole(
-                "peasantPayDebtsTaks",
-                peasantPayDebtsPlan);
-        PayDebtsGoal peasantPayDebtsGoalBDI = new PayDebtsGoal(
+    public static ObtainPriceListGoal buildGoal() {
+        ObtainPriceListTask obtainPriceListTask = new ObtainPriceListTask();
+        Plan obtainPriceListPlan = new Plan();
+        obtainPriceListPlan.addTask(obtainPriceListTask);
+        RationalRole obtainPriceListRole = new RationalRole(
+                "obtainPriceListTask",
+                obtainPriceListPlan);
+        ObtainPriceListGoal obtainPriceListGoal = new ObtainPriceListGoal(
                 wpsStart.getPlanID(),
-                peasantPayDebtsRole,
-                "peasantPayDebtsTaks",
-                GoalBDITypes.OBLIGATION);
-        return peasantPayDebtsGoalBDI;
+                obtainPriceListRole,
+                "obtainPriceListTask",
+                GoalBDITypes.SKILLSRESOURCES);
+        return obtainPriceListGoal;
     }
 
     /**
@@ -57,7 +58,7 @@ public class PayDebtsGoal extends GoalBDI {
      * @param description
      * @param type
      */
-    public PayDebtsGoal(long id, RationalRole role, String description, GoalBDITypes type) {
+    public ObtainPriceListGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
         //wpsReport.info("");
     }
@@ -72,11 +73,7 @@ public class PayDebtsGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getMoney() > 0) {
-            return 0;
-        } else {
-            return 1;
-        }
+        return 1;
     }
 
     /**
@@ -88,8 +85,7 @@ public class PayDebtsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("DebtPayment=" + believes.getPeasantProfile().getDebtPayment());
-        if (believes.getPeasantProfile().getLoanAmountToPay() > 0 ) {
+        if (believes.getPeasantProfile().needAPriceList()) {
             return 1;
         } else {
             return 0;
@@ -106,7 +102,10 @@ public class PayDebtsGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getHealth() > 0) {
+        if (believes.getPeasantProfile().isFree()
+                && believes.getPeasantProfile().haveTimeAvailable(
+                        TimeConsumedBy.AskForAPriceList
+                )) {
             return 1;
         } else {
             return 0;
@@ -148,7 +147,7 @@ public class PayDebtsGoal extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().getLoanAmountToPay() == 0;
+        return believes.getPeasantProfile().getSupplies() == 1;
     }
 
 }

@@ -12,35 +12,32 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsSocietyMarket;
-
-import wpsPeasantFamily.Utils.FarmingResource;
-import BESA.Kernel.Agent.StateBESA;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+package wpsSocietyBank.Agent;
 
 /**
  *
- * @author jairo
  */
-public class MarketAgentState extends StateBESA implements Serializable {
+public enum BankMessageType {
 
+    /**
+     * Formal bank loan
+     */
+    ASK_FOR_FORMAL_LOAN,
+    
+    /**
+     * Informal social loan
+     * Pagadiario (semanal)
+     */
+    ASK_FOR_INFORMAL_LOAN,
+
+    /**
+     * Ask for payment
+     */
+    ASK_CURRENT_TERM,
+    
     /**
      *
      */
-    Map<String, FarmingResource> resources = new HashMap<>();
-
-    /**
-     *
-     */
-    public MarketAgentState() {
-        super();
-    }
-    public Map<String, FarmingResource> getResources() {
-        return resources;
-    }
-    public void setResources(Map<String, FarmingResource> resources) {
-        this.resources = resources;
-    }
+    PAY_LOAN_TERM
+    
 }

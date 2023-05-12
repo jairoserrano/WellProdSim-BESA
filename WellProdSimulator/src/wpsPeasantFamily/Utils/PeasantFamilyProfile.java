@@ -15,6 +15,8 @@
 package wpsPeasantFamily.Utils;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import wpsControl.Agent.wpsCurrentDate;
 import wpsViewer.Agent.wpsReport;
 
@@ -34,8 +36,6 @@ public class PeasantFamilyProfile implements Serializable {
     private double wellBeging;
     private boolean worker;
     private double peasantQualityFactor;
-    private double tools;
-    private double supplies;
     private double liveStockAffinity;
     private boolean farm;
     private String farmName;
@@ -48,7 +48,7 @@ public class PeasantFamilyProfile implements Serializable {
     private double farmDistance;
     private double money;
     private double totalIncome;
-    private double debtPayment;
+    private int loanAmountToPay;
     private double harvestedWeight;
     private double housingQuailty;
     private double timeSpentOnMaintenance;
@@ -66,16 +66,13 @@ public class PeasantFamilyProfile implements Serializable {
     private double trainingRelevance;
     private double trainingCost;
     private double irrigation;
-    private double waterAvailable;
     private double irrigationTime;
     private double pestControl;
     private double diseasedCrop;
     private double weedControl;
     private double infestedCrop;
     private double suppliesAvailability;
-    private double suppliesCost;
     private double toolsAvailability;
-    private double toolsCost;
     private boolean associated;
     private int neighbors;
     private double collaborationValue;
@@ -93,11 +90,19 @@ public class PeasantFamilyProfile implements Serializable {
     private double leisureOptions;
     private boolean sellDone;
 
+    // Resources
+    private Map<String, FarmingResource> priceList = new HashMap<>();
+    private int waterAvailable;
+    private int pesticidesAvailable;
+    private int tools;
+    private int supplies;
+
     // Flags for Goals
     private boolean plantingSeason;
     private boolean growingSeason;
     private boolean harverstSeason;
-    private boolean loanSeason;
+    private boolean formalLoanSeason;
+    private boolean informalLoanSeason;
     private boolean cropCheckedToday;
 
     // Day Time
@@ -105,11 +110,27 @@ public class PeasantFamilyProfile implements Serializable {
     private int currentDay;
     private boolean newDay;
 
+    /**
+     *
+     */
+    public PeasantFamilyProfile() {
+        this.formalLoanSeason = false;
+        this.timeLeftOnDay = 24;
+        this.newDay = true;
+        this.currentDay = 1;
+    }
+    public int getPesticidesAvailable() {
+        return pesticidesAvailable;
+    }
+    public void setPesticidesAvailable(int pesticidesAvailable) {
+        this.pesticidesAvailable = pesticidesAvailable;
+    }
+
     public void setCropCheckedToday() {
         this.cropCheckedToday = true;
     }
-    
-    public boolean isCropCheckedToday(){
+
+    public boolean isCropCheckedToday() {
         return !this.cropCheckedToday;
     }
 
@@ -173,22 +194,12 @@ public class PeasantFamilyProfile implements Serializable {
                 + wpsCurrentDate.getInstance().getDatePlusOneDayAndUpdate());
     }
 
-    /**
-     *
-     */
-    public PeasantFamilyProfile() {
-        this.loanSeason = false;
-        this.timeLeftOnDay = 24;
-        this.newDay = true;
-        this.currentDay = 1;
+    public boolean isFormalLoanNeeded() {
+        return formalLoanSeason;
     }
 
-    public boolean isLoanNeeded() {
-        return loanSeason;
-    }
-
-    public void setLoanSeason(boolean loanSeason) {
-        this.loanSeason = loanSeason;
+    public void setFormalLoanSeason(boolean formalLoanSeason) {
+        this.formalLoanSeason = formalLoanSeason;
     }
 
     public double getPeasantFamilyMinimalVital() {
@@ -348,7 +359,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getTools() {
+    public int getTools() {
         return tools;
     }
 
@@ -356,15 +367,15 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param tools
      */
-    public void setTools(double tools) {
-        this.tools = tools;
+    public void setTools(int tools) {
+        this.tools += tools;
     }
 
     /**
      *
      * @return
      */
-    public double getSupplies() {
+    public int getSupplies() {
         return supplies;
     }
 
@@ -372,8 +383,8 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param supplies
      */
-    public void setSupplies(double supplies) {
-        this.supplies = supplies;
+    public void setSupplies(int supplies) {
+        this.supplies += supplies;
     }
 
     /**
@@ -548,7 +559,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param money
      */
-    public void setMoney(double money) {
+    public void setMoney(Integer money) {
         this.money = money;
     }
 
@@ -556,7 +567,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param money
      */
-    public void increaseMoney(double money) {
+    public void increaseMoney(Integer money) {
         this.money += money;
     }
 
@@ -580,16 +591,16 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getDebtPayment() {
-        return debtPayment;
+    public double getLoanAmountToPay() {
+        return loanAmountToPay;
     }
 
     /**
      *
-     * @param debtPayment
+     * @param loanAmountToPay
      */
-    public void setDebtPayment(double debtPayment) {
-        this.debtPayment = debtPayment;
+    public void setLoanAmountToPay(int loanAmountToPay) {
+        this.loanAmountToPay = loanAmountToPay;
     }
 
     /**
@@ -933,7 +944,7 @@ public class PeasantFamilyProfile implements Serializable {
      * @param waterAvailable
      */
     public void setWaterAvailable(double waterAvailable) {
-        this.waterAvailable = waterAvailable;
+        this.waterAvailable += waterAvailable;
     }
 
     /**
@@ -1036,22 +1047,6 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getSuppliesCost() {
-        return suppliesCost;
-    }
-
-    /**
-     *
-     * @param suppliesCost
-     */
-    public void setSuppliesCost(double suppliesCost) {
-        this.suppliesCost = suppliesCost;
-    }
-
-    /**
-     *
-     * @return
-     */
     public double getToolsAvailability() {
         return toolsAvailability;
     }
@@ -1062,22 +1057,6 @@ public class PeasantFamilyProfile implements Serializable {
      */
     public void setToolsAvailability(double toolsAvailability) {
         this.toolsAvailability = toolsAvailability;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public double getToolsCost() {
-        return toolsCost;
-    }
-
-    /**
-     *
-     * @param toolsCost
-     */
-    public void setToolsCost(double toolsCost) {
-        this.toolsCost = toolsCost;
     }
 
     /**
@@ -1189,7 +1168,7 @@ public class PeasantFamilyProfile implements Serializable {
      * @param livestockNumber
      */
     public void setLivestockNumber(int livestockNumber) {
-        this.livestockNumber = livestockNumber;
+        this.livestockNumber += livestockNumber;
     }
 
     /**
@@ -1473,7 +1452,7 @@ public class PeasantFamilyProfile implements Serializable {
                 + ", farmDistance=" + farmDistance
                 + ", money=" + money
                 + ", totalIncome=" + totalIncome
-                + ", debtPayment=" + debtPayment
+                + ", debtPayment=" + loanAmountToPay
                 + ", harvestedWeight=" + harvestedWeight
                 + ", harverstSeason=" + harverstSeason
                 + ", housingQuailty=" + housingQuailty
@@ -1521,6 +1500,39 @@ public class PeasantFamilyProfile implements Serializable {
      */
     public String getInternalCurrentDate() {
         return this.internalCurrentDate;
+    }
+
+    public void setInformalLoanSeason(boolean loan) {
+        this.informalLoanSeason = loan;
+    }
+
+    public boolean isInformalLoanNeeded() {
+        return this.informalLoanSeason;
+    }
+
+    public void setPesticidesAvailable(Integer pesticidesAvailable) {
+        this.pesticidesAvailable += pesticidesAvailable;
+    }
+
+    public void setPriceList(Map<String, FarmingResource> priceList) {
+        this.priceList = priceList;
+    }
+
+    public Map<String, FarmingResource> getPriceList() {
+        return priceList;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean needAPriceList() {
+        // @TODO: Falta saber si tiene la lista de precios actualizada
+        return this.priceList.isEmpty();
+    }
+
+    public void discountMoney(int discount) {
+        this.money -= discount;
     }
 
 }

@@ -14,33 +14,42 @@
  */
 package wpsSocietyMarket;
 
-import wpsPeasantFamily.Utils.FarmingResource;
-import BESA.Kernel.Agent.StateBESA;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  *
- * @author jairo
  */
-public class MarketAgentState extends StateBESA implements Serializable {
+public enum MarketMessageType {
 
     /**
-     *
+     * 
      */
-    Map<String, FarmingResource> resources = new HashMap<>();
-
+    ASK_FOR_PRICE_LIST,
     /**
-     *
+     * 
      */
-    public MarketAgentState() {
-        super();
-    }
-    public Map<String, FarmingResource> getResources() {
-        return resources;
-    }
-    public void setResources(Map<String, FarmingResource> resources) {
-        this.resources = resources;
-    }
+    BUY_SEEDS,
+    
+    /**
+     * 
+     */
+    BUY_WATER,
+    
+    /**
+     * 
+     */
+    BUY_PESTICIDES,
+    
+    /**
+     * 
+     */
+    BUY_SUPPLIES,
+    
+    /**
+     * 
+     */
+    BUY_TOOLS,
+    
+    /**
+     * 
+     */
+    BUY_LIVESTOCK
 }

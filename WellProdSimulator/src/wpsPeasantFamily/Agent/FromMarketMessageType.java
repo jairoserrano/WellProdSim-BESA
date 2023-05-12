@@ -12,14 +12,45 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsSocietyBank.Agent;
-
-import BESA.Kernel.Agent.Event.DataBESA;
+package wpsPeasantFamily.Agent;
 
 /**
  *
- * @author jairo
  */
-public class BankData extends DataBESA  {
+public enum FromMarketMessageType {
+
+    /**
+     * 
+     */
+    PRICE_LIST,
+    /**
+     * 
+     */
+    SEEDS,
+    
+    /**
+     * 
+     */
+    WATER,
+    
+    /**
+     * 
+     */
+    PESTICIDES,
+    
+    /**
+     * 
+     */
+    SUPPLIES,
+    
+    /**
+     * 
+     */
+    TOOLS,
+    
+    /**
+     * 
+     */
+    LIVESTOCK
     
 }

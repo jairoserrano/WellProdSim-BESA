@@ -14,7 +14,6 @@
  */
 package wpsSocietyMarket;
 
-import wpsSocietyBank.Agent.*;
 import BESA.Kernel.Agent.Event.DataBESA;
 
 /**

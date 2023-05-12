@@ -23,6 +23,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Tasks.L1Survival.SelfEvaluationTask;
 
 /**
@@ -83,6 +84,7 @@ public class SelfEvaluationGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        
         return 0;
     }
 
@@ -139,7 +141,7 @@ public class SelfEvaluationGoal extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("getHealth=" + believes.getPeasantProfile().getHealth());
-        return believes.getPeasantProfile().getHealth()==1;
+        return believes.getPeasantProfile().getHealth() == 1;
     }
 
 }

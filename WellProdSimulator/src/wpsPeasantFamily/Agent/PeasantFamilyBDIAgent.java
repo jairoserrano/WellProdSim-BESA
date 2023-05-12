@@ -47,6 +47,7 @@ import BESA.Kernel.System.Directory.AgHandlerBESA;
 import java.util.ArrayList;
 import java.util.List;
 import rational.guards.InformationFlowGuard;
+import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Goals.L1Survival.DoVitalsGoal;
 import wpsPeasantFamily.Goals.L1Survival.SelfEvaluationGoal;
 import wpsPeasantFamily.Goals.L3Development.SellCropsGoal;
@@ -67,10 +68,14 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
     private static final double BDITHRESHOLD = 0.5;
 
     private static StructBESA createStruct(StructBESA structBESA) throws ExceptionBESA {
-        structBESA.addBehavior("HeartBeatGuard");
-        structBESA.bindGuard("HeartBeatGuard", PeasantFamilyHeartBeatGuard.class);
+        structBESA.addBehavior("PeasantFamilyHeartBeatGuard");
+        structBESA.bindGuard("PeasantFamilyHeartBeatGuard", PeasantFamilyHeartBeatGuard.class);
         structBESA.addBehavior("FromWorldGuard");
         structBESA.bindGuard("FromWorldGuard", FromWorldGuard.class);
+        structBESA.addBehavior("FromBankGuard");
+        structBESA.bindGuard("FromBankGuard", FromBankGuard.class);
+        structBESA.addBehavior("FromMarketGuard");
+        structBESA.bindGuard("FromMarketGuard", FromMarketGuard.class);
         return structBESA;
     }
 
@@ -91,19 +96,19 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
 
     private static List<GoalBDI> createGoals() {
         //wpsReport.info("");
-        
-        List<GoalBDI> goals = new ArrayList();  
-        
+
+        List<GoalBDI> goals = new ArrayList();
+
         //Level 1 Goals: Survival        
-        goals.add(DoVitalsGoal.buildGoal());        
+        goals.add(DoVitalsGoal.buildGoal());
         goals.add(DoHealthCareGoal.buildGoal());
         goals.add(SeekPurposeGoal.buildGoal());
-        goals.add(SelfEvaluationGoal.buildGoal());        
-        
+        goals.add(SelfEvaluationGoal.buildGoal());
+
         //Level 2 Goals: Obligations
         goals.add(LookForLoanGoal.buildGoal());
         goals.add(PayDebtsGoal.buildGoal());
-        
+
         //Level 3 Goals: Development        
         goals.add(AttendToLivestockGoal.buildGoal());
         goals.add(CheckCropsGoal.buildGoal());
@@ -116,7 +121,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         goals.add(ProcessProductsGoal.buildGoal());
         goals.add(SellCropsGoal.buildGoal());
         goals.add(SellProductsGoal.buildGoal());
-        
+
         //Level 4 Goals: Skills And Resources
         goals.add(GetTrainingGoal.buildGoal());
         goals.add(LookForALandGoal.buildGoal());
@@ -126,19 +131,19 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         goals.add(ObtainToolsGoal.buildGoal());
         goals.add(ObtainWaterGoal.buildGoal());
         goals.add(ObtainPesticidesGoal.buildGoal());
-        
+
         //Level 5 Goals: Social
-        goals.add(CommunicateGoal.buildGoal());        
+        goals.add(CommunicateGoal.buildGoal());
         goals.add(LookForCollaborationGoal.buildGoal());
         goals.add(ProvideCollaborationGoal.buildGoal());
 
         //Level 6 Goals: Leisure
-        goals.add(EngageInLeisureActivitiesGoal.buildGoal());        
+        goals.add(EngageInLeisureActivitiesGoal.buildGoal());
         goals.add(SpendFamilyTimeGoal.buildGoal());
-        
+
         return goals;
     }
-    
+
     /**
      *
      */
@@ -161,7 +166,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
             AgHandlerBESA agHandler = AdmBESA.getInstance().getHandlerByAlias(this.getAlias());
             EventBESA eventBesa = new EventBESA(InformationFlowGuard.class.getName(), null);
             agHandler.sendEvent(eventBesa);
-            wpsReport.info("💞 Peasant Family Heart Beat");
+            //wpsReport.info("💞 Peasant Family Heart Beat 💞");
         } catch (ExceptionBESA e) {
             wpsReport.error(e);
         }

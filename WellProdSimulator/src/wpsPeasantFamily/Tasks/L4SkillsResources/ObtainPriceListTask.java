@@ -12,7 +12,7 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Tasks.L2Obligation;
+package wpsPeasantFamily.Tasks.L4SkillsResources;
 
 import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
@@ -23,24 +23,24 @@ import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
-import wpsSocietyBank.Agent.BankAgentGuard;
-import wpsSocietyBank.Agent.BankMessage;
+import wpsSocietyMarket.MarketAgentGuard;
+import wpsSocietyMarket.MarketMessage;
+import wpsSocietyMarket.MarketMessageType;
+import static wpsSocietyMarket.MarketMessageType.ASK_FOR_PRICE_LIST;
 import wpsViewer.Agent.wpsReport;
-import static wpsSocietyBank.Agent.BankMessageType.ASK_FOR_FORMAL_LOAN;
-import static wpsSocietyBank.Agent.BankMessageType.ASK_FOR_INFORMAL_LOAN;
 
 /**
  *
  * @author jairo
  */
-public class LookForLoanTask extends Task {
+public class ObtainPriceListTask extends Task {
 
     private boolean finished;
 
     /**
      *
      */
-    public LookForLoanTask() {
+    public ObtainPriceListTask() {
         ////wpsReport.info("");
         this.finished = false;
     }
@@ -53,39 +53,28 @@ public class LookForLoanTask extends Task {
     public void executeTask(Believes parameters) {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("$ Asking for a LOAN to the Bank " + believes.getPeasantProfile().getMoney());
-        
+
         // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.
         try {
             AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasBankAgent);
+            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasMarketAgent);
 
-            BankMessage bankMessage;
-            if (believes.getPeasantProfile().isInformalLoanNeeded()) {
-                bankMessage = new BankMessage(
-                        ASK_FOR_INFORMAL_LOAN,
-                        believes.getPeasantProfile().getProfileName(),
-                        100000);
-                believes.getPeasantProfile().setInformalLoanSeason(false);
-            } else {
-                bankMessage = new BankMessage(
-                        ASK_FOR_FORMAL_LOAN,
-                        believes.getPeasantProfile().getProfileName(),
-                        50000);
-                believes.getPeasantProfile().setFormalLoanSeason(false);
-            }
+            MarketMessage marketMessage = new MarketMessage(
+                    ASK_FOR_PRICE_LIST,
+                    believes.getPeasantProfile().getProfileName()
+            );
 
             EventBESA ev = new EventBESA(
-                    BankAgentGuard.class.getName(),
-                    bankMessage);
+                    MarketAgentGuard.class.getName(),
+                    marketMessage);
             ah.sendEvent(ev);
 
-            believes.getPeasantProfile().useTime(TimeConsumedBy.LookForLoan);
+            believes.getPeasantProfile().useTime(TimeConsumedBy.AskForAPriceList);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
         this.setTaskWaitingForExecution();
-
     }
 
     /**
@@ -93,7 +82,7 @@ public class LookForLoanTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        //wpsReport.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -102,7 +91,7 @@ public class LookForLoanTask extends Task {
      * @param finished
      */
     public void setFinished(boolean finished) {
-        //wpsReport.info("");
+        ////wpsReport.info("");
         this.finished = finished;
     }
 
@@ -112,7 +101,7 @@ public class LookForLoanTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        //wpsReport.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -122,7 +111,7 @@ public class LookForLoanTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        //wpsReport.info("");
+        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -131,7 +120,7 @@ public class LookForLoanTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        //wpsReport.info("");
+        ////wpsReport.info("");
         return finished;
     }
 
@@ -142,7 +131,7 @@ public class LookForLoanTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        //wpsReport.info("");
+        ////wpsReport.info("");
         return isExecuted();
     }
 }

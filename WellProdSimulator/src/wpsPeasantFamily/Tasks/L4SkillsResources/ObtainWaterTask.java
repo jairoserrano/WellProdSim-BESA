@@ -14,10 +14,19 @@
  */
 package wpsPeasantFamily.Tasks.L4SkillsResources;
 
+import BESA.ExceptionBESA;
+import BESA.Kernel.Agent.Event.EventBESA;
+import BESA.Kernel.System.AdmBESA;
+import BESA.Kernel.System.Directory.AgHandlerBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
+import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsSocietyMarket.MarketAgentGuard;
+import wpsSocietyMarket.MarketMessage;
+import static wpsSocietyMarket.MarketMessageType.BUY_WATER;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -41,12 +50,31 @@ public class ObtainWaterTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        // @TODO: Cambiar a la venta real con el agente social market
-        //believes.getPeasantProfile().increaseFarmReady();
-        believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainWater);
-        this.setFinished(true);
+        //wpsReport.info("$ Asking for a LOAN to the Bank " + believes.getPeasantProfile().getMoney());
+
+        // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.
+        try {
+            AdmBESA adm = AdmBESA.getInstance();
+            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasMarketAgent);
+
+            MarketMessage marketMessage = new MarketMessage(
+                    BUY_WATER,
+                    believes.getPeasantProfile().getProfileName(),
+                    10);
+
+            EventBESA ev = new EventBESA(
+                    MarketAgentGuard.class.getName(),
+                    marketMessage);
+            ah.sendEvent(ev);
+
+            believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainWater);
+
+        } catch (ExceptionBESA ex) {
+            wpsReport.error(ex);
+        }
+        this.setTaskWaitingForExecution();
+
     }
 
     /**
