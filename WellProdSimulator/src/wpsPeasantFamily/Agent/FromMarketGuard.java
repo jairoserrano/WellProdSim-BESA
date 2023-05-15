@@ -86,7 +86,7 @@ public class FromMarketGuard extends GuardBESA {
                     break;
             }
 
-            believes.getPeasantProfile().discountMoney(discount);
+            believes.getPeasantProfile().useMoney(discount);
 
         } catch (IllegalArgumentException e) {
             wpsReport.error("Mensaje no reconocido de FromWorldMessageType");

@@ -91,7 +91,7 @@ public class ManagePestsGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("getCropHealth=" + believes.getPeasantProfile().getCropHealth());
-        if (believes.getPeasantProfile().getCropHealth() < 1) {
+        if (believes.getPeasantProfile().isPesticideSeason()) {
             return 1;
         } else {
             return 0;

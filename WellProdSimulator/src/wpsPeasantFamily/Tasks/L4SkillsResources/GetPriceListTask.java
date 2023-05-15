@@ -25,7 +25,6 @@ import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
-import wpsSocietyMarket.MarketMessageType;
 import static wpsSocietyMarket.MarketMessageType.ASK_FOR_PRICE_LIST;
 import wpsViewer.Agent.wpsReport;
 
@@ -33,14 +32,14 @@ import wpsViewer.Agent.wpsReport;
  *
  * @author jairo
  */
-public class ObtainPriceListTask extends Task {
+public class GetPriceListTask extends Task {
 
     private boolean finished;
 
     /**
      *
      */
-    public ObtainPriceListTask() {
+    public GetPriceListTask() {
         ////wpsReport.info("");
         this.finished = false;
     }

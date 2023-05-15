@@ -63,7 +63,10 @@ public class LookForALandTask extends Task {
         }
     }
 
-    private static WorldState buildWorldState(String rainfallFile, String agentAlias) {
+    private static WorldState buildWorldState(
+            String rainfallFile, 
+            String agentAlias,
+            int cropSize) {
         WorldConfiguration worldConfiguration = WorldConfiguration.getPropsInstance();
         ShortWaveRadiationLayer radiationLayer = new ShortWaveRadiationLayer(
                 worldConfiguration.getProperty("data.radiation"),
@@ -84,7 +87,7 @@ public class LookForALandTask extends Task {
                 0.7,
                 1512,
                 3330,
-                100,
+                cropSize,
                 0.9,
                 0.2,
                 Soil.SAND,
@@ -121,8 +124,12 @@ public class LookForALandTask extends Task {
         }
     }
 
-    private static WorldAgent buildWorld(String rainfallFile, String agentAlias, String aliasWorldAgent) {
-        WorldState worldState = buildWorldState(rainfallFile, agentAlias);
+    private static WorldAgent buildWorld(
+            String rainfallFile, 
+            String agentAlias, 
+            String aliasWorldAgent,
+            int cropSize) {
+        WorldState worldState = buildWorldState(rainfallFile, agentAlias, cropSize);
         StructBESA structBESA = new StructBESA();
         structBESA.bindGuard(WorldGuard.class);
         try {
@@ -170,7 +177,6 @@ public class LookForALandTask extends Task {
 
         // @TODO: setFarmName lo cambia el gobierno o el campesino
         believes.getPeasantProfile().setFarmName("Land_" + believes.getPeasantProfile().getProfileName());
-        believes.getPeasantProfile().setFarmSize(2);
         believes.getPeasantProfile().setHousing(1);
         believes.getPeasantProfile().setServicesPresence(1);
         believes.getPeasantProfile().setHousingSize(1);
@@ -189,7 +195,8 @@ public class LookForALandTask extends Task {
             WorldAgent worldAgent = buildWorld(
                     getRainfallFile(config.getRainfallConditions()),
                     believes.getPeasantProfile().getProfileName(),
-                    believes.getPeasantProfile().getFarmName()
+                    believes.getPeasantProfile().getFarmName(),
+                    believes.getPeasantProfile().getCropSize()
             );
             //wpsReport.info("Inicializando Mundo");
             initialWorldStateInitialization(
@@ -205,7 +212,7 @@ public class LookForALandTask extends Task {
         }
 
         believes.getPeasantProfile().setFarm(true);
-        believes.getPeasantProfile().setPlantingSeason(true);
+        believes.getPeasantProfile().setPreparationSeason(true);
         wpsReport.info("🥬 La familia campesina ya tiene tierra.");
         this.setFinished(true);
 

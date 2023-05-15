@@ -13,6 +13,7 @@
 ---
 ProactivePeasant:
   purpose: ""
+  profileName: "ProactivePeasant"
   health: 1.0
   productivity: 0.7
   wellBeging: 0.7

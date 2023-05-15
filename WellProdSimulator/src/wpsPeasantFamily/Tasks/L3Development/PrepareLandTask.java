@@ -18,6 +18,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -43,10 +44,9 @@ public class PrepareLandTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        // @TODO: Cambiar a la venta real con el agente social market
-        believes.getPeasantProfile().increaseFarmReady();
+        believes.getPeasantProfile().setPlantingSeason(true);
         believes.getPeasantProfile().useTime(TimeConsumedBy.PrepareLand);
-        this.setFinished(true);
+        this.setTaskWaitingForExecution();
     }
 
     /**

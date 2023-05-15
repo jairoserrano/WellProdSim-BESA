@@ -17,6 +17,7 @@ package wpsPeasantFamily.Agent;
 import BESA.BDI.AgentStructuralModel.StateBDI;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
+import static wpsPeasantFamily.Agent.FromWorldMessageType.NOTIFY_CROP_DISEASE;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -38,7 +39,7 @@ public class FromWorldGuard extends GuardBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
 
         FromWorldMessageType messageType = peasantCommMessage.getMessageType();// .getPayload();
-        
+
         wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload() + ":🍙🍙🍙");
 
         try {
@@ -46,6 +47,10 @@ public class FromWorldGuard extends GuardBESA {
             switch (messageType) {
                 case NOTIFY_CROP_DISEASE:
                     believes.getPeasantProfile().setCropHealth(0.5);
+                    break;
+                case CROP_PESTICIDE:
+                    believes.getPeasantProfile().setPesticideSeason(true);
+                    wpsReport.info("   🍙🤖   PESTICIDAAAAA  🤖 🍙  ");
                     break;
                 case NOTIFY_CROP_WATER_STRESS:
                     believes.getPeasantProfile().setCropHealth(0.5);

@@ -14,7 +14,7 @@
  */
 package wpsPeasantFamily.Goals.L3Development;
 
-import wpsPeasantFamily.Tasks.L3Development.PlantCropsTask;
+import wpsPeasantFamily.Tasks.L3Development.PlantCropTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -25,30 +25,31 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
  * @author jairo
  */
-public class PlantCropsGoal extends GoalBDI {
+public class PlantCropGoal extends GoalBDI {
 
     /**
      *
-     * @return
+     * @return PlantCropGoal
      */
-    public static PlantCropsGoal buildGoal() {
-        PlantCropsTask plantCropsTask = new PlantCropsTask();
-        Plan plantCropsPlan = new Plan();
-        plantCropsPlan.addTask(plantCropsTask);
-        RationalRole plantCropsRole = new RationalRole(
-                "plantCropsTask",
-                plantCropsPlan);
-        PlantCropsGoal plantCropsGoalBDI = new PlantCropsGoal(
+    public static PlantCropGoal buildGoal() {
+        PlantCropTask task = new PlantCropTask();
+        Plan plan = new Plan();
+        plan.addTask(task);
+        RationalRole role = new RationalRole(
+                "PlantCropTask",
+                plan);
+        PlantCropGoal goal = new PlantCropGoal(
                 wpsStart.getPlanID(),
-                plantCropsRole,
-                "plantCropsTask",
+                role,
+                "PlantCropTask",
                 GoalBDITypes.SKILLSRESOURCES);
-        return plantCropsGoalBDI;
+        return goal;
     }
 
     /**
@@ -58,9 +59,8 @@ public class PlantCropsGoal extends GoalBDI {
      * @param description
      * @param type
      */
-    public PlantCropsGoal(long id, RationalRole role, String description, GoalBDITypes type) {
+    public PlantCropGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        //wpsReport.info("");
     }
 
     /**
@@ -72,9 +72,9 @@ public class PlantCropsGoal extends GoalBDI {
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("getTools " + believes.getPeasantProfile().getTools());
-        //wpsReport.info("getSeeds " + believes.getPeasantProfile().getSeeds());
-        //believes.getPeasantProfile().getFarmReady() == 1
+        //>= believes.getPeasantProfile().getRiceSeedsByHectare()
+        //wpsReport.debug("tools: " + believes.getPeasantProfile().getTools());
+        //wpsReport.debug("seeds: " + believes.getPeasantProfile().getSeeds());
         if (believes.getPeasantProfile().getTools() > 0
                 && believes.getPeasantProfile().getSeeds() > 0) {
             return 1;
@@ -92,7 +92,7 @@ public class PlantCropsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("PlantingSeason=" + believes.getPeasantProfile().isPlantingSeason());
+        //wpsReport.debug("planting season: " + believes.getPeasantProfile().isPlantingSeason());
         if (believes.getPeasantProfile().isPlantingSeason()) {
             return 1;
         } else {
@@ -108,8 +108,10 @@ public class PlantCropsGoal extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        //wpsReport.debug("free: " + believes.getPeasantProfile().isFree());
+        //wpsReport.debug("time needed: " + TimeConsumedBy.PlantCrops);
+        //wpsReport.debug("have time: " + believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PlantCrops));
         if (believes.getPeasantProfile().isFree()
                 && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PlantCrops)) {
             return 1;
@@ -126,7 +128,6 @@ public class PlantCropsGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         return 1;
     }
 
@@ -138,7 +139,6 @@ public class PlantCropsGoal extends GoalBDI {
      */
     @Override
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info(stateBDI.getMachineBDIParams().getPyramidGoals());
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
         return believes.getPeasantProfile().getHealth() > 0;
     }

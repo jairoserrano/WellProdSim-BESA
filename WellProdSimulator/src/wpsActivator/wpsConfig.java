@@ -17,10 +17,14 @@ package wpsActivator;
 import org.snakeyaml.engine.v2.api.Load;
 import org.snakeyaml.engine.v2.api.LoadSettings;
 import com.google.gson.Gson;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+import wpsPeasantFamily.Utils.FarmingResource;
 import wpsPeasantFamily.Utils.PeasantFamilyProfile;
 import wpsViewer.Agent.wpsReport;
 
@@ -28,7 +32,7 @@ import wpsViewer.Agent.wpsReport;
  *
  * @author jairo
  */
-public class wpsConfig {
+public final class wpsConfig {
 
     private static wpsConfig instance = null;
 
@@ -47,55 +51,11 @@ public class wpsConfig {
      *
      * @param args
      */
-    @SuppressWarnings("unchecked")
     private wpsConfig() {
 
-        LoadSettings settings = LoadSettings.builder().build();
-        Load load = new Load(settings);
-        Map<String, Object> data;
+        loadPeasantConfig();
+        loadWPSConfig();
 
-        try {
-
-            String jsonData;
-            String yamlContent;
-            Gson gson = new Gson();
-
-            yamlContent = new String(Files.readAllBytes(Paths.get("resources/wpsRegularPeasant.yml")));
-            data = (Map<String, Object>) load.loadFromString(yamlContent);
-            wpsReport.info("Configuración RegularPeasant cargada con exito");
-            Map<String, Object> regularPeasant = (Map<String, Object>) data.get("RegularPeasant");
-            jsonData = gson.toJson(regularPeasant);
-            regularFarmerProfile = gson.fromJson(jsonData, PeasantFamilyProfile.class);
-            //wpsReport.info(regularFarmerProfile);
-            
-            yamlContent = new String(Files.readAllBytes(Paths.get("resources/wpsLazyPeasant.yml")));
-            data = (Map<String, Object>) load.loadFromString(yamlContent);
-            wpsReport.info("Configuración LazyPeasant cargada con exito");
-            Map<String, Object> lazyPeasant = (Map<String, Object>) data.get("LazyPeasant");
-            jsonData = gson.toJson(lazyPeasant);
-            lazyFarmerProfile = gson.fromJson(jsonData, PeasantFamilyProfile.class);
-            //wpsReport.info(lazyFarmerProfile);
-            
-            yamlContent = new String(Files.readAllBytes(Paths.get("resources/wpsProactivePeasant.yml")));
-            data = (Map<String, Object>) load.loadFromString(yamlContent);
-            wpsReport.info("Configuración ProactivePeasant cargada con exito");
-            Map<String, Object> proactivePeasant = (Map<String, Object>) data.get("ProactivePeasant");
-            jsonData = gson.toJson(proactivePeasant);
-            proactiveFarmerProfile = gson.fromJson(jsonData, PeasantFamilyProfile.class);
-            //wpsReport.info(proactiveFarmerProfile);
-            
-        } catch (IOException ex) {
-            wpsReport.error("No hay configuración válida");
-            System.exit(0);
-        }
-
-        peasantType = "normal";
-        rainfallConditions = "normal";
-        perturbation = "none";
-        startSimulationDate = "15/03/2022";
-        mainRiceCropID = "rice_1";
-        dayLength = 50;
-        checkCropStatusPeriodic = 7;
     }
 
     /**
@@ -243,6 +203,136 @@ public class wpsConfig {
      */
     public void setPerturbation(String perturbation) {
         this.perturbation = perturbation;
+    }
+
+    public Map<String, FarmingResource> loadMarketConfig() {
+
+        Map<String, FarmingResource> priceList = new HashMap<>();
+        Properties properties = new Properties();
+        FileInputStream fileInputStream = null;
+
+        try {
+            // Especifica la ubicación del archivo .properties
+            fileInputStream = new FileInputStream("resources/wpsConfig.properties");
+            // Carga las propiedades desde el archivo
+            properties.load(fileInputStream);
+
+            priceList.put("water",
+                    new FarmingResource(
+                            "water",
+                            properties.getProperty("market.water.price"),
+                            properties.getProperty("market.water.quantity")
+                    )
+            );
+            priceList.put("seeds",
+                    new FarmingResource(
+                            "seeds",
+                            properties.getProperty("market.seeds.price"),
+                            properties.getProperty("market.seeds.quantity")
+                    )
+            );
+            priceList.put("pesticides",
+                    new FarmingResource(
+                            "pesticides",
+                            properties.getProperty("market.pesticides.price"),
+                            properties.getProperty("market.pesticides.quantity")
+                    )
+            );
+            priceList.put("tools",
+                    new FarmingResource(
+                            "tools",
+                            properties.getProperty("market.tools.price"),
+                            properties.getProperty("market.tools.quantity")
+                    )
+            );
+            priceList.put("livestock",
+                    new FarmingResource(
+                            "livestock",
+                            properties.getProperty("market.livestock.price"),
+                            properties.getProperty("market.livestock.quantity")
+                    )
+            );
+            fileInputStream.close();
+            return priceList;
+        } catch (IOException e) {
+            wpsReport.error(e.getMessage());
+        } finally {
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    wpsReport.error(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
+
+    private void loadWPSConfig() {
+
+        Properties properties = new Properties();
+        FileInputStream fileInputStream = null;
+
+        try {
+            // Especifica la ubicación del archivo .properties
+            fileInputStream = new FileInputStream("resources/wpsConfig.properties");
+            // Carga las propiedades desde el archivo
+            properties.load(fileInputStream);
+            // Valores iniciales de la simulación
+            this.startSimulationDate = properties.getProperty("wpsControl.startdate");
+            fileInputStream.close();
+        } catch (IOException e) {
+            wpsReport.error(e.getMessage());
+        } finally {
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    wpsReport.error(e.getMessage());
+                }
+            }
+        }
+    }
+
+    private void loadPeasantConfig() {
+        LoadSettings settings = LoadSettings.builder().build();
+        Load load = new Load(settings);
+        Map<String, Object> data;
+
+        try {
+
+            String jsonData;
+            String yamlContent;
+            Gson gson = new Gson();
+
+            yamlContent = new String(Files.readAllBytes(Paths.get("resources/wpsRegularPeasant.yml")));
+            data = (Map<String, Object>) load.loadFromString(yamlContent);
+            wpsReport.info("Configuración RegularPeasant cargada con exito");
+            Map<String, Object> regularPeasant = (Map<String, Object>) data.get("RegularPeasant");
+            jsonData = gson.toJson(regularPeasant);
+            regularFarmerProfile = gson.fromJson(jsonData, PeasantFamilyProfile.class);
+            //wpsReport.info(regularFarmerProfile);
+
+            yamlContent = new String(Files.readAllBytes(Paths.get("resources/wpsLazyPeasant.yml")));
+            data = (Map<String, Object>) load.loadFromString(yamlContent);
+            wpsReport.info("Configuración LazyPeasant cargada con exito");
+            Map<String, Object> lazyPeasant = (Map<String, Object>) data.get("LazyPeasant");
+            jsonData = gson.toJson(lazyPeasant);
+            lazyFarmerProfile = gson.fromJson(jsonData, PeasantFamilyProfile.class);
+            //wpsReport.info(lazyFarmerProfile);
+
+            yamlContent = new String(Files.readAllBytes(Paths.get("resources/wpsProactivePeasant.yml")));
+            data = (Map<String, Object>) load.loadFromString(yamlContent);
+            wpsReport.info("Configuración ProactivePeasant cargada con exito");
+            Map<String, Object> proactivePeasant = (Map<String, Object>) data.get("ProactivePeasant");
+            jsonData = gson.toJson(proactivePeasant);
+            proactiveFarmerProfile = gson.fromJson(jsonData, PeasantFamilyProfile.class);
+            //wpsReport.info(proactiveFarmerProfile);
+
+        } catch (IOException ex) {
+            wpsReport.error("No hay configuración válida");
+            System.exit(0);
+        }
     }
 
 }

@@ -19,6 +19,7 @@ import BESA.Kernel.Agent.StateBESA;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import wpsActivator.wpsStart;
 
 /**
  *
@@ -36,6 +37,7 @@ public class MarketAgentState extends StateBESA implements Serializable {
      */
     public MarketAgentState() {
         super();
+        this.resources = wpsStart.config.loadMarketConfig();
     }
     public Map<String, FarmingResource> getResources() {
         return resources;

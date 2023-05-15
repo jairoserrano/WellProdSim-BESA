@@ -26,7 +26,7 @@ import wpsPeasantFamily.Goals.L5Social.ProvideCollaborationGoal;
 import wpsPeasantFamily.Goals.L3Development.CheckCropsGoal;
 import wpsPeasantFamily.Goals.L3Development.PrepareLandGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainSuppliesGoal;
-import wpsPeasantFamily.Goals.L3Development.PlantCropsGoal;
+import wpsPeasantFamily.Goals.L3Development.PlantCropGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainToolsGoal;
 import wpsPeasantFamily.Goals.L3Development.HarvestCropsGoal;
 import wpsPeasantFamily.Goals.L3Development.ProcessProductsGoal;
@@ -47,11 +47,11 @@ import BESA.Kernel.System.Directory.AgHandlerBESA;
 import java.util.ArrayList;
 import java.util.List;
 import rational.guards.InformationFlowGuard;
-import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Goals.L1Survival.DoVitalsGoal;
 import wpsPeasantFamily.Goals.L1Survival.SelfEvaluationGoal;
 import wpsPeasantFamily.Goals.L3Development.SellCropsGoal;
 import wpsPeasantFamily.Goals.L3Development.SellProductsGoal;
+import wpsPeasantFamily.Goals.L4SkillsResources.GetPriceListGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainLivestockGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainSeedsGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainWaterGoal;
@@ -116,13 +116,14 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         goals.add(IrrigateCropsGoal.buildGoal());
         goals.add(MaintainHouseGoal.buildGoal());
         goals.add(ManagePestsGoal.buildGoal());
-        goals.add(PlantCropsGoal.buildGoal());
+        goals.add(PlantCropGoal.buildGoal());
         goals.add(PrepareLandGoal.buildGoal());
         goals.add(ProcessProductsGoal.buildGoal());
         goals.add(SellCropsGoal.buildGoal());
         goals.add(SellProductsGoal.buildGoal());
 
         //Level 4 Goals: Skills And Resources
+        goals.add(GetPriceListGoal.buildGoal());
         goals.add(GetTrainingGoal.buildGoal());
         goals.add(LookForALandGoal.buildGoal());
         goals.add(ObtainLivestockGoal.buildGoal());

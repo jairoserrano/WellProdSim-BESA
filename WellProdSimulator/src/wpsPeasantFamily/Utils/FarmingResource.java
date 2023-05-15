@@ -20,6 +20,17 @@ package wpsPeasantFamily.Utils;
  * @author jairo
  */
 public class FarmingResource {
+
+    public FarmingResource(String name, int cost, int quantity) {
+        this.cost = cost;
+        this.name = name;
+        this.quantity = quantity;
+    }
+    public FarmingResource(String name, String cost, String quantity) {
+        this.cost = Integer.parseInt(cost);
+        this.name = name;
+        this.quantity = Integer.parseInt(quantity);
+    }
     
     int cost;
     String name;

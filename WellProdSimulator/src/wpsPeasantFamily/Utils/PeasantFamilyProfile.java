@@ -39,7 +39,7 @@ public class PeasantFamilyProfile implements Serializable {
     private double liveStockAffinity;
     private boolean farm;
     private String farmName;
-    private double farmSize;
+    private int cropSize;
     private double housing;
     private double servicesPresence;
     private double housingSize;
@@ -52,7 +52,9 @@ public class PeasantFamilyProfile implements Serializable {
     private double harvestedWeight;
     private double housingQuailty;
     private double timeSpentOnMaintenance;
-    private double seeds;
+    private int seeds;
+    private int riceSeedsByHectare;
+    private String currentCropName;
     private boolean busy;
     private double cropHealth;
     private double farmReady;
@@ -98,8 +100,10 @@ public class PeasantFamilyProfile implements Serializable {
     private int supplies;
 
     // Flags for Goals
+    private boolean preparationSeason;
     private boolean plantingSeason;
     private boolean growingSeason;
+    private boolean pesticideSeason;
     private boolean harverstSeason;
     private boolean formalLoanSeason;
     private boolean informalLoanSeason;
@@ -118,19 +122,46 @@ public class PeasantFamilyProfile implements Serializable {
         this.timeLeftOnDay = 24;
         this.newDay = true;
         this.currentDay = 1;
+        this.preparationSeason = false;
     }
-    public int getPesticidesAvailable() {
+
+    public synchronized boolean getPreparationSeason() {
+        return this.preparationSeason;
+    }
+
+    public synchronized void setPreparationSeason(boolean preparationSeason) {
+        this.preparationSeason = preparationSeason;
+    }
+
+    public synchronized String getCurrentCropName() {
+        return this.currentCropName;
+    }
+
+    public synchronized void setCurrentCropName(String currentCropName) {
+        this.currentCropName = currentCropName;
+    }
+
+    public synchronized int getRiceSeedsByHectare() {
+        return riceSeedsByHectare;
+    }
+
+    public synchronized void setRiceSeedsByHectare(int riceSeedsByHectare) {
+        this.riceSeedsByHectare = riceSeedsByHectare;
+    }
+
+    public synchronized int getPesticidesAvailable() {
         return pesticidesAvailable;
     }
-    public void setPesticidesAvailable(int pesticidesAvailable) {
+
+    public synchronized void setPesticidesAvailable(int pesticidesAvailable) {
         this.pesticidesAvailable = pesticidesAvailable;
     }
 
-    public void setCropCheckedToday() {
+    public synchronized void setCropCheckedToday() {
         this.cropCheckedToday = true;
     }
 
-    public boolean isCropCheckedToday() {
+    public synchronized boolean isCropCheckedToday() {
         return !this.cropCheckedToday;
     }
 
@@ -145,7 +176,7 @@ public class PeasantFamilyProfile implements Serializable {
         if (timeLeft <= 0) {
             this.makeNewDay();
         } else {
-            wpsReport.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + wpsCurrentDate.getInstance().getCurrentDate());
+            //wpsReport.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + wpsCurrentDate.getInstance().getCurrentDate());
         }
     }
 
@@ -155,13 +186,9 @@ public class PeasantFamilyProfile implements Serializable {
      * @return
      */
     public synchronized boolean haveTimeAvailable(TimeConsumedBy time) {
-        if (this.timeLeftOnDay - time.getTime() < 0) {
-            //wpsReport.info("⏳🚩⏳🚩⏳ No alcanza le tiempo " + time.getTime() + " tiene " + this.timeLeftOnDay + " del día " + wpsCurrentDate.getInstance().getCurrentDate());
-            return false;
-        } else {
-            //wpsReport.info("⏳ ⏳ ⏳ Todavía tiene " + this.timeLeftOnDay + " en el día " + wpsCurrentDate.getInstance().getCurrentDate());
-            return true;
-        }
+        return this.timeLeftOnDay - time.getTime() >= 0;
+        //wpsReport.info("⏳🚩⏳🚩⏳ No alcanza le tiempo " + time.getTime() + " tiene " + this.timeLeftOnDay + " del día " + wpsCurrentDate.getInstance().getCurrentDate());
+        //wpsReport.info("⏳ ⏳ ⏳ Todavía tiene " + this.timeLeftOnDay + " en el día " + wpsCurrentDate.getInstance().getCurrentDate());
     }
 
     /**
@@ -194,19 +221,19 @@ public class PeasantFamilyProfile implements Serializable {
                 + wpsCurrentDate.getInstance().getDatePlusOneDayAndUpdate());
     }
 
-    public boolean isFormalLoanNeeded() {
+    public synchronized boolean isFormalLoanNeeded() {
         return formalLoanSeason;
     }
 
-    public void setFormalLoanSeason(boolean formalLoanSeason) {
+    public synchronized void setFormalLoanSeason(boolean formalLoanSeason) {
         this.formalLoanSeason = formalLoanSeason;
     }
 
-    public double getPeasantFamilyMinimalVital() {
+    public synchronized double getPeasantFamilyMinimalVital() {
         return peasantFamilyMinimalVital;
     }
 
-    public void setPeasantFamilyMinimalVital(double peasantFamilyMinimalVital) {
+    public synchronized void setPeasantFamilyMinimalVital(double peasantFamilyMinimalVital) {
         this.peasantFamilyMinimalVital = peasantFamilyMinimalVital;
     }
 
@@ -214,11 +241,11 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public boolean isSellDone() {
+    public synchronized boolean isSellDone() {
         return sellDone;
     }
 
-    public void discountDailyMoney() {
+    public synchronized void discountDailyMoney() {
         this.money = this.money - this.peasantFamilyMinimalVital;
     }
 
@@ -226,7 +253,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param sellDone
      */
-    public void setSellDone(boolean sellDone) {
+    public synchronized void setSellDone(boolean sellDone) {
         this.sellDone = sellDone;
     }
 
@@ -234,7 +261,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public String getPurpose() {
+    public synchronized String getPurpose() {
         return purpose;
     }
 
@@ -242,7 +269,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param purpose
      */
-    public void setPurpose(String purpose) {
+    public synchronized void setPurpose(String purpose) {
         this.purpose = purpose;
     }
 
@@ -250,7 +277,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public String getProfileName() {
+    public synchronized String getProfileName() {
         return profileName;
     }
 
@@ -258,7 +285,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param profileName
      */
-    public void setProfileName(String profileName) {
+    public synchronized void setProfileName(String profileName) {
         this.profileName = profileName;
     }
 
@@ -266,7 +293,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getHealth() {
+    public synchronized double getHealth() {
         return health;
     }
 
@@ -274,14 +301,14 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param health
      */
-    public void setHealth(double health) {
+    public synchronized void setHealth(double health) {
         this.health = health;
     }
 
     /**
      *
      */
-    public void increaseHealth() {
+    public synchronized void increaseHealth() {
         if (this.health == 1) {
             this.health = 1;
         } else if (this.health <= 0) {
@@ -295,7 +322,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getProductivity() {
+    public synchronized double getProductivity() {
         return productivity;
     }
 
@@ -303,7 +330,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param productivity
      */
-    public void setProductivity(double productivity) {
+    public synchronized void setProductivity(double productivity) {
         this.productivity = productivity;
     }
 
@@ -311,7 +338,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getWellBeging() {
+    public synchronized double getWellBeging() {
         return wellBeging;
     }
 
@@ -319,7 +346,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param wellBeging
      */
-    public void setWellBeging(double wellBeging) {
+    public synchronized void setWellBeging(double wellBeging) {
         this.wellBeging = wellBeging;
     }
 
@@ -327,7 +354,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public boolean isAWorker() {
+    public synchronized boolean isAWorker() {
         return worker;
     }
 
@@ -335,7 +362,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param worker
      */
-    public void setWorker(boolean worker) {
+    public synchronized void setWorker(boolean worker) {
         this.worker = worker;
     }
 
@@ -343,7 +370,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getPeasantQualityFactor() {
+    public synchronized double getPeasantQualityFactor() {
         return peasantQualityFactor;
     }
 
@@ -351,7 +378,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param peasantQualityFactor
      */
-    public void setPeasantQualityFactor(double peasantQualityFactor) {
+    public synchronized void setPeasantQualityFactor(double peasantQualityFactor) {
         this.peasantQualityFactor = peasantQualityFactor;
     }
 
@@ -359,7 +386,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public int getTools() {
+    public synchronized int getTools() {
         return tools;
     }
 
@@ -367,7 +394,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param tools
      */
-    public void setTools(int tools) {
+    public synchronized void setTools(int tools) {
         this.tools += tools;
     }
 
@@ -375,7 +402,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public int getSupplies() {
+    public synchronized int getSupplies() {
         return supplies;
     }
 
@@ -383,7 +410,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param supplies
      */
-    public void setSupplies(int supplies) {
+    public synchronized void setSupplies(int supplies) {
         this.supplies += supplies;
     }
 
@@ -391,7 +418,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getLiveStockAffinity() {
+    public synchronized double getLiveStockAffinity() {
         return liveStockAffinity;
     }
 
@@ -399,7 +426,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param liveStockAffinity
      */
-    public void setLiveStockAffinity(double liveStockAffinity) {
+    public synchronized void setLiveStockAffinity(double liveStockAffinity) {
         this.liveStockAffinity = liveStockAffinity;
     }
 
@@ -407,7 +434,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public boolean haveAFarm() {
+    public synchronized boolean haveAFarm() {
         return farm;
     }
 
@@ -415,7 +442,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param farm
      */
-    public void setFarm(boolean farm) {
+    public synchronized void setFarm(boolean farm) {
         this.farm = farm;
     }
 
@@ -423,7 +450,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public String getFarmName() {
+    public synchronized String getFarmName() {
         return farmName;
     }
 
@@ -431,7 +458,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param farmName
      */
-    public void setFarmName(String farmName) {
+    public synchronized void setFarmName(String farmName) {
         this.farmName = farmName;
     }
 
@@ -439,23 +466,23 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getFarmSize() {
-        return farmSize;
+    public synchronized int getCropSize() {
+        return cropSize;
     }
 
     /**
      *
-     * @param farmSize
+     * @param cropSize
      */
-    public void setFarmSize(double farmSize) {
-        this.farmSize = farmSize;
+    public synchronized void setFarmSize(int cropSize) {
+        this.cropSize = cropSize;
     }
 
     /**
      *
      * @return
      */
-    public double getHousing() {
+    public synchronized double getHousing() {
         return housing;
     }
 
@@ -463,7 +490,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param housing
      */
-    public void setHousing(double housing) {
+    public synchronized void setHousing(double housing) {
         this.housing = housing;
     }
 
@@ -471,7 +498,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getServicesPresence() {
+    public synchronized double getServicesPresence() {
         return servicesPresence;
     }
 
@@ -479,7 +506,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param servicesPresence
      */
-    public void setServicesPresence(double servicesPresence) {
+    public synchronized void setServicesPresence(double servicesPresence) {
         this.servicesPresence = servicesPresence;
     }
 
@@ -487,7 +514,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getHousingSize() {
+    public synchronized double getHousingSize() {
         return housingSize;
     }
 
@@ -495,7 +522,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param housingSize
      */
-    public void setHousingSize(double housingSize) {
+    public synchronized void setHousingSize(double housingSize) {
         this.housingSize = housingSize;
     }
 
@@ -503,7 +530,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getHousingCondition() {
+    public synchronized double getHousingCondition() {
         return housingCondition;
     }
 
@@ -511,7 +538,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param housingCondition
      */
-    public void setHousingCondition(double housingCondition) {
+    public synchronized void setHousingCondition(double housingCondition) {
         this.housingCondition = housingCondition;
     }
 
@@ -519,7 +546,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getHousingLocation() {
+    public synchronized double getHousingLocation() {
         return housingLocation;
     }
 
@@ -527,7 +554,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param housingLocation
      */
-    public void setHousingLocation(double housingLocation) {
+    public synchronized void setHousingLocation(double housingLocation) {
         this.housingLocation = housingLocation;
     }
 
@@ -535,7 +562,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getFarmDistance() {
+    public synchronized double getFarmDistance() {
         return farmDistance;
     }
 
@@ -543,7 +570,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param farmDistance
      */
-    public void setFarmDistance(double farmDistance) {
+    public synchronized void setFarmDistance(double farmDistance) {
         this.farmDistance = farmDistance;
     }
 
@@ -551,7 +578,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getMoney() {
+    public synchronized double getMoney() {
         return money;
     }
 
@@ -559,7 +586,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param money
      */
-    public void setMoney(Integer money) {
+    public synchronized void setMoney(Integer money) {
         this.money = money;
     }
 
@@ -567,7 +594,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param money
      */
-    public void increaseMoney(Integer money) {
+    public synchronized void increaseMoney(Integer money) {
         this.money += money;
     }
 
@@ -575,7 +602,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getTotalIncome() {
+    public synchronized double getTotalIncome() {
         return totalIncome;
     }
 
@@ -583,7 +610,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param totalIncome
      */
-    public void setTotalIncome(double totalIncome) {
+    public synchronized void setTotalIncome(double totalIncome) {
         this.totalIncome = totalIncome;
     }
 
@@ -591,7 +618,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getLoanAmountToPay() {
+    public synchronized double getLoanAmountToPay() {
         return loanAmountToPay;
     }
 
@@ -599,7 +626,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param loanAmountToPay
      */
-    public void setLoanAmountToPay(int loanAmountToPay) {
+    public synchronized void setLoanAmountToPay(int loanAmountToPay) {
         this.loanAmountToPay = loanAmountToPay;
     }
 
@@ -607,7 +634,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getHarvestedWeight() {
+    public synchronized double getHarvestedWeight() {
         return harvestedWeight;
     }
 
@@ -615,7 +642,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param harvestedWeight
      */
-    public void setHarvestedWeight(double harvestedWeight) {
+    public synchronized void setHarvestedWeight(double harvestedWeight) {
         this.harvestedWeight = harvestedWeight;
     }
 
@@ -623,7 +650,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public boolean isHarverstSeason() {
+    public synchronized boolean isHarverstSeason() {
         return harverstSeason;
     }
 
@@ -631,7 +658,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param harverstSeason
      */
-    public void setHarverstSeason(boolean harverstSeason) {
+    public synchronized void setHarverstSeason(boolean harverstSeason) {
         this.harverstSeason = harverstSeason;
     }
 
@@ -639,7 +666,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getHousingQuailty() {
+    public synchronized double getHousingQuailty() {
         return housingQuailty;
     }
 
@@ -647,7 +674,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param housingQuailty
      */
-    public void setHousingQuailty(double housingQuailty) {
+    public synchronized void setHousingQuailty(double housingQuailty) {
         this.housingQuailty = housingQuailty;
     }
 
@@ -655,7 +682,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getTimeSpentOnMaintenance() {
+    public synchronized double getTimeSpentOnMaintenance() {
         return timeSpentOnMaintenance;
     }
 
@@ -663,7 +690,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param timeSpentOnMaintenance
      */
-    public void setTimeSpentOnMaintenance(double timeSpentOnMaintenance) {
+    public synchronized void setTimeSpentOnMaintenance(double timeSpentOnMaintenance) {
         this.timeSpentOnMaintenance = timeSpentOnMaintenance;
     }
 
@@ -671,7 +698,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getSeeds() {
+    public synchronized int getSeeds() {
         return seeds;
     }
 
@@ -679,7 +706,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param seeds
      */
-    public void setSeeds(double seeds) {
+    public synchronized void setSeeds(int seeds) {
         this.seeds = seeds;
     }
 
@@ -687,7 +714,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public boolean isPlantingSeason() {
+    public synchronized boolean isPlantingSeason() {
         return plantingSeason;
     }
 
@@ -695,7 +722,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param plantingSeason
      */
-    public void setPlantingSeason(boolean plantingSeason) {
+    public synchronized void setPlantingSeason(boolean plantingSeason) {
         this.plantingSeason = plantingSeason;
     }
 
@@ -703,7 +730,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public boolean isGrowingSeason() {
+    public synchronized boolean isGrowingSeason() {
         return growingSeason;
     }
 
@@ -711,7 +738,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param growingSeason
      */
-    public void setGrowingSeason(boolean growingSeason) {
+    public synchronized void setGrowingSeason(boolean growingSeason) {
         this.growingSeason = growingSeason;
     }
 
@@ -719,7 +746,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public boolean isBusy() {
+    public synchronized boolean isBusy() {
         return busy;
     }
 
@@ -727,7 +754,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public boolean isFree() {
+    public synchronized boolean isFree() {
         return !busy;
     }
 
@@ -735,7 +762,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param busy
      */
-    public void setBusy(boolean busy) {
+    public synchronized void setBusy(boolean busy) {
         this.busy = busy;
     }
 
@@ -743,7 +770,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getCropHealth() {
+    public synchronized double getCropHealth() {
         return cropHealth;
     }
 
@@ -751,7 +778,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param cropHealth
      */
-    public void setCropHealth(double cropHealth) {
+    public synchronized void setCropHealth(double cropHealth) {
         this.cropHealth = cropHealth;
     }
 
@@ -759,7 +786,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getFarmReady() {
+    public synchronized double getFarmReady() {
         return farmReady;
     }
 
@@ -767,7 +794,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param farmReady
      */
-    public void setFarmReady(double farmReady) {
+    public synchronized void setFarmReady(double farmReady) {
         this.farmReady = farmReady;
     }
 
@@ -775,7 +802,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getHarvestedWeightExpected() {
+    public synchronized double getHarvestedWeightExpected() {
         return harvestedWeightExpected;
     }
 
@@ -783,7 +810,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param harvestedWeightExpected
      */
-    public void setHarvestedWeightExpected(double harvestedWeightExpected) {
+    public synchronized void setHarvestedWeightExpected(double harvestedWeightExpected) {
         this.harvestedWeightExpected = harvestedWeightExpected;
     }
 
@@ -791,7 +818,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public boolean isProcessedCrop() {
+    public synchronized boolean isProcessedCrop() {
         return processedCrop;
     }
 
@@ -799,7 +826,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param processedCrop
      */
-    public void setProcessedCrop(boolean processedCrop) {
+    public synchronized void setProcessedCrop(boolean processedCrop) {
         this.processedCrop = processedCrop;
     }
 
@@ -807,7 +834,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getCropEficiency() {
+    public synchronized double getCropEficiency() {
         return cropEficiency;
     }
 
@@ -815,7 +842,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param cropEficiency
      */
-    public void setCropEficiency(double cropEficiency) {
+    public synchronized void setCropEficiency(double cropEficiency) {
         this.cropEficiency = cropEficiency;
     }
 
@@ -823,7 +850,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getProcessedWeight() {
+    public synchronized double getProcessedWeight() {
         return processedWeight;
     }
 
@@ -831,7 +858,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param processedWeight
      */
-    public void setProcessedWeight(double processedWeight) {
+    public synchronized void setProcessedWeight(double processedWeight) {
         this.processedWeight = processedWeight;
     }
 
@@ -839,7 +866,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getProcessingTime() {
+    public synchronized double getProcessingTime() {
         return processingTime;
     }
 
@@ -847,7 +874,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param processingTime
      */
-    public void setProcessingTime(double processingTime) {
+    public synchronized void setProcessingTime(double processingTime) {
         this.processingTime = processingTime;
     }
 
@@ -855,7 +882,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getTrainingLevel() {
+    public synchronized double getTrainingLevel() {
         return trainingLevel;
     }
 
@@ -863,7 +890,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param trainingLevel
      */
-    public void setTrainingLevel(double trainingLevel) {
+    public synchronized void setTrainingLevel(double trainingLevel) {
         this.trainingLevel = trainingLevel;
     }
 
@@ -871,7 +898,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getTrainingAvailability() {
+    public synchronized double getTrainingAvailability() {
         return trainingAvailability;
     }
 
@@ -879,7 +906,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param trainingAvailability
      */
-    public void setTrainingAvailability(double trainingAvailability) {
+    public synchronized void setTrainingAvailability(double trainingAvailability) {
         this.trainingAvailability = trainingAvailability;
     }
 
@@ -887,7 +914,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getTrainingRelevance() {
+    public synchronized double getTrainingRelevance() {
         return trainingRelevance;
     }
 
@@ -895,7 +922,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param trainingRelevance
      */
-    public void setTrainingRelevance(double trainingRelevance) {
+    public synchronized void setTrainingRelevance(double trainingRelevance) {
         this.trainingRelevance = trainingRelevance;
     }
 
@@ -903,7 +930,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getTrainingCost() {
+    public synchronized double getTrainingCost() {
         return trainingCost;
     }
 
@@ -911,7 +938,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param trainingCost
      */
-    public void setTrainingCost(double trainingCost) {
+    public synchronized void setTrainingCost(double trainingCost) {
         this.trainingCost = trainingCost;
     }
 
@@ -919,7 +946,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getIrrigation() {
+    public synchronized double getIrrigation() {
         return irrigation;
     }
 
@@ -927,7 +954,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param irrigation
      */
-    public void setIrrigation(double irrigation) {
+    public synchronized void setIrrigation(double irrigation) {
         this.irrigation = irrigation;
     }
 
@@ -935,7 +962,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getWaterAvailable() {
+    public synchronized double getWaterAvailable() {
         return waterAvailable;
     }
 
@@ -943,7 +970,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param waterAvailable
      */
-    public void setWaterAvailable(double waterAvailable) {
+    public synchronized void setWaterAvailable(double waterAvailable) {
         this.waterAvailable += waterAvailable;
     }
 
@@ -951,7 +978,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getIrrigationTime() {
+    public synchronized double getIrrigationTime() {
         return irrigationTime;
     }
 
@@ -959,7 +986,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param irrigationTime
      */
-    public void setIrrigationTime(double irrigationTime) {
+    public synchronized void setIrrigationTime(double irrigationTime) {
         this.irrigationTime = irrigationTime;
     }
 
@@ -967,7 +994,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getPestControl() {
+    public synchronized double getPestControl() {
         return pestControl;
     }
 
@@ -975,7 +1002,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param pestControl
      */
-    public void setPestControl(double pestControl) {
+    public synchronized void setPestControl(double pestControl) {
         this.pestControl = pestControl;
     }
 
@@ -983,7 +1010,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getDiseasedCrop() {
+    public synchronized double getDiseasedCrop() {
         return diseasedCrop;
     }
 
@@ -991,7 +1018,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param diseasedCrop
      */
-    public void setDiseasedCrop(double diseasedCrop) {
+    public synchronized void setDiseasedCrop(double diseasedCrop) {
         this.diseasedCrop = diseasedCrop;
     }
 
@@ -999,7 +1026,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getWeedControl() {
+    public synchronized double getWeedControl() {
         return weedControl;
     }
 
@@ -1007,7 +1034,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param weedControl
      */
-    public void setWeedControl(double weedControl) {
+    public synchronized void setWeedControl(double weedControl) {
         this.weedControl = weedControl;
     }
 
@@ -1015,7 +1042,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getInfestedCrop() {
+    public synchronized double getInfestedCrop() {
         return infestedCrop;
     }
 
@@ -1023,7 +1050,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param infestedCrop
      */
-    public void setInfestedCrop(double infestedCrop) {
+    public synchronized void setInfestedCrop(double infestedCrop) {
         this.infestedCrop = infestedCrop;
     }
 
@@ -1031,7 +1058,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getSuppliesAvailability() {
+    public synchronized double getSuppliesAvailability() {
         return suppliesAvailability;
     }
 
@@ -1039,7 +1066,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param suppliesAvailability
      */
-    public void setSuppliesAvailability(double suppliesAvailability) {
+    public synchronized void setSuppliesAvailability(double suppliesAvailability) {
         this.suppliesAvailability = suppliesAvailability;
     }
 
@@ -1047,7 +1074,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getToolsAvailability() {
+    public synchronized double getToolsAvailability() {
         return toolsAvailability;
     }
 
@@ -1055,7 +1082,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param toolsAvailability
      */
-    public void setToolsAvailability(double toolsAvailability) {
+    public synchronized void setToolsAvailability(double toolsAvailability) {
         this.toolsAvailability = toolsAvailability;
     }
 
@@ -1063,7 +1090,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public boolean isAssociated() {
+    public synchronized boolean isAssociated() {
         return associated;
     }
 
@@ -1071,7 +1098,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param associated
      */
-    public void setAssociated(boolean associated) {
+    public synchronized void setAssociated(boolean associated) {
         this.associated = associated;
     }
 
@@ -1079,7 +1106,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public int getNeighbors() {
+    public synchronized int getNeighbors() {
         return neighbors;
     }
 
@@ -1087,7 +1114,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param neighbors
      */
-    public void setNeighbors(int neighbors) {
+    public synchronized void setNeighbors(int neighbors) {
         this.neighbors = neighbors;
     }
 
@@ -1095,7 +1122,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getCollaborationValue() {
+    public synchronized double getCollaborationValue() {
         return collaborationValue;
     }
 
@@ -1103,7 +1130,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param collaborationValue
      */
-    public void setCollaborationValue(double collaborationValue) {
+    public synchronized void setCollaborationValue(double collaborationValue) {
         this.collaborationValue = collaborationValue;
     }
 
@@ -1111,7 +1138,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getHealthProgramsAvailability() {
+    public synchronized double getHealthProgramsAvailability() {
         return healthProgramsAvailability;
     }
 
@@ -1119,7 +1146,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param healthProgramsAvailability
      */
-    public void setHealthProgramsAvailability(double healthProgramsAvailability) {
+    public synchronized void setHealthProgramsAvailability(double healthProgramsAvailability) {
         this.healthProgramsAvailability = healthProgramsAvailability;
     }
 
@@ -1127,7 +1154,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public boolean isLivestockFarming() {
+    public synchronized boolean isLivestockFarming() {
         return livestockFarming;
     }
 
@@ -1135,7 +1162,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param livestockFarming
      */
-    public void setLivestockFarming(boolean livestockFarming) {
+    public synchronized void setLivestockFarming(boolean livestockFarming) {
         this.livestockFarming = livestockFarming;
     }
 
@@ -1143,7 +1170,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getLivestockHealth() {
+    public synchronized double getLivestockHealth() {
         return livestockHealth;
     }
 
@@ -1151,7 +1178,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param livestockHealth
      */
-    public void setLivestockHealth(double livestockHealth) {
+    public synchronized void setLivestockHealth(double livestockHealth) {
         this.livestockHealth = livestockHealth;
     }
 
@@ -1159,7 +1186,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public int getLivestockNumber() {
+    public synchronized int getLivestockNumber() {
         return livestockNumber;
     }
 
@@ -1167,7 +1194,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param livestockNumber
      */
-    public void setLivestockNumber(int livestockNumber) {
+    public synchronized void setLivestockNumber(int livestockNumber) {
         this.livestockNumber += livestockNumber;
     }
 
@@ -1175,7 +1202,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getFamilyTime() {
+    public synchronized double getFamilyTime() {
         return familyTime;
     }
 
@@ -1183,7 +1210,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param familyTime
      */
-    public void setFamilyTime(double familyTime) {
+    public synchronized void setFamilyTime(double familyTime) {
         this.familyTime = familyTime;
     }
 
@@ -1191,7 +1218,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getPeasantFamilyAffinity() {
+    public synchronized double getPeasantFamilyAffinity() {
         return peasantFamilyAffinity;
     }
 
@@ -1199,7 +1226,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param peasantFamilyAffinity
      */
-    public void setPeasantFamilyAffinity(double peasantFamilyAffinity) {
+    public synchronized void setPeasantFamilyAffinity(double peasantFamilyAffinity) {
         this.peasantFamilyAffinity = peasantFamilyAffinity;
     }
 
@@ -1207,7 +1234,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getFamilyTimeAvailability() {
+    public synchronized double getFamilyTimeAvailability() {
         return familyTimeAvailability;
     }
 
@@ -1215,14 +1242,14 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param familyTimeAvailability
      */
-    public void setFamilyTimeAvailability(double familyTimeAvailability) {
+    public synchronized void setFamilyTimeAvailability(double familyTimeAvailability) {
         this.familyTimeAvailability = familyTimeAvailability;
     }
 
     /**
      *
      */
-    public void increaseFamilyTimeAvailability() {
+    public synchronized void increaseFamilyTimeAvailability() {
         wpsReport.info("");
         /*if (this.familyTimeAvailability == 1) {
             this.familyTimeAvailability = 1;
@@ -1235,7 +1262,7 @@ public class PeasantFamilyProfile implements Serializable {
     /**
      *
      */
-    public void useFamilyTimeAvailability() {
+    public synchronized void useFamilyTimeAvailability() {
         //wpsReport.info("");
         /*if (this.familyTimeAvailability > 0) {
             this.familyTimeAvailability = this.familyTimeAvailability - 0.1;
@@ -1249,7 +1276,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getCommunications() {
+    public synchronized double getCommunications() {
         return communications;
     }
 
@@ -1257,7 +1284,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param communications
      */
-    public void setCommunications(double communications) {
+    public synchronized void setCommunications(double communications) {
         this.communications = communications;
     }
 
@@ -1265,7 +1292,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getSocialCompatibility() {
+    public synchronized double getSocialCompatibility() {
         return socialCompatibility;
     }
 
@@ -1273,7 +1300,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param socialCompatibility
      */
-    public void setSocialCompatibility(double socialCompatibility) {
+    public synchronized void setSocialCompatibility(double socialCompatibility) {
         this.socialCompatibility = socialCompatibility;
     }
 
@@ -1281,7 +1308,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getRestingTimeAvailibility() {
+    public synchronized double getRestingTimeAvailibility() {
         return restingTimeAvailibility;
     }
 
@@ -1289,7 +1316,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param restingTimeAvailibility
      */
-    public void setRestingTimeAvailibility(double restingTimeAvailibility) {
+    public synchronized void setRestingTimeAvailibility(double restingTimeAvailibility) {
         this.restingTimeAvailibility = restingTimeAvailibility;
     }
 
@@ -1297,7 +1324,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getPeasantRestAffinity() {
+    public synchronized double getPeasantRestAffinity() {
         return peasantRestAffinity;
     }
 
@@ -1305,7 +1332,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param peasantRestAffinity
      */
-    public void setPeasantRestAffinity(double peasantRestAffinity) {
+    public synchronized void setPeasantRestAffinity(double peasantRestAffinity) {
         this.peasantRestAffinity = peasantRestAffinity;
     }
 
@@ -1313,7 +1340,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public double getLeisureOptions() {
+    public synchronized double getLeisureOptions() {
         return leisureOptions;
     }
 
@@ -1321,14 +1348,14 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param leisureOptions
      */
-    public void setLeisureOptions(double leisureOptions) {
+    public synchronized void setLeisureOptions(double leisureOptions) {
         this.leisureOptions = leisureOptions;
     }
 
     /**
      *
      */
-    public void useLeisureOptions() {
+    public synchronized void useLeisureOptions() {
         /*wpsReport.info("");
         if (this.leisureOptions > 0) {
             this.leisureOptions = this.leisureOptions - 0.1;
@@ -1339,7 +1366,7 @@ public class PeasantFamilyProfile implements Serializable {
     /**
      *
      */
-    public void increaseLeisureOptions() {
+    public synchronized void increaseLeisureOptions() {
         wpsReport.info("");
         /*if (this.leisureOptions >= 1) {
             this.leisureOptions = 1;
@@ -1352,7 +1379,7 @@ public class PeasantFamilyProfile implements Serializable {
     /**
      *
      */
-    public void reduceHouseCondition() {
+    public synchronized void reduceHouseCondition() {
         //wpsReport.info("");
         /*if (this.housingCondition > 0) {
             this.housingCondition = this.housingCondition - 0.1;
@@ -1363,7 +1390,7 @@ public class PeasantFamilyProfile implements Serializable {
     /**
      *
      */
-    public void increaseHouseCondition() {
+    public synchronized void increaseHouseCondition() {
         //wpsReport.info("");
         /*if (this.housingCondition >= 1) {
             this.housingCondition = 1;
@@ -1376,7 +1403,7 @@ public class PeasantFamilyProfile implements Serializable {
     /**
      *
      */
-    public void increaseTools() {
+    public synchronized void increaseTools() {
         //wpsReport.info("");
         /*if (this.tools >= 1) {
             this.tools = 1;
@@ -1389,7 +1416,7 @@ public class PeasantFamilyProfile implements Serializable {
     /**
      *
      */
-    public void useTools() {
+    public synchronized void useTools() {
         /*if (this.tools > 0) {
             this.tools = this.tools - 0.1;
         }*/
@@ -1413,7 +1440,7 @@ public class PeasantFamilyProfile implements Serializable {
      * @return
      */
     @Override
-    public boolean equals(Object object) {
+    public synchronized boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof PeasantFamilyProfile)) {
             return false;
@@ -1430,7 +1457,7 @@ public class PeasantFamilyProfile implements Serializable {
      * @return
      */
     @Override
-    public String toString() {
+    public synchronized String toString() {
         return "{"
                 + "purpose='" + purpose + '\''
                 + ", health=" + health
@@ -1443,7 +1470,7 @@ public class PeasantFamilyProfile implements Serializable {
                 + ", liveStockAffinity=" + liveStockAffinity
                 + ", farm=" + farm
                 + ", farmName='" + farmName + '\''
-                + ", farmSize=" + farmSize
+                + ", farmSize=" + cropSize
                 + ", housing=" + housing
                 + ", servicesPresence=" + servicesPresence
                 + ", housingSize=" + housingSize
@@ -1469,7 +1496,7 @@ public class PeasantFamilyProfile implements Serializable {
     /**
      *
      */
-    public void increaseFarmReady() {
+    public synchronized void increaseFarmReady() {
         /*
         if (this.farmReady == 1) {
             this.farmReady = 1;
@@ -1482,7 +1509,7 @@ public class PeasantFamilyProfile implements Serializable {
     /**
      *
      */
-    public void increaseTrainingLevel() {
+    public synchronized void increaseTrainingLevel() {
         this.trainingLevel = 1;
     }
 
@@ -1490,7 +1517,7 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @param internalCurrentDate
      */
-    public void setInternalCurrentDate(String internalCurrentDate) {
+    public synchronized void setInternalCurrentDate(String internalCurrentDate) {
         this.internalCurrentDate = internalCurrentDate;
     }
 
@@ -1498,27 +1525,27 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public String getInternalCurrentDate() {
+    public synchronized String getInternalCurrentDate() {
         return this.internalCurrentDate;
     }
 
-    public void setInformalLoanSeason(boolean loan) {
+    public synchronized void setInformalLoanSeason(boolean loan) {
         this.informalLoanSeason = loan;
     }
 
-    public boolean isInformalLoanNeeded() {
+    public synchronized boolean isInformalLoanNeeded() {
         return this.informalLoanSeason;
     }
 
-    public void setPesticidesAvailable(Integer pesticidesAvailable) {
+    public synchronized void setPesticidesAvailable(Integer pesticidesAvailable) {
         this.pesticidesAvailable += pesticidesAvailable;
     }
 
-    public void setPriceList(Map<String, FarmingResource> priceList) {
+    public synchronized void setPriceList(Map<String, FarmingResource> priceList) {
         this.priceList = priceList;
     }
 
-    public Map<String, FarmingResource> getPriceList() {
+    public synchronized Map<String, FarmingResource> getPriceList() {
         return priceList;
     }
 
@@ -1526,13 +1553,29 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public boolean needAPriceList() {
+    public synchronized boolean needAPriceList() {
         // @TODO: Falta saber si tiene la lista de precios actualizada
         return this.priceList.isEmpty();
     }
 
-    public void discountMoney(int discount) {
+    public synchronized void useMoney(int discount) {
         this.money -= discount;
+    }
+
+    public synchronized void useSeeds(int seeds) {
+        this.seeds -= seeds;
+    }
+
+    public synchronized boolean isPreparationSeason() {
+        return this.preparationSeason;
+    }
+
+    public synchronized boolean isPesticideSeason() {
+        return this.pesticideSeason;
+    }
+
+    public synchronized void setPesticideSeason(boolean pesticideSeason) {
+        this.pesticideSeason = pesticideSeason;
     }
 
 }

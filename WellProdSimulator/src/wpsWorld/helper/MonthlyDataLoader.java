@@ -43,7 +43,7 @@ public class MonthlyDataLoader {
             monthData.setStandardDeviation(currentObject.getDouble("standardDeviation"));
             monthlyData.add(monthData);
         });
-        wpsReport.info("Cargando " + dataFileLocation + " ... OK");
+        //wpsReport.info("Cargando " + dataFileLocation + " ... OK");
         return monthlyData;
     }
 }

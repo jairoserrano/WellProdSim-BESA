@@ -12,8 +12,9 @@
 ## * ======================================================================== *
 ---
 RegularPeasant:
+  #Peasant
   purpose: ""
-  profileName: "CampesinoNormal"
+  profileName: "RegularPeasant"
   health: 1.0
   productivity: 0.0
   wellBeging: 1.0
@@ -24,12 +25,13 @@ RegularPeasant:
   peasantConsumption: 1.0
   peasantFamilyMinimalVital: 4833
   liveStockAffinity: 0.7
-  #farm:
+  #Farm:
   farm: false
   farmName: ""
-  farmSize: 1.0
+  farmSize: 10000
   farmDistance: 1.0
   farmReady: 0.0
+  #Crops
   seeds: 1.0
   cropHealth: 1
   irrigation: 0.0
@@ -48,6 +50,8 @@ RegularPeasant:
   cropEficiency: 0
   processedWeight: 0.0
   processingTime: 1.0
+  currentCropName: "rice_1"
+  riceSeedsByHectare: 20
   #toolsAndSupplies:
   tools: 1.0
   toolsAvailability: 1.0

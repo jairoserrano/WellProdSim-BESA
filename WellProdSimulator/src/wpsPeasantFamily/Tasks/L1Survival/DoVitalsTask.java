@@ -18,6 +18,7 @@ import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
+import BESA.Log.ReportBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
@@ -51,11 +52,19 @@ public class DoVitalsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////wpsReport.info("");
+        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        believes.getPeasantProfile().setNewDayFalse();
+        // Vitals about
+        believes.getPeasantProfile().useTime(TimeConsumedBy.DoVitalsTask);
 
         // dormir 8 horas y 4 horas de alimentación
-        wpsReport.info("🔆🔆🔆 Despertó el " + wpsCurrentDate.getInstance().getCurrentDate() + ". Hizo sus funciones vitales.");
+        wpsReport.info(
+                "🔆🔆🔆 "
+                + believes.getPeasantProfile().getProfileName()
+                + " fecha "
+                + wpsCurrentDate.getInstance().getCurrentDate()
+        );
 
         // Vitals about money and food
         if (believes.getPeasantProfile().getMoney()
@@ -65,10 +74,8 @@ public class DoVitalsTask extends Task {
             believes.getPeasantProfile().setFormalLoanSeason(true);
         }
 
-        // Check for the loan pay amount
-        //wpsReport.debug(" PREEEEE00000000001111111111 ");
+        // Check for the loan pay amount only on first day of month
         if (wpsCurrentDate.getInstance().isFirstDayOfMonth()) {
-            //wpsReport.debug(" 00000000001111111111 ");
             try {
                 AdmBESA adm = AdmBESA.getInstance();
                 AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasBankAgent);
@@ -87,11 +94,6 @@ public class DoVitalsTask extends Task {
                 wpsReport.error(ex);
             }
         }
-        //wpsReport.debug(" POOSSST00000000001111111111 ");
-
-        // Vitals about
-        believes.getPeasantProfile().useTime(TimeConsumedBy.DoVitalsTask);
-        believes.getPeasantProfile().setNewDayFalse();
         //this.setFinished(true);
         this.setTaskWaitingForExecution();
     }

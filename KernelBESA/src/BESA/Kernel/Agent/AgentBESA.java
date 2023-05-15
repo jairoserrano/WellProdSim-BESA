@@ -117,7 +117,7 @@ public abstract class AgentBESA {
             throw new KernelAgentExceptionBESA("Couldn't create an instance the agent " + this.alias + ": " + e.toString());
         } //End catch.
     }
-
+    
     /**
      * This method starts the agent behavior. TODO Verificar las excepciones.
      */

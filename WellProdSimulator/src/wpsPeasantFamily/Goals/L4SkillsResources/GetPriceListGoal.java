@@ -23,27 +23,28 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Tasks.L4SkillsResources.ObtainPriceListTask;
+import wpsPeasantFamily.Tasks.L4SkillsResources.GetPriceListTask;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
  * @author jairo
  */
-public class ObtainPriceListGoal extends GoalBDI {
+public class GetPriceListGoal extends GoalBDI {
 
     /**
      *
      * @return
      */
-    public static ObtainPriceListGoal buildGoal() {
-        ObtainPriceListTask obtainPriceListTask = new ObtainPriceListTask();
+    public static GetPriceListGoal buildGoal() {
+        GetPriceListTask obtainPriceListTask = new GetPriceListTask();
         Plan obtainPriceListPlan = new Plan();
         obtainPriceListPlan.addTask(obtainPriceListTask);
         RationalRole obtainPriceListRole = new RationalRole(
                 "obtainPriceListTask",
                 obtainPriceListPlan);
-        ObtainPriceListGoal obtainPriceListGoal = new ObtainPriceListGoal(
+        GetPriceListGoal obtainPriceListGoal = new GetPriceListGoal(
                 wpsStart.getPlanID(),
                 obtainPriceListRole,
                 "obtainPriceListTask",
@@ -58,7 +59,7 @@ public class ObtainPriceListGoal extends GoalBDI {
      * @param description
      * @param type
      */
-    public ObtainPriceListGoal(long id, RationalRole role, String description, GoalBDITypes type) {
+    public GetPriceListGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
         //wpsReport.info("");
     }
@@ -85,6 +86,7 @@ public class ObtainPriceListGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        //wpsReport.debug("Need a Price List: " + believes.getPeasantProfile().needAPriceList());
         if (believes.getPeasantProfile().needAPriceList()) {
             return 1;
         } else {
@@ -102,10 +104,7 @@ public class ObtainPriceListGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.AskForAPriceList
-                )) {
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.AskForAPriceList)) {
             return 1;
         } else {
             return 0;

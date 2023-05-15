@@ -55,6 +55,7 @@ public class CheckCropsTask extends Task {
     public void executeTask(Believes parameters) {
         ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        believes.getPeasantProfile().setCropCheckedToday();
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
@@ -78,7 +79,6 @@ public class CheckCropsTask extends Task {
             // @TODO: falta calcular el tiempo necesario para el cultivo
             believes.getPeasantProfile().useTime(TimeConsumedBy.CheckCrops);
             //this.setFinished(true);
-            believes.getPeasantProfile().setCropCheckedToday();
             this.setTaskWaitingForExecution();
 
         } catch (ExceptionBESA ex) {

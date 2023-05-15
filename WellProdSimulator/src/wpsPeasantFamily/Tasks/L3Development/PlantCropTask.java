@@ -32,14 +32,14 @@ import wpsViewer.Agent.wpsReport;
  *
  * @author jairo
  */
-public class PlantCropsTask extends Task {
+public class PlantCropTask extends Task {
 
     private boolean finished;
 
     /**
      *
      */
-    public PlantCropsTask() {
+    public PlantCropTask() {
         ////wpsReport.info("");
         this.finished = false;
     }
@@ -50,8 +50,11 @@ public class PlantCropsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //wpsReport.info("");
+        wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        believes.getPeasantProfile().setGrowingSeason(true);
+        believes.getPeasantProfile().setPreparationSeason(false);
+        believes.getPeasantProfile().setPlantingSeason(false);
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
@@ -60,26 +63,33 @@ public class PlantCropsTask extends Task {
 
             WorldMessage worldMessage = new WorldMessage(
                     CROP_INIT,
-                    "rice_1",
+                    believes.getPeasantProfile().getProfileName(),
                     wpsCurrentDate.getInstance().getCurrentDate(),
-                    believes.getPeasantProfile().getProfileName());
-            
+                    believes.getPeasantProfile().getProfileName()
+            );
+
             wpsReport.info(worldMessage);
+
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
                     worldMessage);
             ah.sendEvent(ev);
 
-            // @TODO: Cambiar a la venta real con el agente social market
-            believes.getPeasantProfile().setGrowingSeason(true);
-            believes.getPeasantProfile().setPlantingSeason(false);
+            believes.getPeasantProfile().useSeeds(
+                    believes.getPeasantProfile().getRiceSeedsByHectare()
+            );
+            // 2500 kilo * 20 kilos de semillas
+            believes.getPeasantProfile().useMoney(
+                    believes.getPeasantProfile().getPriceList().get("seeds").getCost()
+                    * 20
+            );
+            // Comienza la temporada de siembra
             believes.getPeasantProfile().useTime(TimeConsumedBy.PlantCrops);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-
-        this.setFinished(true);
+        this.setTaskWaitingForExecution();
     }
 
     /**

@@ -25,6 +25,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -90,11 +91,9 @@ public class PrepareLandGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("PlantingSeason=" + believes.getPeasantProfile().isPlantingSeason());
-        //wpsReport.info("haveAFarm=" + believes.getPeasantProfile().haveAFarm()
-        //        + " getFarmReady=" + believes.getPeasantProfile().getFarmReady());
-        if (believes.getPeasantProfile().haveAFarm()
-                && believes.getPeasantProfile().getFarmReady() < 1) {
+        //wpsReport.debug("Preparation season: " + believes.getPeasantProfile().isPreparationSeason());
+        if (believes.getPeasantProfile().isPreparationSeason() 
+                && !believes.getPeasantProfile().needAPriceList()) {
             return 1;
         } else {
             return 0;
@@ -109,11 +108,13 @@ public class PrepareLandGoal extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        //wpsReport.debug("free: " + believes.getPeasantProfile().isFree());
+        //wpsReport.debug("PrepareLand time needed: " + TimeConsumedBy.PrepareLand.getTime());
+        //wpsReport.debug("PrepareLand have time: " + believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PrepareLand));
         if (believes.getPeasantProfile().isFree()
                 && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.PlantCrops
+                        TimeConsumedBy.PrepareLand
                 )) {
             return 0;
         } else {

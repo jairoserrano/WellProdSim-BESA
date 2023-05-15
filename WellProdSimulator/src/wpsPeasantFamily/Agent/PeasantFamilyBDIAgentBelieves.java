@@ -35,7 +35,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      * @param peasantProfile
      */
     public PeasantFamilyBDIAgentBelieves(PeasantFamilyProfile peasantProfile) {
-        wpsReport.debug(">> New Peasant " + peasantProfile.getProfileName());
+        //wpsReport.debug(">> New Peasant " + peasantProfile.getProfileName());
         this.setPeasantProfile(peasantProfile);
         this.peasantEmotionalState = new EmotionalState();
     }

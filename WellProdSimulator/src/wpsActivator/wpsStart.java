@@ -21,6 +21,7 @@ import BESA.Kernel.Agent.PeriodicGuardBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Util.PeriodicDataBESA;
+import java.util.Enumeration;
 import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgent;
 import wpsPeasantFamily.Agent.PeasantFamilyHeartBeatGuard;
@@ -58,17 +59,20 @@ public class wpsStart {
      *
      */
     public static String aliasPeasantFamilyAgent;
-
+    /**
+     * 
+     */
+    public static wpsConfig config = wpsConfig.getInstance();
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
 
         // Set default values of peasant and world
-        wpsConfig config = wpsConfig.getInstance();
+        
         aliasPeasantFamilyAgent = config.getRegularFarmerProfile().getProfileName();
+        //aliasPeasantFamilyAgent02 = config.getProactiveFarmerProfile().getProfileName();
 
-        wpsReport.info(aliasPeasantFamilyAgent);
         // Set init date of simulation
         wpsCurrentDate.getInstance().setCurrentDate(config.getStartSimulationDate());
 
@@ -76,13 +80,17 @@ public class wpsStart {
             wpsReport.info("Inicializando WellProdSimulator");
 
             // @TODO: Regular Peasant Agent
-            PeasantFamilyBDIAgent peasantFamilyAgent = new PeasantFamilyBDIAgent(
+            PeasantFamilyBDIAgent peasantFamilyAgent01 = new PeasantFamilyBDIAgent(
                     aliasPeasantFamilyAgent,
                     config.getRegularFarmerProfile()
             );
+            /*PeasantFamilyBDIAgent peasantFamilyAgent02 = new PeasantFamilyBDIAgent(
+                    aliasPeasantFamilyAgent02,
+                    config.getProactiveFarmerProfile()
+            );*/
 
             // Society Agent
-            SocietyAgent societyAgent = SocietyAgent.createAgent(aliasBankAgent, PASSWD);
+            SocietyAgent societyAgent = SocietyAgent.createAgent(aliasSocietyAgent, PASSWD);
             // Bank Agent
             BankAgent bankAgent = BankAgent.createBankAgent(aliasBankAgent, PASSWD);
             // Markt Agent
@@ -92,7 +100,7 @@ public class wpsStart {
 
             // Simulation Start
             startAllAgents(
-                    peasantFamilyAgent,
+                    peasantFamilyAgent01,
                     societyAgent,
                     bankAgent,
                     marketAgent,
@@ -121,6 +129,7 @@ public class wpsStart {
             agent.start();
             wpsReport.info(agent.getAlias() + " Started");
         }
+
         // Start Peasant Family Heart Beat
         AdmBESA adm = AdmBESA.getInstance();
         PeriodicDataBESA data = new PeriodicDataBESA(
@@ -135,7 +144,8 @@ public class wpsStart {
         // cierra la ejecución completamente al cumplirse un tiempo
         try {
             Thread.sleep(RTSIM * 60 * 1000);
-            System.exit(0);
+            stopSimulation();
+            //System.exit(0);
         } catch (InterruptedException e) {
             wpsReport.error(e.getMessage());
         }
@@ -148,12 +158,10 @@ public class wpsStart {
      */
     public static void stopSimulation() throws ExceptionBESA {
         AdmBESA adm = AdmBESA.getInstance();
-        //AgHandlerBESA agHandler;
-        adm.killAgent(adm.getHandlerByAlias(aliasPeasantFamilyAgent).getAgId(), PASSWD);
-        adm.killAgent(adm.getHandlerByAlias(aliasBankAgent).getAgId(), PASSWD);
-        adm.killAgent(adm.getHandlerByAlias(aliasSocietyAgent).getAgId(), PASSWD);
-        adm.killAgent(adm.getHandlerByAlias(aliasMarketAgent).getAgId(), PASSWD);
-        adm.killAgent(adm.getHandlerByAlias("Land_" + aliasPeasantFamilyAgent).getAgId(), PASSWD);
+        Enumeration enumeration = adm.getIdList();
+        while (enumeration.hasMoreElements()) {
+            adm.killAgent((String) enumeration.nextElement(), PASSWD);
+        }
         adm.kill(0.09);
 
     }

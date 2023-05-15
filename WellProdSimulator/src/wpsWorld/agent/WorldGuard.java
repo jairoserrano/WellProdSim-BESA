@@ -119,9 +119,9 @@ public class WorldGuard extends GuardBESA {
                         defaultCropInsecticideCoverage,
                         worldMessage.getDate());
                 peasantMessage = new FromWorldMessage(
-                        FromWorldMessageType.CROP_INFORMATION_NOTIFICATION,
+                        FromWorldMessageType.CROP_PESTICIDE,
                         worldMessage.getPeasantAgentAlias(),
-                        "CROP_PESTICIDE");
+                        defaultCropInsecticideCoverage + " " + diseaseCellId);
                 peasantMessage.setDate(worldMessage.getDate());
                 this.replyToPeasantAgent(worldMessage.getPeasantAgentAlias(), peasantMessage);
                 break;
@@ -163,13 +163,13 @@ public class WorldGuard extends GuardBESA {
      * @param aid
      * @param date
      */
-    public void notifyPeasantCropProblem(FromWorldMessageType messageType, String aid, String date) {
+    public void notifyPeasantCropProblem(FromWorldMessageType messageType, String agentAlias, String date) {
         try {
-            wpsReport.debug("AgentID: " + aid);
-            AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAid(aid);
+            wpsReport.debug("AgentID: " + agentAlias);
+            AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAlias(agentAlias);
             FromWorldMessage peasantMessage = new FromWorldMessage(
                     messageType,
-                    aid,
+                    agentAlias,
                     null);
             peasantMessage.setDate(date);
             EventBESA event = new EventBESA(
@@ -190,7 +190,7 @@ public class WorldGuard extends GuardBESA {
     public void notifyPeasantCropReadyToHarvest(String agentAlias, String date) {
         try {
             wpsReport.debug("AgentID: " + agentAlias);
-            AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAid(agentAlias);
+            AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAlias(agentAlias);
             FromWorldMessage peasantMessage = new FromWorldMessage(
                     FromWorldMessageType.NOTIFY_CROP_READY_HARVEST,
                     agentAlias,
