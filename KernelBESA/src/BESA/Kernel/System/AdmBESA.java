@@ -15,16 +15,16 @@ import BESA.Log.ReportBESA;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Timer;
 import java.util.UUID;
-
 
 /**
  * This class represents a BESA local administrator.
- * 
- * @author  SIDRe - Pontificia Universidad Javeriana
- * @author  Takina  - Pontificia Universidad Javeriana
+ *
+ * @author SIDRe - Pontificia Universidad Javeriana
+ * @author Takina - Pontificia Universidad Javeriana
  * @version 2.0, 11/01/11
- * @since   JDK1.0
+ * @since JDK1.0
  */
 public abstract class AdmBESA {
 
@@ -58,7 +58,15 @@ public abstract class AdmBESA {
      * administrator.
      */
     protected int counterAgent = 0;
-    
+    /**
+     * Checkpoint status is enable or disable
+     */
+    protected boolean checkpointActive = false;
+    /**
+     * Checkpoint status is enable or disable
+     */
+    protected Timer timerCheckpoint;
+
     /**
      * Creates a new instance.
      */
@@ -83,15 +91,15 @@ public abstract class AdmBESA {
     }
 
     /**
-     * 
+     *
      * @param configBESAPATH
-     * @return 
+     * @return
      */
     public static AdmBESA getInstance(String configBESAPATH) {
         if (INSTANCE == null) {
             try {
                 ReportBESA.setLocationFile(configBESAPATH);
-                createSingletonInstance(configBESAPATH);               
+                createSingletonInstance(configBESAPATH);
             } catch (ExceptionBESA ex) {
                 ReportBESA.error(ex);
             }
@@ -101,7 +109,7 @@ public abstract class AdmBESA {
 
     /**
      * Creates a new instance of the container administrator.
-     *  
+     *
      * @throws ExceptionBESA BESA Exception.
      */
     private synchronized static void createSingletonInstance() throws ExceptionBESA {
@@ -121,7 +129,7 @@ public abstract class AdmBESA {
 
     /**
      * Creates a new instance of the container administrator.
-     *  
+     *
      * @throws ExceptionBESA BESA Exception.
      */
     private synchronized static void createSingletonInstance(String configBESAPATH) throws ExceptionBESA {
@@ -140,13 +148,13 @@ public abstract class AdmBESA {
     }
 
     /**
-     * 
+     *
      * @param configBESA
-     * @throws SystemExceptionBESA 
+     * @throws SystemExceptionBESA
      */
     private static void environmentCase(ConfigBESA configBESA) throws SystemExceptionBESA {
         SystemFactoryBESA systemFactoryBESA = new SystemFactoryBESA();
-        switch (configBESA.getEnvironmentCase()) {            
+        switch (configBESA.getEnvironmentCase()) {
             case REMOTE:
                 INSTANCE = systemFactoryBESA.createRemoteAdmBESA(configBESA);
                 break;
@@ -158,7 +166,7 @@ public abstract class AdmBESA {
                 break;
             case CE:
                 INSTANCE = systemFactoryBESA.createCEAdmBESA(configBESA);
-                break;    
+                break;
             default:
                 INSTANCE = systemFactoryBESA.createLocalAdmBESA(configBESA);
         }
@@ -174,7 +182,6 @@ public abstract class AdmBESA {
     public Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
-
 
     /**
      * This method returns the id of the container.
@@ -204,45 +211,75 @@ public abstract class AdmBESA {
     protected abstract void unregisterAgent(String agId) throws SystemExceptionBESA;
 
     /**
-     * searchAidByAlias buscar agentes que responden a un alias - paginas blancas
+     * searchAidByAlias buscar agentes que responden a un alias - paginas
+     * blancas
      *
-     * @return un iterator con los aids de los agentes encontrados
-     * OJO: por ahora retorna solo el aid de un agente, falta hacer lo del iterator
+     * @return un iterator con los aids de los agentes encontrados OJO: por
+     * ahora retorna solo el aid de un agente, falta hacer lo del iterator
      * @param alias nombre con el que se referencian el/los agentes buscados
      * @throws BESA.Exception.ExceptionBESA
      */
     public abstract String searchAidByAlias(String alias) throws SystemExceptionBESA;
 
-    /**     
-     * searchAidByService buscar agentes que prestan un servicio - paginas amarillas
-     * @param servId nombre/identificador del servicio que prestan el/los agentes buscados
+    /**
+     * searchAidByService buscar agentes que prestan un servicio - paginas
+     * amarillas
+     *
+     * @param servId nombre/identificador del servicio que prestan el/los
+     * agentes buscados
      * @return un iterator con los ids de los agentes encontrados
-     **/
+     *
+     */
     public abstract Iterator searchAidByService(String servId);
 
     /**
      * searchAliasByAid obtener el alias de un agente a partir del aid
+     *
      * @param agId id del agente
      * @return alias del agente
-     **/
+     *
+     */
     public abstract String getAliasByAid(String agId);
 
     /**
-     * 
-     * @return 
+     * This method activate CheckPoint System
+     *
+     * @autor Jairo Serrano
+     * @param checkpointType Tipo de Checkpoint
+     */
+    public abstract void executeCheckpoint();
+
+    /**
+     * This method activate CheckPoint System
+     *
+     * @autor Jairo Serrano
+     */
+    public abstract void activateCheckpoint();
+
+    /**
+     * This method activate CheckPoint System
+     *
+     * @autor Jairo Serrano
+     */
+    public abstract void deactivateCheckpoint();
+
+    /**
+     *
+     * @return
      */
     public abstract Enumeration getIdList();
 
     /**
      *
      * getHandlerByAid obtener el aidHandler de un agente a partir del aid
+     *
      * @param agId id del agente
      * @return aidHandler del agente
      */
     public abstract AgHandlerBESA getHandlerByAid(String agId) throws ExceptionBESA;
 
     /**
-     * 
+     *
      * @param agAlias
      * @return
      * @throws SystemExceptionBESA
@@ -250,12 +287,13 @@ public abstract class AdmBESA {
     public abstract AgHandlerBESA getHandlerByAlias(String agAlias) throws ExceptionBESA;
 
     /**
-     * 
+     *
      * @param agAlias
      * @return
-     * @throws ExceptionBESA 
+     * @throws ExceptionBESA
      */
     public abstract Enumeration<String> getAdmAliasList();
+
     /**
      *
      * @param aid
@@ -272,19 +310,24 @@ public abstract class AdmBESA {
 
     /**
      * addService crear un servicio en las paginas amarillas
+     *
      * @param servId nombre/identificador unico del servicio
-     * @param descriptors vector con nombres alternativos/descriptivos del servicio
+     * @param descriptors vector con nombres alternativos/descriptivos del
+     * servicio
      */
     public abstract void addService(String servId, ArrayList<String> descriptors);
 
     /**
      * removeService eliminar un servicio en las paginas amarillas
+     *
      * @param servId nombre/identificador unico del servicio
-     **/
+     *
+     */
     public abstract void removeService(String servId);
 
     /**
      * bindService asociar un agente a un servicio de las paginas amarillas
+     *
      * @param agId id del agente
      * @param servId nombre/identificador unico del servicio
      * @return true si todo bien, false si el servicio no ha sido creado
@@ -292,7 +335,9 @@ public abstract class AdmBESA {
     public abstract boolean bindService(String agId, String servId);
 
     /**
-     * unbindService eliminar asociacion de un agente a un servicio de las paginas amarillas
+     * unbindService eliminar asociacion de un agente a un servicio de las
+     * paginas amarillas
+     *
      * @param agId id del agente
      * @param servId nombre/identificador unico del servicio
      * @return true si todo bien, false si el servicio no ha sido creado
@@ -300,17 +345,17 @@ public abstract class AdmBESA {
     public abstract void unbindService(String agId, String servId);
 
     /**
-     * 
+     *
      * @param containerPassword
-     * @throws ExceptionBESA 
+     * @throws ExceptionBESA
      */
     public abstract void kill(double containerPassword) throws ExceptionBESA;
 
     /**
-     * 
+     *
      * @param agId
      * @param agh
-     * @param agAlias 
+     * @param agAlias
      */
     public abstract void registerAgent(String agId, AgHandlerBESA agh, String agAlias) throws ExceptionBESA;
 
@@ -368,7 +413,9 @@ public abstract class AdmBESA {
     }
 
     /**
-     * Metodo que retorna el flag de centralizado o distribuido (19 de Enero de 2006)
+     * Metodo que retorna el flag de centralizado o distribuido (19 de Enero de
+     * 2006)
+     *
      * @return
      */
     public boolean isCentralized() {
@@ -377,6 +424,7 @@ public abstract class AdmBESA {
 
     /**
      * Metodo que retorna el configBESA (19 de Enero de 2006)
+     *
      * @return
      */
     public ConfigBESA getConfigBESA() {
@@ -407,43 +455,43 @@ public abstract class AdmBESA {
     public abstract String lookupSPServiceInDirectory(String directoryServiceName);
 
     /**
-     * 
-     * @param config 
+     *
+     * @param config
      */
     public void setConfig(ConfigBESA config) {
         this.config = config;
     }
 
     /**
-     * 
+     *
      * @param alias
-     * @return 
+     * @return
      */
     public abstract boolean doesAgentExist(String alias);
 
     /**
-     * 
+     *
      * @param alias
      * @param agId
-     * @throws SystemExceptionBESA 
+     * @throws SystemExceptionBESA
      */
     public abstract void publicagent(String alias, String agId) throws SystemExceptionBESA;
 
     /**
-     * 
+     *
      * @param ag
      * @param id
      * @param alias
-     * @return 
+     * @return
      */
     public abstract String registerAgent(AgentBESA ag, String id, String alias);
-    
+
     /**
-     * 
+     *
      * @param alias
      * @param aliasDestinationAdmBESA
      * @param passwdAgent
-     * @throws ExceptionBESA 
+     * @throws ExceptionBESA
      */
-    public abstract void moveAgent(String alias, String aliasDestinationAdmBESA, double passwdAgent) throws ExceptionBESA; 
+    public abstract void moveAgent(String alias, String aliasDestinationAdmBESA, double passwdAgent) throws ExceptionBESA;
 }

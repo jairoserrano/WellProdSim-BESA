@@ -12,7 +12,20 @@ import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 //import BESA.Local.Directory.AgLocalHandlerBESA;
 import BESA.Log.ReportBESA;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 
 /**
  * This class represents an agent in the platform BESA. An agent consists of a
@@ -68,6 +81,10 @@ public abstract class AgentBESA {
      * Agent BESA internal structure.
      */
     private StructBESA structAgent;
+    /**
+     * Database Connection
+     */
+    private Connection db = null;
 
     /**
      * Builds a BESA agent. In order to construct an agent BESA is necessary to
@@ -117,7 +134,157 @@ public abstract class AgentBESA {
             throw new KernelAgentExceptionBESA("Couldn't create an instance the agent " + this.alias + ": " + e.toString());
         } //End catch.
     }
-    
+
+    /**
+     * Load Agent from Database
+     *
+     * @autor Jairo Serrano
+     * @return true if CheckPoint data exists
+     */
+    private synchronized boolean loadAgent() {
+
+        System.out.println(this.alias + ".db");
+
+        File file = new File(this.alias + ".db");
+
+        if (file.exists()) {
+
+            try {
+                Class.forName("org.sqlite.JDBC");
+                this.db = DriverManager.getConnection("jdbc:sqlite:" + this.alias + ".db");
+                System.out.println("Database exists");
+
+                Statement stmt;
+                stmt = this.db.createStatement();
+                ResultSet rs;
+
+                rs = stmt.executeQuery("SELECT count(ID) FROM AGENT");
+
+                if (!rs.next()) {
+                    return false;
+                }
+
+                rs = stmt.executeQuery("SELECT * FROM AGENT ORDER BY ID DESC LIMIT 1;");
+
+                while (rs.next()) {
+
+                    String statefromdb = rs.getString("state");
+                    String structAgentfromdb = rs.getString("structAgent");
+                    String passwdAgentfromdb = rs.getString("passwdAgent");
+                    String nameClassAgentfromdb = rs.getString("nameClassAgent");
+
+                    byte[] b1 = Base64.getDecoder().decode(statefromdb);
+                    ByteArrayInputStream bi1 = new ByteArrayInputStream(b1);
+                    ObjectInputStream si1 = new ObjectInputStream(bi1);
+
+                    byte[] b2 = Base64.getDecoder().decode(structAgentfromdb);
+                    ByteArrayInputStream bi2 = new ByteArrayInputStream(b2);
+                    ObjectInputStream si2 = new ObjectInputStream(bi2);
+
+                    // TODO: Eliminar cuando se haga la carga desde ADM @jairo
+                    this.structAgent = (StructBESA) si2.readObject();
+                    this.state = (StateBESA) si1.readObject();
+                    this.passwd = (double) Double.valueOf(passwdAgentfromdb);
+
+                    System.out.println("Status restored from database");
+
+                }
+                rs.close();
+                stmt.close();
+
+                //Load data from state
+                return true;
+
+            } catch (IOException | ClassNotFoundException | SQLException e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+
+        }
+        // Si no hay archivo de DB retorna false
+        return false;
+
+    }
+
+    /**
+     * Guarda el estado del Agente completo
+     *
+     * @autor Jairo Serrano
+     */
+    public synchronized void saveAgent() {
+
+        File file = new File(this.alias + ".db");
+
+        if (file.exists()) {                                                    // the file already existed and the program will enter this block
+
+            try {
+
+                Class.forName("org.sqlite.JDBC");
+                this.db = DriverManager.getConnection("jdbc:sqlite:" + this.alias + ".db");
+
+                //agh.setState(AGENTSTATE.CHECKPOINT);
+                ByteArrayOutputStream stateObj = new ByteArrayOutputStream();
+                ObjectOutputStream so = new ObjectOutputStream(stateObj);
+                so.writeObject(this.state);
+                so.flush();
+
+                ByteArrayOutputStream structAgentObj = new ByteArrayOutputStream();
+                ObjectOutputStream sosa = new ObjectOutputStream(structAgentObj);
+                sosa.writeObject(this.structAgent);
+                sosa.flush();
+
+                String serialState = Base64.getEncoder().encodeToString(stateObj.toByteArray());
+                String serialStructAgent = Base64.getEncoder().encodeToString(structAgentObj.toByteArray());
+
+                String sql = "INSERT INTO AGENT (state, structAgent, passwdAgent, nameClassAgent) VALUES (?,?,?,?);";
+                PreparedStatement pstmt = this.db.prepareStatement(sql);
+                pstmt.setString(1, serialState);
+                pstmt.setString(2, serialStructAgent);
+                pstmt.setString(3, String.valueOf(this.passwd));
+                pstmt.setString(4, this.getClass().getName());
+                pstmt.executeUpdate();
+
+                //ReportBESA.trace("Checkpoint of Agents successfully");
+                System.out.println("Checkpoint of Agent " + this.alias + " successfully");
+                //agh.notifyCheckpoint();
+
+            } catch (IOException | ClassNotFoundException | SQLException e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+
+        } else { //the file did not exist and you can send your error msg
+
+            try {
+                Class.forName("org.sqlite.JDBC");
+                this.db = DriverManager.getConnection("jdbc:sqlite:" + this.alias + ".db");
+
+                Statement stmt = this.db.createStatement();
+
+                //ag.getAlias(), ag.getState(), ag.getStructAgent(), passwdAgent, nameClassAgent
+                String sql = "CREATE TABLE AGENT "
+                        + "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+                        + " state           TEXT NOT NULL,"
+                        + " passwdAgent     TEXT NOT NULL,"
+                        + " structAgent     TEXT NOT NULL,"
+                        + " nameClassAgent  TEXT NOT NULL,"
+                        + " timemark TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
+
+                System.out.println(sql);
+                stmt.executeUpdate(sql);
+                stmt.close();
+
+                System.out.println("Database creation successfully");
+
+            } catch (ClassNotFoundException | SQLException e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+
+        }
+
+    }
+
     /**
      * This method starts the agent behavior. TODO Verificar las excepciones.
      */
@@ -515,5 +682,14 @@ public abstract class AgentBESA {
      */
     public ArrayList<BehaviorBESA> getBehaviors() {
         return behaviors;
+    }
+
+    /**
+     * Returns the agent password.
+     *
+     * @return Internal state of the agent, which inherits of StateBESA.
+     */
+    public double getPassword() {
+        return passwd;
     }
 }

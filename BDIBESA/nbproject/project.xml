@@ -22,7 +22,7 @@
                 <id>jar</id>
             </reference>
             <reference>
-                <foreign-project>LocalBESA</foreign-project>
+                <foreign-project>RationalBESA</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
                 <target>jar</target>
@@ -30,7 +30,7 @@
                 <id>jar</id>
             </reference>
             <reference>
-                <foreign-project>RationalBESA</foreign-project>
+                <foreign-project>RemoteBESA</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
                 <target>jar</target>

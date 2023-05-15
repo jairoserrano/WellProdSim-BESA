@@ -445,4 +445,19 @@ public class LocalAdmBESA extends AdmBESA {
     public Enumeration<String> getAdmAliasList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public void executeCheckpoint() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void activateCheckpoint() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void deactivateCheckpoint() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

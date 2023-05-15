@@ -39,6 +39,10 @@ public class ConfigBESA {
     private int sendEventAttemps = 10;
     private int bloport = 8080;
     private int bpoPort = 8000;
+    /**
+     * Checkpoint frequency in milliseconds
+     */
+    private int checkpointTime = 30000;
 
     public ConfigBESA() throws ConfigExceptionBESA {
         loadConfig();
@@ -416,5 +420,21 @@ public class ConfigBESA {
      */
     public void setBloport(int bloport) {
         this.bloport = bloport;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getCheckpointTime() {
+        return checkpointTime;
+    }
+
+    /**
+     *
+     * @param checkpointTime
+     */
+    public void setCheckpointTime(int checkpointTime) {
+        this.checkpointTime = checkpointTime;
     }
 }

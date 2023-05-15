@@ -7,3 +7,6 @@
 *.log
 WellProdSimulator/.DS_Store
 .DS_Store
+/KernelBESA-ok/nbproject/private/
+/KernelBESA-db/nbproject/private/
+/KernelBESA-local/nbproject/private/
