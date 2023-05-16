@@ -36,9 +36,13 @@ public class WorldGuard extends GuardBESA {
         //wpsReport.info("🚩🚩🚩" + worldMessage);
         WorldState worldState = (WorldState) this.agent.getState();
         FromWorldMessage peasantMessage;
+        CropCellState cropCellState;
+        CropCell cropCellInfo;
+        DiseaseCellState diseaseCellState;
+        JSONObject cropDataJson;
         switch (worldMessage.getWorldMessageType()) {
             case CROP_INIT:
-                wpsReport.info("Start event, initialize first layers state");
+                //wpsReport.info("Start event, initialize first layers state");
                 worldState.lazyUpdateCropsForDate(worldMessage.getDate());
                 wpsCurrentDate.getInstance().getDatePlusOneDayAndUpdate();
                 peasantMessage = new FromWorldMessage(
@@ -56,10 +60,10 @@ public class WorldGuard extends GuardBESA {
                         + " Information " + worldMessage.getPayload()
                         + " Date: " + worldMessage.getDate());
                 worldState.lazyUpdateCropsForDate(worldMessage.getDate());
-                CropCellState cropCellState = worldState.getCropLayer().getCropStateById(worldMessage.getCropId());
-                CropCell cropCellInfo = worldState.getCropLayer().getCropCellById(worldMessage.getCropId());
-                DiseaseCellState diseaseCellState = (DiseaseCellState) cropCellInfo.getDiseaseCell().getCellState();
-                JSONObject cropDataJson = new JSONObject(cropCellState);
+                cropCellState = worldState.getCropLayer().getCropStateById(worldMessage.getCropId());
+                cropCellInfo = worldState.getCropLayer().getCropCellById(worldMessage.getCropId());
+                diseaseCellState = (DiseaseCellState) cropCellInfo.getDiseaseCell().getCellState();
+                cropDataJson = new JSONObject(cropCellState);
                 cropDataJson.put("disease", diseaseCellState.isInfected());
                 cropDataJson.put("cropHarvestReady", cropCellInfo.isHarvestReady());
                 peasantMessage = new FromWorldMessage(
@@ -70,8 +74,8 @@ public class WorldGuard extends GuardBESA {
                 this.replyToPeasantAgent(worldMessage.getPeasantAgentAlias(), peasantMessage);
                 break;
             case CROP_OBSERVE:
-                wpsReport.info("Observing crops (lazy mode).... on date: "
-                        + worldMessage.getDate());
+                //wpsReport.info("Observing crops (lazy mode).... on date: "
+                //        + worldMessage.getDate());
                 worldState.getCropLayer().getAllCrops().forEach(cropCell -> {
                     if (((CropCellState) cropCell.getCellState()).isWaterStress()) {
                         this.notifyPeasantCropProblem(FromWorldMessageType.NOTIFY_CROP_WATER_STRESS,
@@ -127,10 +131,16 @@ public class WorldGuard extends GuardBESA {
                 break;
             case CROP_HARVEST:
                 this.harvestCrop(worldState.getCropLayer());
+                cropCellState = worldState.getCropLayer().getCropStateById(worldMessage.getCropId());
+                cropCellInfo = worldState.getCropLayer().getCropCellById(worldMessage.getCropId());
+                diseaseCellState = (DiseaseCellState) cropCellInfo.getDiseaseCell().getCellState();
+                cropDataJson = new JSONObject(cropCellState);
+                cropDataJson.put("disease", diseaseCellState.isInfected());
+                cropDataJson.put("cropHarvestReady", cropCellInfo.isHarvestReady());
                 peasantMessage = new FromWorldMessage(
                         FromWorldMessageType.CROP_HARVEST,
                         worldMessage.getPeasantAgentAlias(),
-                        "CROP_HARVEST");
+                        cropDataJson.toString());
                 peasantMessage.setDate(worldMessage.getDate());
                 this.replyToPeasantAgent(
                         worldMessage.getPeasantAgentAlias(),

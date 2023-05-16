@@ -53,42 +53,30 @@ public class HarvestCropsTask extends Task {
     public void executeTask(Believes parameters) {
         ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        // @TODO: Cambiar a la venta real con el agente social market
+        believes.getPeasantProfile().useTime(TimeConsumedBy.HarvestCrops);
+        believes.getPeasantProfile().setHarverstSeason(false);
+        believes.getPeasantProfile().setGrowingSeason(false);
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
             AgHandlerBESA ah = adm.getHandlerByAlias(
-                    believes.getPeasantProfile().getFarmName());
-            
-            wpsReport.debug("Actual " +
-                    wpsCurrentDate.getInstance().getCurrentDate());
-            WorldMessage worldMessageInfo = new WorldMessage(
-                    CROP_INFORMATION,
-                    "rice_1",
+                    believes.getPeasantProfile().getFarmName()
+            );
+
+            WorldMessage worldMessage = new WorldMessage(
+                    CROP_HARVEST,
+                    believes.getPeasantProfile().getCurrentCropName(),
                     wpsCurrentDate.getInstance().getCurrentDate(),
                     believes.getPeasantProfile().getProfileName());
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
-                    worldMessageInfo);
-            ah.sendEvent(ev);
-            
-            WorldMessage worldMessage = new WorldMessage(
-                    CROP_HARVEST,
-                    "rice_1",
-                    wpsCurrentDate.getInstance().getCurrentDate(),
-                    believes.getPeasantProfile().getProfileName());
-            ev = new EventBESA(
-                    WorldGuard.class.getName(),
                     worldMessage);
             ah.sendEvent(ev);
-            
-
-            believes.getPeasantProfile().useTime(TimeConsumedBy.HarvestCrops);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-        this.setFinished(true);
+        this.setTaskWaitingForExecution();
     }
 
     /**

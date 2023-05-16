@@ -17,7 +17,8 @@ package wpsPeasantFamily.Agent;
 import BESA.BDI.AgentStructuralModel.StateBDI;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
-import static wpsPeasantFamily.Agent.FromWorldMessageType.NOTIFY_CROP_DISEASE;
+import org.json.JSONObject;
+import static wpsPeasantFamily.Agent.FromWorldMessageType.*;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -33,14 +34,14 @@ public class FromWorldGuard extends GuardBESA {
     @Override
     public void funcExecGuard(EventBESA event) {
         FromWorldMessage peasantCommMessage = (FromWorldMessage) event.getData();
-        wpsReport.debug("🤖🤖🤖 Recibido: " + peasantCommMessage.getPeasantAlias() + " getType=" + peasantCommMessage.getPayload());
+        //wpsReport.debug("🤖🤖🤖 Recibido: " + peasantCommMessage.getPeasantAlias() + " getType=" + peasantCommMessage.getPayload());
 
         StateBDI state = (StateBDI) this.agent.getState();
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
 
         FromWorldMessageType messageType = peasantCommMessage.getMessageType();// .getPayload();
 
-        wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload() + ":🍙🍙🍙");
+        //wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload() + ":🍙🍙🍙");
 
         try {
 
@@ -50,13 +51,14 @@ public class FromWorldGuard extends GuardBESA {
                     break;
                 case CROP_PESTICIDE:
                     believes.getPeasantProfile().setPesticideSeason(true);
-                    wpsReport.info("   🍙🤖   PESTICIDAAAAA  🤖 🍙  ");
+                    //wpsReport.info("   🍙🤖   PESTICIDAAAAA  🤖 🍙  ");
                     break;
                 case NOTIFY_CROP_WATER_STRESS:
-                    believes.getPeasantProfile().setCropHealth(0.5);
+                    believes.getPeasantProfile().setIrrigateSeason(true);
                     break;
                 case CROP_INFORMATION_NOTIFICATION:
-                    wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload());
+                    //believes.getPeasantProfile().setPesticideSeason(true);
+                    //wpsReport.info("🍙🍙🍙: PESTICIDAAAAA");
                     break;
                 case NOTIFY_CROP_READY_HARVEST:
                     believes.getPeasantProfile().setHarverstSeason(true);
@@ -69,8 +71,12 @@ public class FromWorldGuard extends GuardBESA {
                     //believes.getPeasantProfile().setPlantingSeason(true);
                     break;
                 case CROP_HARVEST:
-                    believes.getPeasantProfile().setHarverstSeason(false);
-                    believes.getPeasantProfile().setGrowingSeason(false);
+                    JSONObject cropData = new JSONObject(peasantCommMessage.getPayload());
+                    believes.getPeasantProfile().setHarvestedWeight(
+                            Double.parseDouble(
+                                    cropData.get("aboveGroundBiomass").toString()
+                            )
+                    );
                     break;
                 default:
                     // Código a ejecutar si messageType no coincide con ninguno de los casos anteriores

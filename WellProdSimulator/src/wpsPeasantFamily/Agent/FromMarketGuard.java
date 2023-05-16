@@ -36,12 +36,11 @@ public class FromMarketGuard extends GuardBESA {
         FromMarketMessage fromMarketMessage = (FromMarketMessage) event.getData();
         StateBDI state = (StateBDI) this.agent.getState();
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
-
+        
         FromMarketMessageType fromMarketMessageType = fromMarketMessage.getMessageType();
         int discount = 0;
-
+        
         try {
-
             switch (fromMarketMessageType) {
                 case PRICE_LIST:
                     believes.getPeasantProfile().setPriceList(
@@ -52,46 +51,46 @@ public class FromMarketGuard extends GuardBESA {
                     believes.getPeasantProfile().setSeeds(
                             fromMarketMessage.getQuantity()
                     );
-                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("Seeds").getCost();
+                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("seeds").getCost();
                     break;
                 case WATER:
                     believes.getPeasantProfile().setWaterAvailable(
                             fromMarketMessage.getQuantity()
                     );
-                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("Water").getCost();
+                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("water").getCost();
                     break;
                 case PESTICIDES:
                     believes.getPeasantProfile().setPesticidesAvailable(
                             fromMarketMessage.getQuantity()
                     );
-                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("Pesticides").getCost();
+                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("pesticides").getCost();
                     break;
                 case SUPPLIES:
                     believes.getPeasantProfile().setSupplies(
                             fromMarketMessage.getQuantity()
                     );
-                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("Supplies").getCost();
+                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("supplies").getCost();
                     break;
                 case TOOLS:
                     believes.getPeasantProfile().setTools(
                             fromMarketMessage.getQuantity()
                     );
-                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("Tools").getCost();
+                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("tools").getCost();
                     break;
                 case LIVESTOCK:
                     believes.getPeasantProfile().setLivestockNumber(
                             fromMarketMessage.getQuantity()
                     );
-                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("Livestock").getCost();
+                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("livestock").getCost();
                     break;
             }
-
+            
             believes.getPeasantProfile().useMoney(discount);
-
+            
         } catch (IllegalArgumentException e) {
             wpsReport.error("Mensaje no reconocido de FromWorldMessageType");
         }
-
+        
     }
-
+    
 }

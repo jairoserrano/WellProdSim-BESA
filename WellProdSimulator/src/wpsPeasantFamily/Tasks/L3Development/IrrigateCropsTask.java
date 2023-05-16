@@ -18,16 +18,14 @@ import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import wpsWorld.Agent.WorldGuard;
-import wpsWorld.Messages.WorldMessage;
-import static wpsWorld.Messages.WorldMessageType.CROP_IRRIGATION;
-import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsActivator.wpsStart;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
+import wpsWorld.Agent.WorldGuard;
+import wpsWorld.Messages.WorldMessage;
+import static wpsWorld.Messages.WorldMessageType.CROP_IRRIGATION;
 
 /**
  *
@@ -53,8 +51,9 @@ public class IrrigateCropsTask extends Task {
     public void executeTask(Believes parameters) {
         ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        // @TODO: Cambiar a la venta real con el agente social market
-        //
+        believes.getPeasantProfile().setIrrigateSeason(false);
+        believes.getPeasantProfile().useWater(50);
+        believes.getPeasantProfile().useTime(TimeConsumedBy.IrrigateCrops);
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
@@ -64,22 +63,15 @@ public class IrrigateCropsTask extends Task {
             WorldMessage worldMessage;
             worldMessage = new WorldMessage(
                     CROP_IRRIGATION,
-                    "rice_1",
+                    believes.getPeasantProfile().getCurrentCropName(),
                     believes.getPeasantProfile().getInternalCurrentDate(),
                     believes.getPeasantProfile().getProfileName());
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
                     worldMessage);
             ah.sendEvent(ev);
-            wpsCurrentDate.getInstance().setCurrentDate(
-                    believes.getPeasantProfile().getInternalCurrentDate());
-
-            wpsReport.debug("!----> Actual "
-                    + wpsCurrentDate.getInstance().getCurrentDate());
-
-            believes.getPeasantProfile().setHarverstSeason(true);
-            believes.getPeasantProfile().useTime(TimeConsumedBy.IrrigateCrops);
-            this.setFinished(true);
+            
+            this.setTaskWaitingForExecution();
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);

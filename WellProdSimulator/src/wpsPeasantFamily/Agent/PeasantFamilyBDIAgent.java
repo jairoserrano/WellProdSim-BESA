@@ -49,7 +49,7 @@ import java.util.List;
 import rational.guards.InformationFlowGuard;
 import wpsPeasantFamily.Goals.L1Survival.DoVitalsGoal;
 import wpsPeasantFamily.Goals.L1Survival.SelfEvaluationGoal;
-import wpsPeasantFamily.Goals.L3Development.SellCropsGoal;
+import wpsPeasantFamily.Goals.L3Development.SellCropGoal;
 import wpsPeasantFamily.Goals.L3Development.SellProductsGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.GetPriceListGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainLivestockGoal;
@@ -119,7 +119,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         goals.add(PlantCropGoal.buildGoal());
         goals.add(PrepareLandGoal.buildGoal());
         goals.add(ProcessProductsGoal.buildGoal());
-        goals.add(SellCropsGoal.buildGoal());
+        goals.add(SellCropGoal.buildGoal());
         goals.add(SellProductsGoal.buildGoal());
 
         //Level 4 Goals: Skills And Resources

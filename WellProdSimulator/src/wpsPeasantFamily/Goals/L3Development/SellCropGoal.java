@@ -23,32 +23,33 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Tasks.L3Development.SellCropsTask;
+import wpsPeasantFamily.Tasks.L3Development.SellCropTask;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
  * @author jairo
  */
-public class SellCropsGoal extends GoalBDI {
+public class SellCropGoal extends GoalBDI {
 
     /**
      *
      * @return
      */
-    public static SellCropsGoal buildGoal() {
-        SellCropsTask sellCropsTask = new SellCropsTask();
-        Plan sellCropsPlan = new Plan();
-        sellCropsPlan.addTask(sellCropsTask);
+    public static SellCropGoal buildGoal() {
+        SellCropTask sellCropTask = new SellCropTask();
+        Plan sellCropPlan = new Plan();
+        sellCropPlan.addTask(sellCropTask);
         RationalRole sellCropsRole = new RationalRole(
-                "sellCropsTask",
-                sellCropsPlan);
-        SellCropsGoal sellCropsGoal = new SellCropsGoal(
+                "sellCropTask",
+                sellCropPlan);
+        SellCropGoal sellCropGoal = new SellCropGoal(
                 wpsStart.getPlanID(),
                 sellCropsRole,
-                "sellCropsTask",
+                "sellCropTask",
                 GoalBDITypes.DEVELOPMENT);
-        return sellCropsGoal;
+        return sellCropGoal;
     }
 
     /**
@@ -58,7 +59,7 @@ public class SellCropsGoal extends GoalBDI {
      * @param description
      * @param type
      */
-    public SellCropsGoal(long id, RationalRole role, String description, GoalBDITypes type) {
+    public SellCropGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
         //wpsReport.info("");
     }
@@ -71,8 +72,8 @@ public class SellCropsGoal extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        wpsReport.debug("Tools: " + believes.getPeasantProfile().getTools());
         if (believes.getPeasantProfile().getTools() > 0) {
             return 1;
         } else {
@@ -89,8 +90,9 @@ public class SellCropsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("getHarvestedWeight=" + believes.getPeasantProfile().getHarvestedWeight());
+        //wpsReport.debug(believes.getPeasantProfile());
         if (believes.getPeasantProfile().getHarvestedWeight() > 0) {
+            //wpsReport.info("PROFILE=" + believes.getPeasantProfile());
             return 1;
         } else {
             return 0;
@@ -111,9 +113,9 @@ public class SellCropsGoal extends GoalBDI {
                 && believes.getPeasantProfile().haveTimeAvailable(
                         TimeConsumedBy.SellCrops
                 )) {
-            return 0;
-        } else {
             return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -126,6 +128,7 @@ public class SellCropsGoal extends GoalBDI {
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
+        wpsReport.warn(stateBDI.getMachineBDIParams().getIntention());
         return 1;
     }
 
@@ -152,8 +155,7 @@ public class SellCropsGoal extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setGrowingSeason(true);
         return believes.getPeasantProfile().getHarvestedWeight() == 0;
     }
-
+    
 }

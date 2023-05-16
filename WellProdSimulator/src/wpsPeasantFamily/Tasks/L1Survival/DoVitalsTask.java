@@ -18,10 +18,10 @@ import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import BESA.Log.ReportBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
+import wpsControl.Agent.DateHelper;
 import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
@@ -57,15 +57,20 @@ public class DoVitalsTask extends Task {
         believes.getPeasantProfile().setNewDayFalse();
         // Vitals about
         believes.getPeasantProfile().useTime(TimeConsumedBy.DoVitalsTask);
+        if (DateHelper.differenceDaysBetweenTwoDates(
+                wpsCurrentDate.getInstance().getCurrentDate(),
+                believes.getPeasantProfile().getStartRiceSeason()) == 0) {
+            wpsReport.info("8888888888 COMENZÓ la preparación 888888888");
+            believes.getPeasantProfile().setPreparationSeason(true);
+        }
 
         // dormir 8 horas y 4 horas de alimentación
-        wpsReport.info(
+        /*wpsReport.info(
                 "🔆🔆🔆 "
                 + believes.getPeasantProfile().getProfileName()
                 + " fecha "
                 + wpsCurrentDate.getInstance().getCurrentDate()
-        );
-
+        );*/
         // Vitals about money and food
         if (believes.getPeasantProfile().getMoney()
                 > believes.getPeasantProfile().getPeasantFamilyMinimalVital()) {

@@ -89,8 +89,8 @@ public class IrrigateCropsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("isGrowingSeason=" + believes.getPeasantProfile().isGrowingSeason());
-        if (believes.getPeasantProfile().isGrowingSeason()) {
+        if (believes.getPeasantProfile().isIrrigateSeason()
+                && believes.getPeasantProfile().isGrowingSeason()) {
             return 1;
         } else {
             return 0;
@@ -107,13 +107,13 @@ public class IrrigateCropsGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().isBusy()
+        if (believes.getPeasantProfile().isFree()
                 && believes.getPeasantProfile().haveTimeAvailable(
                         TimeConsumedBy.IrrigateCrops
                 )) {
-            return 0;
-        } else {
             return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -153,11 +153,7 @@ public class IrrigateCropsGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //believes.getPeasantProfile().setGrowingSeason(true);
-        if (believes.getPeasantProfile().getFarmReady() == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
 }

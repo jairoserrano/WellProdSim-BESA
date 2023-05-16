@@ -50,11 +50,13 @@ public class PlantCropTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        wpsReport.info("");
+        wpsReport.info("🍚 sembrando");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setGrowingSeason(true);
         believes.getPeasantProfile().setPreparationSeason(false);
         believes.getPeasantProfile().setPlantingSeason(false);
+        // Comienza la temporada de siembra
+        believes.getPeasantProfile().useTime(TimeConsumedBy.PlantCrops);
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
@@ -67,8 +69,6 @@ public class PlantCropTask extends Task {
                     wpsCurrentDate.getInstance().getCurrentDate(),
                     believes.getPeasantProfile().getProfileName()
             );
-
-            wpsReport.info(worldMessage);
 
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
@@ -83,8 +83,6 @@ public class PlantCropTask extends Task {
                     believes.getPeasantProfile().getPriceList().get("seeds").getCost()
                     * 20
             );
-            // Comienza la temporada de siembra
-            believes.getPeasantProfile().useTime(TimeConsumedBy.PlantCrops);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);

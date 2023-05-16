@@ -51,9 +51,8 @@ public class ObtainWaterTask extends Task {
     @Override
     public void executeTask(Believes parameters) {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("$ Asking for a LOAN to the Bank " + believes.getPeasantProfile().getMoney());
+        believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainWater);
 
-        // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.
         try {
             AdmBESA adm = AdmBESA.getInstance();
             AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasMarketAgent);
@@ -61,14 +60,12 @@ public class ObtainWaterTask extends Task {
             MarketMessage marketMessage = new MarketMessage(
                     BUY_WATER,
                     believes.getPeasantProfile().getProfileName(),
-                    10);
+                    100);
 
             EventBESA ev = new EventBESA(
                     MarketAgentGuard.class.getName(),
                     marketMessage);
             ah.sendEvent(ev);
-
-            believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainWater);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);

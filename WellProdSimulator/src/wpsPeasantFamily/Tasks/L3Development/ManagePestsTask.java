@@ -52,7 +52,8 @@ public class ManagePestsTask extends Task {
     public void executeTask(Believes parameters) {
         ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        // @TODO: Cambiar a la venta real con el agente mundo
+        believes.getPeasantProfile().useTime(TimeConsumedBy.ManagePests);
+        believes.getPeasantProfile().setPesticideSeason(false);
         
         try {
             AdmBESA adm = AdmBESA.getInstance();
@@ -71,8 +72,6 @@ public class ManagePestsTask extends Task {
             ah.sendEvent(ev);
             wpsCurrentDate.getInstance().setCurrentDate(
                     believes.getPeasantProfile().getInternalCurrentDate());
-
-            believes.getPeasantProfile().useTime(TimeConsumedBy.ManagePests);
             this.setTaskWaitingForExecution();
 
         } catch (ExceptionBESA ex) {

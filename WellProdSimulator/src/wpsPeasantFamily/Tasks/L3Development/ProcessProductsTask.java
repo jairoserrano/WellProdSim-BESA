@@ -44,7 +44,7 @@ public class ProcessProductsTask extends Task {
         ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
-        believes.getPeasantProfile().increaseFarmReady();
+        //believes.getPeasantProfile().increaseFarmReady();
         believes.getPeasantProfile().useTime(TimeConsumedBy.ProcessProducts);
         this.setFinished(true);
     }

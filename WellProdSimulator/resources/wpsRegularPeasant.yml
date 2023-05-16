@@ -51,6 +51,8 @@ RegularPeasant:
   processedWeight: 0.0
   processingTime: 1.0
   currentCropName: "rice_1"
+  startRiceSeason: "01/03/2022"
+  endRiceSeason: "30/05/2022"
   riceSeedsByHectare: 20
   #toolsAndSupplies:
   tools: 1.0

@@ -107,13 +107,13 @@ public class HarvestCropsGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().isBusy()
+        if (believes.getPeasantProfile().isFree()
                 && believes.getPeasantProfile().haveTimeAvailable(
                         TimeConsumedBy.HarvestCrops
                 )) {
-            return 0;
-        } else {
             return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -155,7 +155,7 @@ public class HarvestCropsGoal extends GoalBDI {
         //believes.getPeasantProfile().setGrowingSeason(true);
         //return believes.getPeasantProfile()
         // @TODO: Fix cierre de temporada 
-        return false;
+        return true;
     }
 
 }

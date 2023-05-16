@@ -25,10 +25,8 @@ import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsActivator.wpsStart;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
-import wpsWorld.Messages.WorldMessageType;
 import static wpsWorld.Messages.WorldMessageType.CROP_OBSERVE;
 
 /**
@@ -56,6 +54,8 @@ public class CheckCropsTask extends Task {
         ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setCropCheckedToday();
+        // @TODO: falta calcular el tiempo necesario para el cultivo
+        believes.getPeasantProfile().useTime(TimeConsumedBy.CheckCrops);
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
@@ -63,21 +63,31 @@ public class CheckCropsTask extends Task {
                     believes.getPeasantProfile().getFarmName());
 
             WorldMessage worldMessage;
-            worldMessage = new WorldMessage(
-                    CROP_OBSERVE,
-                    "rice_1",
-                    wpsCurrentDate.getInstance().getCurrentDate(),
-                    believes.getPeasantProfile().getProfileName());
+
+            if (Math.random() < 0.2) {
+                worldMessage = new WorldMessage(
+                        CROP_INFORMATION,
+                        believes.getPeasantProfile().getCurrentCropName(),
+                        wpsCurrentDate.getInstance().getCurrentDate(),
+                        believes.getPeasantProfile().getProfileName()
+                );
+                wpsReport.debug("enviado CROP_INFORMATION");
+            } else {
+                worldMessage = new WorldMessage(
+                        CROP_OBSERVE,
+                        believes.getPeasantProfile().getCurrentCropName(),
+                        wpsCurrentDate.getInstance().getCurrentDate(),
+                        believes.getPeasantProfile().getProfileName()
+                );
+                wpsReport.debug("enviado CROP_OBSERVE");
+            }
+
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
                     worldMessage);
             ah.sendEvent(ev);
 
-            wpsReport.debug("🗓️🗓️🗓️ Date: " + wpsCurrentDate.getInstance().getCurrentDate());
-
-            //believes.getPeasantProfile().setHarverstSeason(true);
-            // @TODO: falta calcular el tiempo necesario para el cultivo
-            believes.getPeasantProfile().useTime(TimeConsumedBy.CheckCrops);
+            //wpsReport.debug("🗓️🗓️🗓️ Date: " + wpsCurrentDate.getInstance().getCurrentDate());
             //this.setFinished(true);
             this.setTaskWaitingForExecution();
 

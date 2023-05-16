@@ -185,7 +185,6 @@ public class LookForALandTask extends Task {
 
         // @TODO: setPlantingSeason lo cambia el reloj global
         believes.getPeasantProfile().useTime(TimeConsumedBy.LookForALand);
-
         // Set default values of peasant and world
         wpsConfig config = wpsConfig.getInstance();
         // Set world perturbation
@@ -198,13 +197,11 @@ public class LookForALandTask extends Task {
                     believes.getPeasantProfile().getFarmName(),
                     believes.getPeasantProfile().getCropSize()
             );
-            //wpsReport.info("Inicializando Mundo");
             initialWorldStateInitialization(
                     worldAgent,
                     believes.getPeasantProfile().getProfileName()
             );
 
-            //wpsReport.info("Configurado Mundo Simple para " + believes.getPeasantProfile().getProfileName());
             worldAgent.start();
 
         } catch (Exception ex) {
@@ -212,7 +209,6 @@ public class LookForALandTask extends Task {
         }
 
         believes.getPeasantProfile().setFarm(true);
-        believes.getPeasantProfile().setPreparationSeason(true);
         wpsReport.info("🥬 La familia campesina ya tiene tierra.");
         this.setFinished(true);
 

@@ -90,7 +90,7 @@ public class ObtainWaterGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("PlantingSeason=" + believes.getPeasantProfile().isPlantingSeason());
-        if (believes.getPeasantProfile().getSupplies() < 1) {
+        if (believes.getPeasantProfile().getWaterAvailable()<= 0) {
             return 1;
         } else {
             return 0;
@@ -152,7 +152,7 @@ public class ObtainWaterGoal extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().getSupplies() == 1;
+        return believes.getPeasantProfile().getWaterAvailable() > 0;
     }
 
 }

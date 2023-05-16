@@ -60,34 +60,40 @@ public class MarketAgentGuard extends GuardBESA {
             } else {
                 switch (messageType) {
                     case BUY_SEEDS:
-                        if (state.getResources().get("Seeds").isAvailable(quantity)){
-                            state.getResources().get("Seeds").discountQuantity(quantity);
+                        if (state.getResources().get("seeds").isAvailable(quantity)){
+                            state.getResources().get("seeds").discountQuantity(quantity);
                         }
+                        fromMarketMessageType = FromMarketMessageType.SEEDS;
                         break;
                     case BUY_WATER:
-                        if (state.getResources().get("Water").isAvailable(quantity)){
-                            state.getResources().get("Water").discountQuantity(quantity);
+                        if (state.getResources().get("water").isAvailable(quantity)){
+                            state.getResources().get("water").discountQuantity(quantity);
                         }
+                        fromMarketMessageType = FromMarketMessageType.WATER;
                         break;
                     case BUY_PESTICIDES:
-                        if (state.getResources().get("Pesticides").isAvailable(quantity)){
-                            state.getResources().get("Pesticides").discountQuantity(quantity);
+                        if (state.getResources().get("pesticides").isAvailable(quantity)){
+                            state.getResources().get("pesticides").discountQuantity(quantity);
                         }
+                        fromMarketMessageType = FromMarketMessageType.PESTICIDES;
                         break;
                     case BUY_SUPPLIES:
-                        if (state.getResources().get("Supplies").isAvailable(quantity)){
-                            state.getResources().get("Supplies").discountQuantity(quantity);
+                        if (state.getResources().get("supplies").isAvailable(quantity)){
+                            state.getResources().get("supplies").discountQuantity(quantity);
                         }
+                        fromMarketMessageType = FromMarketMessageType.SUPPLIES;
                         break;
                     case BUY_TOOLS:
-                        if (state.getResources().get("Tools").isAvailable(quantity)){
-                            state.getResources().get("Tools").discountQuantity(quantity);
+                        if (state.getResources().get("tools").isAvailable(quantity)){
+                            state.getResources().get("tools").discountQuantity(quantity);
                         }
+                        fromMarketMessageType = FromMarketMessageType.TOOLS;
                         break;
                     case BUY_LIVESTOCK:
-                        if (state.getResources().get("Livestock").isAvailable(quantity)){
-                            state.getResources().get("Livestock").discountQuantity(quantity);
+                        if (state.getResources().get("livestock").isAvailable(quantity)){
+                            state.getResources().get("livestock").discountQuantity(quantity);
                         }
+                        fromMarketMessageType = FromMarketMessageType.LIVESTOCK;
                         break;
                 }
                 fromMarketMessage = new FromMarketMessage(
