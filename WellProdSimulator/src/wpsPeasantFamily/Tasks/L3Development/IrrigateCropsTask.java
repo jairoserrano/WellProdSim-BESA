@@ -49,7 +49,7 @@ public class IrrigateCropsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setIrrigateSeason(false);
         believes.getPeasantProfile().useWater(50);
@@ -71,11 +71,13 @@ public class IrrigateCropsTask extends Task {
                     worldMessage);
             ah.sendEvent(ev);
             
-            this.setTaskWaitingForExecution();
+            //this.setTaskWaitingForExecution();
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
+        
+        this.setFinished();
     }
 
     /**
@@ -89,11 +91,11 @@ public class IrrigateCropsTask extends Task {
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
+    public void setFinished() {
         ////wpsReport.info("");
-        this.finished = finished;
+        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -103,7 +105,7 @@ public class IrrigateCropsTask extends Task {
     @Override
     public void interruptTask(Believes parameters) {
         ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -113,7 +115,7 @@ public class IrrigateCropsTask extends Task {
     @Override
     public void cancelTask(Believes parameters) {
         ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**

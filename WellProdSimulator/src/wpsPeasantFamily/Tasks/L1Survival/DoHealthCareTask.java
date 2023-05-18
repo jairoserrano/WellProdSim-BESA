@@ -14,10 +14,15 @@
  */
 package wpsPeasantFamily.Tasks.L1Survival;
 
+import BESA.ExceptionBESA;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import rational.mapping.Believes;
 import rational.mapping.Task;
+import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -41,10 +46,18 @@ public class DoHealthCareTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().useTime(TimeConsumedBy.DoHealthCare);
-        believes.getPeasantProfile().increaseHealth();
+        //believes.getPeasantProfile().increaseHealth();
+        wpsReport.info("⚙️⚙️⚙️ MURIÓ ⚙️⚙️⚙️");
+        
+        try {
+            wpsStart.stopSimulation();
+            System.exit(1);
+        } catch (ExceptionBESA ex) {
+            Logger.getLogger(DoHealthCareTask.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setFinished(true);
     }
 

@@ -14,10 +14,18 @@
  */
 package wpsPeasantFamily.Tasks.L3Development;
 
+import BESA.ExceptionBESA;
+import BESA.Kernel.Agent.Event.EventBESA;
+import BESA.Kernel.System.AdmBESA;
+import BESA.Kernel.System.Directory.AgHandlerBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
+import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsSocietyMarket.MarketAgentGuard;
+import wpsSocietyMarket.MarketMessage;
+import static wpsSocietyMarket.MarketMessageType.SELL_CROP;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -41,12 +49,33 @@ public class SellCropTask extends Task {
      * @param parameters
      */
     @Override
-    public void executeTask(Believes parameters) {
-        wpsReport.info("VENDIENDOOOOOOOO ");
+    public synchronized void executeTask(Believes parameters) {
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
         believes.getPeasantProfile().useTime(TimeConsumedBy.SellCrops);
-        this.setTaskWaitingForExecution();
+        
+        try {
+            AdmBESA adm = AdmBESA.getInstance();
+            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasMarketAgent);
+
+            MarketMessage marketMessage = new MarketMessage(
+                    SELL_CROP,
+                    believes.getPeasantProfile().getProfileName(),
+                    believes.getPeasantProfile().getHarvestedWeight(),
+                    believes.getPeasantProfile().getCurrentCropName()
+            );
+
+            EventBESA ev = new EventBESA(
+                    MarketAgentGuard.class.getName(),
+                    marketMessage);
+            ah.sendEvent(ev);
+
+        } catch (ExceptionBESA ex) {
+            wpsReport.error(ex);
+        }
+        this.setFinished();
+        //this.setTaskWaitingForExecution();
     }
 
     /**
@@ -60,11 +89,10 @@ public class SellCropTask extends Task {
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
-        ////wpsReport.info("");
-        this.finished = finished;
+    public void setFinished() {
+        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -74,7 +102,7 @@ public class SellCropTask extends Task {
     @Override
     public void interruptTask(Believes parameters) {
         ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -84,7 +112,7 @@ public class SellCropTask extends Task {
     @Override
     public void cancelTask(Believes parameters) {
         ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**

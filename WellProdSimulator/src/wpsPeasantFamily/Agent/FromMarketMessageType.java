@@ -51,6 +51,11 @@ public enum FromMarketMessageType {
     /**
      * 
      */
-    LIVESTOCK
+    LIVESTOCK,
+    
+    /**
+     * 
+     */
+    SOLD_CROP
     
 }

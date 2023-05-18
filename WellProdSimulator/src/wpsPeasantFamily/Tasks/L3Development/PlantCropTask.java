@@ -50,12 +50,11 @@ public class PlantCropTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        wpsReport.info("🍚 sembrando");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setGrowingSeason(true);
         believes.getPeasantProfile().setPreparationSeason(false);
         believes.getPeasantProfile().setPlantingSeason(false);
-        // Comienza la temporada de siembra
         believes.getPeasantProfile().useTime(TimeConsumedBy.PlantCrops);
 
         try {
@@ -87,7 +86,8 @@ public class PlantCropTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-        this.setTaskWaitingForExecution();
+        this.setFinished();
+        //this.setTaskWaitingForExecution();
     }
 
     /**
@@ -95,17 +95,16 @@ public class PlantCropTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////wpsReport.info("");
         return finished;
     }
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
+    public void setFinished() {
         ////wpsReport.info("");
-        this.finished = finished;
+        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -115,7 +114,7 @@ public class PlantCropTask extends Task {
     @Override
     public void interruptTask(Believes parameters) {
         ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -125,7 +124,7 @@ public class PlantCropTask extends Task {
     @Override
     public void cancelTask(Believes parameters) {
         ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**

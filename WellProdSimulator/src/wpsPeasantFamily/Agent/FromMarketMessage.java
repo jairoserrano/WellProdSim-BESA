@@ -25,10 +25,11 @@ import wpsPeasantFamily.Utils.FarmingResource;
  */
 public class FromMarketMessage extends DataBESA {
 
-    private Integer quantity;
+    private int quantity;
     private FromMarketMessageType fromMarketMessageType;
+    private int value;
+    private String cropName;
     private Map<String, FarmingResource> priceList = new HashMap<>();
-
 
     /**
      *
@@ -40,7 +41,7 @@ public class FromMarketMessage extends DataBESA {
         this.fromMarketMessageType = fromMarketMessageType;
     }
 
-        /**
+    /**
      *
      * @param fromMarketMessageType
      * @param priceList
@@ -49,7 +50,20 @@ public class FromMarketMessage extends DataBESA {
         this.priceList = priceList;
         this.fromMarketMessageType = fromMarketMessageType;
     }
-    
+
+    /**
+     *
+     * @param fromMarketMessageType
+     * @param quantity
+     * @param value
+     */
+    public FromMarketMessage(FromMarketMessageType fromMarketMessageType, String cropName, int quantity, int value) {
+        this.value = value;
+        this.quantity = quantity;
+        this.cropName = cropName;
+        this.fromMarketMessageType = fromMarketMessageType;
+    }
+
     /**
      *
      * @param quantity
@@ -57,9 +71,11 @@ public class FromMarketMessage extends DataBESA {
     public FromMarketMessage(Integer quantity) {
         this.quantity = quantity;
     }
+
     public Map<String, FarmingResource> getPriceList() {
         return priceList;
     }
+
     public void setPriceList(Map<String, FarmingResource> priceList) {
         this.priceList = priceList;
     }
@@ -78,6 +94,38 @@ public class FromMarketMessage extends DataBESA {
      */
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getValue() {
+        return value;
+    }
+
+    /**
+     *
+     * @param value
+     */
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getCropName() {
+        return cropName;
+    }
+
+    /**
+     *
+     * @param cropName
+     */
+    public void setCropName(String cropName) {
+        this.cropName = cropName;
     }
 
     /**

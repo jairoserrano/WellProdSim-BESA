@@ -51,6 +51,7 @@ public class ObtainLivestockTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("$ Asking for a LOAN to the Bank " + believes.getPeasantProfile().getMoney());
 
@@ -74,7 +75,8 @@ public class ObtainLivestockTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-        this.setTaskWaitingForExecution();
+        //this.setTaskWaitingForExecution();
+        this.setFinished();
     }
 
     /**
@@ -82,17 +84,14 @@ public class ObtainLivestockTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////wpsReport.info("");
         return finished;
     }
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
-        ////wpsReport.info("");
-        this.finished = finished;
+    public void setFinished() {
+        this.finished = true;
     }
 
     /**
@@ -101,8 +100,7 @@ public class ObtainLivestockTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -111,8 +109,7 @@ public class ObtainLivestockTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -120,7 +117,6 @@ public class ObtainLivestockTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////wpsReport.info("");
         return finished;
     }
 
@@ -131,7 +127,6 @@ public class ObtainLivestockTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////wpsReport.info("");
         return isExecuted();
     }
 }

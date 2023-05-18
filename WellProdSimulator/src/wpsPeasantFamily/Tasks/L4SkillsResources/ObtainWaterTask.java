@@ -49,7 +49,8 @@ public class ObtainWaterTask extends Task {
      * @param parameters
      */
     @Override
-    public void executeTask(Believes parameters) {
+    public synchronized void executeTask(Believes parameters) {
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainWater);
 
@@ -60,7 +61,8 @@ public class ObtainWaterTask extends Task {
             MarketMessage marketMessage = new MarketMessage(
                     BUY_WATER,
                     believes.getPeasantProfile().getProfileName(),
-                    100);
+                    100
+            );
 
             EventBESA ev = new EventBESA(
                     MarketAgentGuard.class.getName(),
@@ -70,7 +72,8 @@ public class ObtainWaterTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-        this.setTaskWaitingForExecution();
+        this.setFinished();
+        //this.setTaskWaitingForExecution();
 
     }
 
@@ -85,11 +88,11 @@ public class ObtainWaterTask extends Task {
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
+    public void setFinished() {
         ////wpsReport.info("");
-        this.finished = finished;
+        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -98,8 +101,7 @@ public class ObtainWaterTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -108,8 +110,7 @@ public class ObtainWaterTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -117,7 +118,6 @@ public class ObtainWaterTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////wpsReport.info("");
         return finished;
     }
 

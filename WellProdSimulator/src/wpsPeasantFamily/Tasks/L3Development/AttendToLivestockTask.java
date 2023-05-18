@@ -17,6 +17,7 @@ package wpsPeasantFamily.Tasks.L3Development;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -40,12 +41,12 @@ public class AttendToLivestockTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         /*believes.getPeasantProfile().increaseHealth();
         believes.getPeasantProfile().increaseLeisureOptions();
         believes.getPeasantProfile().useFamilyTimeAvailability();*/
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -59,11 +60,11 @@ public class AttendToLivestockTask extends Task {
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
+    public void setFinished() {
         //wpsReport.info("");
-        this.finished = finished;
+        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -73,7 +74,7 @@ public class AttendToLivestockTask extends Task {
     @Override
     public void interruptTask(Believes parameters) {
         //wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -83,7 +84,7 @@ public class AttendToLivestockTask extends Task {
     @Override
     public void cancelTask(Believes parameters) {
         //wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**

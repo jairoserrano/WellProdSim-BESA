@@ -51,5 +51,11 @@ public enum MarketMessageType {
     /**
      * 
      */
-    BUY_LIVESTOCK
+    BUY_LIVESTOCK,
+    
+    /**
+     * 
+     */
+    SELL_CROP
+    
 }

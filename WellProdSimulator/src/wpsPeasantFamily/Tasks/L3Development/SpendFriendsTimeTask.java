@@ -18,6 +18,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -41,13 +42,11 @@ public class SpendFriendsTimeTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        /*believes.getPeasantProfile().increaseHealth();
-        believes.getPeasantProfile().increaseLeisureOptions();
-        believes.getPeasantProfile().useFamilyTimeAvailability();*/
         believes.getPeasantProfile().useTime(TimeConsumedBy.SpendFriendsTime);
         this.setFinished(true);
+        this.setTaskFinalized();
     }
 
     /**

@@ -50,7 +50,7 @@ public class ManagePestsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().useTime(TimeConsumedBy.ManagePests);
         believes.getPeasantProfile().setPesticideSeason(false);
@@ -72,11 +72,12 @@ public class ManagePestsTask extends Task {
             ah.sendEvent(ev);
             wpsCurrentDate.getInstance().setCurrentDate(
                     believes.getPeasantProfile().getInternalCurrentDate());
-            this.setTaskWaitingForExecution();
+            //this.setTaskWaitingForExecution();
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
+        this.setFinished();
     }
 
     /**
@@ -90,11 +91,11 @@ public class ManagePestsTask extends Task {
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
+    public void setFinished() {
         ////wpsReport.info("");
-        this.finished = finished;
+        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -104,7 +105,7 @@ public class ManagePestsTask extends Task {
     @Override
     public void interruptTask(Believes parameters) {
         ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -114,7 +115,7 @@ public class ManagePestsTask extends Task {
     @Override
     public void cancelTask(Believes parameters) {
         ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**

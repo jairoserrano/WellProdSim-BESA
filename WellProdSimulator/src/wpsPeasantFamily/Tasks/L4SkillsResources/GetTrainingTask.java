@@ -18,6 +18,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -41,12 +42,12 @@ public class GetTrainingTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
         believes.getPeasantProfile().increaseTrainingLevel();
         believes.getPeasantProfile().useTime(TimeConsumedBy.GetTraining);
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -54,17 +55,15 @@ public class GetTrainingTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////wpsReport.info("");
         return finished;
     }
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
-        ////wpsReport.info("");
-        this.finished = finished;
+    public void setFinished() {
+        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -73,8 +72,7 @@ public class GetTrainingTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -83,8 +81,7 @@ public class GetTrainingTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -92,7 +89,6 @@ public class GetTrainingTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////wpsReport.info("");
         return finished;
     }
 
@@ -103,7 +99,6 @@ public class GetTrainingTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////wpsReport.info("");
         return isExecuted();
     }
 }

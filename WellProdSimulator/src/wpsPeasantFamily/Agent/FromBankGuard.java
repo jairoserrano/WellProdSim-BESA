@@ -52,6 +52,7 @@ public class FromBankGuard extends GuardBESA {
                     break;
                 case DENIED_FORMAL_LOAN:
                     // @TODO: Pedir prestado en otro lado? cancelar?
+                    believes.getPeasantProfile().setFormalLoanSeason(false);
                     believes.getPeasantProfile().setInformalLoanSeason(true);
                     break;
                 case TERM_TO_PAY:

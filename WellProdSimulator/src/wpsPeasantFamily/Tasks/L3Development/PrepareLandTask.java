@@ -42,11 +42,12 @@ public class PrepareLandTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setPlantingSeason(true);
         believes.getPeasantProfile().useTime(TimeConsumedBy.PrepareLand);
-        this.setTaskWaitingForExecution();
+        //this.setTaskWaitingForExecution();
+        this.setFinished();
     }
 
     /**
@@ -60,11 +61,10 @@ public class PrepareLandTask extends Task {
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
-        ////wpsReport.info("");
-        this.finished = finished;
+    public void setFinished() {
+        this.setTaskFinalized();
+        this.finished = true;
     }
 
     /**
@@ -74,7 +74,7 @@ public class PrepareLandTask extends Task {
     @Override
     public void interruptTask(Believes parameters) {
         ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -84,7 +84,7 @@ public class PrepareLandTask extends Task {
     @Override
     public void cancelTask(Believes parameters) {
         ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**

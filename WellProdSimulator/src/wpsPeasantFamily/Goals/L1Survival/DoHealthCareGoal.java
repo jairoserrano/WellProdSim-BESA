@@ -24,8 +24,6 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
-import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -73,7 +71,7 @@ public class DoHealthCareGoal extends GoalBDI {
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        wpsReport.info("getHealthProgramsAvailability=" + believes.getPeasantProfile().getHealthProgramsAvailability());
+        //wpsReport.info("getHealthProgramsAvailability=" + believes.getPeasantProfile().getHealthProgramsAvailability());
         if (believes.getPeasantProfile().getHealthProgramsAvailability() > 0) {
             return 1;
         } else {
@@ -91,7 +89,7 @@ public class DoHealthCareGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("getHealth=" + believes.getPeasantProfile().getHealth());
-        if (believes.getPeasantProfile().getHealth() < 1) {
+        if (believes.getPeasantProfile().getHealth() ==0 ) {
             return 1;
         } else {
             return 0;
@@ -108,11 +106,12 @@ public class DoHealthCareGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.DoHealthCare)) {
+        /*if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.DoHealthCare)) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
+        return 1;
     }
 
     /**
@@ -137,7 +136,8 @@ public class DoHealthCareGoal extends GoalBDI {
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
         //wpsReport.info(stateBDI.getMachineBDIParams().getPyramidGoals());
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
-        return believes.getPeasantProfile().getHealth() > 0;
+        return true;
+        //return believes.getPeasantProfile().getHealth() > 0;
     }
 
     /**
@@ -150,7 +150,7 @@ public class DoHealthCareGoal extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("getHealth=" + believes.getPeasantProfile().getHealth());
-        return believes.getPeasantProfile().getHealth() == 1;
+        return believes.getPeasantProfile().getHealth() == 100 || believes.getPeasantProfile().getHealth() <= 0;
     }
 
 }

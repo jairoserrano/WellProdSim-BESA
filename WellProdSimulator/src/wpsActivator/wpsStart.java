@@ -38,9 +38,9 @@ public class wpsStart {
 
     private static int PLANID = 0;
     final private static double PASSWD = 0.91;
-    final private static int BEAT = 10;
+    final private static int BEAT = 100;
     // Tiempo simulado 1 minuto, más o menos 1 año con un beat de 10
-    final private static int RTSIM = 6;
+    final private static int RTSIM = 5;
 
     /**
      *

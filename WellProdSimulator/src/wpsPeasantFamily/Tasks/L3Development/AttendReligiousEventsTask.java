@@ -18,6 +18,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -41,12 +42,12 @@ public class AttendReligiousEventsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().useTime(
                 TimeConsumedBy.AttendReligiousEvents
         );
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -60,11 +61,10 @@ public class AttendReligiousEventsTask extends Task {
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
-        //wpsReport.info("");
-        this.finished = finished;
+    public void setFinished() {
+        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -73,8 +73,7 @@ public class AttendReligiousEventsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        //wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -83,8 +82,7 @@ public class AttendReligiousEventsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        //wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -92,7 +90,6 @@ public class AttendReligiousEventsTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        //wpsReport.info("");
         return finished;
     }
 
@@ -103,7 +100,6 @@ public class AttendReligiousEventsTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        //wpsReport.info("");
         return isExecuted();
     }
 }

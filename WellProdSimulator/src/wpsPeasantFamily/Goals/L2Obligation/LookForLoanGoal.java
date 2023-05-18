@@ -150,8 +150,7 @@ public class LookForLoanGoal extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().getHarvestedWeight() == 0
-                && believes.getPeasantProfile().getProcessedWeight() == 0;
+        return !believes.getPeasantProfile().isFormalLoanNeeded();
     }
 
 }

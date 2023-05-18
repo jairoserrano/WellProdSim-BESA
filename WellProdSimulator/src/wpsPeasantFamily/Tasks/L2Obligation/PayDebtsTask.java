@@ -49,7 +49,7 @@ public class PayDebtsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
 
         try {
@@ -69,8 +69,8 @@ public class PayDebtsTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-
-        this.setFinished(true);
+        this.setFinished();
+        this.setTaskFinalized();
     }
 
     /**
@@ -84,11 +84,9 @@ public class PayDebtsTask extends Task {
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
-        //wpsReport.info("");
-        this.finished = finished;
+    public void setFinished() {
+        this.finished = true;
     }
 
     /**
@@ -97,8 +95,7 @@ public class PayDebtsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        //wpsReport.info("");
-        this.setFinished(true);
+        this.setTaskFinalized();
     }
 
     /**
@@ -107,8 +104,7 @@ public class PayDebtsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        //wpsReport.info("");
-        this.setFinished(true);
+        this.setTaskFinalized();
     }
 
     /**
@@ -116,7 +112,6 @@ public class PayDebtsTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        //wpsReport.info("");
         return finished;
     }
 

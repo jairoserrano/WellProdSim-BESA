@@ -51,7 +51,7 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setCropCheckedToday();
         // @TODO: falta calcular el tiempo necesario para el cultivo
@@ -88,8 +88,8 @@ public class CheckCropsTask extends Task {
             ah.sendEvent(ev);
 
             //wpsReport.debug("🗓️🗓️🗓️ Date: " + wpsCurrentDate.getInstance().getCurrentDate());
-            //this.setFinished(true);
-            this.setTaskWaitingForExecution();
+            this.setFinished();
+            //this.setTaskWaitingForExecution();
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
@@ -101,17 +101,15 @@ public class CheckCropsTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////wpsReport.info("");
         return finished;
     }
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
-        ////wpsReport.info("");
-        this.finished = finished;
+    public void setFinished() {
+        this.setTaskFinalized();
+        this.finished = true;
     }
 
     /**
@@ -120,8 +118,7 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -130,8 +127,7 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -139,7 +135,6 @@ public class CheckCropsTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////wpsReport.info("");
         return finished;
     }
 
@@ -150,7 +145,6 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////wpsReport.info("");
         return isExecuted();
     }
 }

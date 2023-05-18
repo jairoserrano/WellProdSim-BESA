@@ -51,6 +51,7 @@ public class ObtainSeedsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("$ Asking for a LOAN to the Bank " + believes.getPeasantProfile().getMoney());
 
@@ -74,7 +75,8 @@ public class ObtainSeedsTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-        this.setTaskWaitingForExecution();
+        this.setFinished();
+        //this.setTaskWaitingForExecution();
     }
 
     /**
@@ -88,11 +90,10 @@ public class ObtainSeedsTask extends Task {
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
-        ////wpsReport.info("");
-        this.finished = finished;
+    public void setFinished() {
+        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -101,8 +102,7 @@ public class ObtainSeedsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -111,8 +111,7 @@ public class ObtainSeedsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**

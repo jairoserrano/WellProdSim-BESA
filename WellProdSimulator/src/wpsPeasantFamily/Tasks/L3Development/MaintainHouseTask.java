@@ -18,6 +18,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -41,13 +42,13 @@ public class MaintainHouseTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
         believes.getPeasantProfile().increaseHouseCondition();
         believes.getPeasantProfile().useTools();
         believes.getPeasantProfile().useTime(TimeConsumedBy.MaintainHouse);
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -61,11 +62,11 @@ public class MaintainHouseTask extends Task {
 
     /**
      *
-     * @param finished
-     */
-    public void setFinished(boolean finished) {
+¡     */
+    public void setFinished() {
         ////wpsReport.info("");
-        this.finished = finished;
+        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -75,7 +76,7 @@ public class MaintainHouseTask extends Task {
     @Override
     public void interruptTask(Believes parameters) {
         ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -85,7 +86,7 @@ public class MaintainHouseTask extends Task {
     @Override
     public void cancelTask(Believes parameters) {
         ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**

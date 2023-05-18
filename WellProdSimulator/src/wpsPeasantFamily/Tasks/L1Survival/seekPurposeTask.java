@@ -17,6 +17,7 @@ package wpsPeasantFamily.Tasks.L1Survival;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -39,30 +40,12 @@ public class SeekPurposeTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setPurpose("farmer");
         believes.getPeasantProfile().setBusy(false);
         believes.getPeasantProfile().makeNewDay();
-        this.setFinished(true);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        ////wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
-     * @param finished
-     */
-    public void setFinished(boolean finished) {
-        ////wpsReport.info("");
-        this.finished = finished;
+        this.setTaskFinalized();
     }
 
     /**
@@ -71,10 +54,7 @@ public class SeekPurposeTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setWorker(false);
-        this.setFinished(true);
+        this.setTaskFinalized();
     }
 
     /**
@@ -83,19 +63,7 @@ public class SeekPurposeTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setWorker(false);
-        this.setFinished(true);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isExecuted() {
-        ////wpsReport.info("");
-        return finished;
+        this.setTaskFinalized();
     }
 
     /**
@@ -105,7 +73,7 @@ public class SeekPurposeTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes parameters) {
-        ////wpsReport.info("");
-        return isExecuted();
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        return !believes.getPeasantProfile().getPurpose().isBlank();
     }
 }

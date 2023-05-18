@@ -39,10 +39,7 @@ public final class wpsConfig {
     private String peasantType = "";
     private String rainfallConditions = "";
     private String perturbation = "";
-    private String startSimulationDate = "15/03/2022";
-    private String mainRiceCropID = "rice_1";
-    private long dayLength = 50;
-    private long checkCropStatusPeriodic = 7;
+    private String startSimulationDate;
     PeasantFamilyProfile regularFarmerProfile;
     PeasantFamilyProfile lazyFarmerProfile;
     PeasantFamilyProfile proactiveFarmerProfile;
@@ -91,54 +88,6 @@ public final class wpsConfig {
      */
     public PeasantFamilyProfile getProactiveFarmerProfile() {
         return proactiveFarmerProfile;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getMainRiceCropID() {
-        return mainRiceCropID;
-    }
-
-    /**
-     *
-     * @param mainRiceCropID
-     */
-    public void setMainRiceCropID(String mainRiceCropID) {
-        this.mainRiceCropID = mainRiceCropID;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public long getDayLength() {
-        return dayLength;
-    }
-
-    /**
-     *
-     * @param dayLength
-     */
-    public void setDayLength(long dayLength) {
-        this.dayLength = dayLength;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public long getCheckCropStatusPeriodic() {
-        return checkCropStatusPeriodic;
-    }
-
-    /**
-     *
-     * @param checkCropStatusPeriodic
-     */
-    public void setCheckCropStatusPeriodic(long checkCropStatusPeriodic) {
-        this.checkCropStatusPeriodic = checkCropStatusPeriodic;
     }
 
     /**
@@ -250,6 +199,13 @@ public final class wpsConfig {
                             "livestock",
                             properties.getProperty("market.livestock.price"),
                             properties.getProperty("market.livestock.quantity")
+                    )
+            );
+            priceList.put("ñame",
+                    new FarmingResource(
+                            "ñame",
+                            properties.getProperty("market.ñame.price"),
+                            properties.getProperty("market.ñame.quantity")
                     )
             );
             fileInputStream.close();

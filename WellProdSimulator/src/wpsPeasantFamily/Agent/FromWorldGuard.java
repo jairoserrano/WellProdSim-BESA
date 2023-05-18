@@ -42,7 +42,6 @@ public class FromWorldGuard extends GuardBESA {
         FromWorldMessageType messageType = peasantCommMessage.getMessageType();// .getPayload();
 
         //wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload() + ":🍙🍙🍙");
-
         try {
 
             switch (messageType) {
@@ -73,7 +72,7 @@ public class FromWorldGuard extends GuardBESA {
                 case CROP_HARVEST:
                     JSONObject cropData = new JSONObject(peasantCommMessage.getPayload());
                     believes.getPeasantProfile().setHarvestedWeight(
-                            Double.parseDouble(
+                            Integer.parseInt(
                                     cropData.get("aboveGroundBiomass").toString()
                             )
                     );
@@ -83,7 +82,7 @@ public class FromWorldGuard extends GuardBESA {
                     break;
             }
         } catch (IllegalArgumentException e) {
-            wpsReport.error("Mensaje no reconocido de FromWorldMessageType");
+            wpsReport.error("Mensaje no reconocido de FromWorldMessageType" + e.getStackTrace());
         }
 
     }

@@ -25,6 +25,7 @@ public class MarketMessage extends DataBESA {
     private String peasantAlias;
     private int quantity;
     private MarketMessageType marketMessageType;
+    private String cropName;
 
     /**
      *
@@ -35,6 +36,32 @@ public class MarketMessage extends DataBESA {
     public MarketMessage(MarketMessageType marketMessageType, String peasantAlias, int quantity) {
         this.peasantAlias = peasantAlias;
         this.quantity = quantity;
+        this.marketMessageType = marketMessageType;
+    }
+
+    /**
+     *
+     * @param marketMessageType
+     * @param peasantAlias
+     * @param quantity
+     * @param cropName
+     */
+    public MarketMessage(MarketMessageType marketMessageType, String peasantAlias, double quantity, String cropName) {
+        this.peasantAlias = peasantAlias;
+        this.quantity = (int) quantity;
+        this.marketMessageType = marketMessageType;
+        this.cropName = cropName;
+    }
+
+    /**
+     *
+     * @param marketMessageType
+     * @param peasantAlias
+     * @param quantity
+     */
+    public MarketMessage(MarketMessageType marketMessageType, String peasantAlias, double quantity) {
+        this.peasantAlias = peasantAlias;
+        this.quantity = (int) quantity;
         this.marketMessageType = marketMessageType;
     }
 
@@ -54,6 +81,14 @@ public class MarketMessage extends DataBESA {
      */
     public MarketMessage(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getCropName() {
+        return cropName;
+    }
+
+    public void setCropName(String cropName) {
+        this.cropName = cropName;
     }
 
     /**

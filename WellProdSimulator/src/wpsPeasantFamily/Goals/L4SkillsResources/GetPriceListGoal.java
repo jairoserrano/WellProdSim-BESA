@@ -25,7 +25,6 @@ import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Tasks.L4SkillsResources.GetPriceListTask;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
-import wpsViewer.Agent.wpsReport;
 
 /**
  *

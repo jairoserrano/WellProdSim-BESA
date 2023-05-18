@@ -66,7 +66,8 @@ public class LookForALandTask extends Task {
     private static WorldState buildWorldState(
             String rainfallFile, 
             String agentAlias,
-            int cropSize) {
+            int cropSize,
+            String cropName) {
         WorldConfiguration worldConfiguration = WorldConfiguration.getPropsInstance();
         ShortWaveRadiationLayer radiationLayer = new ShortWaveRadiationLayer(
                 worldConfiguration.getProperty("data.radiation"),
@@ -93,7 +94,7 @@ public class LookForALandTask extends Task {
                 Soil.SAND,
                 true,
                 diseaseCellRice,
-                "rice_1",
+                cropName,
                 agentAlias));
         cropLayer.bindLayer("radiation", radiationLayer);
         cropLayer.bindLayer("rainfall", rainfallLayer);
@@ -128,8 +129,9 @@ public class LookForALandTask extends Task {
             String rainfallFile, 
             String agentAlias, 
             String aliasWorldAgent,
-            int cropSize) {
-        WorldState worldState = buildWorldState(rainfallFile, agentAlias, cropSize);
+            int cropSize,
+            String cropName) {
+        WorldState worldState = buildWorldState(rainfallFile, agentAlias, cropSize, cropName);
         StructBESA structBESA = new StructBESA();
         structBESA.bindGuard(WorldGuard.class);
         try {
@@ -172,7 +174,7 @@ public class LookForALandTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
 
         // @TODO: setFarmName lo cambia el gobierno o el campesino
@@ -195,7 +197,8 @@ public class LookForALandTask extends Task {
                     getRainfallFile(config.getRainfallConditions()),
                     believes.getPeasantProfile().getProfileName(),
                     believes.getPeasantProfile().getFarmName(),
-                    believes.getPeasantProfile().getCropSize()
+                    believes.getPeasantProfile().getCropSize(),
+                    believes.getPeasantProfile().getCurrentCropName()
             );
             initialWorldStateInitialization(
                     worldAgent,
@@ -210,7 +213,7 @@ public class LookForALandTask extends Task {
 
         believes.getPeasantProfile().setFarm(true);
         wpsReport.info("🥬 La familia campesina ya tiene tierra.");
-        this.setFinished(true);
+        this.setFinished();
 
     }
 
@@ -219,17 +222,15 @@ public class LookForALandTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        //wpsReport.info("");
         return finished;
     }
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
-        //wpsReport.info("");
-        this.finished = finished;
+    public void setFinished() {
+        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -238,7 +239,6 @@ public class LookForALandTask extends Task {
      */
     @Override
     public void interruptTask(Believes believes) {
-        //wpsReport.info("");
         this.finished = true;
     }
 
@@ -248,7 +248,6 @@ public class LookForALandTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        //wpsReport.info("");
         this.finished = true;
     }
 
@@ -257,7 +256,6 @@ public class LookForALandTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        //wpsReport.info("");
         return finished;
     }
 
@@ -268,7 +266,6 @@ public class LookForALandTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        //wpsReport.info("");
         return isExecuted();
     }
 }

@@ -27,7 +27,6 @@ import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Utils.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
-import static wpsWorld.Messages.WorldMessageType.CROP_INFORMATION;
 
 /**
  *
@@ -51,7 +50,7 @@ public class HarvestCropsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().useTime(TimeConsumedBy.HarvestCrops);
         believes.getPeasantProfile().setHarverstSeason(false);
@@ -76,7 +75,8 @@ public class HarvestCropsTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-        this.setTaskWaitingForExecution();
+        //this.setTaskWaitingForExecution();
+        this.setFinished();
     }
 
     /**
@@ -90,11 +90,10 @@ public class HarvestCropsTask extends Task {
 
     /**
      *
-     * @param finished
      */
-    public void setFinished(boolean finished) {
-        ////wpsReport.info("");
-        this.finished = finished;
+    public void setFinished() {
+        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -103,8 +102,7 @@ public class HarvestCropsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**
@@ -113,8 +111,7 @@ public class HarvestCropsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setFinished();
     }
 
     /**

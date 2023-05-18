@@ -50,9 +50,11 @@ public class LookForLoanTask extends Task {
      * @param parameters
      */
     @Override
-    public void executeTask(Believes parameters) {
+    public synchronized void executeTask(Believes parameters) {
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("$ Asking for a LOAN to the Bank " + believes.getPeasantProfile().getMoney());
+        
+        believes.getPeasantProfile().setFormalLoanSeason(false);
         
         // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.
         try {
@@ -70,7 +72,7 @@ public class LookForLoanTask extends Task {
                 bankMessage = new BankMessage(
                         ASK_FOR_FORMAL_LOAN,
                         believes.getPeasantProfile().getProfileName(),
-                        50000);
+                        500000);
                 believes.getPeasantProfile().setFormalLoanSeason(false);
             }
 
@@ -84,26 +86,8 @@ public class LookForLoanTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-        this.setTaskWaitingForExecution();
+        this.setTaskFinalized();
 
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        //wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
-     * @param finished
-     */
-    public void setFinished(boolean finished) {
-        //wpsReport.info("");
-        this.finished = finished;
     }
 
     /**
@@ -112,8 +96,7 @@ public class LookForLoanTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        //wpsReport.info("");
-        this.setFinished(true);
+        this.setTaskFinalized();
     }
 
     /**
@@ -122,17 +105,7 @@ public class LookForLoanTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        //wpsReport.info("");
-        this.setFinished(true);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isExecuted() {
-        //wpsReport.info("");
-        return finished;
+        this.setTaskFinalized();
     }
 
     /**
@@ -142,7 +115,6 @@ public class LookForLoanTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        //wpsReport.info("");
-        return isExecuted();
+        return true;
     }
 }

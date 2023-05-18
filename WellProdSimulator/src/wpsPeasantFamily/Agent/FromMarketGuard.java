@@ -40,8 +40,17 @@ public class FromMarketGuard extends GuardBESA {
         FromMarketMessageType fromMarketMessageType = fromMarketMessage.getMessageType();
         int discount = 0;
         
+        //wpsReport.warn(fromMarketMessage.getMessageType());
+        
         try {
             switch (fromMarketMessageType) {
+                case SOLD_CROP:
+                    believes.getPeasantProfile().setHarvestedWeight(
+                            believes.getPeasantProfile().getHarvestedWeight()
+                             - fromMarketMessage.getQuantity()
+                    );
+                    //wpsReport.info("Vendido");
+                    break;
                 case PRICE_LIST:
                     believes.getPeasantProfile().setPriceList(
                             fromMarketMessage.getPriceList()

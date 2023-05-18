@@ -23,6 +23,7 @@ import wpsPeasantFamily.Agent.FromMarketMessage;
 import wpsPeasantFamily.Agent.FromMarketMessageType;
 import static wpsSocietyMarket.MarketMessageType.ASK_FOR_PRICE_LIST;
 import static wpsSocietyMarket.MarketMessageType.BUY_SEEDS;
+import static wpsSocietyMarket.MarketMessageType.SELL_CROP;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -44,61 +45,54 @@ public class MarketAgentGuard extends GuardBESA {
         int quantity = marketMessage.getQuantity();
 
         try {
-
             AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAlias(
                     marketMessage.getPeasantAlias()
             );
             FromMarketMessageType fromMarketMessageType = null;
             FromMarketMessage fromMarketMessage;
 
-            if (messageType.equals(ASK_FOR_PRICE_LIST)) {
+            if (messageType == ASK_FOR_PRICE_LIST) {
                 fromMarketMessageType = FromMarketMessageType.PRICE_LIST;
                 fromMarketMessage = new FromMarketMessage(
                         fromMarketMessageType,
                         state.getResources()
                 );
-            } else {
-                switch (messageType) {
-                    case BUY_SEEDS:
-                        if (state.getResources().get("seeds").isAvailable(quantity)){
-                            state.getResources().get("seeds").discountQuantity(quantity);
-                        }
-                        fromMarketMessageType = FromMarketMessageType.SEEDS;
-                        break;
-                    case BUY_WATER:
-                        if (state.getResources().get("water").isAvailable(quantity)){
-                            state.getResources().get("water").discountQuantity(quantity);
-                        }
-                        fromMarketMessageType = FromMarketMessageType.WATER;
-                        break;
-                    case BUY_PESTICIDES:
-                        if (state.getResources().get("pesticides").isAvailable(quantity)){
-                            state.getResources().get("pesticides").discountQuantity(quantity);
-                        }
-                        fromMarketMessageType = FromMarketMessageType.PESTICIDES;
-                        break;
-                    case BUY_SUPPLIES:
-                        if (state.getResources().get("supplies").isAvailable(quantity)){
-                            state.getResources().get("supplies").discountQuantity(quantity);
-                        }
-                        fromMarketMessageType = FromMarketMessageType.SUPPLIES;
-                        break;
-                    case BUY_TOOLS:
-                        if (state.getResources().get("tools").isAvailable(quantity)){
-                            state.getResources().get("tools").discountQuantity(quantity);
-                        }
-                        fromMarketMessageType = FromMarketMessageType.TOOLS;
-                        break;
-                    case BUY_LIVESTOCK:
-                        if (state.getResources().get("livestock").isAvailable(quantity)){
-                            state.getResources().get("livestock").discountQuantity(quantity);
-                        }
-                        fromMarketMessageType = FromMarketMessageType.LIVESTOCK;
-                        break;
-                }
+            } else if (messageType == SELL_CROP) {
+                state.getResources().get(marketMessage.getCropName()).setQuantity(
+                        quantity
+                        + marketMessage.getQuantity()
+                );
+                //wpsReport.warn("Comprado");
+                fromMarketMessageType = FromMarketMessageType.SOLD_CROP;
                 fromMarketMessage = new FromMarketMessage(
                         fromMarketMessageType,
-                        quantity);
+                        marketMessage.getCropName(),
+                        quantity,
+                        state.getResources().get(marketMessage.getCropName()).getCost() * quantity
+                );
+            } else {
+                String productType = switch (messageType) {
+                    case BUY_SEEDS ->
+                        "seeds";
+                    case BUY_WATER ->
+                        "water";
+                    case BUY_PESTICIDES ->
+                        "pesticides";
+                    case BUY_SUPPLIES ->
+                        "supplies";
+                    case BUY_TOOLS ->
+                        "tools";
+                    case BUY_LIVESTOCK ->
+                        "livestock";
+                    default ->
+                        throw new IllegalArgumentException("Invalid message type: " + messageType);
+                };
+
+                if (state.getResources().get(productType).isAvailable(quantity)) {
+                    state.getResources().get(productType).discountQuantity(quantity);
+                }
+                fromMarketMessageType = FromMarketMessageType.valueOf(productType.toUpperCase());
+                fromMarketMessage = new FromMarketMessage(fromMarketMessageType, quantity);
             }
 
             EventBESA ev = new EventBESA(

@@ -36,14 +36,10 @@ import wpsViewer.Agent.wpsReport;
  */
 public class DoVitalsTask extends Task {
 
-    private boolean finished;
-
     /**
      *
      */
     public DoVitalsTask() {
-        ////wpsReport.info("");
-        this.finished = false;
     }
 
     /**
@@ -51,32 +47,25 @@ public class DoVitalsTask extends Task {
      * @param parameters
      */
     @Override
-    public void executeTask(Believes parameters) {
-        //wpsReport.info("");
+    public synchronized void executeTask(Believes parameters) {
+        wpsReport.info("⚙️⚙️⚙️");      
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setNewDayFalse();
-        // Vitals about
         believes.getPeasantProfile().useTime(TimeConsumedBy.DoVitalsTask);
+        
         if (DateHelper.differenceDaysBetweenTwoDates(
                 wpsCurrentDate.getInstance().getCurrentDate(),
                 believes.getPeasantProfile().getStartRiceSeason()) == 0) {
-            wpsReport.info("8888888888 COMENZÓ la preparación 888888888");
             believes.getPeasantProfile().setPreparationSeason(true);
         }
 
-        // dormir 8 horas y 4 horas de alimentación
-        /*wpsReport.info(
-                "🔆🔆🔆 "
-                + believes.getPeasantProfile().getProfileName()
-                + " fecha "
-                + wpsCurrentDate.getInstance().getCurrentDate()
-        );*/
         // Vitals about money and food
         if (believes.getPeasantProfile().getMoney()
-                > believes.getPeasantProfile().getPeasantFamilyMinimalVital()) {
+                >= believes.getPeasantProfile().getPeasantFamilyMinimalVital()) {
             believes.getPeasantProfile().discountDailyMoney();
         } else {
             believes.getPeasantProfile().setFormalLoanSeason(true);
+            believes.getPeasantProfile().decreaseHealth();
         }
 
         // Check for the loan pay amount only on first day of month
@@ -99,28 +88,12 @@ public class DoVitalsTask extends Task {
                 wpsReport.error(ex);
             }
         }
-        //this.setFinished(true);
-        this.setTaskWaitingForExecution();
+        wpsReport.debug(believes.getPeasantProfile());
+        //this.setTaskWaitingForExecution();
+        this.setTaskFinalized();
     }
 
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        ////wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
-     * @param finished
-     */
-    public void setFinished(boolean finished) {
-        //wpsReport.info("");
-        this.finished = finished;
-    }
-
+  
     /**
      *
      * @param parameters
@@ -128,7 +101,7 @@ public class DoVitalsTask extends Task {
     @Override
     public void interruptTask(Believes parameters) {
         //wpsReport.info("");
-        this.setFinished(true);
+        this.setTaskFinalized();
     }
 
     /**
@@ -137,27 +110,18 @@ public class DoVitalsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
+        this.setTaskFinalized();
     }
 
     /**
      *
-     * @return
-     */
-    public boolean isExecuted() {
-        ////wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
-     * @param believes
+     * @param parameters
      * @return
      */
     @Override
-    public boolean checkFinish(Believes believes) {
+    public boolean checkFinish(Believes parameters) {
         ////wpsReport.info("");
-        return isExecuted();
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        return !believes.getPeasantProfile().isNewDay();
     }
 }
