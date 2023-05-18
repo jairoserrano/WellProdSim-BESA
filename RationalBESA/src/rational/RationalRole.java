@@ -59,7 +59,7 @@ public class RationalRole extends DataBESA {
      *
      * @param task The task to be added.
      */
-    public void addTask(Task task) {
+    public synchronized void addTask(Task task) {
         rolePlan.addTask(task);
     }
 
@@ -69,7 +69,7 @@ public class RationalRole extends DataBESA {
      * @param task The task to be added.
      * @param prevTasks The list of previous tasks for the task.
      */
-    public void addTask(Task task, List<Task> prevTasks) {
+    public synchronized void addTask(Task task, List<Task> prevTasks) {
         rolePlan.addTask(task, prevTasks);
     }
 

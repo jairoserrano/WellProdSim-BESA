@@ -2,7 +2,6 @@ package rational.guards;
 
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
-import BESA.Log.ReportBESA;
 import java.util.Iterator;
 import rational.RationalState;
 import rational.mapping.Plan;
@@ -19,19 +18,13 @@ public class PlanExecutionGuard extends GuardBESA {
         RationalState rst = (RationalState) this.getAgent().getState();
         if (rst.getMainRole() != null) {
             Plan plan = rst.getMainRole().getRolePlan();
-            //ReportBESA.debug(plan.getTasks());
             Iterator<Task> it1 = plan.getTasksInExecution().iterator();
             while (it1.hasNext()) {
                 Task task = it1.next();
                 if (task.isFinalized()) {
-                    Iterator<Task> it2 = plan.getGraphPlan().get(task).iterator();
-                    while (it2.hasNext()) {
-                        Task nextTask = it2.next();
+                    for (Task nextTask : plan.getGraphPlan().get(task)) {
                         boolean canExecute = true;
-                        Iterator<Task> it3 = plan.getDependencyGraph().get(nextTask).iterator();
-                        while (it3.hasNext()) {
-                            Task dependencyTask = it3.next();
-                            //ReportBESA.debug(dependencyTask.toString());
+                        for (Task dependencyTask : plan.getDependencyGraph().get(nextTask)) {
                             if (!dependencyTask.isFinalized()) {
                                 canExecute = false;
                                 break;

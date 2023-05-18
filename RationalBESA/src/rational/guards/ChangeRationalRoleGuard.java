@@ -25,26 +25,30 @@ public class ChangeRationalRoleGuard extends GuardBESA {
     public void funcExecGuard(EventBESA ebesa) {
         RationalState state = (RationalState) this.getAgent().getState();
         RationalRole newrole = (RationalRole) ebesa.getData();
-        //ReportBESA.debug("🟢 MainRole " + state.getMainRole() + " - Trying to change to rol 🟩 " + newrole.getRoleName());
+        ReportBESA.debug("🟢 MainRole " + state.getMainRole() + " - Trying to change to rol 🟩 " + newrole.getRoleName());
 
         if (state.getMainRole() != null && !state.getMainRole().getRoleName().equals(((RationalRole) ebesa.getData()).getRoleName())) {
             if (state.getMainRole() != null) {
                 Plan plan = state.getMainRole().getRolePlan();
-                //ReportBESA.debug("🔸 C " + plan.getTasks().size() + " plans " + plan.getTasks());
-
                 if (plan != null) {
                     Iterator<Task> it = plan.getTasksInExecution().iterator();
                     while (it.hasNext()) {
                         Task task = it.next();
                         if (task.isInExecution()) {
-                            task.cancelTask(state.getBelieves());
-                            //ReportBESA.debug("Canceled task " + task);
+                            ReportBESA.warn("Tarea en ejecución: " + task.toString());
+                            //task.cancelTask(state.getBelieves());
+                            while (task.isInExecution()) {
+                                try {
+                                    Thread.sleep(50); // espera medio segundo antes de verificar de nuevo
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    Thread.currentThread().interrupt();
+                                }
+                            }
                             it.remove();
                         } else if (task.isFinalized()) {
-                            //ReportBESA.debug("Finished task " + it);
                             it.remove();
                         }
-                        //ReportBESA.debug("Finalizing task " + task);
                         task.setTaskFinalized();
                     }
                 }
