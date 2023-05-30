@@ -24,7 +24,6 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Tasks.L1Survival.DoVitalsTask;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +40,12 @@ public class DoVitalsGoal extends GoalBDI {
         Plan doVitalsPlan = new Plan();
         doVitalsPlan.addTask(doVitalsTask);
         RationalRole doVitalsRole = new RationalRole(
-                "doVitalsTask",
+                "DoVitalsTask",
                 doVitalsPlan);
         DoVitalsGoal doVitalsGoal = new DoVitalsGoal(
                 wpsStart.getPlanID(),
                 doVitalsRole,
-                "doVitalsTask",
+                "DoVitalsTask",
                 GoalBDITypes.SURVIVAL);
         return doVitalsGoal;
     }

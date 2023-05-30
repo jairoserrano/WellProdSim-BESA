@@ -24,7 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class MaintainHouseGoal extends GoalBDI {
         Plan maintainHousePlan = new Plan();
         maintainHousePlan.addTask(maintainHouseTask);
         RationalRole maintainHouseRole = new RationalRole(
-                "maintainHouseTask",
+                "MaintainHouseTask",
                 maintainHousePlan);
         MaintainHouseGoal maintainHouseGoalBDI = new MaintainHouseGoal(
                 wpsStart.getPlanID(),
                 maintainHouseRole,
-                "maintainHouseTask",
+                "MaintainHouseTask",
                 GoalBDITypes.DEVELOPMENT);
         return maintainHouseGoalBDI;
     }
@@ -110,7 +110,7 @@ public class MaintainHouseGoal extends GoalBDI {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("isBusy=" + believes.getPeasantProfile().isBusy());
         if (believes.getPeasantProfile().isBusy() 
-                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.MaintainHouse)) {
+                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.MaintainHouseTask)) {
             return 0;
         } else {
             return 1;

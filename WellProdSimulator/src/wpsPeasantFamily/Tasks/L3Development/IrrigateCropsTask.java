@@ -21,7 +21,7 @@ import BESA.Kernel.System.Directory.AgHandlerBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
@@ -53,7 +53,7 @@ public class IrrigateCropsTask extends Task {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setIrrigateSeason(false);
         believes.getPeasantProfile().useWater(50);
-        believes.getPeasantProfile().useTime(TimeConsumedBy.IrrigateCrops);
+        believes.getPeasantProfile().useTime(TimeConsumedBy.IrrigateCropsTask);
 
         try {
             AdmBESA adm = AdmBESA.getInstance();

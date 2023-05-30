@@ -22,7 +22,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
 import static wpsSocietyMarket.MarketMessageType.BUY_WATER;
@@ -52,7 +52,7 @@ public class ObtainWaterTask extends Task {
     public synchronized void executeTask(Believes parameters) {
         wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainWater);
+        believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainWaterTask);
 
         try {
             AdmBESA adm = AdmBESA.getInstance();

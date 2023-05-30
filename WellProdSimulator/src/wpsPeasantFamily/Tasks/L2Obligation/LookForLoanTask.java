@@ -22,7 +22,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyBank.Agent.BankAgentGuard;
 import wpsSocietyBank.Agent.BankMessage;
 import wpsViewer.Agent.wpsReport;
@@ -81,7 +81,7 @@ public class LookForLoanTask extends Task {
                     bankMessage);
             ah.sendEvent(ev);
 
-            believes.getPeasantProfile().useTime(TimeConsumedBy.LookForLoan);
+            believes.getPeasantProfile().useTime(TimeConsumedBy.LookForLoanTask);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);

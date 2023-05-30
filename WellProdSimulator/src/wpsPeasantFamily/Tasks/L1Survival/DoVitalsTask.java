@@ -24,7 +24,7 @@ import wpsActivator.wpsStart;
 import wpsControl.Agent.DateHelper;
 import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyBank.Agent.BankAgentGuard;
 import wpsSocietyBank.Agent.BankMessage;
 import static wpsSocietyBank.Agent.BankMessageType.ASK_CURRENT_TERM;

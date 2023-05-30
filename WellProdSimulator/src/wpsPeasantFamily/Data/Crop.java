@@ -12,36 +12,70 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Agent;
+package wpsPeasantFamily.Data;
+
+import java.io.Serializable;
 
 /**
  *
+ * @author jairo
  */
-public enum FromBankMessageType {
+public class Crop implements Serializable {
+    
+    String name;
 
     /**
      *
+     * @return
      */
-    APPROBED_LOAN,
+    public String getName() {
+        return name;
+    }
 
     /**
      *
+     * @param name
      */
-    DENIED_FORMAL_LOAN,
-    
+    public void setName(String name) {
+        this.name = name;
+    }
+
     /**
      *
+     * @return
      */
-    DENIED_INFORMAL_LOAN,
-    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (name != null ? name.hashCode() : 0);
+        return hash;
+    }
+
     /**
      *
+     * @param object
+     * @return
      */
-    TERM_TO_PAY,
-    
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Crop)) {
+            return false;
+        }
+        Crop other = (Crop) object;
+        if ((this.name == null && other.name != null) || (this.name != null && !this.name.equals(other.name))) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      *
+     * @return
      */
-    TERM_PAYED
+    @Override
+    public String toString() {
+        return "Crop [ name=" + name + " ]";
+    }
     
 }

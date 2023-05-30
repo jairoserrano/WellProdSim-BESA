@@ -12,7 +12,7 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Utils;
+package wpsPeasantFamily.Data;
 
 /**
  *
@@ -20,36 +20,37 @@ package wpsPeasantFamily.Utils;
  */
 public enum TimeConsumedBy {
 
-    LookForLoan(4),
-    DoHealthCare(4),
+    LookForLoanTask(4),
+    SeekPurposeTask(24),
+    GetPriceListTask(2),
+    DoHealthCareTask(4),
     DoVitalsTask(12),
-    AttendReligiousEvents(2),
-    AttendToLivestock(2),
-    CheckCrops(2),
-    HarvestCrops(2),
-    IrrigateCrops(2),
-    MaintainHouse(2),
-    ManagePests(2),
-    PlantCrops(2),
-    PrepareLand(2),
-    ProcessProducts(2),
-    SellCrops(2),
-    SellProducts(2),
+    AttendReligiousEventsTask(2),
+    AttendToLivestockTask(2),
+    CheckCropsTask(2),
+    HarvestCropsTask(2),
+    IrrigateCropsTask(2),
+    MaintainHouseTask(2),
+    ManagePestsTask(2),
+    PlantCropTask(2),
+    PrepareLandTask(2),
+    ProcessProductsTask(2),
+    SellCropTask(2),
+    SellProductsTask(2),
     SpendFamilyTime(2),
     SpendFriendsTime(2),
     GetTraining(2),
-    LookForALand(8),
-    AskForAPriceList(2),
-    ObtainLivestock(4),
-    ObtainPesticides(4),
-    ObtainSeeds(4),
-    ObtainSupplies(4),
-    ObtainTools(4),
-    ObtainWater(4),
+    LookForALandTask(8),
+    ObtainLivestockTask(4),
+    ObtainPesticidesTask(4),
+    ObtainSeedsTask(4),
+    ObtainSuppliestask(4),
+    ObtainToolsTask(4),
+    ObtainWaterTask(4),
     Communicate(1),
     LookForCollaboration(1),
     ProvideCollaboration(2),
-    EngageInLeisureActivitiesGoal(1),
+    PeasantLeisureTask(1),
     FindNews(2),
     WasteTimeAndResourcesGoal(1);
     
@@ -59,7 +60,7 @@ public enum TimeConsumedBy {
         this.time = time;
     }
 
-    public double getTime() {
+    public int getTime() {
         return time;
     }
 

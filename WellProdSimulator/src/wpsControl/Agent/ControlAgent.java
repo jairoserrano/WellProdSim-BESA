@@ -14,6 +14,7 @@
  */
 package wpsControl.Agent;
 
+import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.AgentBESA;
 import BESA.Kernel.Agent.KernelAgentExceptionBESA;
 import BESA.Kernel.Agent.StateBESA;
@@ -37,11 +38,28 @@ public class ControlAgent extends AgentBESA {
         super(alias, state, structAgent, passwd);
     }
 
+    public static ControlAgent createAgent(String alias, double passwd) throws ExceptionBESA{        
+        ControlAgent controlAgent = new ControlAgent(alias, createState(), createStruct(new StructBESA()), passwd);
+        return controlAgent;        
+    }
+    
+    private static StructBESA createStruct(StructBESA structBESA) throws ExceptionBESA {
+        structBESA.addBehavior("ControlAgentGuard");
+        structBESA.bindGuard("ControlAgentGuard", ControlAgentGuard.class);
+        return structBESA;
+    }
+    
+    private static ControlAgentState createState() throws ExceptionBESA {
+        ControlAgentState controlAgentState = new ControlAgentState();
+        return controlAgentState;
+    }
+
     /**
      *
      */
     @Override
     public void setupAgent() {
+        
     }
 
     /**
@@ -49,6 +67,7 @@ public class ControlAgent extends AgentBESA {
      */
     @Override
     public void shutdownAgent() {
+        
     }
-
+    
 }

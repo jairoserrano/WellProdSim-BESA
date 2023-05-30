@@ -40,12 +40,12 @@ public class LookForCollaborationGoal extends GoalBDI {
         Plan askForCollaborationPlan = new Plan();
         askForCollaborationPlan.addTask(askForCollaborationTask);
         RationalRole askForCollaborationRole = new RationalRole(
-                "askForCollaborationTask",
+                "AskForCollaborationTask",
                 askForCollaborationPlan);
         LookForCollaborationGoal askForCollaborationGoalBDI = new LookForCollaborationGoal(
                 wpsStart.getPlanID(),
                 askForCollaborationRole,
-                "askForCollaborationTask",
+                "AskForCollaborationTask",
                 GoalBDITypes.SOCIAL);
         return askForCollaborationGoalBDI;
     }

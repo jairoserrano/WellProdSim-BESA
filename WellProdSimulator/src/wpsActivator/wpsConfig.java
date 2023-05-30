@@ -19,13 +19,14 @@ import org.snakeyaml.engine.v2.api.LoadSettings;
 import com.google.gson.Gson;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import wpsPeasantFamily.Utils.FarmingResource;
-import wpsPeasantFamily.Utils.PeasantFamilyProfile;
+import wpsPeasantFamily.Data.FarmingResource;
+import wpsPeasantFamily.Data.PeasantFamilyProfile;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -227,26 +228,20 @@ public final class wpsConfig {
     private void loadWPSConfig() {
 
         Properties properties = new Properties();
-        FileInputStream fileInputStream = null;
 
-        try {
+        ClassLoader classLoader = getClass().getClassLoader();
+
+        try (InputStream fileInputStream = classLoader.getResourceAsStream("wpsConfig.properties")) {
             // Especifica la ubicación del archivo .properties
-            fileInputStream = new FileInputStream("resources/wpsConfig.properties");
+
             // Carga las propiedades desde el archivo
             properties.load(fileInputStream);
             // Valores iniciales de la simulación
             this.startSimulationDate = properties.getProperty("wpsControl.startdate");
+            System.out.println("---" + this.startSimulationDate + "----");
             fileInputStream.close();
         } catch (IOException e) {
             wpsReport.error(e.getMessage());
-        } finally {
-            if (fileInputStream != null) {
-                try {
-                    fileInputStream.close();
-                } catch (IOException e) {
-                    wpsReport.error(e.getMessage());
-                }
-            }
         }
     }
 

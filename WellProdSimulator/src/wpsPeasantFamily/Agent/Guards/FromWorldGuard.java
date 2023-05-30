@@ -12,13 +12,14 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Agent;
+package wpsPeasantFamily.Agent.Guards;
 
 import BESA.BDI.AgentStructuralModel.StateBDI;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
 import org.json.JSONObject;
-import static wpsPeasantFamily.Agent.FromWorldMessageType.*;
+import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import static wpsPeasantFamily.Agent.Guards.FromWorldMessageType.*;
 import wpsViewer.Agent.wpsReport;
 
 /**

@@ -12,66 +12,57 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Agent;
-
-import BESA.Kernel.Agent.Event.DataBESA;
+package wpsPeasantFamily.Data;
 
 /**
  *
  * @author jairo
  */
-public class FromBankMessage extends DataBESA {
-
-    private Integer amount;
-    private FromBankMessageType fromBankMessageType;
+public enum SensorDataType {
 
     /**
      *
-     * @param fromBankMessageType
-     * @param amount
      */
-    public FromBankMessage(FromBankMessageType fromBankMessageType, Integer amount) {
-        this.amount = amount;
-        this.fromBankMessageType = fromBankMessageType;
+    ACTIVITY("activity"),
+
+    /**
+     *
+     */
+    EMOTIONS("emotions"),
+
+    /**
+     *
+     */
+    INTERACTION("interaction"),
+
+    /**
+     *
+     */
+    PEASANT("peasant"),
+
+    /**
+     *
+     */
+    PURPOSE("purpose");
+    private final String identif;
+
+    private SensorDataType(String i) {
+        identif = i;
     }
 
     /**
      *
-     * @param amount
-     */
-    public FromBankMessage(Integer amount) {
-        this.amount = amount;
-    }
-
-    /**
-     *
+     * @param ident
      * @return
      */
-    public Integer getAmount() {
-        return amount;
-    }
-
-    /**
-     *
-     * @param amount
-     */
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public FromBankMessageType getMessageType() {
-        return fromBankMessageType;
-    }
-
-    /**
-     *
-     * @param fromBankMessageType
-     */
-    public void setMessageType(FromBankMessageType fromBankMessageType) {
-        this.fromBankMessageType = fromBankMessageType;
+    public static SensorDataType getFromId(String ident) {
+        SensorDataType ret = null;
+        for (SensorDataType sdt : values()) {
+            if (sdt.identif.equals(ident)) {
+                ret = sdt;
+                break;
+            }
+        }
+        return ret;
     }
 }

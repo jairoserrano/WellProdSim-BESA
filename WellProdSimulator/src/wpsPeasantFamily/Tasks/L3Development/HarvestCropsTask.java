@@ -25,7 +25,7 @@ import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -52,7 +52,7 @@ public class HarvestCropsTask extends Task {
     public void executeTask(Believes parameters) {
         wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().useTime(TimeConsumedBy.HarvestCrops);
+        believes.getPeasantProfile().useTime(TimeConsumedBy.HarvestCropsTask);
         believes.getPeasantProfile().setHarverstSeason(false);
         believes.getPeasantProfile().setGrowingSeason(false);
 

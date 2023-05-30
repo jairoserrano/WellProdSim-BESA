@@ -24,7 +24,8 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Tasks.L3Development.SellProductsTask;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -37,18 +38,18 @@ public class SellProductsGoal extends GoalBDI {
      * @return
      */
     public static SellProductsGoal buildGoal() {
-        ProcessProductsTask processProductsTask = new ProcessProductsTask();
-        Plan processProductsPlan = new Plan();
-        processProductsPlan.addTask(processProductsTask);
-        RationalRole processProductsRole = new RationalRole(
-                "processProductsTask",
-                processProductsPlan);
-        SellProductsGoal processProductsGoalBDI = new SellProductsGoal(
+        SellProductsTask sellProductsTask = new SellProductsTask();
+        Plan sellProductsPlan = new Plan();
+        sellProductsPlan.addTask(sellProductsTask);
+        RationalRole sellProductsRole = new RationalRole(
+                "SellProductsTask",
+                sellProductsPlan);
+        SellProductsGoal sellProductsGoalBDI = new SellProductsGoal(
                 wpsStart.getPlanID(),
-                processProductsRole,
-                "processProductsTask",
+                sellProductsRole,
+                "SellProductsTask",
                 GoalBDITypes.DEVELOPMENT);
-        return processProductsGoalBDI;
+        return sellProductsGoalBDI;
     }
 
     /**
@@ -108,8 +109,7 @@ public class SellProductsGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.SellProducts
+                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.SellProductsTask
                 )) {
             return 1;
         } else {

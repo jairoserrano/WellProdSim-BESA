@@ -24,7 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -110,10 +110,10 @@ public class PlantCropGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.debug("free: " + believes.getPeasantProfile().isFree());
-        //wpsReport.debug("time needed: " + TimeConsumedBy.PlantCrops);
-        //wpsReport.debug("have time: " + believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PlantCrops));
+        //wpsReport.debug("time needed: " + TimeConsumedBy.PlantCropTask);
+        //wpsReport.debug("have time: " + believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PlantCropTask));
         if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PlantCrops)) {
+                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PlantCropTask)) {
             return 1;
         } else {
             return 0;

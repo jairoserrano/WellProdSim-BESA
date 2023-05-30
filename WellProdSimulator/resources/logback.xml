@@ -11,11 +11,11 @@
         </rollingPolicy>
 
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <maxFileSize>5MB</maxFileSize>
+            <maxFileSize>50MB</maxFileSize>
         </triggeringPolicy>
         
         <encoder>
-            <pattern>%highlight(%-5level) %d{HH:mm:ss.SSS} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} |-%highlight(%-5level) %msg%n</pattern>
         </encoder>
         
     </appender>

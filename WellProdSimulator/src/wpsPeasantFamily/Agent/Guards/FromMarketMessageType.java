@@ -12,7 +12,7 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Agent;
+package wpsPeasantFamily.Agent.Guards;
 
 /**
  *

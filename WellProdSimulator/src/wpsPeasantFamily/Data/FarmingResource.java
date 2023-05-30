@@ -13,7 +13,7 @@
  * ==========================================================================
  */
 
-package wpsPeasantFamily.Utils;
+package wpsPeasantFamily.Data;
 
 /**
  *

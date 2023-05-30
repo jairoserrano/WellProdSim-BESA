@@ -40,12 +40,12 @@ public class DoHealthCareGoal extends GoalBDI {
         Plan doHealthCarePlan = new Plan();
         doHealthCarePlan.addTask(doHealthCareTask);
         RationalRole doHealthCareRole = new RationalRole(
-                "doHealthCareTask",
+                "DoHealthCareTask",
                 doHealthCarePlan);
         DoHealthCareGoal doHealthCareGoal = new DoHealthCareGoal(
                 wpsStart.getPlanID(),
                 doHealthCareRole,
-                "doHealthCareTask",
+                "DoHealthCareTask",
                 GoalBDITypes.SURVIVAL);
         return doHealthCareGoal;
     }

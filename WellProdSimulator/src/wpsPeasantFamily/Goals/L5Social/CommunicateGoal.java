@@ -40,12 +40,12 @@ public class CommunicateGoal extends GoalBDI {
         Plan communicatePlan = new Plan();
         communicatePlan.addTask(communicateTask);
         RationalRole communicateRole = new RationalRole(
-                "communicateTask",
+                "CommunicateTask",
                 communicatePlan);
         CommunicateGoal communicateGoalBDI = new CommunicateGoal(
                 wpsStart.getPlanID(),
                 communicateRole,
-                "communicateTask",
+                "CommunicateTask",
                 GoalBDITypes.SOCIAL);
         return communicateGoalBDI;
     }

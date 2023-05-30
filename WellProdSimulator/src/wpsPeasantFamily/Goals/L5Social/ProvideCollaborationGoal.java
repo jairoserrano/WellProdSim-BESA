@@ -40,12 +40,12 @@ public class ProvideCollaborationGoal extends GoalBDI {
         Plan collaboratePlan = new Plan();
         collaboratePlan.addTask(collaborateTask);
         RationalRole collaborateRole = new RationalRole(
-                "collaborateTask",
+                "CollaborateTask",
                 collaboratePlan);
         ProvideCollaborationGoal collaborateGoalBDI = new ProvideCollaborationGoal(
                 wpsStart.getPlanID(),
                 collaborateRole,
-                "collaborateTask",
+                "CollaborateTask",
                 GoalBDITypes.SOCIAL);
         return collaborateGoalBDI;
     }

@@ -22,7 +22,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
 import static wpsSocietyMarket.MarketMessageType.BUY_SEEDS;
@@ -70,7 +70,7 @@ public class ObtainSeedsTask extends Task {
                     marketMessage);
             ah.sendEvent(ev);
 
-            believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainSeeds);
+            believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainSeedsTask);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);

@@ -1,5 +1,5 @@
 ## * ======================================================================== *
-## * __      __ _ __   ___  *    WellProdSim Proactive Peasant                  *
+## * __      __ _ __   ___  *    WellProdSim Regular Peasant                  *
 ## * \ \ /\ / /| '_ \ / __| *    @version 1.0                                 *
 ## *  \ V  V / | |_) |\__ \ *    @since 2023                                  *
 ## *   \_/\_/  | .__/ |___/ *                                                 *
@@ -12,24 +12,28 @@
 ## * ======================================================================== *
 ---
 ProactivePeasant:
+  #Peasant
   purpose: ""
   profileName: "ProactivePeasant"
-  health: 1.0
-  productivity: 0.7
-  wellBeging: 0.7
+  health: 100
+  productivity: 0.0
+  wellBeging: 1.0
   worker: true
   employee: false
   peasantQualityFactor: 0.7
+  peasantFamilyConf: 1.0
+  peasantConsumption: 1.0
   peasantFamilyMinimalVital: 4833
   liveStockAffinity: 0.7
-  #farm:
-  farm: true
+  #Farm:
+  farm: false
   farmName: ""
-  farmSize: 1.0
+  farmSize: 10000
   farmDistance: 1.0
   farmReady: 0.0
+  #Crops
   seeds: 1.0
-  cropHealth: 0.0
+  cropHealth: 1
   irrigation: 0.0
   waterAvailable: 0.0
   irrigationTime: 1.0
@@ -43,9 +47,13 @@ ProactivePeasant:
   harvestedWeight: 0.0
   harvestedWeightExpected: 1.0
   processedCrop: false
-  cropEficiency: 00
+  cropEficiency: 0
   processedWeight: 0.0
   processingTime: 1.0
+  currentCropName: "ñame"
+  startRiceSeason: "15/01/2022"
+  endRiceSeason: "30/05/2022"
+  riceSeedsByHectare: 20
   #toolsAndSupplies:
   tools: 1.0
   toolsAvailability: 1.0
@@ -62,13 +70,13 @@ ProactivePeasant:
   housingQuailty: 1.0
   timeSpentOnMaintenance: 1.0
   #finance:
-  money: 1.0
+  money: 1000000
   totalIncome: 0.0
   debtPayment: 0.0
   #training:
-  trainingLevel: 0.7
+  trainingLevel: 1.0
   trainingAvailability: 0.7
-  trainingRelevance: 0.7
+  trainingRelevance: 1
   trainingCost: 1.0
   #social:
   associated: false
@@ -77,13 +85,13 @@ ProactivePeasant:
   communications: 0.0
   socialCompatibility: 0.7
   #healthAndWellness:
-  healthProgramsAvailability: 1.0
-  familyTime: 0.7
+  healthProgramsAvailability: 1
+  familyTime: 0
   peasantFamilyAffinity: 0.7
-  familyTimeAvailability: 0.7
+  familyTimeAvailability: 1
   restingTimeAvailibility: 0.7
   peasantRestAffinity: 0.7
-  leisureOptions: 0.7
+  leisureOptions: 1.0
   #livestock:
   livestockFarming: false
   livestockHealth: 1.0

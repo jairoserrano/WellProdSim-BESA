@@ -25,7 +25,7 @@ import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 import static wpsWorld.Messages.WorldMessageType.CROP_OBSERVE;
 
@@ -55,7 +55,7 @@ public class CheckCropsTask extends Task {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setCropCheckedToday();
         // @TODO: falta calcular el tiempo necesario para el cultivo
-        believes.getPeasantProfile().useTime(TimeConsumedBy.CheckCrops);
+        believes.getPeasantProfile().useTime(TimeConsumedBy.CheckCropsTask);
 
         try {
             AdmBESA adm = AdmBESA.getInstance();

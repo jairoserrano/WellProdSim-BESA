@@ -24,7 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Tasks.L4SkillsResources.ObtainPesticidesTask;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class ObtainPesticidesGoal extends GoalBDI {
         Plan obtainPesticidesPlan = new Plan();
         obtainPesticidesPlan.addTask(obtainPesticidesTask);
         RationalRole obtainPesticidesRole = new RationalRole(
-                "obtainPesticidesTask",
+                "ObtainPesticidesTask",
                 obtainPesticidesPlan);
         ObtainPesticidesGoal obtainPesticidesGoal = new ObtainPesticidesGoal(
                 wpsStart.getPlanID(),
                 obtainPesticidesRole,
-                "obtainPesticidesTask",
+                "ObtainPesticidesTask",
                 GoalBDITypes.SKILLSRESOURCES);
         return obtainPesticidesGoal;
     }
@@ -108,8 +108,7 @@ public class ObtainPesticidesGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.ObtainPesticides
+                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.ObtainPesticidesTask
                 )) {
             return 1;
         } else {

@@ -12,12 +12,12 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Agent;
+package wpsPeasantFamily.Agent.Guards;
 
 import BESA.Kernel.Agent.Event.DataBESA;
 import java.util.HashMap;
 import java.util.Map;
-import wpsPeasantFamily.Utils.FarmingResource;
+import wpsPeasantFamily.Data.FarmingResource;
 
 /**
  *

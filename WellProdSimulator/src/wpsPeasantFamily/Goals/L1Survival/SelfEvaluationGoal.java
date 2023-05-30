@@ -23,7 +23,6 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Tasks.L1Survival.SelfEvaluationTask;
 
 /**
@@ -41,12 +40,12 @@ public class SelfEvaluationGoal extends GoalBDI {
         Plan selfEvaluationPlan = new Plan();
         selfEvaluationPlan.addTask(selfEvaluationTask);
         RationalRole selfEvaluationRole = new RationalRole(
-                "selfEvaluationTask",
+                "SelfEvaluationTask",
                 selfEvaluationPlan);
         SelfEvaluationGoal selfEvaluationGoalBDI = new SelfEvaluationGoal(
                 wpsStart.getPlanID(),
                 selfEvaluationRole,
-                "selfEvaluationTask",
+                "SelfEvaluationTask",
                 GoalBDITypes.SURVIVAL);
         return selfEvaluationGoalBDI;
     }

@@ -20,7 +20,7 @@ public class ContributionComparator implements Comparator<GoalBDI> {
 
     /**
      * <p> 
-     * method that doesnt allow repeatd values and compare using ths contribution value
+     * method that doesn't allow repeated values and compare using this contribution value
      * </p> 
      * @param goal1
      * @param goal2

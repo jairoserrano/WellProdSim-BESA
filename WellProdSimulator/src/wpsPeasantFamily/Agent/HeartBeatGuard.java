@@ -12,37 +12,26 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsSocietyMarket;
+package wpsPeasantFamily.Agent;
 
-import wpsPeasantFamily.Data.FarmingResource;
-import BESA.Kernel.Agent.StateBESA;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import wpsActivator.wpsStart;
+import BESA.Kernel.Agent.Event.EventBESA;
+import BESA.Kernel.Agent.GuardBESA;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
  * @author jairo
  */
-public class MarketAgentState extends StateBESA implements Serializable {
-
+public class HeartBeatGuard extends GuardBESA{
+    
     /**
      *
+     * @param event
      */
-    Map<String, FarmingResource> resources = new HashMap<>();
-
-    /**
-     *
-     */
-    public MarketAgentState() {
-        super();
-        this.resources = wpsStart.config.loadMarketConfig();
+    @Override
+    public void funcExecGuard(EventBESA event) {
+        //wpsReport.debug("Recibido Beat");
+        ((PeasantFamilyBDIAgent)this.getAgent()).BDIPulse();
     }
-    public Map<String, FarmingResource> getResources() {
-        return resources;
-    }
-    public void setResources(Map<String, FarmingResource> resources) {
-        this.resources = resources;
-    }
+    
 }

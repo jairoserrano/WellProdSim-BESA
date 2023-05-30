@@ -24,7 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Tasks.L3Development.AttendToLivestockTask;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class AttendToLivestockGoal extends GoalBDI {
         Plan attendToLivestockPlan = new Plan();
         attendToLivestockPlan.addTask(attendToLivestockTask);
         RationalRole attendToLivestockRole = new RationalRole(
-                "attendToLivestockTask",
+                "AttendToLivestockTask",
                 attendToLivestockPlan);
         AttendToLivestockGoal attendToLivestockGoal = new AttendToLivestockGoal(
                 wpsStart.getPlanID(),
                 attendToLivestockRole,
-                "attendToLivestockTask",
+                "AttendToLivestockTask",
                 GoalBDITypes.DEVELOPMENT);
         return attendToLivestockGoal;
     }
@@ -107,8 +107,7 @@ public class AttendToLivestockGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(
-                TimeConsumedBy.AttendToLivestock
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.AttendToLivestockTask
         )) {
             return 1;
         } else {

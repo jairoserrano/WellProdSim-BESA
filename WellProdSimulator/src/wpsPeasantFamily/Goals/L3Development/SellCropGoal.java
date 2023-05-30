@@ -24,7 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Tasks.L3Development.SellCropTask;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -42,12 +42,12 @@ public class SellCropGoal extends GoalBDI {
         Plan sellCropPlan = new Plan();
         sellCropPlan.addTask(sellCropTask);
         RationalRole sellCropsRole = new RationalRole(
-                "sellCropTask",
+                "SellCropTask",
                 sellCropPlan);
         SellCropGoal sellCropGoal = new SellCropGoal(
                 wpsStart.getPlanID(),
                 sellCropsRole,
-                "sellCropTask",
+                "SellCropTask",
                 GoalBDITypes.DEVELOPMENT);
         return sellCropGoal;
     }
@@ -110,8 +110,7 @@ public class SellCropGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.SellCrops
+                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.SellCropTask
                 )) {
             return 1;
         } else {

@@ -21,7 +21,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -48,7 +48,7 @@ public class DoHealthCareTask extends Task {
     public void executeTask(Believes parameters) {
         wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().useTime(TimeConsumedBy.DoHealthCare);
+        believes.getPeasantProfile().useTime(TimeConsumedBy.DoHealthCareTask);
         //believes.getPeasantProfile().increaseHealth();
         wpsReport.info("⚙️⚙️⚙️ MURIÓ ⚙️⚙️⚙️");
         

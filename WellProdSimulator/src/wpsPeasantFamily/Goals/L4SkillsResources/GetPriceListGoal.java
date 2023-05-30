@@ -24,7 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Tasks.L4SkillsResources.GetPriceListTask;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -37,18 +37,18 @@ public class GetPriceListGoal extends GoalBDI {
      * @return
      */
     public static GetPriceListGoal buildGoal() {
-        GetPriceListTask obtainPriceListTask = new GetPriceListTask();
-        Plan obtainPriceListPlan = new Plan();
-        obtainPriceListPlan.addTask(obtainPriceListTask);
-        RationalRole obtainPriceListRole = new RationalRole(
-                "obtainPriceListTask",
-                obtainPriceListPlan);
-        GetPriceListGoal obtainPriceListGoal = new GetPriceListGoal(
+        GetPriceListTask getPriceListGoalTask = new GetPriceListTask();
+        Plan getPriceListPlan = new Plan();
+        getPriceListPlan.addTask(getPriceListGoalTask);
+        RationalRole getPriceListRole = new RationalRole(
+                "GetPriceListTask",
+                getPriceListPlan);
+        GetPriceListGoal getPriceListGoal = new GetPriceListGoal(
                 wpsStart.getPlanID(),
-                obtainPriceListRole,
-                "obtainPriceListTask",
+                getPriceListRole,
+                "GetPriceListTask",
                 GoalBDITypes.SKILLSRESOURCES);
-        return obtainPriceListGoal;
+        return getPriceListGoal;
     }
 
     /**
@@ -103,7 +103,7 @@ public class GetPriceListGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.AskForAPriceList)) {
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.GetPriceListTask)) {
             return 1;
         } else {
             return 0;

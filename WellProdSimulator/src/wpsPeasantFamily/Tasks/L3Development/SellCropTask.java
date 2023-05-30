@@ -22,7 +22,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
 import static wpsSocietyMarket.MarketMessageType.SELL_CROP;
@@ -53,7 +53,7 @@ public class SellCropTask extends Task {
         wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
-        believes.getPeasantProfile().useTime(TimeConsumedBy.SellCrops);
+        believes.getPeasantProfile().useTime(TimeConsumedBy.SellCropTask);
         
         try {
             AdmBESA adm = AdmBESA.getInstance();

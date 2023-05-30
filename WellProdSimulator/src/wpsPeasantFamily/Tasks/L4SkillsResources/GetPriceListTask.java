@@ -22,7 +22,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
 import static wpsSocietyMarket.MarketMessageType.ASK_FOR_PRICE_LIST;
@@ -68,7 +68,7 @@ public class GetPriceListTask extends Task {
                     marketMessage);
             ah.sendEvent(ev);
 
-            believes.getPeasantProfile().useTime(TimeConsumedBy.AskForAPriceList);
+            believes.getPeasantProfile().useTime(TimeConsumedBy.GetPriceListTask);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);

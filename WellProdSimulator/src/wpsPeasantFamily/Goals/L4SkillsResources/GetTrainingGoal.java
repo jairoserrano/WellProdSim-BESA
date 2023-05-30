@@ -24,7 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class GetTrainingGoal extends GoalBDI {
         Plan trainingPlan = new Plan();
         trainingPlan.addTask(trainingTask);
         RationalRole trainingRole = new RationalRole(
-                "trainingTask",
+                "TrainingTask",
                 trainingPlan);
         GetTrainingGoal trainingGoalBDI = new GetTrainingGoal(
                 wpsStart.getPlanID(),
                 trainingRole,
-                "trainingTask",
+                "TrainingTask",
                 GoalBDITypes.SKILLSRESOURCES);
         return trainingGoalBDI;
     }

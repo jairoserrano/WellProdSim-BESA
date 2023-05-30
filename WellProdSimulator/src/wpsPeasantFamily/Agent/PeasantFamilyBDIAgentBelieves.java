@@ -14,11 +14,10 @@
  */
 package wpsPeasantFamily.Agent;
 
-import wpsPeasantFamily.Utils.PeasantFamilyProfile;
+import wpsPeasantFamily.Data.PeasantFamilyProfile;
 import rational.data.InfoData;
 import rational.mapping.Believes;
 import wpsPeasant.EmotionalModel.EmotionalState;
-import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -35,7 +34,6 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      * @param peasantProfile
      */
     public PeasantFamilyBDIAgentBelieves(PeasantFamilyProfile peasantProfile) {
-        //wpsReport.debug(">> New Peasant " + peasantProfile.getProfileName());
         this.setPeasantProfile(peasantProfile);
         this.peasantEmotionalState = new EmotionalState();
     }
@@ -45,7 +43,6 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      * @return
      */
     public EmotionalState getPeasantEmotionalState() {
-        //wpsReport.info("");
         return peasantEmotionalState;
     }
 
@@ -54,7 +51,6 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      * @return
      */
     public PeasantFamilyProfile getPeasantProfile() {
-        //wpsReport.info("");
         return peasantProfile;
     }
 

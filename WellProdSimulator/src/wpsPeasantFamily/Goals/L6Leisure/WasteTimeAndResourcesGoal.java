@@ -24,7 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Tasks.L6Leisure.WasteTimeAndResourcesTask;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
         Plan wasteTimeAndResourcesPlan = new Plan();
         wasteTimeAndResourcesPlan.addTask(wasteTimeAndResourcesTask);
         RationalRole wasteTimeAndResourcesRole = new RationalRole(
-                "wasteTimeAndResourcesTask",
+                "WasteTimeAndResourcesTask",
                 wasteTimeAndResourcesPlan);
         WasteTimeAndResourcesGoal wasteTimeAndResourcesGoal = new WasteTimeAndResourcesGoal(
                 wpsStart.getPlanID(),
                 wasteTimeAndResourcesRole,
-                "wasteTimeAndResourcesTask",
+                "WasteTimeAndResourcesTask",
                 GoalBDITypes.LEISURE);
         return wasteTimeAndResourcesGoal;
     }

@@ -26,7 +26,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
 import static wpsSocietyMarket.MarketMessageType.BUY_TOOLS;
@@ -74,7 +74,7 @@ public class ObtainToolsTask extends Task {
                     marketMessage);
             ah.sendEvent(ev);
 
-            believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainTools);
+            believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainToolsTask);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);

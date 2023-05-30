@@ -40,7 +40,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsConfig;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -186,7 +186,7 @@ public class LookForALandTask extends Task {
         believes.getPeasantProfile().setFarmDistance(1);
 
         // @TODO: setPlantingSeason lo cambia el reloj global
-        believes.getPeasantProfile().useTime(TimeConsumedBy.LookForALand);
+        believes.getPeasantProfile().useTime(TimeConsumedBy.LookForALandTask);
         // Set default values of peasant and world
         wpsConfig config = wpsConfig.getInstance();
         // Set world perturbation

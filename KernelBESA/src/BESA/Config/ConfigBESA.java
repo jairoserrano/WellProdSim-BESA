@@ -8,6 +8,7 @@ package BESA.Config;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import javax.xml.parsers.DocumentBuilder;
@@ -57,7 +58,13 @@ public class ConfigBESA {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new FileInputStream(CONFIG_FILE));
+
+            ClassLoader classLoader = getClass().getClassLoader();
+            InputStream inputStream = classLoader.getResourceAsStream(CONFIG_FILE);
+            if (inputStream == null) {
+                System.out.print("error config file");
+            }
+            Document document = builder.parse(inputStream);
 
             document.getDocumentElement().normalize();
             Element root = document.getDocumentElement();

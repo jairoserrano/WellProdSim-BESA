@@ -24,7 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Tasks.L3Development.SpendFriendsTimeTask;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -42,12 +42,12 @@ public class SpendFriendsTimeGoal extends GoalBDI {
         Plan spendFriendsTimePlan = new Plan();
         spendFriendsTimePlan.addTask(spendFriendsTimeTask);
         RationalRole spendFriendsTimeRole = new RationalRole(
-                "spendFriendsTimeTask",
+                "SpendFriendsTimeTask",
                 spendFriendsTimePlan);
         SpendFriendsTimeGoal spendFriendsTimeGoal = new SpendFriendsTimeGoal(
                 wpsStart.getPlanID(),
                 spendFriendsTimeRole,
-                "spendFriendsTimeTask",
+                "SpendFriendsTimeTask",
                 GoalBDITypes.DEVELOPMENT);
         return spendFriendsTimeGoal;
     }

@@ -17,7 +17,7 @@ package wpsPeasantFamily.Tasks.L3Development;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -47,7 +47,7 @@ public class MaintainHouseTask extends Task {
         // @TODO: Cambiar a la venta real con el agente social market
         believes.getPeasantProfile().increaseHouseCondition();
         believes.getPeasantProfile().useTools();
-        believes.getPeasantProfile().useTime(TimeConsumedBy.MaintainHouse);
+        believes.getPeasantProfile().useTime(TimeConsumedBy.MaintainHouseTask);
         this.setFinished();
     }
 

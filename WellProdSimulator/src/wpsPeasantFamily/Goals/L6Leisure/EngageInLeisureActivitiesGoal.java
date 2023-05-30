@@ -24,7 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
         Plan peasantLeisurePlan = new Plan();
         peasantLeisurePlan.addTask(peasantLeisureTask);
         RationalRole peasantLeisureRole = new RationalRole(
-                "peasantLeisureTask",
+                "PeasantLeisureTask",
                 peasantLeisurePlan);
         EngageInLeisureActivitiesGoal peasantLeisureGoal = new EngageInLeisureActivitiesGoal(
                 wpsStart.getPlanID(),
                 peasantLeisureRole,
-                "peasantLeisureTask",
+                "PeasantLeisureTask",
                 GoalBDITypes.LEISURE);
         return peasantLeisureGoal;
     }
@@ -109,8 +109,7 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().getHealth() > 0
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.EngageInLeisureActivitiesGoal
+                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PeasantLeisureTask
                 )) {
             return 1;
         } else {

@@ -17,7 +17,7 @@ package wpsPeasantFamily.Tasks.L3Development;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -44,8 +44,7 @@ public class AttendReligiousEventsTask extends Task {
     public void executeTask(Believes parameters) {
         wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().useTime(
-                TimeConsumedBy.AttendReligiousEvents
+        believes.getPeasantProfile().useTime(TimeConsumedBy.AttendReligiousEventsTask
         );
         this.setFinished();
     }

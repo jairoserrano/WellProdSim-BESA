@@ -24,7 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class ObtainSuppliesGoal extends GoalBDI {
         Plan obtainSuppliesPlan = new Plan();
         obtainSuppliesPlan.addTask(obtainSuppliesTask);
         RationalRole obtainSuppliesRole = new RationalRole(
-                "obtainSuppliesTask",
+                "ObtainSuppliesTask",
                 obtainSuppliesPlan);
         ObtainSuppliesGoal obtainSuppliesGoalBDI = new ObtainSuppliesGoal(
                 wpsStart.getPlanID(),
                 obtainSuppliesRole,
-                "obtainSuppliesTask",
+                "ObtainSuppliesTask",
                 GoalBDITypes.SKILLSRESOURCES);
         return obtainSuppliesGoalBDI;
     }
@@ -108,8 +108,7 @@ public class ObtainSuppliesGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.ObtainSupplies
+                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.ObtainSuppliestask
                 )) {
             return 1;
         } else {

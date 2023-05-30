@@ -24,7 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Tasks.L4SkillsResources.ObtainLivestockTask;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class ObtainLivestockGoal extends GoalBDI {
         Plan obtainLivestockPlan = new Plan();
         obtainLivestockPlan.addTask(obtainLivestockTask);
         RationalRole obtainLivestockRole = new RationalRole(
-                "obtainLivestockTask",
+                "ObtainLivestockTask",
                 obtainLivestockPlan);
         ObtainLivestockGoal obtainLivestockGoal = new ObtainLivestockGoal(
                 wpsStart.getPlanID(),
                 obtainLivestockRole,
-                "obtainLivestockTask",
+                "ObtainLivestockTask",
                 GoalBDITypes.SKILLSRESOURCES);
         return obtainLivestockGoal;
     }
@@ -107,8 +107,7 @@ public class ObtainLivestockGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.ObtainLivestock
+                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.ObtainLivestockTask
                 )) {
             return 1;
         } else {

@@ -12,14 +12,36 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsControl.Agent;
-
-import BESA.Kernel.Agent.Event.DataBESA;
+package wpsPeasantFamily.Agent.Guards;
 
 /**
  *
- * @author jairo
  */
-public class ControlData extends DataBESA {
+public enum FromBankMessageType {
 
+    /**
+     *
+     */
+    APPROBED_LOAN,
+
+    /**
+     *
+     */
+    DENIED_FORMAL_LOAN,
+    
+    /**
+     *
+     */
+    DENIED_INFORMAL_LOAN,
+    
+    /**
+     *
+     */
+    TERM_TO_PAY,
+    
+    /**
+     *
+     */
+    TERM_PAYED
+    
 }

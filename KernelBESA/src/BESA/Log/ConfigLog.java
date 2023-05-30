@@ -3,6 +3,7 @@ package BESA.Log;
 import BESA.Config.ConfigExceptionBESA;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -37,7 +38,13 @@ public class ConfigLog {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(new FileInputStream(CONFIG_FILE));
+
+            ClassLoader classLoader = getClass().getClassLoader();
+            InputStream inputStream = classLoader.getResourceAsStream(CONFIG_FILE);
+            if (inputStream == null) {
+                System.out.print("error config XML fil");
+            }
+            Document doc = dBuilder.parse(inputStream);
 
             doc.getDocumentElement().normalize();
 

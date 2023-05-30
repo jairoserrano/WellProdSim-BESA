@@ -4,7 +4,7 @@
  */
 package wpsPeasant.EmotionalModel;
 
-import wpsPeasantFamily.Utils.SensorData;
+import wpsPeasantFamily.Data.SensorData;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

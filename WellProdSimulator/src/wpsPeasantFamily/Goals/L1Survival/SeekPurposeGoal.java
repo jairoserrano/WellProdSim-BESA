@@ -40,12 +40,12 @@ public class SeekPurposeGoal extends GoalBDI {
         Plan seekPurposePlan = new Plan();
         seekPurposePlan.addTask(seekPurposeTask);
         RationalRole seekPurposeRole = new RationalRole(
-                "seekPurposeTask",
+                "SeekPurposeTask",
                 seekPurposePlan);
         SeekPurposeGoal seekPurposeGoal = new SeekPurposeGoal(
                 wpsStart.getPlanID(),
                 seekPurposeRole,
-                "seekPurposeTask",
+                "SeekPurposeTask",
                 GoalBDITypes.SURVIVAL);
         return seekPurposeGoal;
     }

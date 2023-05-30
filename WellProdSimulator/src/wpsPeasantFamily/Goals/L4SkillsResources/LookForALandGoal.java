@@ -24,7 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class LookForALandGoal extends GoalBDI {
         Plan lookForALandPlan = new Plan();
         lookForALandPlan.addTask(lookForALandTask);
         RationalRole lookForALandRole = new RationalRole(
-                "lookForALandTask",
+                "LookForALandTask",
                 lookForALandPlan);
         LookForALandGoal lookForALandGoal = new LookForALandGoal(
                 wpsStart.getPlanID(),
                 lookForALandRole,
-                "lookForALandTask",
+                "LookForALandTask",
                 GoalBDITypes.SKILLSRESOURCES);
         return lookForALandGoal;
     }
@@ -107,8 +107,7 @@ public class LookForALandGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(
-                TimeConsumedBy.LookForALand
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.LookForALandTask
         )) {
             return 1;
         } else {

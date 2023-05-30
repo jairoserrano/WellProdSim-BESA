@@ -24,7 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class IrrigateCropsGoal extends GoalBDI {
         Plan irrigateCropsPlan = new Plan();
         irrigateCropsPlan.addTask(irrigateCropsTask);
         RationalRole irrigateCropsRole = new RationalRole(
-                "irrigateCropsTask",
+                "IrrigateCropsTask",
                 irrigateCropsPlan);
         IrrigateCropsGoal irrigateCropsGoalBDI = new IrrigateCropsGoal(
                 wpsStart.getPlanID(),
                 irrigateCropsRole,
-                "irrigateCropsTask",
+                "IrrigateCropsTask",
                 GoalBDITypes.DEVELOPMENT);
         return irrigateCropsGoalBDI;
     }
@@ -108,8 +108,7 @@ public class IrrigateCropsGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.IrrigateCrops
+                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.IrrigateCropsTask
                 )) {
             return 1;
         } else {

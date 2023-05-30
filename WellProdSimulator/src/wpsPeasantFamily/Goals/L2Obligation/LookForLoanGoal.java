@@ -24,7 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Tasks.L2Obligation.LookForLoanTask;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class LookForLoanGoal extends GoalBDI {
         Plan lookForLoanPlan = new Plan();
         lookForLoanPlan.addTask(lookForLoanTask);
         RationalRole lookForLoanRole = new RationalRole(
-                "lookForLoanTask",
+                "LookForLoanTask",
                 lookForLoanPlan);
         LookForLoanGoal lookForLoanGoal = new LookForLoanGoal(
                 wpsStart.getPlanID(),
                 lookForLoanRole,
-                "lookForLoanTask",
+                "LookForLoanTask",
                 GoalBDITypes.OBLIGATION);
         return lookForLoanGoal;
     }
@@ -73,7 +73,7 @@ public class LookForLoanGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.LookForLoan)
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.LookForLoanTask)
                 && believes.getPeasantProfile().getHealth() > 0) {
             return 1;
         } else {

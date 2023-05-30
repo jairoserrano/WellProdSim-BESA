@@ -40,12 +40,12 @@ public class PayDebtsGoal extends GoalBDI {
         Plan peasantPayDebtsPlan = new Plan();
         peasantPayDebtsPlan.addTask(peasantPayDebtsTask);
         RationalRole peasantPayDebtsRole = new RationalRole(
-                "peasantPayDebtsTaks",
+                "PeasantPayDebtsTaks",
                 peasantPayDebtsPlan);
         PayDebtsGoal peasantPayDebtsGoalBDI = new PayDebtsGoal(
                 wpsStart.getPlanID(),
                 peasantPayDebtsRole,
-                "peasantPayDebtsTaks",
+                "PeasantPayDebtsTaks",
                 GoalBDITypes.OBLIGATION);
         return peasantPayDebtsGoalBDI;
     }

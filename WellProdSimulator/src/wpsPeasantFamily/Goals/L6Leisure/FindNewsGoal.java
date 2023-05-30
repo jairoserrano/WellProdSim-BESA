@@ -24,7 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class FindNewsGoal extends GoalBDI {
         Plan peasantLeisurePlan = new Plan();
         peasantLeisurePlan.addTask(peasantLeisureTask);
         RationalRole peasantLeisureRole = new RationalRole(
-                "peasantLeisureTask",
+                "PeasantLeisureTask",
                 peasantLeisurePlan);
         FindNewsGoal peasantLeisureGoalBDI = new FindNewsGoal(
                 wpsStart.getPlanID(),
                 peasantLeisureRole,
-                "peasantLeisureTask",
+                "PeasantLeisureTask",
                 GoalBDITypes.LEISURE);
         return peasantLeisureGoalBDI;
     }

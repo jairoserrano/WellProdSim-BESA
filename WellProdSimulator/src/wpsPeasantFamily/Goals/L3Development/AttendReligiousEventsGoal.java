@@ -24,7 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Tasks.L3Development.AttendReligiousEventsTask;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class AttendReligiousEventsGoal extends GoalBDI {
         Plan attendReligiousEventsPlan = new Plan();
         attendReligiousEventsPlan.addTask(attendReligiousEventsTask);
         RationalRole attendReligiousEventsRole = new RationalRole(
-                "attendReligiousEventsTask",
+                "AttendReligiousEventsTask",
                 attendReligiousEventsPlan);
         AttendReligiousEventsGoal attendReligiousEventsGoal = new AttendReligiousEventsGoal(
                 wpsStart.getPlanID(),
                 attendReligiousEventsRole,
-                "attendReligiousEventsTask",
+                "AttendReligiousEventsTask",
                 GoalBDITypes.DEVELOPMENT);
         return attendReligiousEventsGoal;
     }
@@ -73,8 +73,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(
-                TimeConsumedBy.AttendReligiousEvents
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.AttendReligiousEventsTask
         )) {
             return 1;
         } else {

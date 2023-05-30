@@ -24,7 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Tasks.L3Development.CheckCropsTask;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class CheckCropsGoal extends GoalBDI {
         Plan checkCropsPlan = new Plan();
         checkCropsPlan.addTask(checkCropsTask);
         RationalRole checkCropsRole = new RationalRole(
-                "checkCropsTask",
+                "CheckCropsTask",
                 checkCropsPlan);
         CheckCropsGoal checkCropsGoal = new CheckCropsGoal(
                 wpsStart.getPlanID(),
                 checkCropsRole,
-                "checkCropsTask",
+                "CheckCropsTask",
                 GoalBDITypes.DEVELOPMENT);
         return checkCropsGoal;
     }
@@ -107,7 +107,7 @@ public class CheckCropsGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.CheckCrops)
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.CheckCropsTask)
                 && believes.getPeasantProfile().isCropCheckedToday()) {
             return 1;
         } else {

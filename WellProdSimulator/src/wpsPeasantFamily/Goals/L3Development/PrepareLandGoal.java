@@ -24,7 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -42,12 +42,12 @@ public class PrepareLandGoal extends GoalBDI {
         Plan prepareLandPlan = new Plan();
         prepareLandPlan.addTask(prepareLandTask);
         RationalRole prepareLandRole = new RationalRole(
-                "prepareLandTask",
+                "PrepareLandTask",
                 prepareLandPlan);
         PrepareLandGoal prepareLandGoal = new PrepareLandGoal(
                 wpsStart.getPlanID(),
                 prepareLandRole,
-                "prepareLandTask",
+                "PrepareLandTask",
                 GoalBDITypes.DEVELOPMENT);
         return prepareLandGoal;
     }
@@ -110,11 +110,10 @@ public class PrepareLandGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.debug("free: " + believes.getPeasantProfile().isFree());
-        //wpsReport.debug("PrepareLand time needed: " + TimeConsumedBy.PrepareLand.getTime());
-        //wpsReport.debug("PrepareLand have time: " + believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PrepareLand));
+        //wpsReport.debug("PrepareLandTask time needed: " + TimeConsumedBy.PrepareLandTask.getTime());
+        //wpsReport.debug("PrepareLandTask have time: " + believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PrepareLandTask));
         if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.PrepareLand
+                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PrepareLandTask
                 )) {
             return 0;
         } else {

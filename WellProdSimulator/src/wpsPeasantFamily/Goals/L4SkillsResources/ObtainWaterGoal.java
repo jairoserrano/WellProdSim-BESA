@@ -24,7 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Tasks.L4SkillsResources.ObtainWaterTask;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
  *
@@ -41,12 +41,12 @@ public class ObtainWaterGoal extends GoalBDI {
         Plan obtainWaterPlan = new Plan();
         obtainWaterPlan.addTask(obtainWaterTask);
         RationalRole obtainWaterRole = new RationalRole(
-                "obtainWaterTask",
+                "ObtainWaterTask",
                 obtainWaterPlan);
         ObtainWaterGoal obtainWaterGoal = new ObtainWaterGoal(
                 wpsStart.getPlanID(),
                 obtainWaterRole,
-                "obtainWaterTask",
+                "ObtainWaterTask",
                 GoalBDITypes.SKILLSRESOURCES);
         return obtainWaterGoal;
     }
@@ -109,8 +109,7 @@ public class ObtainWaterGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.ObtainWater
+                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.ObtainWaterTask
                 )) {
             return 1;
         } else {

@@ -1,4 +1,4 @@
-package wpsPeasantFamily.Agent;
+package wpsPeasantFamily.Agent.Guards;
 
 import BESA.Kernel.Agent.Event.DataBESA;
 

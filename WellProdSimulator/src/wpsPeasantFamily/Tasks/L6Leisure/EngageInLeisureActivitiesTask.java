@@ -17,7 +17,7 @@ package wpsPeasantFamily.Tasks.L6Leisure;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Utils.TimeConsumedBy;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -45,7 +45,7 @@ public class EngageInLeisureActivitiesTask extends Task {
         wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //believes.getPeasantProfile().useLeisureOptions();
-        believes.getPeasantProfile().useTime(TimeConsumedBy.EngageInLeisureActivitiesGoal);
+        believes.getPeasantProfile().useTime(TimeConsumedBy.PeasantLeisureTask);
         this.setTaskWaitingForExecution();
         //this.setFinished(true);
     }

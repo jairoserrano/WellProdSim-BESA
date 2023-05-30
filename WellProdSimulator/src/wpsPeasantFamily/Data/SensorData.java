@@ -12,7 +12,7 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Utils;
+package wpsPeasantFamily.Data;
 
 import java.util.Map;
 import rational.data.InfoData;
