@@ -35,12 +35,12 @@ public class FromWorldGuard extends GuardBESA {
     @Override
     public void funcExecGuard(EventBESA event) {
         FromWorldMessage peasantCommMessage = (FromWorldMessage) event.getData();
-        //wpsReport.debug("🤖🤖🤖 Recibido: " + peasantCommMessage.getPeasantAlias() + " getType=" + peasantCommMessage.getPayload());
+        wpsReport.warn("🤖🤖🤖 Recibido: " + peasantCommMessage.getPeasantAlias() + " getType=" + peasantCommMessage.getPayload());
 
         StateBDI state = (StateBDI) this.agent.getState();
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
 
-        FromWorldMessageType messageType = peasantCommMessage.getMessageType();// .getPayload();
+        FromWorldMessageType messageType = peasantCommMessage.getMessageType();
 
         //wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload() + ":🍙🍙🍙");
         try {

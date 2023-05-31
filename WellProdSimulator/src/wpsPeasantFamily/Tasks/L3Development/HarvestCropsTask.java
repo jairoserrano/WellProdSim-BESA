@@ -66,7 +66,7 @@ public class HarvestCropsTask extends Task {
                     CROP_HARVEST,
                     believes.getPeasantProfile().getCurrentCropName(),
                     wpsCurrentDate.getInstance().getCurrentDate(),
-                    believes.getPeasantProfile().getProfileName());
+                    believes.getPeasantProfile().getPeasantFamilyAlias());
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
                     worldMessage);

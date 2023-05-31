@@ -59,19 +59,19 @@ public class LookForLoanTask extends Task {
         // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.
         try {
             AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasBankAgent);
+            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.config.getBankAgentName());
 
             BankMessage bankMessage;
             if (believes.getPeasantProfile().isInformalLoanNeeded()) {
                 bankMessage = new BankMessage(
                         ASK_FOR_INFORMAL_LOAN,
-                        believes.getPeasantProfile().getProfileName(),
+                        believes.getPeasantProfile().getPeasantFamilyAlias(),
                         100000);
                 believes.getPeasantProfile().setInformalLoanSeason(false);
             } else {
                 bankMessage = new BankMessage(
                         ASK_FOR_FORMAL_LOAN,
-                        believes.getPeasantProfile().getProfileName(),
+                        believes.getPeasantProfile().getPeasantFamilyAlias(),
                         500000);
                 believes.getPeasantProfile().setFormalLoanSeason(false);
             }

@@ -19,12 +19,13 @@ import BESA.Kernel.Agent.AgentBESA;
 import BESA.Kernel.Agent.KernelAgentExceptionBESA;
 import BESA.Kernel.Agent.StateBESA;
 import BESA.Kernel.Agent.StructBESA;
+import wpsActivator.wpsStart;
 
 /**
  *
  * @author jairo
  */
-public class wpsPerturbationAgent extends AgentBESA {
+public class PerturbationAgent extends AgentBESA {
 
     /**
      *
@@ -34,33 +35,39 @@ public class wpsPerturbationAgent extends AgentBESA {
      * @param passwd
      * @throws KernelAgentExceptionBESA
      */
-    public wpsPerturbationAgent(String alias, StateBESA state, StructBESA structAgent, double passwd) throws KernelAgentExceptionBESA {
+    public PerturbationAgent(String alias, StateBESA state, StructBESA structAgent, double passwd) throws KernelAgentExceptionBESA {
         super(alias, state, structAgent, passwd);
     }
 
-    public static wpsPerturbationAgent createPerturbationAgent(double passwd) throws ExceptionBESA{      
-        wpsPerturbationAgent perturbationAgent = new wpsPerturbationAgent("wpsPerturbation", createState(), createStruct(new StructBESA()), passwd);
+    public static PerturbationAgent createAgent(double passwd) throws ExceptionBESA {
+        PerturbationAgent perturbationAgent = new PerturbationAgent(
+                wpsStart.config.getPerturbationAgentName(),
+                createState(),
+                createStruct(
+                        new StructBESA()),
+                passwd
+        );
         return perturbationAgent;
-        
+
     }
-    
+
     private static StructBESA createStruct(StructBESA structBESA) throws ExceptionBESA {
         structBESA.addBehavior("PerturbationAgentGuard");
         structBESA.bindGuard("PerturbationAgentGuard", wpsPerturbationGuard.class);
         return structBESA;
     }
-    
+
     private static wpsPerturbationState createState() throws ExceptionBESA {
         wpsPerturbationState perturbationAgentState = new wpsPerturbationState();
         return perturbationAgentState;
     }
-    
+
     /**
      *
      */
     @Override
     public void setupAgent() {
-        
+
     }
 
     /**
@@ -68,7 +75,7 @@ public class wpsPerturbationAgent extends AgentBESA {
      */
     @Override
     public void shutdownAgent() {
-        
+
     }
-    
+
 }

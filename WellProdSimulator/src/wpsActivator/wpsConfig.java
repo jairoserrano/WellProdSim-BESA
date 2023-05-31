@@ -25,6 +25,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 import wpsPeasantFamily.Data.FarmingResource;
 import wpsPeasantFamily.Data.PeasantFamilyProfile;
 import wpsViewer.Agent.wpsReport;
@@ -36,25 +37,21 @@ import wpsViewer.Agent.wpsReport;
 public final class wpsConfig {
 
     private static wpsConfig instance = null;
-
+    private String SocietyAgentName;
+    private String BankAgentName;
+    private String MarketAgentName;
+    private String ControlAgentName;
+    private String PerturbationAgentName;
+    private String ViewerAgentName;
     private String peasantType = "";
     private String rainfallConditions = "";
     private String perturbation = "";
     private String startSimulationDate;
+    private int peasantSerialID;
+
     PeasantFamilyProfile regularFarmerProfile;
     PeasantFamilyProfile lazyFarmerProfile;
     PeasantFamilyProfile proactiveFarmerProfile;
-
-    /**
-     *
-     * @param args
-     */
-    private wpsConfig() {
-
-        loadPeasantConfig();
-        loadWPSConfig();
-
-    }
 
     /**
      *
@@ -65,6 +62,42 @@ public final class wpsConfig {
             instance = new wpsConfig();
         }
         return instance;
+    }
+
+    /**
+     *
+     * @param args
+     */
+    private wpsConfig() {
+
+        loadPeasantConfig();
+        loadWPSConfig();
+        this.peasantSerialID = 1;
+
+    }
+
+    public String getSocietyAgentName() {
+        return SocietyAgentName;
+    }
+
+    public String getBankAgentName() {
+        return BankAgentName;
+    }
+
+    public String getMarketAgentName() {
+        return MarketAgentName;
+    }
+
+    public String getPerturbationAgentName() {
+        return PerturbationAgentName;
+    }
+
+    public String getControlAgentName() {
+        return ControlAgentName;
+    }
+
+    public String getViewerAgentName() {
+        return this.ViewerAgentName;
     }
 
     /**
@@ -236,8 +269,16 @@ public final class wpsConfig {
 
             // Carga las propiedades desde el archivo
             properties.load(fileInputStream);
+
             // Valores iniciales de la simulación
-            this.startSimulationDate = properties.getProperty("wpsControl.startdate");
+            this.startSimulationDate = properties.getProperty("control.startdate");
+            this.BankAgentName = properties.getProperty("bank.name");
+            this.ControlAgentName = properties.getProperty("control.name");
+            this.MarketAgentName = properties.getProperty("market.name");
+            this.SocietyAgentName = properties.getProperty("society.name");
+            this.PerturbationAgentName = properties.getProperty("perturbation.name");
+            this.ViewerAgentName = properties.getProperty("viewer.name");
+
             System.out.println("---" + this.startSimulationDate + "----");
             fileInputStream.close();
         } catch (IOException e) {
@@ -283,6 +324,25 @@ public final class wpsConfig {
         } catch (IOException ex) {
             wpsReport.error("No hay configuración válida");
             System.exit(0);
+        }
+    }
+
+    public synchronized String getUniqueFarmerName() {
+        return "PeasantFamily_" + peasantSerialID++;
+    }
+
+    public synchronized PeasantFamilyProfile getFarmerProfile() {
+        Random rand = new Random();
+
+        switch (rand.nextInt(3)) {
+            case 0:
+                return this.getRegularFarmerProfile();
+            case 1:
+                return this.getProactiveFarmerProfile();
+            case 2:
+                return this.getRegularFarmerProfile();
+            default:
+                return this.getRegularFarmerProfile();
         }
     }
 

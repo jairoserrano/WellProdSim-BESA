@@ -107,8 +107,7 @@ public class LookForALandGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.LookForALandTask
-        )) {
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.LookForALandTask)) {
             return 1;
         } else {
             return 0;

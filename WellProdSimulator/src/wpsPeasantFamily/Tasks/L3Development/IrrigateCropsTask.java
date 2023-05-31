@@ -65,7 +65,7 @@ public class IrrigateCropsTask extends Task {
                     CROP_IRRIGATION,
                     believes.getPeasantProfile().getCurrentCropName(),
                     believes.getPeasantProfile().getInternalCurrentDate(),
-                    believes.getPeasantProfile().getProfileName());
+                    believes.getPeasantProfile().getPeasantFamilyAlias());
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
                     worldMessage);

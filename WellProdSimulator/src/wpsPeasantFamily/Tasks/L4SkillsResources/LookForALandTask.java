@@ -174,16 +174,17 @@ public class LookForALandTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
 
         // @TODO: setFarmName lo cambia el gobierno o el campesino
-        believes.getPeasantProfile().setFarmName("Land_" + believes.getPeasantProfile().getProfileName());
+        believes.getPeasantProfile().setFarmName("Land_" + believes.getPeasantProfile().getPeasantFamilyAlias());
         believes.getPeasantProfile().setHousing(1);
         believes.getPeasantProfile().setServicesPresence(1);
         believes.getPeasantProfile().setHousingSize(1);
         believes.getPeasantProfile().setHousingLocation(1);
         believes.getPeasantProfile().setFarmDistance(1);
+        believes.getPeasantProfile().setFarm(true);
 
         // @TODO: setPlantingSeason lo cambia el reloj global
         believes.getPeasantProfile().useTime(TimeConsumedBy.LookForALandTask);
@@ -195,14 +196,14 @@ public class LookForALandTask extends Task {
         try {
             WorldAgent worldAgent = buildWorld(
                     getRainfallFile(config.getRainfallConditions()),
-                    believes.getPeasantProfile().getProfileName(),
+                    believes.getPeasantProfile().getPeasantFamilyAlias(),
                     believes.getPeasantProfile().getFarmName(),
                     believes.getPeasantProfile().getCropSize(),
                     believes.getPeasantProfile().getCurrentCropName()
             );
             initialWorldStateInitialization(
                     worldAgent,
-                    believes.getPeasantProfile().getProfileName()
+                    believes.getPeasantProfile().getPeasantFamilyAlias()
             );
 
             worldAgent.start();
@@ -210,9 +211,8 @@ public class LookForALandTask extends Task {
         } catch (Exception ex) {
             wpsReport.error(ex);
         }
-
-        believes.getPeasantProfile().setFarm(true);
-        wpsReport.info("🥬 La familia campesina ya tiene tierra.");
+        
+        wpsReport.info("🥬 " + believes.getPeasantProfile().getPeasantFamilyAlias() + " ya tiene tierra.");
         this.setFinished();
 
     }

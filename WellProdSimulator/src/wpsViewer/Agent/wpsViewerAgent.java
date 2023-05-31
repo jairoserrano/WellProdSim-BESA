@@ -14,6 +14,8 @@
  */
 package wpsViewer.Agent;
 
+import wpsSocietyMarket.*;
+import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.AgentBESA;
 import BESA.Kernel.Agent.KernelAgentExceptionBESA;
 import BESA.Kernel.Agent.StateBESA;
@@ -37,12 +39,28 @@ public class wpsViewerAgent extends AgentBESA {
         super(alias, state, structAgent, passwd);
     }
 
+    public static wpsViewerAgent createAgent(String alias, double passwd) throws ExceptionBESA{        
+        wpsViewerAgent viewerAgent = new wpsViewerAgent(alias, createState(), createStruct(new StructBESA()), passwd);
+        return viewerAgent;
+    }
+    
+    private static StructBESA createStruct(StructBESA structBESA) throws ExceptionBESA {
+        structBESA.addBehavior("wpsViewerAgentGuard");
+        structBESA.bindGuard("wpsViewerAgentGuard", wpsViewerAgentGuard.class);
+        return structBESA;
+    }
+    
+    private static wpsViewerAgentState createState() throws ExceptionBESA {
+        wpsViewerAgentState marketAgentState = new wpsViewerAgentState();
+        return marketAgentState;
+    }
+    
     /**
      *
      */
     @Override
     public void setupAgent() {
-
+        
     }
 
     /**
@@ -50,7 +68,7 @@ public class wpsViewerAgent extends AgentBESA {
      */
     @Override
     public void shutdownAgent() {
-
+        
     }
-
+    
 }

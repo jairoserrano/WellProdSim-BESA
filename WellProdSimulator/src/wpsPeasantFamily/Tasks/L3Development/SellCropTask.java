@@ -57,11 +57,11 @@ public class SellCropTask extends Task {
         
         try {
             AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasMarketAgent);
+            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.config.getMarketAgentName());
 
             MarketMessage marketMessage = new MarketMessage(
                     SELL_CROP,
-                    believes.getPeasantProfile().getProfileName(),
+                    believes.getPeasantProfile().getPeasantFamilyAlias(),
                     believes.getPeasantProfile().getHarvestedWeight(),
                     believes.getPeasantProfile().getCurrentCropName()
             );

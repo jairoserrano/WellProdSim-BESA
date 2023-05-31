@@ -56,11 +56,11 @@ public class ObtainWaterTask extends Task {
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasMarketAgent);
+            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.config.getMarketAgentName());
 
             MarketMessage marketMessage = new MarketMessage(
                     BUY_WATER,
-                    believes.getPeasantProfile().getProfileName(),
+                    believes.getPeasantProfile().getPeasantFamilyAlias(),
                     100
             );
 

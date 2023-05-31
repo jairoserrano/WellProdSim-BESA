@@ -17,6 +17,8 @@ package wpsPeasantFamily.Data;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import wpsControl.Agent.wpsCurrentDate;
 import wpsViewer.Agent.wpsReport;
 
@@ -27,8 +29,7 @@ import wpsViewer.Agent.wpsReport;
 public class PeasantFamilyProfile implements Serializable {
 
     private String purpose;
-    private String profileName;
-    private String agentID;
+    private String peasantFamilyAlias;
     private String internalCurrentDate;
     private double peasantFamilyMinimalVital;
     private int health;
@@ -202,6 +203,11 @@ public class PeasantFamilyProfile implements Serializable {
         } else {
             //wpsReport.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + wpsCurrentDate.getInstance().getCurrentDate());
         }
+        try {
+            Thread.sleep(time.getTime() * 100);
+        } catch (InterruptedException ex) {
+            wpsReport.error(ex);
+        }
     }
 
     /**
@@ -243,7 +249,7 @@ public class PeasantFamilyProfile implements Serializable {
         /*wpsReport.info(
                 "🔆 New Day # "
                 + this.currentDay + " - 🔆 "
-                + this.profileName + " "
+                + this.peasantFamilyAlias + " "
                 + this.internalCurrentDate
         );*/
     }
@@ -304,16 +310,16 @@ public class PeasantFamilyProfile implements Serializable {
      *
      * @return
      */
-    public synchronized String getProfileName() {
-        return profileName;
+    public synchronized String getPeasantFamilyAlias() {
+        return peasantFamilyAlias;
     }
 
     /**
      *
-     * @param profileName
+     * @param peasantFamilyAlias
      */
-    public synchronized void setProfileName(String profileName) {
-        this.profileName = profileName;
+    public synchronized void setPeasantFamilyAlias(String peasantFamilyAlias) {
+        this.peasantFamilyAlias = peasantFamilyAlias;
     }
 
     /**
@@ -1480,20 +1486,6 @@ public class PeasantFamilyProfile implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        //return "PeasantFamilyProfile{" + "purpose=" + purpose + ", profileName=" + profileName + ", agentID=" + agentID + ", internalCurrentDate=" + internalCurrentDate + ", peasantFamilyMinimalVital=" + peasantFamilyMinimalVital + ", health=" + health + ", productivity=" + productivity + ", wellBeging=" + wellBeging + ", worker=" + worker + ", peasantQualityFactor=" + peasantQualityFactor + ", liveStockAffinity=" + liveStockAffinity + ", farm=" + farm + ", farmName=" + farmName + ", cropSize=" + cropSize + ", housing=" + housing + ", servicesPresence=" + servicesPresence + ", housingSize=" + housingSize + ", housingCondition=" + housingCondition + ", housingLocation=" + housingLocation + ", farmDistance=" + farmDistance + ", money=" + money + ", totalIncome=" + totalIncome + ", loanAmountToPay=" + loanAmountToPay + ", harvestedWeight=" + harvestedWeight + ", housingQuailty=" + housingQuailty + ", timeSpentOnMaintenance=" + timeSpentOnMaintenance + ", busy=" + busy + ", cropHealth=" + cropHealth + ", farmReady=" + farmReady + ", harvestedWeightExpected=" + harvestedWeightExpected + ", processedCrop=" + processedCrop + ", cropEficiency=" + cropEficiency + ", processedWeight=" + processedWeight + ", processingTime=" + processingTime + ", trainingLevel=" + trainingLevel + ", trainingAvailability=" + trainingAvailability + ", trainingRelevance=" + trainingRelevance + ", trainingCost=" + trainingCost + ", irrigation=" + irrigation + ", irrigationTime=" + irrigationTime + ", pestControl=" + pestControl + ", diseasedCrop=" + diseasedCrop + ", weedControl=" + weedControl + ", infestedCrop=" + infestedCrop + ", suppliesAvailability=" + suppliesAvailability + ", toolsAvailability=" + toolsAvailability + ", associated=" + associated + ", neighbors=" + neighbors + ", collaborationValue=" + collaborationValue + ", healthProgramsAvailability=" + healthProgramsAvailability + ", livestockFarming=" + livestockFarming + ", livestockHealth=" + livestockHealth + ", livestockNumber=" + livestockNumber + ", familyTime=" + familyTime + ", peasantFamilyAffinity=" + peasantFamilyAffinity + ", familyTimeAvailability=" + familyTimeAvailability + ", communications=" + communications + ", socialCompatibility=" + socialCompatibility + ", restingTimeAvailibility=" + restingTimeAvailibility + ", peasantRestAffinity=" + peasantRestAffinity + ", leisureOptions=" + leisureOptions + ", sellDone=" + sellDone + ", priceList=" + priceList + ", waterAvailable=" + waterAvailable + ", pesticidesAvailable=" + pesticidesAvailable + ", tools=" + tools + ", supplies=" + supplies + ", riceSeedsByHectare=" + riceSeedsByHectare + ", seeds=" + seeds + ", startRiceSeason=" + startRiceSeason + ", endRiceSeason=" + endRiceSeason + ", currentCropName=" + currentCropName + ", preparationSeason=" + preparationSeason + ", plantingSeason=" + plantingSeason + ", growingSeason=" + growingSeason + ", pesticideSeason=" + pesticideSeason + ", irrigateSeason=" + irrigateSeason + ", harverstSeason=" + harverstSeason + ", formalLoanSeason=" + formalLoanSeason + ", informalLoanSeason=" + informalLoanSeason + ", cropCheckedToday=" + cropCheckedToday + ", timeLeftOnDay=" + timeLeftOnDay + ", currentDay=" + currentDay + ", newDay=" + newDay + '}';
-        return    "\n------------------------------------------------------------------------------------------------ \n" 
-                + this.profileName + "{\n" 
-                + "internalCurrentDate=" + internalCurrentDate + ", health=" + health + ", farm=" + farm + ", farmName=" + farmName + ", money=" + money + ", loanAmountToPay=" + loanAmountToPay 
-                + ",\n harvestedWeight=" + harvestedWeight + ", cropHealth=" + cropHealth + ", processedWeight=" + processedWeight + ", diseasedCrop=" + diseasedCrop + ", weedControl=" + weedControl + ", infestedCrop=" + infestedCrop + ", sellDone=" + sellDone 
-                //+ ",\n priceList=" + priceList + ",\n waterAvailable=" + waterAvailable + ", pesticidesAvailable=" + pesticidesAvailable + ", tools=" + tools + ", supplies=" + supplies +", seeds=" + seeds + ", startRiceSeason=" + startRiceSeason 
-                + ",\n waterAvailable=" + waterAvailable + ", pesticidesAvailable=" + pesticidesAvailable + ", tools=" + tools + ", supplies=" + supplies +", seeds=" + seeds + ", startRiceSeason=" + startRiceSeason 
-                + ",\n currentCropName=" + currentCropName + ", preparationSeason=" + preparationSeason + ", plantingSeason=" + plantingSeason + ", growingSeason=" + growingSeason + ", pesticideSeason=" + pesticideSeason + ", irrigateSeason=" + irrigateSeason + ", harverstSeason=" + harverstSeason + ", formalLoanSeason=" + formalLoanSeason 
-                + ",\n informalLoanSeason=" + informalLoanSeason + ", cropCheckedToday=" + cropCheckedToday + ", timeLeftOnDay=" + timeLeftOnDay + ", currentDay=" + currentDay + ", newDay=" + newDay 
-                + "\n------------------------------------------------------------------------------------------------ \n" + '}';
-    }
-
     /**
      *
      */
@@ -1597,6 +1589,23 @@ public class PeasantFamilyProfile implements Serializable {
 
     public void decreaseHealth() {
         this.health -= 5;
+    }
+
+    public String toJson() {
+        return "PeasantFamilyProfile{" + "purpose=" + purpose + ", peasantFamilyAlias=" + peasantFamilyAlias + ", internalCurrentDate=" + internalCurrentDate + ", peasantFamilyMinimalVital=" + peasantFamilyMinimalVital + ", health=" + health + ", productivity=" + productivity + ", wellBeging=" + wellBeging + ", worker=" + worker + ", peasantQualityFactor=" + peasantQualityFactor + ", liveStockAffinity=" + liveStockAffinity + ", farm=" + farm + ", farmName=" + farmName + ", cropSize=" + cropSize + ", housing=" + housing + ", servicesPresence=" + servicesPresence + ", housingSize=" + housingSize + ", housingCondition=" + housingCondition + ", housingLocation=" + housingLocation + ", farmDistance=" + farmDistance + ", money=" + money + ", totalIncome=" + totalIncome + ", loanAmountToPay=" + loanAmountToPay + ", housingQuailty=" + housingQuailty + ", timeSpentOnMaintenance=" + timeSpentOnMaintenance + ", busy=" + busy + ", cropHealth=" + cropHealth + ", farmReady=" + farmReady + ", harvestedWeightExpected=" + harvestedWeightExpected + ", processedCrop=" + processedCrop + ", cropEficiency=" + cropEficiency + ", processedWeight=" + processedWeight + ", processingTime=" + processingTime + ", trainingLevel=" + trainingLevel + ", trainingAvailability=" + trainingAvailability + ", trainingRelevance=" + trainingRelevance + ", trainingCost=" + trainingCost + ", irrigation=" + irrigation + ", irrigationTime=" + irrigationTime + ", pestControl=" + pestControl + ", diseasedCrop=" + diseasedCrop + ", weedControl=" + weedControl + ", infestedCrop=" + infestedCrop + ", suppliesAvailability=" + suppliesAvailability + ", toolsAvailability=" + toolsAvailability + ", associated=" + associated + ", neighbors=" + neighbors + ", collaborationValue=" + collaborationValue + ", healthProgramsAvailability=" + healthProgramsAvailability + ", livestockFarming=" + livestockFarming + ", livestockHealth=" + livestockHealth + ", livestockNumber=" + livestockNumber + ", familyTime=" + familyTime + ", peasantFamilyAffinity=" + peasantFamilyAffinity + ", familyTimeAvailability=" + familyTimeAvailability + ", communications=" + communications + ", socialCompatibility=" + socialCompatibility + ", restingTimeAvailibility=" + restingTimeAvailibility + ", peasantRestAffinity=" + peasantRestAffinity + ", leisureOptions=" + leisureOptions + ", sellDone=" + sellDone + ", priceList=" + priceList + ", waterAvailable=" + waterAvailable + ", pesticidesAvailable=" + pesticidesAvailable + ", tools=" + tools + ", supplies=" + supplies + ", riceSeedsByHectare=" + riceSeedsByHectare + ", seeds=" + seeds + ", harvestedWeight=" + harvestedWeight + ", startRiceSeason=" + startRiceSeason + ", endRiceSeason=" + endRiceSeason + ", currentCropName=" + currentCropName + ", preparationSeason=" + preparationSeason + ", plantingSeason=" + plantingSeason + ", growingSeason=" + growingSeason + ", pesticideSeason=" + pesticideSeason + ", irrigateSeason=" + irrigateSeason + ", harverstSeason=" + harverstSeason + ", formalLoanSeason=" + formalLoanSeason + ", informalLoanSeason=" + informalLoanSeason + ", cropCheckedToday=" + cropCheckedToday + ", timeLeftOnDay=" + timeLeftOnDay + ", currentDay=" + currentDay + ", newDay=" + newDay + '}';
+    }
+
+    @Override
+    public synchronized String toString() {
+        //return "PeasantFamilyProfile{" + "purpose=" + purpose + ", peasantFamilyAlias=" + peasantFamilyAlias + ", agentID=" + agentID + ", internalCurrentDate=" + internalCurrentDate + ", peasantFamilyMinimalVital=" + peasantFamilyMinimalVital + ", health=" + health + ", productivity=" + productivity + ", wellBeging=" + wellBeging + ", worker=" + worker + ", peasantQualityFactor=" + peasantQualityFactor + ", liveStockAffinity=" + liveStockAffinity + ", farm=" + farm + ", farmName=" + farmName + ", cropSize=" + cropSize + ", housing=" + housing + ", servicesPresence=" + servicesPresence + ", housingSize=" + housingSize + ", housingCondition=" + housingCondition + ", housingLocation=" + housingLocation + ", farmDistance=" + farmDistance + ", money=" + money + ", totalIncome=" + totalIncome + ", loanAmountToPay=" + loanAmountToPay + ", harvestedWeight=" + harvestedWeight + ", housingQuailty=" + housingQuailty + ", timeSpentOnMaintenance=" + timeSpentOnMaintenance + ", busy=" + busy + ", cropHealth=" + cropHealth + ", farmReady=" + farmReady + ", harvestedWeightExpected=" + harvestedWeightExpected + ", processedCrop=" + processedCrop + ", cropEficiency=" + cropEficiency + ", processedWeight=" + processedWeight + ", processingTime=" + processingTime + ", trainingLevel=" + trainingLevel + ", trainingAvailability=" + trainingAvailability + ", trainingRelevance=" + trainingRelevance + ", trainingCost=" + trainingCost + ", irrigation=" + irrigation + ", irrigationTime=" + irrigationTime + ", pestControl=" + pestControl + ", diseasedCrop=" + diseasedCrop + ", weedControl=" + weedControl + ", infestedCrop=" + infestedCrop + ", suppliesAvailability=" + suppliesAvailability + ", toolsAvailability=" + toolsAvailability + ", associated=" + associated + ", neighbors=" + neighbors + ", collaborationValue=" + collaborationValue + ", healthProgramsAvailability=" + healthProgramsAvailability + ", livestockFarming=" + livestockFarming + ", livestockHealth=" + livestockHealth + ", livestockNumber=" + livestockNumber + ", familyTime=" + familyTime + ", peasantFamilyAffinity=" + peasantFamilyAffinity + ", familyTimeAvailability=" + familyTimeAvailability + ", communications=" + communications + ", socialCompatibility=" + socialCompatibility + ", restingTimeAvailibility=" + restingTimeAvailibility + ", peasantRestAffinity=" + peasantRestAffinity + ", leisureOptions=" + leisureOptions + ", sellDone=" + sellDone + ", priceList=" + priceList + ", waterAvailable=" + waterAvailable + ", pesticidesAvailable=" + pesticidesAvailable + ", tools=" + tools + ", supplies=" + supplies + ", riceSeedsByHectare=" + riceSeedsByHectare + ", seeds=" + seeds + ", startRiceSeason=" + startRiceSeason + ", endRiceSeason=" + endRiceSeason + ", currentCropName=" + currentCropName + ", preparationSeason=" + preparationSeason + ", plantingSeason=" + plantingSeason + ", growingSeason=" + growingSeason + ", pesticideSeason=" + pesticideSeason + ", irrigateSeason=" + irrigateSeason + ", harverstSeason=" + harverstSeason + ", formalLoanSeason=" + formalLoanSeason + ", informalLoanSeason=" + informalLoanSeason + ", cropCheckedToday=" + cropCheckedToday + ", timeLeftOnDay=" + timeLeftOnDay + ", currentDay=" + currentDay + ", newDay=" + newDay + '}';
+        return this.peasantFamilyAlias
+                + "\nPeasant Current Date = " + internalCurrentDate + "\nhealth=" + health + ", farm=" + farm + ", farmName=" + farmName + ", money=" + money + ", loanAmountToPay=" + loanAmountToPay
+                + ",\nHarvestedWeight = " + harvestedWeight + ", cropHealth=" + cropHealth + ", processedWeight=" + processedWeight + ", diseasedCrop=" + diseasedCrop + ", weedControl=" + weedControl + ", infestedCrop=" + infestedCrop + ", sellDone=" + sellDone
+                //+ ",\n priceList=" + priceList + ",\n waterAvailable=" + waterAvailable + ", pesticidesAvailable=" + pesticidesAvailable + ", tools=" + tools + ", supplies=" + supplies +", seeds=" + seeds + ", startRiceSeason=" + startRiceSeason 
+                + ",\nformalLoanSeason=" + formalLoanSeason + ", informalLoanSeason=" + informalLoanSeason + ", cropCheckedToday=" + cropCheckedToday + ", timeLeftOnDay=" + timeLeftOnDay + ", currentDay=" + currentDay + ", newDay=" + newDay
+                + ",\nwaterAvailable=" + waterAvailable + ", pesticidesAvailable=" + pesticidesAvailable + ", tools=" + tools + ", supplies=" + supplies + ", seeds=" + seeds + ", startRiceSeason=" + startRiceSeason
+                + ",\ncurrentCropName   = " + currentCropName + "\npreparationSeason = " + preparationSeason + "\nplantingSeason    = " + plantingSeason + "\ngrowingSeason     = " + growingSeason + "\npesticideSeason   = " + pesticideSeason + "\nirrigateSeason    = " + irrigateSeason + " \nharverstSeason    = " + harverstSeason
+                + "\n------------------------------------------------------------------------------------------------ \n";
     }
 
 }

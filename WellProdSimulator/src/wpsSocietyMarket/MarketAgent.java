@@ -38,7 +38,7 @@ public class MarketAgent extends AgentBESA {
         super(alias, state, structAgent, passwd);
     }
 
-    public static MarketAgent createBankAgent(String alias, double passwd) throws ExceptionBESA{        
+    public static MarketAgent createAgent(String alias, double passwd) throws ExceptionBESA{        
         MarketAgent marketAgent = new MarketAgent(alias, createState(), createStruct(new StructBESA()), passwd);
         return marketAgent;
     }

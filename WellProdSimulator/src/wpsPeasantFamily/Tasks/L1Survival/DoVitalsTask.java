@@ -48,7 +48,9 @@ public class DoVitalsTask extends Task {
      */
     @Override
     public synchronized void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");      
+
+
+        //wpsReport.info("⚙️⚙️⚙️");      
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setNewDayFalse();
         believes.getPeasantProfile().useTime(TimeConsumedBy.DoVitalsTask);
@@ -72,11 +74,11 @@ public class DoVitalsTask extends Task {
         if (wpsCurrentDate.getInstance().isFirstDayOfMonth()) {
             try {
                 AdmBESA adm = AdmBESA.getInstance();
-                AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasBankAgent);
+                AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.config.getBankAgentName());
 
                 BankMessage bankMessage = new BankMessage(
                         ASK_CURRENT_TERM,
-                        believes.getPeasantProfile().getProfileName()
+                        believes.getPeasantProfile().getPeasantFamilyAlias()
                 );
 
                 EventBESA ev = new EventBESA(

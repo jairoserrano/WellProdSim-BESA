@@ -32,6 +32,7 @@ import rational.guards.InformationFlowGuard;
 import wpsPeasantFamily.Agent.Guards.FromBankGuard;
 import wpsPeasantFamily.Agent.Guards.FromMarketGuard;
 import wpsPeasantFamily.Agent.Guards.FromWorldGuard;
+import wpsPeasantFamily.Agent.Guards.StatusGuard;
 import wpsPeasantFamily.Data.PeasantFamilyProfile;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsPeasantFamily.Goals.L1Survival.DoHealthCareGoal;
@@ -87,11 +88,13 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         structBESA.bindGuard("FromBankGuard", FromBankGuard.class);
         structBESA.addBehavior("FromMarketGuard");
         structBESA.bindGuard("FromMarketGuard", FromMarketGuard.class);
+        structBESA.addBehavior("StatusGuard");
+        structBESA.bindGuard("StatusGuard", StatusGuard.class);
         return structBESA;
     }
 
-    private static PeasantFamilyBDIAgentBelieves createBelieves(PeasantFamilyProfile profile) {
-        return new PeasantFamilyBDIAgentBelieves(profile);
+    private static PeasantFamilyBDIAgentBelieves createBelieves(String alias, PeasantFamilyProfile profile) {
+        return new PeasantFamilyBDIAgentBelieves(alias, profile);
     }
 
     private static List<GoalBDI> createGoals() {
@@ -152,7 +155,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
      * @throws ExceptionBESA
      */
     public PeasantFamilyBDIAgent(String alias, PeasantFamilyProfile peasantProfile) throws ExceptionBESA {
-        super(alias, createBelieves(peasantProfile), createGoals(), BDITHRESHOLD, createStruct(new StructBESA()));
+        super(alias, createBelieves(alias, peasantProfile), createGoals(), BDITHRESHOLD, createStruct(new StructBESA()));
         //wpsReport.info("PeasantAgent Iniciado");
     }
 
@@ -179,7 +182,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
      *
      */
     public void BDIPulse() {
-        //wpsReport.debug("Beat inicial");
+        //wpsReport.debug(this.getAlias() + " Beat inicial");
 
         // Crea un nuevo ScheduledExecutorService si no existe ya uno
         if (executor == null) {
@@ -213,11 +216,14 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
     private int getUpdatedWaitTime() {
         StateBDI believes = (StateBDI) this.state;
         if (believes.getMainRole() != null) {
-            wpsReport.debug(this.getAlias() + " MAIN ROLE FROM UPDATE " + believes.getMainRole().getRoleName());
-            //wpsReport.warn(this.getAlias() + " MAIN getIntention " + believes.getMachineBDIParams().getIntention());
-            return TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 100;
+            //wpsReport.debug(this.getAlias() + " MAIN ROLE FROM UPDATE " + believes.getMainRole().getRoleName());
+            wpsReport.warn(this.getAlias() + " MAIN "
+                    + ""
+                    + ""
+                    + "Intention " + believes.getMachineBDIParams().getIntention());
+            return TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 200;
         } else {
-            wpsReport.debug(this.getAlias() + " MAIN ROLE NULL");
+            //wpsReport.debug(this.getAlias() + " MAIN ROLE NULL");
             return 100;
         }
     }

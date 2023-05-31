@@ -33,7 +33,7 @@ public class WorldGuard extends GuardBESA {
     @Override
     public void funcExecGuard(EventBESA eventBESA) {
         WorldMessage worldMessage = (WorldMessage) eventBESA.getData();
-        //wpsReport.info("🚩🚩🚩" + worldMessage);
+        wpsReport.info("🚩🚩🚩" + worldMessage);
         WorldState worldState = (WorldState) this.agent.getState();
         FromWorldMessage peasantMessage;
         CropCellState cropCellState;

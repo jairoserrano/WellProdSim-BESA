@@ -19,16 +19,22 @@ import BESA.Kernel.Agent.AgentBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import wpsControl.Agent.ControlAgent;
 import wpsControl.Agent.wpsCurrentDate;
+import wpsPeasantFamily.Agent.Guards.StatusGuard;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgent;
 import wpsPeasantFamily.Agent.HeartBeatGuard;
-import wpsPerturbation.Agent.wpsPerturbationAgent;
+import wpsPerturbation.Agent.PerturbationAgent;
 import wpsSociety.Agent.SocietyAgent;
 import wpsSocietyBank.Agent.BankAgent;
 import wpsSocietyMarket.MarketAgent;
 import wpsViewer.Agent.wpsReport;
+import wpsViewer.Agent.wpsViewerAgent;
 
 /**
  *
@@ -37,85 +43,48 @@ public class wpsStart {
 
     private static int PLANID = 0;
     final private static double PASSWD = 0.91;
-    // Tiempo simulado 1 minuto, más o menos 1 año con un beat de 10
-    final private static int RTSIM = 5;
-
-    /**
-     *
-     */
-    public static String aliasSocietyAgent = "MariaLabaja";
-    /**
-     *
-     */
-    public static String aliasBankAgent = "BancoAgrario";
-    /**
-     *
-     */
-    public static String aliasMarketAgent = "LaPlazaAgraria";
-    /**
-     *
-     */
-    public static String aliasControlAgent = "wps";
-
-    /**
-     *
-     */
-    public static String aliasPeasantFamilyAgent01;
-    
-    /**
-     *
-     */
-    public static String aliasPeasantFamilyAgent02;
-    /**
-     * 
-     */
     public static wpsConfig config = wpsConfig.getInstance();
+    private static int peasantFamiliesAgents = 2;
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
 
-        // Set default values of peasant and world
-        
-        aliasPeasantFamilyAgent01 = config.getRegularFarmerProfile().getProfileName();
-        aliasPeasantFamilyAgent02 = config.getProactiveFarmerProfile().getProfileName();
+        printHeader();
 
         // Set init date of simulation
         wpsCurrentDate.getInstance().setCurrentDate(config.getStartSimulationDate());
 
+        List<PeasantFamilyBDIAgent> peasantFamilyBDIAgents = new ArrayList<>();
+
         try {
-            wpsReport.info("Inicializando WellProdSimulator");
-            
-            // Control Agent
-            ControlAgent controlAgent = ControlAgent.createAgent(aliasControlAgent, PASSWD);
-            // Society Agent
-            SocietyAgent societyAgent = SocietyAgent.createAgent(aliasSocietyAgent, PASSWD);
-            // Bank Agent
-            BankAgent bankAgent = BankAgent.createBankAgent(aliasBankAgent, PASSWD);
-            // Markt Agent
-            MarketAgent marketAgent = MarketAgent.createBankAgent(aliasMarketAgent, PASSWD);
-            // Perturbator Agent
-            wpsPerturbationAgent perturbationAgent = wpsPerturbationAgent.createPerturbationAgent(PASSWD);
-            
+
+            ControlAgent controlAgent = ControlAgent.createAgent(config.getControlAgentName(), PASSWD);
+            SocietyAgent societyAgent = SocietyAgent.createAgent(config.getSocietyAgentName(), PASSWD);
+            BankAgent bankAgent = BankAgent.createBankAgent(config.getBankAgentName(), PASSWD);
+            MarketAgent marketAgent = MarketAgent.createAgent(config.getMarketAgentName(), PASSWD);
+            PerturbationAgent perturbationAgent = PerturbationAgent.createAgent(PASSWD);
+            wpsViewerAgent viewerAgent = wpsViewerAgent.createAgent(config.getViewerAgentName(), PASSWD);
+
             // @TODO: Regular and Proactive Peasant Agents
-            PeasantFamilyBDIAgent peasantFamilyAgent01 = new PeasantFamilyBDIAgent(
-                    aliasPeasantFamilyAgent01,
-                    config.getRegularFarmerProfile()
-            );
-            PeasantFamilyBDIAgent peasantFamilyAgent02 = new PeasantFamilyBDIAgent(
-                    aliasPeasantFamilyAgent02,
-                    config.getProactiveFarmerProfile()
-            );
+            for (int i = 0; i < peasantFamiliesAgents; i++) {
+                PeasantFamilyBDIAgent peasantFamilyBDIAgent = new PeasantFamilyBDIAgent(
+                        config.getUniqueFarmerName(),
+                        config.getFarmerProfile()
+                );
+                peasantFamilyBDIAgents.add(peasantFamilyBDIAgent);
+            }
 
             // Simulation Start
             startAllAgents(
+                    peasantFamilyBDIAgents,
+                    viewerAgent,
                     controlAgent,
                     societyAgent,
                     bankAgent,
                     marketAgent,
-                    perturbationAgent,
-                    peasantFamilyAgent01,
-                    peasantFamilyAgent02
+                    perturbationAgent
             );
 
         } catch (ExceptionBESA ex) {
@@ -133,53 +102,32 @@ public class wpsStart {
         return ++PLANID;
     }
 
-    private static void startAllAgents(AgentBESA... A) throws ExceptionBESA {
+    private static void startAllAgents(List<PeasantFamilyBDIAgent> peasantFamilies, AgentBESA... A) throws ExceptionBESA {
 
-        // start agent by agent
-        for (AgentBESA agent : A) {
-            agent.start();
-            wpsReport.info(agent.getAlias() + " Started");
-        }
-
-        // Start Peasant Family Heart Beat
         try {
-            AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA agHandler = adm.getHandlerByAlias(aliasPeasantFamilyAgent01);
-            EventBESA eventBesa = new EventBESA(HeartBeatGuard.class.getName(), null);
-            agHandler.sendEvent(eventBesa);
-            //wpsReport.debug("Enviado Beat");
+            // Starting general simulation agents
+            for (AgentBESA agent : A) {
+                agent.start();
+                wpsReport.info(agent.getAlias() + " Started");
+            }
+            // Starting families agents
+            for (PeasantFamilyBDIAgent peasantFamily : peasantFamilies) {
+                peasantFamily.start();
+                wpsReport.info(peasantFamily.getAlias() + " Started");
+            }
+            // first heart beat to families
+            for (int i = 1; i <= peasantFamiliesAgents; i++) {
+                AdmBESA adm = AdmBESA.getInstance();
+                EventBESA eventBesa = new EventBESA(HeartBeatGuard.class.getName(), null);
+                AgHandlerBESA agHandler = adm.getHandlerByAlias("PeasantFamily_" + i);
+                agHandler.sendEvent(eventBesa);
+            }
+
         } catch (ExceptionBESA e) {
             wpsReport.error(e);
         }
-        try {
-            AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA agHandler = adm.getHandlerByAlias(aliasPeasantFamilyAgent02);
-            EventBESA eventBesa = new EventBESA(HeartBeatGuard.class.getName(), null);
-            agHandler.sendEvent(eventBesa);
-            //wpsReport.debug("Enviado Beat");
-        } catch (ExceptionBESA e) {
-            wpsReport.error(e);
-        }
-        /*
-        AdmBESA adm = AdmBESA.getInstance();
-        PeriodicDataBESA data = new PeriodicDataBESA(
-                BEAT,
-                PeriodicGuardBESA.START_PERIODIC_CALL);
-        AgHandlerBESA agHandler = adm.getHandlerByAlias(aliasPeasantFamilyAgent);
-        EventBESA eventBesa = new EventBESA(
-                HeartBeatGuard.class.getName(),
-                data);
-        agHandler.sendEvent(eventBesa);
-        */
 
-        // cierra la ejecución completamente al cumplirse un tiempo
-        try {
-            Thread.sleep(RTSIM * 60 * 1000);
-            stopSimulation();
-            //System.exit(0);
-        } catch (InterruptedException e) {
-            wpsReport.error(e.getMessage());
-        }
+        stopSimulation();
 
     }
 
@@ -188,13 +136,62 @@ public class wpsStart {
      * @throws ExceptionBESA
      */
     public static void stopSimulation() throws ExceptionBESA {
-        AdmBESA adm = AdmBESA.getInstance();
-        Enumeration enumeration = adm.getIdList();
-        while (enumeration.hasMoreElements()) {
-            adm.killAgent((String) enumeration.nextElement(), PASSWD);
-        }
-        adm.kill(0.09);
 
+        // Closing simulation after 5 minutes
+        try {
+            Thread.sleep((60 * 1) * 1000);
+            
+            getStatus();
+            
+            AdmBESA adm = AdmBESA.getInstance();
+            Enumeration enumeration = adm.getIdList();
+            while (enumeration.hasMoreElements()) {
+                adm.killAgent((String) enumeration.nextElement(), PASSWD);
+            }
+            adm.kill(0.09);
+            wpsReport.info("Simulation finished.\n\n\n\n");
+            System.exit(0);
+        } catch (InterruptedException e) {
+            wpsReport.error(e.getMessage());
+        }
+
+    }
+    
+    public static void getStatus(){
+        // first heart beat to families
+        try {
+            for (int i = 1; i <= peasantFamiliesAgents; i++) {
+                AdmBESA adm = AdmBESA.getInstance();
+                EventBESA eventBesa = new EventBESA(StatusGuard.class.getName(), null);
+                AgHandlerBESA agHandler = adm.getHandlerByAlias("PeasantFamily_" + i);
+                agHandler.sendEvent(eventBesa);
+                Thread.sleep(2000);
+            }
+        } catch (ExceptionBESA ex) {
+            Logger.getLogger(wpsStart.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(wpsStart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void printHeader() {
+
+        wpsReport.info(
+                "\n\n/**\n"
+                + " * ==========================================================================\n"
+                + " * __      __ _ __   ___  *    WellProdSim                                  *\n"
+                + " * \\ \\ /\\ / /| '_ \\ / __| *    @version 1.0                                 *\n"
+                + " *  \\ V  V / | |_) |\\__ \\ *    @since 2023                                  *\n"
+                + " *   \\_/\\_/  | .__/ |___/ *                                                 *\n"
+                + " *           | |          *    @author Jairo Serrano                        *\n"
+                + " *           |_|          *    @author Enrique Gonzalez                     *\n"
+                + " * ==========================================================================\n"
+                + " * Social Simulator used to estimate productivity and well-being of peasant *\n"
+                + " * families. It is event oriented, high concurrency, heterogeneous time     *\n"
+                + " * management and emotional reasoning BDI.                                  *\n"
+                + " * ==========================================================================\n"
+                + " */\n\n"
+        );
     }
 
 }

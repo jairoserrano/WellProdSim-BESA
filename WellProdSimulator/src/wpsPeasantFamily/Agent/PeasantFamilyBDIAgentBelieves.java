@@ -33,8 +33,9 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      *
      * @param peasantProfile
      */
-    public PeasantFamilyBDIAgentBelieves(PeasantFamilyProfile peasantProfile) {
+    public PeasantFamilyBDIAgentBelieves(String alias, PeasantFamilyProfile peasantProfile) {
         this.setPeasantProfile(peasantProfile);
+        this.peasantProfile.setPeasantFamilyAlias(alias);
         this.peasantEmotionalState = new EmotionalState();
     }
 

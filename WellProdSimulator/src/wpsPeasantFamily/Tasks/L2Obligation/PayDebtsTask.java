@@ -54,11 +54,11 @@ public class PayDebtsTask extends Task {
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasBankAgent);
+            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.config.getBankAgentName());
 
             BankMessage bankMessage = new BankMessage(
                     PAY_LOAN_TERM,
-                    believes.getPeasantProfile().getProfileName()
+                    believes.getPeasantProfile().getPeasantFamilyAlias()
             );
 
             EventBESA ev = new EventBESA(

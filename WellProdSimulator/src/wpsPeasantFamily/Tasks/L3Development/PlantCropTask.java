@@ -64,9 +64,9 @@ public class PlantCropTask extends Task {
 
             WorldMessage worldMessage = new WorldMessage(
                     CROP_INIT,
-                    believes.getPeasantProfile().getProfileName(),
+                    believes.getPeasantProfile().getPeasantFamilyAlias(),
                     wpsCurrentDate.getInstance().getCurrentDate(),
-                    believes.getPeasantProfile().getProfileName()
+                    believes.getPeasantProfile().getPeasantFamilyAlias()
             );
 
             EventBESA ev = new EventBESA(

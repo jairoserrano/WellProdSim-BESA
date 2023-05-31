@@ -69,17 +69,17 @@ public class CheckCropsTask extends Task {
                         CROP_INFORMATION,
                         believes.getPeasantProfile().getCurrentCropName(),
                         wpsCurrentDate.getInstance().getCurrentDate(),
-                        believes.getPeasantProfile().getProfileName()
+                        believes.getPeasantProfile().getPeasantFamilyAlias()
                 );
-                wpsReport.debug("enviado CROP_INFORMATION");
+                wpsReport.warn("enviado CROP_INFORMATION");
             } else {
                 worldMessage = new WorldMessage(
                         CROP_OBSERVE,
                         believes.getPeasantProfile().getCurrentCropName(),
                         wpsCurrentDate.getInstance().getCurrentDate(),
-                        believes.getPeasantProfile().getProfileName()
+                        believes.getPeasantProfile().getPeasantFamilyAlias()
                 );
-                wpsReport.debug("enviado CROP_OBSERVE");
+                wpsReport.warn("enviado CROP_OBSERVE");
             }
 
             EventBESA ev = new EventBESA(

@@ -58,11 +58,11 @@ public class ObtainLivestockTask extends Task {
         // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.
         try {
             AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.aliasMarketAgent);
+            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.config.getMarketAgentName());
 
             MarketMessage marketMessage = new MarketMessage(
                     BUY_LIVESTOCK,
-                    believes.getPeasantProfile().getProfileName(),
+                    believes.getPeasantProfile().getPeasantFamilyAlias(),
                     1);
 
             EventBESA ev = new EventBESA(

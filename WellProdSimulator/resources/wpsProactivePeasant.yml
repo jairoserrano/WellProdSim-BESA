@@ -14,7 +14,6 @@
 ProactivePeasant:
   #Peasant
   purpose: ""
-  profileName: "ProactivePeasant"
   health: 100
   productivity: 0.0
   wellBeging: 1.0

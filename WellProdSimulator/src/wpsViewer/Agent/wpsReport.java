@@ -22,6 +22,7 @@ public class wpsReport {
     private static final Logger logger = LoggerFactory.getLogger(wpsReport.class);
 
     private wpsReport() {
+        
     }
 
     public static void trace(Object message) {
@@ -53,7 +54,13 @@ public class wpsReport {
         String callingClassName = stackTrace[3].getClassName();
         String callingMethodName = stackTrace[3].getMethodName();
         String simpleClassName = callingClassName.substring(callingClassName.lastIndexOf('.') + 1);
-        return String.format("%23s:%-20s %-65s", simpleClassName, callingMethodName, message);
+        if (simpleClassName.contains("DoVitalsTask")) {
+            return Thread.currentThread().getName()
+                    +"\n-------------------------------------------------------------------------------------------------\n" 
+                    + String.format("%23s:%-20s %-65s", simpleClassName, callingMethodName, message);
+        } else {
+            return Thread.currentThread().getName() + " " + String.format("%23s:%-20s %-65s", simpleClassName, callingMethodName, message);
+        }
     }
 
 }

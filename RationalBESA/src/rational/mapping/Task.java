@@ -15,6 +15,11 @@ public abstract class Task {
     }
 
     /**
+     * Current state of the task.
+     */
+    protected STATE taskState;
+
+    /**
      * Task class constructor that initializes the task state to
      * WAITING_FOR_EXECUTION.
      */
@@ -25,21 +30,21 @@ public abstract class Task {
     /**
      * Sets the task state to IN_EXECUTION.
      */
-    public void setTaskInExecution() {
+    public synchronized void setTaskInExecution() {
         this.taskState = STATE.IN_EXECUTION;
     }
 
     /**
      * Sets the task state to WAITING_FOR_EXECUTION.
      */
-    public void setTaskWaitingForExecution() {
+    public synchronized void setTaskWaitingForExecution() {
         this.taskState = STATE.WAITING_FOR_EXECUTION;
     }
 
     /**
      * Sets the task state to FINALIZED.
      */
-    public void setTaskFinalized() {
+    public synchronized void setTaskFinalized() {
         this.taskState = STATE.FINALIZED;
     }
 
@@ -48,7 +53,7 @@ public abstract class Task {
      *
      * @return True if the state is IN_EXECUTION, false otherwise.
      */
-    public boolean isInExecution() {
+    public synchronized boolean isInExecution() {
         return this.taskState == STATE.IN_EXECUTION;
     }
 
@@ -57,7 +62,7 @@ public abstract class Task {
      *
      * @return True if the state is WAITING_FOR_EXECUTION, false otherwise.
      */
-    public boolean isWaitingForExecution() {
+    public synchronized boolean isWaitingForExecution() {
         return this.taskState == STATE.WAITING_FOR_EXECUTION;
     }
 
@@ -66,21 +71,16 @@ public abstract class Task {
      *
      * @return True if the state is FINALIZED, false otherwise.
      */
-    public boolean isFinalized() {
+    public synchronized boolean isFinalized() {
         return this.taskState == STATE.FINALIZED;
     }
-
-    /**
-     * Current state of the task.
-     */
-    protected STATE taskState;
 
     /**
      * Runs the task if it is not in execution and has not finished.
      *
      * @param believes Agent beliefs.
      */
-    public void run(Believes believes) {
+    public synchronized void run(Believes believes) {
         if (this.checkFinish(believes)) {
             this.setTaskFinalized();
         } else {

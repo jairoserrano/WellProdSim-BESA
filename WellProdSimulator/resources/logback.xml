@@ -1,32 +1,28 @@
 <configuration>
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE" />
+        <queueSize>5000</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/wpsSimulator.log</file>
-        
         <append>false</append>
-        
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <fileNamePattern>logs/wpsSimulator.%i.log.zip</fileNamePattern>
             <minIndex>1</minIndex>
             <maxIndex>3</maxIndex>
         </rollingPolicy>
-
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
             <maxFileSize>50MB</maxFileSize>
         </triggeringPolicy>
-        
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} |-%highlight(%-5level) %msg%n</pattern>
         </encoder>
-        
     </appender>
-    <!--<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%highlight(%-5level) %d{HH:mm:ss.SSS} - %msg%n</pattern>
-        </encoder>
-    </appender>-->
+
     <root level="ALL">
-        <appender-ref ref="FILE" />
-        <!--<appender-ref ref="CONSOLE" />-->
+        <appender-ref ref="ASYNC" />
     </root>
 </configuration>
-
