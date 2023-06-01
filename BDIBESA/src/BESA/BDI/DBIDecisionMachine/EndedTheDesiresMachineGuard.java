@@ -25,9 +25,14 @@ public class EndedTheDesiresMachineGuard extends GuardBESA{
         StateBDI stateBDI = (StateBDI) agentBDI.getState();
         if (stateBDI.isInQueue()){
             try {
-                EventBESA eventBesa = new EventBESA(DesireToIntentionInstantiationGuard.class.getName(), null);
+                EventBESA eventBesa = new EventBESA(
+                        DesireToIntentionInstantiationGuard.class.getName(), 
+                        null
+                );
                 AgHandlerBESA agHandlerBESA;
-                agHandlerBESA = agentBDI.getAdmLocal().getHandlerByAlias(agentBDI.getAlias());
+                agHandlerBESA = agentBDI.getAdmLocal().getHandlerByAlias(
+                        agentBDI.getAlias()
+                );
                 agHandlerBESA.sendEvent(eventBesa);
                 stateBDI.setEndedTheDesiresMachine(false);
                 stateBDI.setInQueue(false);

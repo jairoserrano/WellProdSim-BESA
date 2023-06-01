@@ -50,7 +50,7 @@ public class PlantCropTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setGrowingSeason(true);
         believes.getPeasantProfile().setPreparationSeason(false);
@@ -60,7 +60,8 @@ public class PlantCropTask extends Task {
         try {
             AdmBESA adm = AdmBESA.getInstance();
             AgHandlerBESA ah = adm.getHandlerByAlias(
-                    believes.getPeasantProfile().getFarmName());
+                    believes.getPeasantProfile().getPeasantFamilyLandAlias()
+            );
 
             WorldMessage worldMessage = new WorldMessage(
                     CROP_INIT,

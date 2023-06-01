@@ -14,12 +14,8 @@
  */
 package wpsPeasantFamily.Tasks.L1Survival;
 
-import BESA.ExceptionBESA;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import rational.mapping.Believes;
 import rational.mapping.Task;
-import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
@@ -45,19 +41,19 @@ public class DoHealthCareTask extends Task {
      * @param parameters
      */
     @Override
-    public void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+    public synchronized void executeTask(Believes parameters) {
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().useTime(TimeConsumedBy.DoHealthCareTask);
         //believes.getPeasantProfile().increaseHealth();
-        wpsReport.info("⚙️⚙️⚙️ MURIÓ ⚙️⚙️⚙️");
+        wpsReport.warn("⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️ MURIÓ -RIP- ⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️");
         
-        try {
-            wpsStart.stopSimulation();
-            System.exit(1);
+        /*try {
+            //wpsStart.stopSimulation();
+            //System.exit(1);
         } catch (ExceptionBESA ex) {
             Logger.getLogger(DoHealthCareTask.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         this.setFinished(true);
     }
 

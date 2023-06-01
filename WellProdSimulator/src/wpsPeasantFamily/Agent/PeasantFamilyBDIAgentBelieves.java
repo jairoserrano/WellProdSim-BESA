@@ -28,7 +28,6 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
     private PeasantFamilyProfile peasantProfile;
     private EmotionalState peasantEmotionalState;
 
-
     /**
      *
      * @param peasantProfile
@@ -51,7 +50,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      *
      * @return
      */
-    public PeasantFamilyProfile getPeasantProfile() {
+    public synchronized PeasantFamilyProfile getPeasantProfile() {
         return peasantProfile;
     }
 
@@ -70,7 +69,6 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      */
     @Override
     public boolean update(InfoData infoData) {
-        //wpsReport.info("");
         return true;
     }
 

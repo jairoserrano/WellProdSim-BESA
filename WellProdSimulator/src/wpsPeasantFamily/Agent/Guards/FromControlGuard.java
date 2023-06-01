@@ -12,41 +12,32 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsControl.Agent;
+package wpsPeasantFamily.Agent.Guards;
 
-import BESA.Kernel.Agent.StateBESA;
-import java.io.Serializable;
-import wpsActivator.wpsStart;
+import BESA.BDI.AgentStructuralModel.StateBDI;
+import BESA.Kernel.Agent.Event.EventBESA;
+import BESA.Kernel.Agent.GuardBESA;
+import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
  * @author jairo
  */
-public class ControlAgentState extends StateBESA implements Serializable {
-
-    int activeAgents;
+public class FromControlGuard extends GuardBESA {
 
     /**
      *
+     * @param event
      */
-    public ControlAgentState() {
-        super();
-        this.activeAgents = 0;
+    @Override
+    public void funcExecGuard(EventBESA event) {
+        wpsReport.warn("desbloqueando");
+        StateBDI state = (StateBDI) this.agent.getState();
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
+        
+        believes.getPeasantProfile().releaseWeekBlock();
+
     }
 
-    public boolean getActiveAgentsReady() {
-        return (this.activeAgents == wpsStart.peasantFamiliesAgents);
-    }
-
-    public int getActiveAgents() {
-        return this.activeAgents;
-    }
-
-    public void resetActiveAgents() {
-        this.activeAgents = 0;
-    }
-
-    public synchronized void increaseActiveAgents() {
-        this.activeAgents++;
-    }
 }

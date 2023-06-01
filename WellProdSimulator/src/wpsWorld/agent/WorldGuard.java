@@ -31,7 +31,7 @@ public class WorldGuard extends GuardBESA {
      * @param eventBESA
      */
     @Override
-    public void funcExecGuard(EventBESA eventBESA) {
+    public synchronized void funcExecGuard(EventBESA eventBESA) {
         WorldMessage worldMessage = (WorldMessage) eventBESA.getData();
         wpsReport.info("🚩🚩🚩" + worldMessage);
         WorldState worldState = (WorldState) this.agent.getState();
@@ -154,7 +154,7 @@ public class WorldGuard extends GuardBESA {
      * @param peasantAgentAlias
      * @param peasantMessage
      */
-    public void replyToPeasantAgent(String peasantAgentAlias, FromWorldMessage peasantMessage) {
+    public synchronized void replyToPeasantAgent(String peasantAgentAlias, FromWorldMessage peasantMessage) {
         try {
             AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAlias(peasantAgentAlias);
             EventBESA event = new EventBESA(
@@ -173,7 +173,7 @@ public class WorldGuard extends GuardBESA {
      * @param aid
      * @param date
      */
-    public void notifyPeasantCropProblem(FromWorldMessageType messageType, String agentAlias, String date) {
+    public synchronized void notifyPeasantCropProblem(FromWorldMessageType messageType, String agentAlias, String date) {
         try {
             wpsReport.debug("AgentID: " + agentAlias);
             AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAlias(agentAlias);
@@ -197,7 +197,7 @@ public class WorldGuard extends GuardBESA {
      * @param agentAlias
      * @param date
      */
-    public void notifyPeasantCropReadyToHarvest(String agentAlias, String date) {
+    public synchronized void notifyPeasantCropReadyToHarvest(String agentAlias, String date) {
         try {
             wpsReport.debug("AgentID: " + agentAlias);
             AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAlias(agentAlias);
@@ -220,7 +220,7 @@ public class WorldGuard extends GuardBESA {
      *
      * @param cropLayer
      */
-    public void harvestCrop(CropLayer cropLayer) {
+    public synchronized void harvestCrop(CropLayer cropLayer) {
         cropLayer.writeCropData();
         try {
             AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAid(this.agent.getAid());

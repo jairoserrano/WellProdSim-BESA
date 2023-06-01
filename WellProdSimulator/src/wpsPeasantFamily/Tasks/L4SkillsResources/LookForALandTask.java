@@ -40,6 +40,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsConfig;
+import wpsActivator.wpsStart;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
@@ -48,6 +49,60 @@ import wpsViewer.Agent.wpsReport;
  * @author jairo
  */
 public class LookForALandTask extends Task {
+
+    /**
+     *
+     */
+    public LookForALandTask() {
+        //wpsReport.info("");
+    }
+
+    /**
+     *
+     * @param parameters
+     */
+    @Override
+    public synchronized void executeTask(Believes parameters) {
+        //wpsReport.info("⚙️⚙️⚙️");
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+
+        // @TODO: setPlantingSeason lo cambia el reloj global
+        believes.getPeasantProfile().useTime(TimeConsumedBy.LookForALandTask);
+
+        // @TODO: setFarmName lo cambia el gobierno o el campesino
+        believes.getPeasantProfile().setLand(true);
+        believes.getPeasantProfile().setHousing(1);
+        believes.getPeasantProfile().setServicesPresence(1);
+        believes.getPeasantProfile().setHousingSize(1);
+        believes.getPeasantProfile().setHousingLocation(1);
+        believes.getPeasantProfile().setFarmDistance(1);
+
+        // Set world perturbation
+        setPerturbation(wpsStart.config.getPerturbation());
+
+        try {
+            WorldAgent worldAgent = buildWorld(
+                    getRainfallFile(wpsStart.config.getRainfallConditions()),
+                    believes.getPeasantProfile().getPeasantFamilyAlias(),
+                    believes.getPeasantProfile().getPeasantFamilyLandAlias(),
+                    believes.getPeasantProfile().getCropSize(),
+                    believes.getPeasantProfile().getCurrentCropName()
+            );
+            initialWorldStateInitialization(
+                    worldAgent,
+                    believes.getPeasantProfile().getPeasantFamilyAlias()
+            );
+
+            worldAgent.start();
+
+        } catch (Exception ex) {
+            wpsReport.error(ex);
+        }
+
+        wpsReport.info("🥬 " + believes.getPeasantProfile().getPeasantFamilyAlias() + " ya tiene tierra " + believes.getPeasantProfile().getPeasantFamilyLandAlias());
+        this.setTaskFinalized();
+
+    }
 
     private static void setPerturbation(String arg) {
         WorldConfiguration worldConfiguration = WorldConfiguration.getPropsInstance();
@@ -64,7 +119,7 @@ public class LookForALandTask extends Task {
     }
 
     private static WorldState buildWorldState(
-            String rainfallFile, 
+            String rainfallFile,
             String agentAlias,
             int cropSize,
             String cropName) {
@@ -126,11 +181,12 @@ public class LookForALandTask extends Task {
     }
 
     private static WorldAgent buildWorld(
-            String rainfallFile, 
-            String agentAlias, 
+            String rainfallFile,
+            String agentAlias,
             String aliasWorldAgent,
             int cropSize,
             String cropName) {
+        wpsReport.warn(agentAlias + " " + aliasWorldAgent);
         WorldState worldState = buildWorldState(rainfallFile, agentAlias, cropSize, cropName);
         StructBESA structBESA = new StructBESA();
         structBESA.bindGuard(WorldGuard.class);
@@ -158,80 +214,6 @@ public class LookForALandTask extends Task {
         }
         return rainfallFile;
     }
-    private boolean finished;
-
-    /**
-     *
-     */
-    public LookForALandTask() {
-        //wpsReport.info("");
-        this.finished = false;
-    }
-
-    /**
-     *
-     * @param parameters
-     */
-    @Override
-    public void executeTask(Believes parameters) {
-        //wpsReport.info("⚙️⚙️⚙️");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-
-        // @TODO: setFarmName lo cambia el gobierno o el campesino
-        believes.getPeasantProfile().setFarmName("Land_" + believes.getPeasantProfile().getPeasantFamilyAlias());
-        believes.getPeasantProfile().setHousing(1);
-        believes.getPeasantProfile().setServicesPresence(1);
-        believes.getPeasantProfile().setHousingSize(1);
-        believes.getPeasantProfile().setHousingLocation(1);
-        believes.getPeasantProfile().setFarmDistance(1);
-        believes.getPeasantProfile().setFarm(true);
-
-        // @TODO: setPlantingSeason lo cambia el reloj global
-        believes.getPeasantProfile().useTime(TimeConsumedBy.LookForALandTask);
-        // Set default values of peasant and world
-        wpsConfig config = wpsConfig.getInstance();
-        // Set world perturbation
-        setPerturbation(config.getPerturbation());
-
-        try {
-            WorldAgent worldAgent = buildWorld(
-                    getRainfallFile(config.getRainfallConditions()),
-                    believes.getPeasantProfile().getPeasantFamilyAlias(),
-                    believes.getPeasantProfile().getFarmName(),
-                    believes.getPeasantProfile().getCropSize(),
-                    believes.getPeasantProfile().getCurrentCropName()
-            );
-            initialWorldStateInitialization(
-                    worldAgent,
-                    believes.getPeasantProfile().getPeasantFamilyAlias()
-            );
-
-            worldAgent.start();
-
-        } catch (Exception ex) {
-            wpsReport.error(ex);
-        }
-        
-        wpsReport.info("🥬 " + believes.getPeasantProfile().getPeasantFamilyAlias() + " ya tiene tierra.");
-        this.setFinished();
-
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        return finished;
-    }
-
-    /**
-     *
-     */
-    public void setFinished() {
-        this.finished = true;
-        this.setTaskFinalized();
-    }
 
     /**
      *
@@ -239,7 +221,7 @@ public class LookForALandTask extends Task {
      */
     @Override
     public void interruptTask(Believes believes) {
-        this.finished = true;
+        this.setTaskFinalized();
     }
 
     /**
@@ -248,15 +230,7 @@ public class LookForALandTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        this.finished = true;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isExecuted() {
-        return finished;
+        this.setTaskFinalized();
     }
 
     /**
@@ -265,7 +239,8 @@ public class LookForALandTask extends Task {
      * @return
      */
     @Override
-    public boolean checkFinish(Believes believes) {
-        return isExecuted();
+    public boolean checkFinish(Believes parameters) {
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        return believes.getPeasantProfile().haveAFarm();
     }
 }

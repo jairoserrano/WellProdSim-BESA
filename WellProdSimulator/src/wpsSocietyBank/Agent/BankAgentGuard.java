@@ -18,17 +18,17 @@ import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import wpsPeasantFamily.Agent.Guards.FromBankGuard;
-import wpsPeasantFamily.Agent.Guards.FromBankMessage;
-import wpsPeasantFamily.Agent.Guards.FromBankMessageType;
-import static wpsPeasantFamily.Agent.Guards.FromBankMessageType.APPROBED_LOAN;
-import static wpsPeasantFamily.Agent.Guards.FromBankMessageType.TERM_PAYED;
-import static wpsPeasantFamily.Agent.Guards.FromBankMessageType.TERM_TO_PAY;
+import wpsPeasantFamily.Agent.Guards.FromBank.FromBankGuard;
+import wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessage;
+import wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType;
+import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.APPROBED_LOAN;
+import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.TERM_PAYED;
+import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.TERM_TO_PAY;
 import static wpsSocietyBank.Agent.BankMessageType.PAY_LOAN_TERM;
 import wpsViewer.Agent.wpsReport;
 import static wpsSocietyBank.Agent.BankMessageType.ASK_FOR_FORMAL_LOAN;
-import static wpsPeasantFamily.Agent.Guards.FromBankMessageType.DENIED_FORMAL_LOAN;
-import static wpsPeasantFamily.Agent.Guards.FromBankMessageType.DENIED_INFORMAL_LOAN;
+import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.DENIED_FORMAL_LOAN;
+import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.DENIED_INFORMAL_LOAN;
 import static wpsSocietyBank.Agent.BankMessageType.ASK_FOR_INFORMAL_LOAN;
 
 /**

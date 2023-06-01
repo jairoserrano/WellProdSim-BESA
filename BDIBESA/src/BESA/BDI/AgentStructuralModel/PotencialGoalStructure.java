@@ -30,12 +30,12 @@ public class PotencialGoalStructure implements Serializable {
 
     public PotencialGoalStructure() {
 
-        survivalGoalsList = new TreeSet<GoalBDI>();
-        dutyGoalsList = new TreeSet<GoalBDI>();
-        oportunityGoalsList = new TreeSet<GoalBDI>();
-        requirementGoalsList = new TreeSet<GoalBDI>();
-        needGoalsList = new TreeSet<GoalBDI>();
-        attentionCycleGoalsList = new TreeSet<GoalBDI>();
+        survivalGoalsList = new TreeSet<>();
+        dutyGoalsList = new TreeSet<>();
+        oportunityGoalsList = new TreeSet<>();
+        requirementGoalsList = new TreeSet<>();
+        needGoalsList = new TreeSet<>();
+        attentionCycleGoalsList = new TreeSet<>();
     }
 
     public SortedSet<GoalBDI> getDutyGoalsList() {

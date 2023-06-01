@@ -42,7 +42,7 @@ public class PrepareLandTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setPlantingSeason(true);
         believes.getPeasantProfile().useTime(TimeConsumedBy.PrepareLandTask);

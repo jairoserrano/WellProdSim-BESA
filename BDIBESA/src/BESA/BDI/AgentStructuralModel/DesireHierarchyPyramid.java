@@ -8,7 +8,6 @@ package BESA.BDI.AgentStructuralModel;
 
 import BESA.BDI.AgentStructuralModel.Functions.ContributionComparator;
 import BESA.Kernel.Agent.Event.KernellAgentEventExceptionBESA;
-import BESA.Log.ReportBESA;
 import rational.mapping.Believes;
 import java.io.Serializable;
 import java.util.ArrayList;

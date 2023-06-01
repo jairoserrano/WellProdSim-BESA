@@ -42,7 +42,6 @@ public class LookForLoanTask extends Task {
      */
     public LookForLoanTask() {
         ////wpsReport.info("");
-        this.finished = false;
     }
 
     /**
@@ -51,7 +50,7 @@ public class LookForLoanTask extends Task {
      */
     @Override
     public synchronized void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+       //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         
         believes.getPeasantProfile().setFormalLoanSeason(false);

@@ -40,7 +40,6 @@ public class HarvestCropsTask extends Task {
      *
      */
     public HarvestCropsTask() {
-        ////wpsReport.info("");
         this.finished = false;
     }
 
@@ -49,8 +48,8 @@ public class HarvestCropsTask extends Task {
      * @param parameters
      */
     @Override
-    public void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+    public synchronized void executeTask(Believes parameters) {
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().useTime(TimeConsumedBy.HarvestCropsTask);
         believes.getPeasantProfile().setHarverstSeason(false);
@@ -59,7 +58,7 @@ public class HarvestCropsTask extends Task {
         try {
             AdmBESA adm = AdmBESA.getInstance();
             AgHandlerBESA ah = adm.getHandlerByAlias(
-                    believes.getPeasantProfile().getFarmName()
+                    believes.getPeasantProfile().getPeasantFamilyLandAlias()
             );
 
             WorldMessage worldMessage = new WorldMessage(
@@ -75,7 +74,7 @@ public class HarvestCropsTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-        //this.setTaskWaitingForExecution();
+        this.setTaskFinalized();
         this.setFinished();
     }
 
@@ -84,7 +83,6 @@ public class HarvestCropsTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////wpsReport.info("");
         return finished;
     }
 
@@ -93,7 +91,6 @@ public class HarvestCropsTask extends Task {
      */
     public void setFinished() {
         this.finished = true;
-        this.setTaskFinalized();
     }
 
     /**
@@ -116,21 +113,12 @@ public class HarvestCropsTask extends Task {
 
     /**
      *
-     * @return
-     */
-    public boolean isExecuted() {
-        ////wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
      * @param believes
      * @return
      */
     @Override
     public boolean checkFinish(Believes believes) {
         ////wpsReport.info("");
-        return isExecuted();
+        return this.finished;
     }
 }

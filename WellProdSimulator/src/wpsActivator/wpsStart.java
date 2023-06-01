@@ -44,9 +44,12 @@ public class wpsStart {
     private static int PLANID = 0;
     final private static double PASSWD = 0.91;
     public static wpsConfig config = wpsConfig.getInstance();
-    private static int peasantFamiliesAgents = 2;
+    public static int peasantFamiliesAgents = 4;
+    private static int SIMTIME = 3;
 
     /**
+     * The main method to start the simulation.
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -95,13 +98,21 @@ public class wpsStart {
     }
 
     /**
+     * Gets the next plan ID.
      *
-     * @return
+     * @return the next plan ID
      */
     public static int getPlanID() {
         return ++PLANID;
     }
 
+    /**
+     * Starts all the agents and begins the simulation.
+     *
+     * @param peasantFamilies the list of peasant family agents
+     * @param agents the other simulation agents
+     * @throws ExceptionBESA if there is an exception while starting the agents
+     */
     private static void startAllAgents(List<PeasantFamilyBDIAgent> peasantFamilies, AgentBESA... A) throws ExceptionBESA {
 
         try {
@@ -114,6 +125,7 @@ public class wpsStart {
             for (PeasantFamilyBDIAgent peasantFamily : peasantFamilies) {
                 peasantFamily.start();
                 wpsReport.info(peasantFamily.getAlias() + " Started");
+                Thread.sleep(200);
             }
             // first heart beat to families
             for (int i = 1; i <= peasantFamiliesAgents; i++) {
@@ -123,8 +135,8 @@ public class wpsStart {
                 agHandler.sendEvent(eventBesa);
             }
 
-        } catch (ExceptionBESA e) {
-            wpsReport.error(e);
+        } catch (ExceptionBESA | InterruptedException ex) {
+            wpsReport.error(ex);
         }
 
         stopSimulation();
@@ -132,17 +144,16 @@ public class wpsStart {
     }
 
     /**
+     * Stops the simulation after a specified time.
      *
-     * @throws ExceptionBESA
+     * @throws ExceptionBESA if there is an exception while stopping the agents
      */
     public static void stopSimulation() throws ExceptionBESA {
 
         // Closing simulation after 5 minutes
         try {
-            Thread.sleep((60 * 1) * 1000);
-            
+            Thread.sleep((60 * SIMTIME) * 1000);
             getStatus();
-            
             AdmBESA adm = AdmBESA.getInstance();
             Enumeration enumeration = adm.getIdList();
             while (enumeration.hasMoreElements()) {
@@ -156,8 +167,11 @@ public class wpsStart {
         }
 
     }
-    
-    public static void getStatus(){
+
+    /**
+     * Sends status events to the peasant family agents.
+     */
+    public static void getStatus() {
         // first heart beat to families
         try {
             for (int i = 1; i <= peasantFamiliesAgents; i++) {
@@ -165,19 +179,17 @@ public class wpsStart {
                 EventBESA eventBesa = new EventBESA(StatusGuard.class.getName(), null);
                 AgHandlerBESA agHandler = adm.getHandlerByAlias("PeasantFamily_" + i);
                 agHandler.sendEvent(eventBesa);
-                Thread.sleep(2000);
             }
-        } catch (ExceptionBESA ex) {
-            Logger.getLogger(wpsStart.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(wpsStart.class.getName()).log(Level.SEVERE, null, ex);
+            Thread.sleep(5000);
+        } catch (ExceptionBESA | InterruptedException ex) {
+            wpsReport.error(ex);
         }
     }
 
     public static void printHeader() {
 
         wpsReport.info(
-                "\n\n/**\n"
+                "\n\n\n"
                 + " * ==========================================================================\n"
                 + " * __      __ _ __   ___  *    WellProdSim                                  *\n"
                 + " * \\ \\ /\\ / /| '_ \\ / __| *    @version 1.0                                 *\n"
@@ -190,7 +202,7 @@ public class wpsStart {
                 + " * families. It is event oriented, high concurrency, heterogeneous time     *\n"
                 + " * management and emotional reasoning BDI.                                  *\n"
                 + " * ==========================================================================\n"
-                + " */\n\n"
+                + " \n\n"
         );
     }
 

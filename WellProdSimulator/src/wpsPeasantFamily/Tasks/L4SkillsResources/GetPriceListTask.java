@@ -50,7 +50,7 @@ public class GetPriceListTask extends Task {
      */
     @Override
     public synchronized void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
 
         // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.

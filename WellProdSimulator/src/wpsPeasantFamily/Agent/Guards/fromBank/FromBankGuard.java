@@ -12,16 +12,16 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Agent.Guards;
+package wpsPeasantFamily.Agent.Guards.FromBank;
 
 import BESA.BDI.AgentStructuralModel.StateBDI;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import static wpsPeasantFamily.Agent.Guards.FromBankMessageType.APPROBED_LOAN;
-import static wpsPeasantFamily.Agent.Guards.FromBankMessageType.TERM_TO_PAY;
+import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.APPROBED_LOAN;
+import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.TERM_TO_PAY;
 import wpsViewer.Agent.wpsReport;
-import static wpsPeasantFamily.Agent.Guards.FromBankMessageType.DENIED_FORMAL_LOAN;
+import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.DENIED_FORMAL_LOAN;
 
 /**
  *

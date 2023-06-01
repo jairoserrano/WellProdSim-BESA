@@ -2,6 +2,8 @@ package rational.mapping;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import rational.tasks.VoidTask;
 
 public class Plan {
@@ -12,8 +14,10 @@ public class Plan {
     private List<Task> tasksWaitingForExecution;
     private final Task initial;
     private ExecutorService executorService;
+    private final Lock believesLock;
 
     public Plan() {
+        believesLock = new ReentrantLock();
         graphPlan = new HashMap<>();
         tasksInExecution = new LinkedList<>();
         tasksWaitingForExecution = new LinkedList<>();
@@ -92,22 +96,29 @@ public class Plan {
         tasksInExecution.add(initial);
     }
 
-    public void executeTasks(Believes believes) throws InterruptedException {
+    public synchronized void executeTasks(Believes believes) throws InterruptedException {
         while (!tasksWaitingForExecution.isEmpty()) {
             Iterator<Task> taskIterator = tasksWaitingForExecution.iterator();
             while (taskIterator.hasNext()) {
                 Task task = taskIterator.next();
                 if (!task.isInExecution() && !task.isFinalized()) {
                     executorService.submit(() -> {
-                        task.run(believes);
-                        synchronized (this) {
-                            tasksInExecution.add(task);
-                            taskIterator.remove();
+                        // Adquirir el bloqueo antes de acceder a 'believes'
+                        believesLock.lock();
+                        try {
+                            task.run(believes);
+                            synchronized (this) {
+                                tasksInExecution.add(task);
+                                taskIterator.remove();
+                            }
+                        } finally {
+                            // Liberar el bloqueo después de usar 'believes'
+                            believesLock.unlock();
                         }
                     });
                 }
             }
-            Thread.sleep(1000); // Sleep for a while before next check
+            Thread.sleep(100); // Sleep for a while before next check
         }
         executorService.shutdown();
         executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);

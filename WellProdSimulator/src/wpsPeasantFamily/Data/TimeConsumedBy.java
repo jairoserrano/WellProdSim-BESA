@@ -21,6 +21,7 @@ package wpsPeasantFamily.Data;
 public enum TimeConsumedBy {
 
     LookForLoanTask(4),
+    StealingOutOfNecessityTask(6),
     SeekPurposeTask(24),
     GetPriceListTask(2),
     DoHealthCareTask(4),

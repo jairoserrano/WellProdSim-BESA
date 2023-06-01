@@ -36,12 +36,9 @@ public class FromWorldGuard extends GuardBESA {
     public void funcExecGuard(EventBESA event) {
         FromWorldMessage peasantCommMessage = (FromWorldMessage) event.getData();
         wpsReport.warn("🤖🤖🤖 Recibido: " + peasantCommMessage.getPeasantAlias() + " getType=" + peasantCommMessage.getPayload());
-
         StateBDI state = (StateBDI) this.agent.getState();
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
-
         FromWorldMessageType messageType = peasantCommMessage.getMessageType();
-
         //wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload() + ":🍙🍙🍙");
         try {
 
@@ -71,7 +68,9 @@ public class FromWorldGuard extends GuardBESA {
                     //believes.getPeasantProfile().setPlantingSeason(true);
                     break;
                 case CROP_HARVEST:
-                    JSONObject cropData = new JSONObject(peasantCommMessage.getPayload());
+                    JSONObject cropData = new JSONObject(
+                            peasantCommMessage.getPayload()
+                    );
                     believes.getPeasantProfile().setHarvestedWeight(
                             Integer.parseInt(
                                     cropData.get("aboveGroundBiomass").toString()
@@ -83,7 +82,7 @@ public class FromWorldGuard extends GuardBESA {
                     break;
             }
         } catch (IllegalArgumentException e) {
-            wpsReport.error("Mensaje no reconocido de FromWorldMessageType" + e.getStackTrace());
+            wpsReport.error(e.getStackTrace());
         }
 
     }

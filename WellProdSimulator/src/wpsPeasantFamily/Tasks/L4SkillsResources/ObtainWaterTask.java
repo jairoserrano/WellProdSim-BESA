@@ -50,7 +50,7 @@ public class ObtainWaterTask extends Task {
      */
     @Override
     public synchronized void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainWaterTask);
 

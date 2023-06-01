@@ -12,36 +12,25 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Tasks.L4SkillsResources;
+package wpsPeasantFamily.Tasks.L3Development;
 
-import BESA.ExceptionBESA;
-import BESA.Kernel.Agent.Event.EventBESA;
-import BESA.Kernel.System.AdmBESA;
-import BESA.Kernel.System.Directory.AgHandlerBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
-import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Data.TimeConsumedBy;
-import wpsSocietyMarket.MarketAgentGuard;
-import wpsSocietyMarket.MarketMessage;
-import static wpsSocietyMarket.MarketMessageType.BUY_SUPPLIES;
-import static wpsSocietyMarket.MarketMessageType.BUY_TOOLS;
-import wpsViewer.Agent.wpsReport;
 
 /**
  *
  * @author jairo
  */
-public class ObtainSuppliesTask extends Task {
+public class StealingOutOfNecessityTask extends Task {
 
     private boolean finished;
 
     /**
      *
      */
-    public ObtainSuppliesTask() {
-        ////wpsReport.info("");
+    public StealingOutOfNecessityTask() {
+        //wpsReport.info("");
         this.finished = false;
     }
 
@@ -53,29 +42,9 @@ public class ObtainSuppliesTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("$ Asking for a LOAN to the Bank " + believes.getPeasantProfile().getMoney());
-
-        // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.
-        try {
-            AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.config.getMarketAgentName());
-
-            MarketMessage marketMessage = new MarketMessage(
-                    BUY_SUPPLIES,
-                    believes.getPeasantProfile().getPeasantFamilyAlias(),
-                    10);
-
-            EventBESA ev = new EventBESA(
-                    MarketAgentGuard.class.getName(),
-                    marketMessage);
-            ah.sendEvent(ev);
-
-            believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainSuppliestask);
-
-        } catch (ExceptionBESA ex) {
-            wpsReport.error(ex);
-        }
-        //this.setTaskWaitingForExecution();
+        /*believes.getPeasantProfile().increaseHealth();
+        believes.getPeasantProfile().increaseLeisureOptions();
+        believes.getPeasantProfile().useFamilyTimeAvailability();*/
         this.setFinished();
     }
 
@@ -84,7 +53,7 @@ public class ObtainSuppliesTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////wpsReport.info("");
+        //wpsReport.info("");
         return finished;
     }
 
@@ -92,7 +61,7 @@ public class ObtainSuppliesTask extends Task {
      *
      */
     public void setFinished() {
-        ////wpsReport.info("");
+        //wpsReport.info("");
         this.finished = true;
         this.setTaskFinalized();
     }
@@ -103,7 +72,7 @@ public class ObtainSuppliesTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
+        //wpsReport.info("");
         this.setFinished();
     }
 
@@ -113,7 +82,7 @@ public class ObtainSuppliesTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
+        //wpsReport.info("");
         this.setFinished();
     }
 
@@ -122,7 +91,7 @@ public class ObtainSuppliesTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////wpsReport.info("");
+        //wpsReport.info("");
         return finished;
     }
 
@@ -133,7 +102,7 @@ public class ObtainSuppliesTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////wpsReport.info("");
+        //wpsReport.info("");
         return isExecuted();
     }
 }

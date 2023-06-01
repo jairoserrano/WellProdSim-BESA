@@ -50,7 +50,7 @@ public class ManagePestsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().useTime(TimeConsumedBy.ManagePestsTask);
         believes.getPeasantProfile().setPesticideSeason(false);
@@ -58,7 +58,8 @@ public class ManagePestsTask extends Task {
         try {
             AdmBESA adm = AdmBESA.getInstance();
             AgHandlerBESA ah = adm.getHandlerByAlias(
-                    believes.getPeasantProfile().getFarmName());
+                    believes.getPeasantProfile().getPeasantFamilyLandAlias()
+            );
 
             WorldMessage worldMessage;
             worldMessage = new WorldMessage(

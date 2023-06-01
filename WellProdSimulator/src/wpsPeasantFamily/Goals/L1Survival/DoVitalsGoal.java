@@ -24,6 +24,8 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Tasks.L1Survival.DoVitalsTask;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -105,8 +107,8 @@ public class DoVitalsGoal extends GoalBDI {
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        /*if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.DoVitalsTask)) {
+        /*PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.DoVitalsTask)) {
             return 1;
         } else {
             return 0;
@@ -148,9 +150,8 @@ public class DoVitalsGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return true;
+        return !believes.getPeasantProfile().isNewDay();
     }
 
 }

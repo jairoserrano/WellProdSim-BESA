@@ -20,7 +20,6 @@ import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
-import static wpsWorld.Messages.WorldMessageType.CROP_INFORMATION;
 import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
@@ -28,6 +27,7 @@ import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 import static wpsWorld.Messages.WorldMessageType.CROP_OBSERVE;
+import static wpsWorld.Messages.WorldMessageType.CROP_INFORMATION;
 
 /**
  *
@@ -35,14 +35,11 @@ import static wpsWorld.Messages.WorldMessageType.CROP_OBSERVE;
  */
 public class CheckCropsTask extends Task {
 
-    private boolean finished;
-
     /**
      *
      */
     public CheckCropsTask() {
         ////wpsReport.info("");
-        this.finished = false;
     }
 
     /**
@@ -50,20 +47,22 @@ public class CheckCropsTask extends Task {
      * @param parameters
      */
     @Override
-    public void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+    public synchronized void executeTask(Believes parameters) {
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setCropCheckedToday();
         // @TODO: falta calcular el tiempo necesario para el cultivo
         believes.getPeasantProfile().useTime(TimeConsumedBy.CheckCropsTask);
+        believes.getPeasantProfile().setCropCheckedToday();
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
             AgHandlerBESA ah = adm.getHandlerByAlias(
-                    believes.getPeasantProfile().getFarmName());
+                    believes.getPeasantProfile().getPeasantFamilyLandAlias()
+            );
 
             WorldMessage worldMessage;
 
+            // 80% de probabilidad de ejecutar
             if (Math.random() < 0.2) {
                 worldMessage = new WorldMessage(
                         CROP_INFORMATION,
@@ -82,14 +81,13 @@ public class CheckCropsTask extends Task {
                 wpsReport.warn("enviado CROP_OBSERVE");
             }
 
-            EventBESA ev = new EventBESA(
+            EventBESA event = new EventBESA(
                     WorldGuard.class.getName(),
-                    worldMessage);
-            ah.sendEvent(ev);
+                    worldMessage
+            );
+            ah.sendEvent(event);
 
-            //wpsReport.debug("🗓️🗓️🗓️ Date: " + wpsCurrentDate.getInstance().getCurrentDate());
-            this.setFinished();
-            //this.setTaskWaitingForExecution();
+            this.setTaskFinalized();
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
@@ -98,27 +96,11 @@ public class CheckCropsTask extends Task {
 
     /**
      *
-     * @return
-     */
-    public boolean isFinished() {
-        return finished;
-    }
-
-    /**
-     *
-     */
-    public void setFinished() {
-        this.setTaskFinalized();
-        this.finished = true;
-    }
-
-    /**
-     *
      * @param parameters
      */
     @Override
     public void interruptTask(Believes parameters) {
-        this.setFinished();
+        this.setTaskFinalized();
     }
 
     /**
@@ -127,15 +109,7 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        this.setFinished();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isExecuted() {
-        return finished;
+        this.setTaskFinalized();
     }
 
     /**
@@ -145,6 +119,6 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        return isExecuted();
+        return true;
     }
 }

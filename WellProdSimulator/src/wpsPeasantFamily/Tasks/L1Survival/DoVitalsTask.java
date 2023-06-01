@@ -21,6 +21,7 @@ import BESA.Kernel.System.Directory.AgHandlerBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
+import wpsControl.Agent.ControlAgentGuard;
 import wpsControl.Agent.DateHelper;
 import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
@@ -48,13 +49,11 @@ public class DoVitalsTask extends Task {
      */
     @Override
     public synchronized void executeTask(Believes parameters) {
-
-
         //wpsReport.info("⚙️⚙️⚙️");      
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setNewDayFalse();
         believes.getPeasantProfile().useTime(TimeConsumedBy.DoVitalsTask);
-        
+
         if (DateHelper.differenceDaysBetweenTwoDates(
                 wpsCurrentDate.getInstance().getCurrentDate(),
                 believes.getPeasantProfile().getStartRiceSeason()) == 0) {
@@ -63,11 +62,11 @@ public class DoVitalsTask extends Task {
 
         // Vitals about money and food
         if (believes.getPeasantProfile().getMoney()
-                >= believes.getPeasantProfile().getPeasantFamilyMinimalVital()) {
+                >= believes.getPeasantProfile().getPeasantFamilyMinimalVital()*10) {
             believes.getPeasantProfile().discountDailyMoney();
         } else {
             believes.getPeasantProfile().setFormalLoanSeason(true);
-            believes.getPeasantProfile().decreaseHealth();
+            //believes.getPeasantProfile().decreaseHealth();
         }
 
         // Check for the loan pay amount only on first day of month
@@ -90,12 +89,11 @@ public class DoVitalsTask extends Task {
                 wpsReport.error(ex);
             }
         }
-        wpsReport.debug(believes.getPeasantProfile());
-        //this.setTaskWaitingForExecution();
+        wpsReport.info(believes.getPeasantProfile());
+        checkWeek(parameters);
         this.setTaskFinalized();
     }
 
-  
     /**
      *
      * @param parameters
@@ -124,6 +122,26 @@ public class DoVitalsTask extends Task {
     public boolean checkFinish(Believes parameters) {
         ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return !believes.getPeasantProfile().isNewDay();
+        if (believes.getPeasantProfile().isNewDay()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void checkWeek(Believes parameters) {
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        if (believes.getPeasantProfile().getCurrentDay() % 7 == 0) {
+            try {
+                believes.getPeasantProfile().setWeekBlock();
+                wpsReport.warn(believes.getPeasantProfile().getWeekBlock());
+                AdmBESA adm = AdmBESA.getInstance();
+                EventBESA eventBesa = new EventBESA(ControlAgentGuard.class.getName(), null);
+                AgHandlerBESA agHandler = adm.getHandlerByAlias(wpsStart.config.getControlAgentName());
+                agHandler.sendEvent(eventBesa);
+            } catch (ExceptionBESA ex) {
+                wpsReport.error(ex);
+            }
+        }
     }
 }

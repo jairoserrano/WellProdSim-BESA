@@ -22,33 +22,33 @@ import rational.RationalRole;
 import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Tasks.L3Development.CheckCropsTask;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Data.TimeConsumedBy;
+import wpsPeasantFamily.Tasks.L3Development.StealingOutOfNecessityTask;
 
 /**
  *
  * @author jairo
  */
-public class CheckCropsGoal extends GoalBDI {
+public class StealingOutOfNecessityGoal extends GoalBDI {
 
     /**
      *
      * @return
      */
-    public static CheckCropsGoal buildGoal() {
-        CheckCropsTask checkCropsTask = new CheckCropsTask();
-        Plan checkCropsPlan = new Plan();
-        checkCropsPlan.addTask(checkCropsTask);
-        RationalRole checkCropsRole = new RationalRole(
-                "CheckCropsTask",
-                checkCropsPlan);
-        CheckCropsGoal checkCropsGoal = new CheckCropsGoal(
+    public static StealingOutOfNecessityGoal buildGoal() {
+        StealingOutOfNecessityTask task = new StealingOutOfNecessityTask();
+        Plan plan = new Plan();
+        plan.addTask(task);
+        RationalRole role = new RationalRole(
+                "StealingOutOfNecessityTask",
+                plan);
+        StealingOutOfNecessityGoal goal = new StealingOutOfNecessityGoal(
                 wpsStart.getPlanID(),
-                checkCropsRole,
-                "CheckCropsTask",
+                role,
+                "StealingOutOfNecessityTask",
                 GoalBDITypes.DEVELOPMENT);
-        return checkCropsGoal;
+        return goal;
     }
 
     /**
@@ -58,7 +58,7 @@ public class CheckCropsGoal extends GoalBDI {
      * @param description
      * @param type
      */
-    public CheckCropsGoal(long id, RationalRole role, String description, GoalBDITypes type) {
+    public StealingOutOfNecessityGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
         //wpsReport.info("");
     }
@@ -73,7 +73,8 @@ public class CheckCropsGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().isFree()) {
+        if (believes.getPeasantProfile().getTools() > 0
+                && believes.getPeasantProfile().getSupplies() > 0) {
             return 1;
         } else {
             return 0;
@@ -89,8 +90,8 @@ public class CheckCropsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("FamilyTimeAvailability=" + believes.getPeasantProfile().getFamilyTimeAvailability());
-        if (believes.getPeasantProfile().isGrowingSeason()) {
+        //wpsReport.debug("Preparation season: " + believes.getPeasantProfile().isPreparationSeason());
+        if (believes.getPeasantProfile().isInformalLoanNeeded()) {
             return 1;
         } else {
             return 0;
@@ -105,13 +106,11 @@ public class CheckCropsGoal extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.CheckCropsTask)
-                && !believes.getPeasantProfile().isCropCheckedToday()) {
+        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.StealingOutOfNecessityTask)) {
             return 1;
         } else {
-            return 0;
+            return 1;
         }
     }
 
@@ -150,7 +149,8 @@ public class CheckCropsGoal extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().isCropCheckedToday();
+        //believes.getPeasantProfile().setGrowingSeason(true);
+        return believes.getPeasantProfile().getFarmReady() == 1;
     }
 
 }

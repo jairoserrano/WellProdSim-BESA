@@ -43,15 +43,15 @@ public final class wpsConfig {
     private String ControlAgentName;
     private String PerturbationAgentName;
     private String ViewerAgentName;
-    private String peasantType = "";
-    private String rainfallConditions = "";
-    private String perturbation = "";
+    private String peasantType;
+    private String rainfallConditions;
+    private String perturbation;
     private String startSimulationDate;
     private int peasantSerialID;
 
-    PeasantFamilyProfile regularFarmerProfile;
-    PeasantFamilyProfile lazyFarmerProfile;
-    PeasantFamilyProfile proactiveFarmerProfile;
+    private PeasantFamilyProfile regularFarmerProfile;
+    private PeasantFamilyProfile lazyFarmerProfile;
+    private PeasantFamilyProfile proactiveFarmerProfile;
 
     /**
      *
@@ -73,6 +73,8 @@ public final class wpsConfig {
         loadPeasantConfig();
         loadWPSConfig();
         this.peasantSerialID = 1;
+        this.rainfallConditions = "";
+        this.perturbation = "";
 
     }
 
@@ -104,7 +106,7 @@ public final class wpsConfig {
      *
      * @return
      */
-    public PeasantFamilyProfile getRegularFarmerProfile() {
+    public synchronized PeasantFamilyProfile getRegularFarmerProfile() {
         return regularFarmerProfile;
     }
 
@@ -112,7 +114,7 @@ public final class wpsConfig {
      *
      * @return
      */
-    public PeasantFamilyProfile getLazyFarmerProfile() {
+    public synchronized PeasantFamilyProfile getLazyFarmerProfile() {
         return lazyFarmerProfile;
     }
 
@@ -120,7 +122,7 @@ public final class wpsConfig {
      *
      * @return
      */
-    public PeasantFamilyProfile getProactiveFarmerProfile() {
+    public synchronized PeasantFamilyProfile getProactiveFarmerProfile() {
         return proactiveFarmerProfile;
     }
 
@@ -144,7 +146,7 @@ public final class wpsConfig {
      *
      * @return
      */
-    public String getPeasantType() {
+    public synchronized String getPeasantType() {
         return peasantType;
     }
 
@@ -152,7 +154,7 @@ public final class wpsConfig {
      *
      * @param peasantType
      */
-    public void setPeasantType(String peasantType) {
+    public synchronized void setPeasantType(String peasantType) {
         this.peasantType = peasantType;
     }
 
@@ -160,7 +162,7 @@ public final class wpsConfig {
      *
      * @return
      */
-    public String getRainfallConditions() {
+    public synchronized String getRainfallConditions() {
         return rainfallConditions;
     }
 
@@ -168,7 +170,7 @@ public final class wpsConfig {
      *
      * @param rainfallConditions
      */
-    public void setRainfallConditions(String rainfallConditions) {
+    public synchronized void setRainfallConditions(String rainfallConditions) {
         this.rainfallConditions = rainfallConditions;
     }
 
@@ -176,7 +178,7 @@ public final class wpsConfig {
      *
      * @return
      */
-    public String getPerturbation() {
+    public synchronized String getPerturbation() {
         return perturbation;
     }
 
@@ -184,11 +186,11 @@ public final class wpsConfig {
      *
      * @param perturbation
      */
-    public void setPerturbation(String perturbation) {
+    public synchronized void setPerturbation(String perturbation) {
         this.perturbation = perturbation;
     }
 
-    public Map<String, FarmingResource> loadMarketConfig() {
+    public synchronized Map<String, FarmingResource> loadMarketConfig() {
 
         Map<String, FarmingResource> priceList = new HashMap<>();
         Properties properties = new Properties();
@@ -200,50 +202,27 @@ public final class wpsConfig {
             // Carga las propiedades desde el archivo
             properties.load(fileInputStream);
 
-            priceList.put("water",
-                    new FarmingResource(
-                            "water",
-                            properties.getProperty("market.water.price"),
-                            properties.getProperty("market.water.quantity")
-                    )
-            );
-            priceList.put("seeds",
-                    new FarmingResource(
-                            "seeds",
-                            properties.getProperty("market.seeds.price"),
-                            properties.getProperty("market.seeds.quantity")
-                    )
-            );
-            priceList.put("pesticides",
-                    new FarmingResource(
-                            "pesticides",
-                            properties.getProperty("market.pesticides.price"),
-                            properties.getProperty("market.pesticides.quantity")
-                    )
-            );
-            priceList.put("tools",
-                    new FarmingResource(
-                            "tools",
-                            properties.getProperty("market.tools.price"),
-                            properties.getProperty("market.tools.quantity")
-                    )
-            );
-            priceList.put("livestock",
-                    new FarmingResource(
-                            "livestock",
-                            properties.getProperty("market.livestock.price"),
-                            properties.getProperty("market.livestock.quantity")
-                    )
-            );
-            priceList.put("ñame",
-                    new FarmingResource(
-                            "ñame",
-                            properties.getProperty("market.ñame.price"),
-                            properties.getProperty("market.ñame.quantity")
-                    )
-            );
+            String[] resourceNames = {
+                "water", "seeds", "pesticides",
+                "tools", "livestock", "ñame"
+            };
+
+            for (String resourceName : resourceNames) {
+                priceList.put(resourceName,
+                        new FarmingResource(
+                                resourceName,
+                                properties.getProperty(
+                                        "market." + resourceName + ".price"
+                                ),
+                                properties.getProperty(
+                                        "market." + resourceName + ".quantity"
+                                )
+                        )
+                );
+            }
             fileInputStream.close();
             return priceList;
+
         } catch (IOException e) {
             wpsReport.error(e.getMessage());
         } finally {
@@ -258,19 +237,14 @@ public final class wpsConfig {
         return null;
     }
 
-    private void loadWPSConfig() {
+    private synchronized void loadWPSConfig() {
 
         Properties properties = new Properties();
 
         ClassLoader classLoader = getClass().getClassLoader();
 
         try (InputStream fileInputStream = classLoader.getResourceAsStream("wpsConfig.properties")) {
-            // Especifica la ubicación del archivo .properties
-
-            // Carga las propiedades desde el archivo
             properties.load(fileInputStream);
-
-            // Valores iniciales de la simulación
             this.startSimulationDate = properties.getProperty("control.startdate");
             this.BankAgentName = properties.getProperty("bank.name");
             this.ControlAgentName = properties.getProperty("control.name");
@@ -278,15 +252,13 @@ public final class wpsConfig {
             this.SocietyAgentName = properties.getProperty("society.name");
             this.PerturbationAgentName = properties.getProperty("perturbation.name");
             this.ViewerAgentName = properties.getProperty("viewer.name");
-
-            System.out.println("---" + this.startSimulationDate + "----");
             fileInputStream.close();
         } catch (IOException e) {
             wpsReport.error(e.getMessage());
         }
     }
 
-    private void loadPeasantConfig() {
+    private synchronized void loadPeasantConfig() {
         LoadSettings settings = LoadSettings.builder().build();
         Load load = new Load(settings);
         Map<String, Object> data;
@@ -303,7 +275,6 @@ public final class wpsConfig {
             Map<String, Object> regularPeasant = (Map<String, Object>) data.get("RegularPeasant");
             jsonData = gson.toJson(regularPeasant);
             regularFarmerProfile = gson.fromJson(jsonData, PeasantFamilyProfile.class);
-            //wpsReport.info(regularFarmerProfile);
 
             yamlContent = new String(Files.readAllBytes(Paths.get("resources/wpsLazyPeasant.yml")));
             data = (Map<String, Object>) load.loadFromString(yamlContent);
@@ -311,7 +282,6 @@ public final class wpsConfig {
             Map<String, Object> lazyPeasant = (Map<String, Object>) data.get("LazyPeasant");
             jsonData = gson.toJson(lazyPeasant);
             lazyFarmerProfile = gson.fromJson(jsonData, PeasantFamilyProfile.class);
-            //wpsReport.info(lazyFarmerProfile);
 
             yamlContent = new String(Files.readAllBytes(Paths.get("resources/wpsProactivePeasant.yml")));
             data = (Map<String, Object>) load.loadFromString(yamlContent);
@@ -319,7 +289,6 @@ public final class wpsConfig {
             Map<String, Object> proactivePeasant = (Map<String, Object>) data.get("ProactivePeasant");
             jsonData = gson.toJson(proactivePeasant);
             proactiveFarmerProfile = gson.fromJson(jsonData, PeasantFamilyProfile.class);
-            //wpsReport.info(proactiveFarmerProfile);
 
         } catch (IOException ex) {
             wpsReport.error("No hay configuración válida");

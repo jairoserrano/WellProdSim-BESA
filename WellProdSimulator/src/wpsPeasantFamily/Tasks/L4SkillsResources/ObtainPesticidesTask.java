@@ -51,7 +51,7 @@ public class ObtainPesticidesTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("$ Asking for a LOAN to the Bank " + believes.getPeasantProfile().getMoney());
 

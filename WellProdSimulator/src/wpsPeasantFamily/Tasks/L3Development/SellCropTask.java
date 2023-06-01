@@ -50,7 +50,7 @@ public class SellCropTask extends Task {
      */
     @Override
     public synchronized void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
         believes.getPeasantProfile().useTime(TimeConsumedBy.SellCropTask);

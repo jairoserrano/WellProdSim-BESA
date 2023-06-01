@@ -30,23 +30,23 @@ public abstract class BDIAgentBuilder {
         this.password = password;
     }
 
-    public String getAlias() {
+    public synchronized String getAlias() {
         return alias;
     }
 
-    public void setAlias(String alias) {
+    public synchronized void setAlias(String alias) {
         this.alias = alias;
     }
 
-    public double getPassword() {
+    public synchronized double getPassword() {
         return password;
     }
 
-    public void setPassword(double password) {
+    public synchronized void setPassword(double password) {
         this.password = password;
     }
 
-    public void setAgentBDI(AgentBDI agentBDI) {
+    public synchronized void setAgentBDI(AgentBDI agentBDI) {
         this.agentBDI = agentBDI;
     }
 
@@ -54,19 +54,19 @@ public abstract class BDIAgentBuilder {
         return paramsMachine;
     }
 
-    public void setParamsMachine(BDIMachineParams paramsMachine) {
+    public synchronized void setParamsMachine(BDIMachineParams paramsMachine) {
         this.paramsMachine = paramsMachine;
     }
 
-    public AgentBDI getAgentBDI() {
+    public synchronized AgentBDI getAgentBDI() {
         return agentBDI;
     }
 
-    public Believes getBelieves() {
+    public synchronized Believes getBelieves() {
         return believes;
     }
 
-    public void setBelieves(Believes believes) {
+    public synchronized void setBelieves(Believes believes) {
         this.believes = believes;
     }
 

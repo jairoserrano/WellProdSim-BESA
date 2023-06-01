@@ -29,7 +29,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import rational.guards.InformationFlowGuard;
-import wpsPeasantFamily.Agent.Guards.FromBankGuard;
+import wpsPeasantFamily.Agent.Guards.FromBank.FromBankGuard;
+import wpsPeasantFamily.Agent.Guards.FromControlGuard;
 import wpsPeasantFamily.Agent.Guards.FromMarketGuard;
 import wpsPeasantFamily.Agent.Guards.FromWorldGuard;
 import wpsPeasantFamily.Agent.Guards.StatusGuard;
@@ -53,6 +54,7 @@ import wpsPeasantFamily.Goals.L3Development.ProcessProductsGoal;
 import wpsPeasantFamily.Goals.L3Development.SellCropGoal;
 import wpsPeasantFamily.Goals.L3Development.SellProductsGoal;
 import wpsPeasantFamily.Goals.L3Development.SpendFamilyTimeGoal;
+import wpsPeasantFamily.Goals.L3Development.StealingOutOfNecessityGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.GetPriceListGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.GetTrainingGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.LookForALandGoal;
@@ -82,6 +84,8 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
     private static StructBESA createStruct(StructBESA structBESA) throws ExceptionBESA {
         structBESA.addBehavior("HeartBeatGuard");
         structBESA.bindGuard("HeartBeatGuard", HeartBeatGuard.class);
+        structBESA.addBehavior("FromControlGuard");
+        structBESA.bindGuard("FromControlGuard", FromControlGuard.class);        
         structBESA.addBehavior("FromWorldGuard");
         structBESA.bindGuard("FromWorldGuard", FromWorldGuard.class);
         structBESA.addBehavior("FromBankGuard");
@@ -104,8 +108,8 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
 
         //Level 1 Goals: Survival        
         goals.add(DoVitalsGoal.buildGoal());
-        goals.add(DoHealthCareGoal.buildGoal());
         goals.add(SeekPurposeGoal.buildGoal());
+        goals.add(DoHealthCareGoal.buildGoal());        
         goals.add(SelfEvaluationGoal.buildGoal());
 
         //Level 2 Goals: Obligations
@@ -124,6 +128,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         goals.add(ProcessProductsGoal.buildGoal());
         goals.add(SellCropGoal.buildGoal());
         goals.add(SellProductsGoal.buildGoal());
+        goals.add(StealingOutOfNecessityGoal.buildGoal());
 
         //Level 4 Goals: Skills And Resources
         goals.add(GetPriceListGoal.buildGoal());
@@ -181,31 +186,36 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
     /**
      *
      */
-    public void BDIPulse() {
+    public synchronized void BDIPulse() {
         //wpsReport.debug(this.getAlias() + " Beat inicial");
 
-        // Crea un nuevo ScheduledExecutorService si no existe ya uno
         if (executor == null) {
             executor = Executors.newScheduledThreadPool(1);
         }
 
-        // Obtiene el tiempo de espera inicial
         int waitTime = getUpdatedWaitTime();
 
-        // Programa el hilo para que se ejecute después de un cierto período de tiempo
         futureTask = executor.schedule(this::executePulseTask, waitTime, TimeUnit.MILLISECONDS);
 
     }
 
-    private void executePulseTask() {
-        //wpsReport.debug("Ejecutando Beat");
+    private synchronized void executePulseTask() {
+
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) ((StateBDI) this.getState()).getBelieves();
+
         try {
+            while (believes.getPeasantProfile().getWeekBlock()) {
+                wpsReport.debug("Bloqueado Beat para " + this.getAlias());
+                Thread.sleep(1000);
+            }
             AgHandlerBESA agHandler = AdmBESA.getInstance().getHandlerByAlias(this.getAlias());
             EventBESA eventBesa = new EventBESA(InformationFlowGuard.class.getName(), null);
             agHandler.sendEvent(eventBesa);
             //wpsReport.info("💞 Peasant Family Heart Beat 💞");
         } catch (ExceptionBESA e) {
             wpsReport.error(e);
+        } catch (InterruptedException ex) {
+            wpsReport.error(ex);
         }
 
         int waitTime = getUpdatedWaitTime();
@@ -213,18 +223,15 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         futureTask = executor.schedule(this::executePulseTask, waitTime, TimeUnit.MILLISECONDS);
     }
 
-    private int getUpdatedWaitTime() {
+    private synchronized int getUpdatedWaitTime() {
         StateBDI believes = (StateBDI) this.state;
         if (believes.getMainRole() != null) {
-            //wpsReport.debug(this.getAlias() + " MAIN ROLE FROM UPDATE " + believes.getMainRole().getRoleName());
-            wpsReport.warn(this.getAlias() + " MAIN "
-                    + ""
-                    + ""
-                    + "Intention " + believes.getMachineBDIParams().getIntention());
-            return TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 200;
+            wpsReport.debug(this.getAlias() + " MAIN ROLE " + believes.getMainRole().getRoleName());
+            //wpsReport.warn(this.getAlias() + " MAIN Intention " + believes.getMachineBDIParams().getIntention());
+            return TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 400;
         } else {
             //wpsReport.debug(this.getAlias() + " MAIN ROLE NULL");
-            return 100;
+            return 400;
         }
     }
 
