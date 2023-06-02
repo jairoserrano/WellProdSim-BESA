@@ -22,8 +22,6 @@ import BESA.Kernel.System.Directory.AgHandlerBESA;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import wpsControl.Agent.ControlAgent;
 import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.Guards.StatusGuard;
@@ -44,7 +42,7 @@ public class wpsStart {
     private static int PLANID = 0;
     final private static double PASSWD = 0.91;
     public static wpsConfig config = wpsConfig.getInstance();
-    public static int peasantFamiliesAgents = 4;
+    public static int peasantFamiliesAgents = 10;
     private static int SIMTIME = 3;
 
     /**

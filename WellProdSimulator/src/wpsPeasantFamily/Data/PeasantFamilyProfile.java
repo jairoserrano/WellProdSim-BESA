@@ -24,7 +24,7 @@ import wpsViewer.Agent.wpsReport;
  *
  * @author jairo
  */
-public class PeasantFamilyProfile implements Serializable {
+public class PeasantFamilyProfile implements Serializable, Cloneable {
 
     private String purpose;
     private String peasantFamilyAlias;
@@ -1758,6 +1758,15 @@ public class PeasantFamilyProfile implements Serializable {
      */
     public boolean getWeekBlock() {
         return this.weekBlock;
+    }
+
+    @Override
+    public PeasantFamilyProfile clone() {
+        try {
+            return (PeasantFamilyProfile) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 
 }
