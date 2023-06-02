@@ -17,15 +17,12 @@ package wpsPeasantFamily.Tasks.L1Survival;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsViewer.Agent.wpsReport;
 
 /**
  *
  * @author jairo
  */
 public class SeekPurposeTask extends Task {
-
-    private boolean finished = false;
 
     /**
      *

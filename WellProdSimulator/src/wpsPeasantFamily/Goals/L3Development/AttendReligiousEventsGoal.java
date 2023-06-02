@@ -146,9 +146,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setGrowingSeason(true);
-        return believes.getPeasantProfile().getHarvestedWeight() == 0;
+        return true;
     }
 
 }

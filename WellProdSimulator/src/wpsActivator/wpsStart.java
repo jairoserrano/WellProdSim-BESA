@@ -29,6 +29,7 @@ import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.Guards.StatusGuard;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgent;
 import wpsPeasantFamily.Agent.HeartBeatGuard;
+import wpsPeasantFamily.Data.PeasantFamilyProfile;
 import wpsPerturbation.Agent.PerturbationAgent;
 import wpsSociety.Agent.SocietyAgent;
 import wpsSocietyBank.Agent.BankAgent;
@@ -44,8 +45,8 @@ public class wpsStart {
     private static int PLANID = 0;
     final private static double PASSWD = 0.91;
     public static wpsConfig config = wpsConfig.getInstance();
-    public static int peasantFamiliesAgents = 4;
-    private static int SIMTIME = 3;
+    public static int peasantFamiliesAgents = 40;
+    private static int SIMTIME = 5;
 
     /**
      * The main method to start the simulation.
@@ -71,12 +72,14 @@ public class wpsStart {
             wpsViewerAgent viewerAgent = wpsViewerAgent.createAgent(config.getViewerAgentName(), PASSWD);
 
             // @TODO: Regular and Proactive Peasant Agents
-            for (int i = 0; i < peasantFamiliesAgents; i++) {
-                PeasantFamilyBDIAgent peasantFamilyBDIAgent = new PeasantFamilyBDIAgent(
-                        config.getUniqueFarmerName(),
-                        config.getFarmerProfile()
+            for (int i = 1; i <= peasantFamiliesAgents; i++) {
+                PeasantFamilyProfile profile = config.getFarmerProfile();
+                peasantFamilyBDIAgents.add(
+                        new PeasantFamilyBDIAgent(
+                                "PeasantFamily_" + i,
+                                profile
+                        )
                 );
-                peasantFamilyBDIAgents.add(peasantFamilyBDIAgent);
             }
 
             // Simulation Start
@@ -125,7 +128,6 @@ public class wpsStart {
             for (PeasantFamilyBDIAgent peasantFamily : peasantFamilies) {
                 peasantFamily.start();
                 wpsReport.info(peasantFamily.getAlias() + " Started");
-                Thread.sleep(200);
             }
             // first heart beat to families
             for (int i = 1; i <= peasantFamiliesAgents; i++) {
@@ -135,7 +137,7 @@ public class wpsStart {
                 agHandler.sendEvent(eventBesa);
             }
 
-        } catch (ExceptionBESA | InterruptedException ex) {
+        } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
 

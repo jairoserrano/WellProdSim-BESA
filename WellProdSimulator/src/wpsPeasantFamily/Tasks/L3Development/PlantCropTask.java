@@ -25,7 +25,10 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Agent.UpdateBelievesPeasantFamilyAgent;
+import static wpsPeasantFamily.Data.SeasonType.GROWING;
 import wpsPeasantFamily.Data.TimeConsumedBy;
+import static wpsPeasantFamily.Data.UpdateType.USE_TIME;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -52,10 +55,19 @@ public class PlantCropTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setGrowingSeason(true);
-        believes.getPeasantProfile().setPreparationSeason(false);
-        believes.getPeasantProfile().setPlantingSeason(false);
-        believes.getPeasantProfile().useTime(TimeConsumedBy.PlantCropTask);
+
+        String peasantFamilyAlias = believes.getPeasantProfile().getPeasantFamilyAlias();
+
+        UpdateBelievesPeasantFamilyAgent.send(
+                peasantFamilyAlias,
+                USE_TIME,
+                TimeConsumedBy.valueOf(this.getClass().getSimpleName())
+        );
+
+        UpdateBelievesPeasantFamilyAgent.send(
+                peasantFamilyAlias,
+                GROWING
+        );
 
         try {
             AdmBESA adm = AdmBESA.getInstance();

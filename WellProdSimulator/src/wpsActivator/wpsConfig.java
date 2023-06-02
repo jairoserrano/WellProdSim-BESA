@@ -36,7 +36,7 @@ import wpsViewer.Agent.wpsReport;
  */
 public final class wpsConfig {
 
-    private static wpsConfig instance = null;
+    private static final wpsConfig INSTANCE = new wpsConfig();
     private String SocietyAgentName;
     private String BankAgentName;
     private String MarketAgentName;
@@ -47,7 +47,6 @@ public final class wpsConfig {
     private String rainfallConditions;
     private String perturbation;
     private String startSimulationDate;
-    private int peasantSerialID;
 
     private PeasantFamilyProfile regularFarmerProfile;
     private PeasantFamilyProfile lazyFarmerProfile;
@@ -58,10 +57,7 @@ public final class wpsConfig {
      * @return
      */
     public static wpsConfig getInstance() {
-        if (instance == null) {
-            instance = new wpsConfig();
-        }
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -72,7 +68,6 @@ public final class wpsConfig {
 
         loadPeasantConfig();
         loadWPSConfig();
-        this.peasantSerialID = 1;
         this.rainfallConditions = "";
         this.perturbation = "";
 
@@ -107,7 +102,7 @@ public final class wpsConfig {
      * @return
      */
     public synchronized PeasantFamilyProfile getRegularFarmerProfile() {
-        return regularFarmerProfile;
+        return regularFarmerProfile.clone();
     }
 
     /**
@@ -115,7 +110,7 @@ public final class wpsConfig {
      * @return
      */
     public synchronized PeasantFamilyProfile getLazyFarmerProfile() {
-        return lazyFarmerProfile;
+        return lazyFarmerProfile.clone();
     }
 
     /**
@@ -123,7 +118,7 @@ public final class wpsConfig {
      * @return
      */
     public synchronized PeasantFamilyProfile getProactiveFarmerProfile() {
-        return proactiveFarmerProfile;
+        return proactiveFarmerProfile.clone();
     }
 
     /**
@@ -294,10 +289,6 @@ public final class wpsConfig {
             wpsReport.error("No hay configuración válida");
             System.exit(0);
         }
-    }
-
-    public synchronized String getUniqueFarmerName() {
-        return "PeasantFamily_" + peasantSerialID++;
     }
 
     public synchronized PeasantFamilyProfile getFarmerProfile() {

@@ -23,11 +23,17 @@ import wpsWorld.Messages.WorldMessage;
 import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
+import wpsPeasantFamily.Agent.Guards.Believes.UpdateGuard;
+import wpsPeasantFamily.Agent.Guards.Believes.UpdateMessage;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Agent.UpdateBelievesPeasantFamilyAgent;
 import wpsPeasantFamily.Data.TimeConsumedBy;
+import static wpsPeasantFamily.Data.UpdateType.USED_NEW_DAY;
+import static wpsPeasantFamily.Data.UpdateType.USE_TIME;
 import wpsViewer.Agent.wpsReport;
 import static wpsWorld.Messages.WorldMessageType.CROP_OBSERVE;
 import static wpsWorld.Messages.WorldMessageType.CROP_INFORMATION;
+import static wpsPeasantFamily.Data.UpdateType.CROP_CHECKED_TODAY;
 
 /**
  *
@@ -39,7 +45,6 @@ public class CheckCropsTask extends Task {
      *
      */
     public CheckCropsTask() {
-        ////wpsReport.info("");
     }
 
     /**
@@ -50,9 +55,17 @@ public class CheckCropsTask extends Task {
     public synchronized void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        String peasantFamilyAlias = believes.getPeasantProfile().getPeasantFamilyAlias();
         // @TODO: falta calcular el tiempo necesario para el cultivo
-        believes.getPeasantProfile().useTime(TimeConsumedBy.CheckCropsTask);
-        believes.getPeasantProfile().setCropCheckedToday();
+        UpdateBelievesPeasantFamilyAgent.send(
+                peasantFamilyAlias,
+                USE_TIME,
+                TimeConsumedBy.valueOf(this.getClass().getSimpleName())
+        );
+        UpdateBelievesPeasantFamilyAgent.send(
+                peasantFamilyAlias,
+                CROP_CHECKED_TODAY
+        );
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
@@ -121,4 +134,5 @@ public class CheckCropsTask extends Task {
     public boolean checkFinish(Believes believes) {
         return true;
     }
+
 }

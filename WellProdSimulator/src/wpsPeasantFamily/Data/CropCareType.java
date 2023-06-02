@@ -12,35 +12,37 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Agent.Guards.FromBank;
+package wpsPeasantFamily.Data;
 
 /**
  *
  */
-public enum FromBankMessageType {
+public enum CropCareType {
 
     /**
      *
      */
-    APPROBED_LOAN,
+    PESTICIDE,
 
     /**
      *
      */
-    DENIED_FORMAL_LOAN,
+    IRRIGATION,
     
     /**
      *
      */
-    DENIED_INFORMAL_LOAN,
+    CHECK,
     
     /**
-     *
+     * 
      */
-    TERM_TO_PAY,
+    BADWEED, 
     
     /**
-     *
+     * 
      */
-    TERM_PAYED
+    NONE
+    
+    
 }

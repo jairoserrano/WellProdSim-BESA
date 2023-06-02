@@ -24,7 +24,8 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Data.TimeConsumedBy;
+import static wpsPeasantFamily.Data.SeasonType.HARVEST;
+import static wpsPeasantFamily.Data.TimeConsumedBy.HarvestCropsTask;
 
 /**
  *
@@ -90,7 +91,7 @@ public class HarvestCropsGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("PlantingSeason=" + believes.getPeasantProfile().isPlantingSeason());
-        if (believes.getPeasantProfile().isHarverstSeason()) {
+        if (believes.getPeasantProfile().getCurrentSeason() == HARVEST) {
             return 1;
         } else {
             return 0;
@@ -108,8 +109,7 @@ public class HarvestCropsGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.HarvestCropsTask
-                )) {
+                && believes.getPeasantProfile().haveTimeAvailable(HarvestCropsTask)) {
             return 1;
         } else {
             return 0;
@@ -149,12 +149,8 @@ public class HarvestCropsGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //believes.getPeasantProfile().setGrowingSeason(true);
-        //return believes.getPeasantProfile()
-        // @TODO: Fix cierre de temporada 
-        return true;
+        return believes.getPeasantProfile().getCurrentSeason() != HARVEST;
     }
 
 }

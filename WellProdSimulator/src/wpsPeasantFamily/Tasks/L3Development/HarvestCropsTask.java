@@ -25,7 +25,10 @@ import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Agent.UpdateBelievesPeasantFamilyAgent;
+import static wpsPeasantFamily.Data.SeasonType.NONE;
 import wpsPeasantFamily.Data.TimeConsumedBy;
+import static wpsPeasantFamily.Data.UpdateType.USE_TIME;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -34,13 +37,10 @@ import wpsViewer.Agent.wpsReport;
  */
 public class HarvestCropsTask extends Task {
 
-    private boolean finished;
-
     /**
      *
      */
     public HarvestCropsTask() {
-        this.finished = false;
     }
 
     /**
@@ -51,9 +51,17 @@ public class HarvestCropsTask extends Task {
     public synchronized void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().useTime(TimeConsumedBy.HarvestCropsTask);
-        believes.getPeasantProfile().setHarverstSeason(false);
-        believes.getPeasantProfile().setGrowingSeason(false);
+        String peasantFamilyAlias = believes.getPeasantProfile().getPeasantFamilyAlias();
+
+        UpdateBelievesPeasantFamilyAgent.send(
+                peasantFamilyAlias,
+                USE_TIME,
+                TimeConsumedBy.valueOf(this.getClass().getSimpleName())
+        );
+        UpdateBelievesPeasantFamilyAgent.send(
+                peasantFamilyAlias,
+                NONE
+        );
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
@@ -65,7 +73,8 @@ public class HarvestCropsTask extends Task {
                     CROP_HARVEST,
                     believes.getPeasantProfile().getCurrentCropName(),
                     wpsCurrentDate.getInstance().getCurrentDate(),
-                    believes.getPeasantProfile().getPeasantFamilyAlias());
+                    peasantFamilyAlias
+            );
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),
                     worldMessage);
@@ -75,22 +84,6 @@ public class HarvestCropsTask extends Task {
             wpsReport.error(ex);
         }
         this.setTaskFinalized();
-        this.setFinished();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        return finished;
-    }
-
-    /**
-     *
-     */
-    public void setFinished() {
-        this.finished = true;
     }
 
     /**
@@ -99,7 +92,7 @@ public class HarvestCropsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        this.setFinished();
+        this.setTaskFinalized();
     }
 
     /**
@@ -108,7 +101,7 @@ public class HarvestCropsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        this.setFinished();
+        this.setTaskFinalized();
     }
 
     /**
@@ -118,7 +111,6 @@ public class HarvestCropsTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////wpsReport.info("");
-        return this.finished;
+        return true;
     }
 }

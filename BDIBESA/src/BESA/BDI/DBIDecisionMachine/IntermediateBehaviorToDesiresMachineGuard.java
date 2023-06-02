@@ -12,9 +12,6 @@ import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 import BESA.Log.ReportBESA;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import rational.guards.ChangeRationalRoleGuard;
 
 /**
  *

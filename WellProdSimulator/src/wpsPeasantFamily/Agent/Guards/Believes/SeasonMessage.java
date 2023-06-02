@@ -12,35 +12,32 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Agent.Guards.FromBank;
+package wpsPeasantFamily.Agent.Guards.Believes;
+
+import BESA.Kernel.Agent.Event.DataBESA;
+import wpsPeasantFamily.Data.SeasonType;
 
 /**
  *
+ * @author jairo
  */
-public enum FromBankMessageType {
+public class SeasonMessage extends DataBESA {
 
-    /**
-     *
-     */
-    APPROBED_LOAN,
+    private SeasonType seasonType;
 
-    /**
-     *
-     */
-    DENIED_FORMAL_LOAN,
+    public SeasonType getSeasonType() {
+        return seasonType;
+    }
+
+    public void setSeasonType(SeasonType seasonType) {
+        this.seasonType = seasonType;
+    }
     
     /**
      *
      */
-    DENIED_INFORMAL_LOAN,
-    
-    /**
-     *
-     */
-    TERM_TO_PAY,
-    
-    /**
-     *
-     */
-    TERM_PAYED
+    public SeasonMessage(SeasonType seasonType) {
+        this.seasonType = seasonType;
+    }
+
 }

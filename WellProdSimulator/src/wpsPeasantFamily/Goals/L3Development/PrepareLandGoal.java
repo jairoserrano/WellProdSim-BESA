@@ -24,6 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import static wpsPeasantFamily.Data.SeasonType.PREPARATION;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
@@ -91,7 +92,7 @@ public class PrepareLandGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.debug("Preparation season: " + believes.getPeasantProfile().isPreparationSeason());
-        if (believes.getPeasantProfile().isPreparationSeason() 
+        if (believes.getPeasantProfile().getCurrentSeason() == PREPARATION 
                 && !believes.getPeasantProfile().needAPriceList()) {
             return 1;
         } else {

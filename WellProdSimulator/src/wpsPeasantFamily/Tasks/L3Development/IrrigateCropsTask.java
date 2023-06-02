@@ -21,7 +21,11 @@ import BESA.Kernel.System.Directory.AgHandlerBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Agent.UpdateBelievesPeasantFamilyAgent;
+import wpsPeasantFamily.Data.CropCareType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
+import static wpsPeasantFamily.Data.UpdateType.CROP_CHECKED_TODAY;
+import static wpsPeasantFamily.Data.UpdateType.USE_TIME;
 import wpsViewer.Agent.wpsReport;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
@@ -51,9 +55,20 @@ public class IrrigateCropsTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setIrrigateSeason(false);
+        String peasantFamilyAlias = believes.getPeasantProfile().getPeasantFamilyAlias();
+        
+        UpdateBelievesPeasantFamilyAgent.send(
+                peasantFamilyAlias,
+                CropCareType.NONE
+        );
+        
         believes.getPeasantProfile().useWater(50);
-        believes.getPeasantProfile().useTime(TimeConsumedBy.IrrigateCropsTask);
+        
+        UpdateBelievesPeasantFamilyAgent.send(
+                peasantFamilyAlias,
+                USE_TIME,
+                TimeConsumedBy.valueOf(this.getClass().getSimpleName())
+        );
 
         try {
             AdmBESA adm = AdmBESA.getInstance();

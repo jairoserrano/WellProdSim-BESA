@@ -24,8 +24,6 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Tasks.L1Survival.DoVitalsTask;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Data.TimeConsumedBy;
-import wpsViewer.Agent.wpsReport;
 
 /**
  *

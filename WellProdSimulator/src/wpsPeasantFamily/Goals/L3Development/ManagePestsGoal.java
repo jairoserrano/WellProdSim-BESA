@@ -24,6 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import static wpsPeasantFamily.Data.CropCareType.PESTICIDE;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
@@ -91,7 +92,7 @@ public class ManagePestsGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("getCropHealth=" + believes.getPeasantProfile().getCropHealth());
-        if (believes.getPeasantProfile().isPesticideSeason()) {
+        if (believes.getPeasantProfile().getCurrentCropCare() == PESTICIDE) {
             return 1;
         } else {
             return 0;
@@ -149,10 +150,7 @@ public class ManagePestsGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setGrowingSeason(true);
-        return believes.getPeasantProfile().getCropHealth() == 1;
+        return true;
     }
 
 }

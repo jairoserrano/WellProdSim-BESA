@@ -24,6 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Tasks.L3Development.CheckCropsTask;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.CropCareType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
@@ -90,7 +91,7 @@ public class CheckCropsGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("FamilyTimeAvailability=" + believes.getPeasantProfile().getFamilyTimeAvailability());
-        if (believes.getPeasantProfile().isGrowingSeason()) {
+        if (believes.getPeasantProfile().getCurrentCropCare() == CropCareType.CHECK) {
             return 1;
         } else {
             return 0;

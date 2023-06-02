@@ -23,6 +23,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.MoneyOriginType;
 import wpsPeasantFamily.Tasks.L2Obligation.LookForLoanTask;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
@@ -91,7 +92,7 @@ public class LookForLoanGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("isFormalLoanNeeded=" + believes.getPeasantProfile().isFormalLoanNeeded());
-        if (believes.getPeasantProfile().isFormalLoanNeeded()) {
+        if (believes.getPeasantProfile().getCurrentMoneyOrigin() == MoneyOriginType.LOAN) {
             return 1;
         } else {
             return 0;
@@ -150,7 +151,7 @@ public class LookForLoanGoal extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return !believes.getPeasantProfile().isFormalLoanNeeded();
+        return true;
     }
 
 }

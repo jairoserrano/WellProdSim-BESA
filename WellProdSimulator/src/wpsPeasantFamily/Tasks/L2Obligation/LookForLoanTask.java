@@ -22,7 +22,10 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Agent.UpdateBelievesPeasantFamilyAgent;
+import wpsPeasantFamily.Data.MoneyOriginType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
+import static wpsPeasantFamily.Data.UpdateType.USE_TIME;
 import wpsSocietyBank.Agent.BankAgentGuard;
 import wpsSocietyBank.Agent.BankMessage;
 import wpsViewer.Agent.wpsReport;
@@ -50,37 +53,42 @@ public class LookForLoanTask extends Task {
      */
     @Override
     public synchronized void executeTask(Believes parameters) {
-       //wpsReport.info("⚙️⚙️⚙️");
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        
-        believes.getPeasantProfile().setFormalLoanSeason(false);
-        
+        String peasantFamilyAlias = believes.getPeasantProfile().getPeasantFamilyAlias();
+        UpdateBelievesPeasantFamilyAgent.send(
+                peasantFamilyAlias,
+                USE_TIME,
+                TimeConsumedBy.valueOf(this.getClass().getSimpleName())
+        );        
+
         // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.
         try {
             AdmBESA adm = AdmBESA.getInstance();
             AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.config.getBankAgentName());
 
             BankMessage bankMessage;
-            if (believes.getPeasantProfile().isInformalLoanNeeded()) {
+            if (believes.getPeasantProfile().getCurrentMoneyOrigin() == MoneyOriginType.INFORMAL) {
                 bankMessage = new BankMessage(
                         ASK_FOR_INFORMAL_LOAN,
-                        believes.getPeasantProfile().getPeasantFamilyAlias(),
+                        peasantFamilyAlias,
                         100000);
-                believes.getPeasantProfile().setInformalLoanSeason(false);
             } else {
                 bankMessage = new BankMessage(
                         ASK_FOR_FORMAL_LOAN,
-                        believes.getPeasantProfile().getPeasantFamilyAlias(),
+                        peasantFamilyAlias,
                         500000);
-                believes.getPeasantProfile().setFormalLoanSeason(false);
             }
 
             EventBESA ev = new EventBESA(
                     BankAgentGuard.class.getName(),
                     bankMessage);
             ah.sendEvent(ev);
-
-            believes.getPeasantProfile().useTime(TimeConsumedBy.LookForLoanTask);
+            
+            UpdateBelievesPeasantFamilyAgent.send(
+                    peasantFamilyAlias,
+                    MoneyOriginType.NONE
+            );
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);

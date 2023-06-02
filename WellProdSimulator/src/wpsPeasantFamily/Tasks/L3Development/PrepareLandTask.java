@@ -17,8 +17,9 @@ package wpsPeasantFamily.Tasks.L3Development;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Agent.UpdateBelievesPeasantFamilyAgent;
+import static wpsPeasantFamily.Data.SeasonType.PREPARATION;
 import wpsPeasantFamily.Data.TimeConsumedBy;
-import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -44,7 +45,12 @@ public class PrepareLandTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setPlantingSeason(true);
+        String peasantFamilyAlias = believes.getPeasantProfile().getPeasantFamilyAlias();
+        
+        UpdateBelievesPeasantFamilyAgent.send(
+                peasantFamilyAlias,
+                PREPARATION
+        );
         believes.getPeasantProfile().useTime(TimeConsumedBy.PrepareLandTask);
         //this.setTaskWaitingForExecution();
         this.setFinished();

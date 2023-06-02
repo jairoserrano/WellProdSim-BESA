@@ -12,63 +12,40 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Tasks.L1Survival;
-
-import rational.mapping.Believes;
-import rational.mapping.Task;
-import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsViewer.Agent.wpsReport;
+package wpsPeasantFamily.Data;
 
 /**
  *
- * @author jairo
  */
-public class SelfEvaluationTask extends Task {
+public enum MoneyOriginType {
+
+    /**
+     *
+     */
+    LOAN,
+
+    /**
+     *
+     */
+    INFORMAL,
     
     /**
      *
      */
-    public SelfEvaluationTask() {
-        ////wpsReport.info("");
-    }
-
+    AVANCE,
+    
     /**
      *
-     * @param parameters
      */
-    @Override
-    public synchronized void executeTask(Believes parameters) {
-        //wpsReport.info("⚙️⚙️⚙️");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        this.setTaskFinalized();
-    }
-
+    BENEFICENCIA,
+    
     /**
      *
-     * @param parameters
      */
-    @Override
-    public void interruptTask(Believes parameters) {
-        this.setTaskFinalized();
-    }
-
+    ROBERY,
+    
     /**
-     *
-     * @param parameters
+     * 
      */
-    @Override
-    public void cancelTask(Believes parameters) {
-        this.setTaskFinalized();
-    }
-
-    /**
-     *
-     * @param believes
-     * @return
-     */
-    @Override
-    public boolean checkFinish(Believes believes) {
-        ////wpsReport.info("");
-        return true;
-    }
+    NONE
 }

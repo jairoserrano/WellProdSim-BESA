@@ -12,63 +12,31 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Tasks.L1Survival;
+package wpsPeasantFamily.Agent.Guards.Believes;
 
-import rational.mapping.Believes;
-import rational.mapping.Task;
+import BESA.BDI.AgentStructuralModel.StateBDI;
+import BESA.Kernel.Agent.Event.EventBESA;
+import BESA.Kernel.Agent.GuardBESA;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsViewer.Agent.wpsReport;
+import wpsPeasantFamily.Data.SeasonType;
 
 /**
  *
  * @author jairo
  */
-public class SelfEvaluationTask extends Task {
+public class SeasonGuard extends GuardBESA {
+
+    /**
+     *
+     * @param event
+     */
+    @Override
+    public void funcExecGuard(EventBESA event) {
+        SeasonMessage seasonMessage = (SeasonMessage) event.getData();
+        StateBDI state = (StateBDI) this.agent.getState();
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
+        SeasonType seasonType = seasonMessage.getSeasonType();
+        believes.getPeasantProfile().setCurrentSeason(seasonType);
+    }
     
-    /**
-     *
-     */
-    public SelfEvaluationTask() {
-        ////wpsReport.info("");
-    }
-
-    /**
-     *
-     * @param parameters
-     */
-    @Override
-    public synchronized void executeTask(Believes parameters) {
-        //wpsReport.info("⚙️⚙️⚙️");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        this.setTaskFinalized();
-    }
-
-    /**
-     *
-     * @param parameters
-     */
-    @Override
-    public void interruptTask(Believes parameters) {
-        this.setTaskFinalized();
-    }
-
-    /**
-     *
-     * @param parameters
-     */
-    @Override
-    public void cancelTask(Believes parameters) {
-        this.setTaskFinalized();
-    }
-
-    /**
-     *
-     * @param believes
-     * @return
-     */
-    @Override
-    public boolean checkFinish(Believes believes) {
-        ////wpsReport.info("");
-        return true;
-    }
 }

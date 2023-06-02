@@ -29,6 +29,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import rational.guards.InformationFlowGuard;
+import wpsPeasantFamily.Agent.Guards.Believes.SeasonGuard;
+import wpsPeasantFamily.Agent.Guards.Believes.UpdateGuard;
 import wpsPeasantFamily.Agent.Guards.FromBank.FromBankGuard;
 import wpsPeasantFamily.Agent.Guards.FromControlGuard;
 import wpsPeasantFamily.Agent.Guards.FromMarketGuard;
@@ -85,7 +87,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         structBESA.addBehavior("HeartBeatGuard");
         structBESA.bindGuard("HeartBeatGuard", HeartBeatGuard.class);
         structBESA.addBehavior("FromControlGuard");
-        structBESA.bindGuard("FromControlGuard", FromControlGuard.class);        
+        structBESA.bindGuard("FromControlGuard", FromControlGuard.class);
         structBESA.addBehavior("FromWorldGuard");
         structBESA.bindGuard("FromWorldGuard", FromWorldGuard.class);
         structBESA.addBehavior("FromBankGuard");
@@ -94,61 +96,62 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         structBESA.bindGuard("FromMarketGuard", FromMarketGuard.class);
         structBESA.addBehavior("StatusGuard");
         structBESA.bindGuard("StatusGuard", StatusGuard.class);
+        structBESA.addBehavior("SeasonGuard");
+        structBESA.bindGuard("SeasonGuard", SeasonGuard.class);
+        structBESA.addBehavior("UpdateGuard");
+        structBESA.bindGuard("UpdateGuard", UpdateGuard.class);
         return structBESA;
     }
 
-    private static PeasantFamilyBDIAgentBelieves createBelieves(String alias, PeasantFamilyProfile profile) {
+    private synchronized static PeasantFamilyBDIAgentBelieves createBelieves(String alias, PeasantFamilyProfile profile) {
         return new PeasantFamilyBDIAgentBelieves(alias, profile);
     }
 
     private static List<GoalBDI> createGoals() {
-        //wpsReport.info("");
 
         List<GoalBDI> goals = new ArrayList();
 
         //Level 1 Goals: Survival        
         goals.add(DoVitalsGoal.buildGoal());
         goals.add(SeekPurposeGoal.buildGoal());
-        goals.add(DoHealthCareGoal.buildGoal());        
-        goals.add(SelfEvaluationGoal.buildGoal());
+        //goals.add(DoHealthCareGoal.buildGoal());        
+        //goals.add(SelfEvaluationGoal.buildGoal());
 
         //Level 2 Goals: Obligations
-        goals.add(LookForLoanGoal.buildGoal());
-        goals.add(PayDebtsGoal.buildGoal());
-
+        //goals.add(LookForLoanGoal.buildGoal());
+        //goals.add(PayDebtsGoal.buildGoal());
         //Level 3 Goals: Development        
-        goals.add(AttendToLivestockGoal.buildGoal());
+        //goals.add(AttendToLivestockGoal.buildGoal());
         goals.add(CheckCropsGoal.buildGoal());
         goals.add(HarvestCropsGoal.buildGoal());
         goals.add(IrrigateCropsGoal.buildGoal());
-        goals.add(MaintainHouseGoal.buildGoal());
-        goals.add(ManagePestsGoal.buildGoal());
+        //goals.add(MaintainHouseGoal.buildGoal());
+        //goals.add(ManagePestsGoal.buildGoal());
         goals.add(PlantCropGoal.buildGoal());
         goals.add(PrepareLandGoal.buildGoal());
-        goals.add(ProcessProductsGoal.buildGoal());
-        goals.add(SellCropGoal.buildGoal());
-        goals.add(SellProductsGoal.buildGoal());
-        goals.add(StealingOutOfNecessityGoal.buildGoal());
+        //goals.add(ProcessProductsGoal.buildGoal());
+        //goals.add(SellCropGoal.buildGoal());
+        //goals.add(SellProductsGoal.buildGoal());
+        //goals.add(StealingOutOfNecessityGoal.buildGoal());
 
         //Level 4 Goals: Skills And Resources
         goals.add(GetPriceListGoal.buildGoal());
-        goals.add(GetTrainingGoal.buildGoal());
+        //goals.add(GetTrainingGoal.buildGoal());
         goals.add(LookForALandGoal.buildGoal());
-        goals.add(ObtainLivestockGoal.buildGoal());
-        goals.add(ObtainSeedsGoal.buildGoal());
-        goals.add(ObtainSuppliesGoal.buildGoal());
-        goals.add(ObtainToolsGoal.buildGoal());
-        goals.add(ObtainWaterGoal.buildGoal());
-        goals.add(ObtainPesticidesGoal.buildGoal());
+        //goals.add(ObtainLivestockGoal.buildGoal());
+        //goals.add(ObtainSeedsGoal.buildGoal());
+        //goals.add(ObtainSuppliesGoal.buildGoal());
+        //goals.add(ObtainToolsGoal.buildGoal());
+        //goals.add(ObtainWaterGoal.buildGoal());
+        //goals.add(ObtainPesticidesGoal.buildGoal());
 
         //Level 5 Goals: Social
-        goals.add(CommunicateGoal.buildGoal());
-        goals.add(LookForCollaborationGoal.buildGoal());
-        goals.add(ProvideCollaborationGoal.buildGoal());
-
+        //goals.add(CommunicateGoal.buildGoal());
+        //goals.add(LookForCollaborationGoal.buildGoal());
+        //goals.add(ProvideCollaborationGoal.buildGoal());
         //Level 6 Goals: Leisure
         goals.add(EngageInLeisureActivitiesGoal.buildGoal());
-        goals.add(SpendFamilyTimeGoal.buildGoal());
+        //goals.add(SpendFamilyTimeGoal.buildGoal());
 
         return goals;
     }
@@ -200,38 +203,39 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
     }
 
     private synchronized void executePulseTask() {
+        synchronized (this) {
+            PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) ((StateBDI) this.getState()).getBelieves();
 
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) ((StateBDI) this.getState()).getBelieves();
-
-        try {
-            while (believes.getPeasantProfile().getWeekBlock()) {
-                wpsReport.debug("Bloqueado Beat para " + this.getAlias());
-                Thread.sleep(1000);
+            try {
+                while (believes.getPeasantProfile().getWeekBlock()) {
+                    wpsReport.debug("Bloqueado Beat para " + this.getAlias());
+                    Thread.sleep(1000);
+                }
+                AgHandlerBESA agHandler = AdmBESA.getInstance().getHandlerByAlias(this.getAlias());
+                EventBESA eventBesa = new EventBESA(InformationFlowGuard.class.getName(), null);
+                agHandler.sendEvent(eventBesa);
+                //wpsReport.info("💞 Peasant Family Heart Beat 💞");
+            } catch (ExceptionBESA | InterruptedException ex) {
+                wpsReport.error(ex);
             }
-            AgHandlerBESA agHandler = AdmBESA.getInstance().getHandlerByAlias(this.getAlias());
-            EventBESA eventBesa = new EventBESA(InformationFlowGuard.class.getName(), null);
-            agHandler.sendEvent(eventBesa);
-            //wpsReport.info("💞 Peasant Family Heart Beat 💞");
-        } catch (ExceptionBESA e) {
-            wpsReport.error(e);
-        } catch (InterruptedException ex) {
-            wpsReport.error(ex);
+
+            int waitTime = getUpdatedWaitTime();
+
+            futureTask = executor.schedule(this::executePulseTask, waitTime, TimeUnit.MILLISECONDS);
         }
-
-        int waitTime = getUpdatedWaitTime();
-
-        futureTask = executor.schedule(this::executePulseTask, waitTime, TimeUnit.MILLISECONDS);
     }
 
     private synchronized int getUpdatedWaitTime() {
-        StateBDI believes = (StateBDI) this.state;
-        if (believes.getMainRole() != null) {
-            wpsReport.debug(this.getAlias() + " MAIN ROLE " + believes.getMainRole().getRoleName());
-            //wpsReport.warn(this.getAlias() + " MAIN Intention " + believes.getMachineBDIParams().getIntention());
-            return TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 400;
-        } else {
-            //wpsReport.debug(this.getAlias() + " MAIN ROLE NULL");
-            return 400;
+        synchronized (this) {
+            StateBDI believes = (StateBDI) this.state;
+            if (believes.getMainRole() != null) {
+                wpsReport.debug(this.getAlias() + " MAIN ROLE " + believes.getMainRole().getRoleName());
+                //wpsReport.warn(this.getAlias() + " MAIN Intention " + believes.getMachineBDIParams().getIntention());
+                return TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 400;
+            } else {
+                //wpsReport.debug(this.getAlias() + " MAIN ROLE NULL");
+                return 400;
+            }
         }
     }
 

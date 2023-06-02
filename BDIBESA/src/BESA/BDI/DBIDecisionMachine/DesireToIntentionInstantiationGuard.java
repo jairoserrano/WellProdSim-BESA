@@ -33,7 +33,7 @@ import rational.mapping.Believes;
 public class DesireToIntentionInstantiationGuard extends GuardBESA {
 
     @Override
-    public void funcExecGuard(EventBESA event) {
+    public synchronized void funcExecGuard(EventBESA event) {
         AgentBDI agentBDI = (AgentBDI) agent;
         StateBDI stateBDI = (StateBDI) agentBDI.getState();
         try {

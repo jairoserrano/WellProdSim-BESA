@@ -91,11 +91,12 @@ public class StealingOutOfNecessityGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.debug("Preparation season: " + believes.getPeasantProfile().isPreparationSeason());
-        if (believes.getPeasantProfile().isInformalLoanNeeded()) {
+        /*if (believes.getPeasantProfile().isInformalLoanNeeded()) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
+        return 0;
     }
 
     /**
