@@ -23,6 +23,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.CropCareType;
 import wpsPeasantFamily.Tasks.L4SkillsResources.ObtainWaterTask;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
@@ -91,7 +92,7 @@ public class ObtainWaterGoal extends GoalBDI {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("PlantingSeason=" + believes.getPeasantProfile().isPlantingSeason());
         if (believes.getPeasantProfile().isWaterNeeded()
-                && believes.getPeasantProfile().isIrrigateSeason()) {
+                && believes.getCurrentCropCare() == CropCareType.IRRIGATION) {
             return 1;
         } else {
             return 0;
@@ -108,8 +109,8 @@ public class ObtainWaterGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.ObtainWaterTask
+        if (believes.isFree()
+                && believes.haveTimeAvailable(TimeConsumedBy.ObtainWaterTask
                 )) {
             return 1;
         } else {

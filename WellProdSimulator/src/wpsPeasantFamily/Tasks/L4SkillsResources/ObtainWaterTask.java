@@ -52,7 +52,7 @@ public class ObtainWaterTask extends Task {
     public synchronized void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainWaterTask);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
 
         try {
             AdmBESA adm = AdmBESA.getInstance();

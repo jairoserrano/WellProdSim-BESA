@@ -57,7 +57,7 @@ import wpsPeasantFamily.Goals.L3Development.SpendFamilyTimeGoal;
 import wpsPeasantFamily.Goals.L3Development.StealingOutOfNecessityGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.GetPriceListGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.GetTrainingGoal;
-import wpsPeasantFamily.Goals.L4SkillsResources.LookForALandGoal;
+import wpsPeasantFamily.Goals.L4SkillsResources.ObtainALandGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainLivestockGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainPesticidesGoal;
 import wpsPeasantFamily.Goals.L4SkillsResources.ObtainSeedsGoal;
@@ -85,7 +85,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         structBESA.addBehavior("HeartBeatGuard");
         structBESA.bindGuard("HeartBeatGuard", HeartBeatGuard.class);
         structBESA.addBehavior("FromControlGuard");
-        structBESA.bindGuard("FromControlGuard", FromControlGuard.class);        
+        structBESA.bindGuard("FromControlGuard", FromControlGuard.class);
         structBESA.addBehavior("FromWorldGuard");
         structBESA.bindGuard("FromWorldGuard", FromWorldGuard.class);
         structBESA.addBehavior("FromBankGuard");
@@ -102,14 +102,13 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
     }
 
     private static List<GoalBDI> createGoals() {
-        //wpsReport.info("");
 
         List<GoalBDI> goals = new ArrayList();
 
         //Level 1 Goals: Survival        
         goals.add(DoVitalsGoal.buildGoal());
         goals.add(SeekPurposeGoal.buildGoal());
-        goals.add(DoHealthCareGoal.buildGoal());        
+        goals.add(DoHealthCareGoal.buildGoal());
         goals.add(SelfEvaluationGoal.buildGoal());
 
         //Level 2 Goals: Obligations
@@ -133,7 +132,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         //Level 4 Goals: Skills And Resources
         goals.add(GetPriceListGoal.buildGoal());
         goals.add(GetTrainingGoal.buildGoal());
-        goals.add(LookForALandGoal.buildGoal());
+        goals.add(ObtainALandGoal.buildGoal());
         goals.add(ObtainLivestockGoal.buildGoal());
         goals.add(ObtainSeedsGoal.buildGoal());
         goals.add(ObtainSuppliesGoal.buildGoal());
@@ -161,7 +160,6 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
      */
     public PeasantFamilyBDIAgent(String alias, PeasantFamilyProfile peasantProfile) throws ExceptionBESA {
         super(alias, createBelieves(alias, peasantProfile), createGoals(), BDITHRESHOLD, createStruct(new StructBESA()));
-        //wpsReport.info("PeasantAgent Iniciado");
     }
 
     /**
@@ -187,24 +185,23 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
      *
      */
     public synchronized void BDIPulse() {
-        //wpsReport.debug(this.getAlias() + " Beat inicial");
-
         if (executor == null) {
             executor = Executors.newScheduledThreadPool(1);
         }
-
         int waitTime = getUpdatedWaitTime();
 
         futureTask = executor.schedule(this::executePulseTask, waitTime, TimeUnit.MILLISECONDS);
-
     }
 
+    /**
+     *
+     */
     private synchronized void executePulseTask() {
 
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) ((StateBDI) this.getState()).getBelieves();
 
         try {
-            while (believes.getPeasantProfile().getWeekBlock()) {
+            while (believes.getWeekBlock()) {
                 wpsReport.debug("Bloqueado Beat para " + this.getAlias());
                 Thread.sleep(1000);
             }
@@ -219,19 +216,19 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         }
 
         int waitTime = getUpdatedWaitTime();
-
+        wpsReport.debug(this.getAlias() + " durmiendo " + waitTime);
         futureTask = executor.schedule(this::executePulseTask, waitTime, TimeUnit.MILLISECONDS);
     }
 
     private synchronized int getUpdatedWaitTime() {
         StateBDI believes = (StateBDI) this.state;
         if (believes.getMainRole() != null) {
-            wpsReport.debug(this.getAlias() + " MAIN ROLE " + believes.getMainRole().getRoleName());
+            //wpsReport.debug(this.getAlias() + " MAIN ROLE " + believes.getMainRole().getRoleName());
             //wpsReport.warn(this.getAlias() + " MAIN Intention " + believes.getMachineBDIParams().getIntention());
-            return TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 400;
+            return TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 100;
         } else {
             //wpsReport.debug(this.getAlias() + " MAIN ROLE NULL");
-            return 400;
+            return 100;
         }
     }
 

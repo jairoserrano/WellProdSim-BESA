@@ -47,7 +47,7 @@ public class MaintainHouseTask extends Task {
         // @TODO: Cambiar a la venta real con el agente social market
         believes.getPeasantProfile().increaseHouseCondition();
         believes.getPeasantProfile().useTools();
-        believes.getPeasantProfile().useTime(TimeConsumedBy.MaintainHouseTask);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         this.setFinished();
     }
 

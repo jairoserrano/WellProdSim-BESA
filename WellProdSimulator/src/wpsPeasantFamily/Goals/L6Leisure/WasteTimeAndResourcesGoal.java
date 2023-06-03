@@ -91,8 +91,8 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("isFree=" + believes.getPeasantProfile().isFree());
-        if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.WasteTimeAndResourcesGoal)) {
+        if (believes.isFree()
+                && believes.haveTimeAvailable(TimeConsumedBy.WasteTimeAndResourcesTask)) {
             return 1;
         } else {
             return 0;

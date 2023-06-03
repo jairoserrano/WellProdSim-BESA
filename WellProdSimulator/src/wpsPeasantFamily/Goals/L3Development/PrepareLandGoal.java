@@ -24,6 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
@@ -90,9 +91,7 @@ public class PrepareLandGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.debug("Preparation season: " + believes.getPeasantProfile().isPreparationSeason());
-        if (believes.getPeasantProfile().isPreparationSeason() 
-                && !believes.getPeasantProfile().needAPriceList()) {
+        if (believes.getCurrentSeason() == SeasonType.PREPARATION) {
             return 1;
         } else {
             return 0;
@@ -108,15 +107,10 @@ public class PrepareLandGoal extends GoalBDI {
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.debug("free: " + believes.getPeasantProfile().isFree());
-        //wpsReport.debug("PrepareLandTask time needed: " + TimeConsumedBy.PrepareLandTask.getTime());
-        //wpsReport.debug("PrepareLandTask have time: " + believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PrepareLandTask));
-        if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PrepareLandTask
-                )) {
-            return 0;
-        } else {
+        if (believes.haveTimeAvailable(TimeConsumedBy.PrepareLandTask)) {
             return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -128,7 +122,6 @@ public class PrepareLandGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         return 1;
     }
 

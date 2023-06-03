@@ -36,7 +36,7 @@ public class FromControlGuard extends GuardBESA {
         StateBDI state = (StateBDI) this.agent.getState();
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
         
-        believes.getPeasantProfile().releaseWeekBlock();
+        believes.releaseWeekBlock();
 
     }
 

@@ -25,6 +25,8 @@ import wpsControl.Agent.ControlAgentGuard;
 import wpsControl.Agent.DateHelper;
 import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.MoneyOriginType;
+import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyBank.Agent.BankAgentGuard;
 import wpsSocietyBank.Agent.BankMessage;
@@ -51,13 +53,13 @@ public class DoVitalsTask extends Task {
     public synchronized void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");      
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setNewDayFalse();
-        believes.getPeasantProfile().useTime(TimeConsumedBy.DoVitalsTask);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
+        believes.setNewDay(false);
 
         if (DateHelper.differenceDaysBetweenTwoDates(
                 wpsCurrentDate.getInstance().getCurrentDate(),
                 believes.getPeasantProfile().getStartRiceSeason()) == 0) {
-            believes.getPeasantProfile().setPreparationSeason(true);
+            believes.setCurrentSeason(SeasonType.PREPARATION);
         }
 
         // Vitals about money and food
@@ -65,8 +67,8 @@ public class DoVitalsTask extends Task {
                 >= believes.getPeasantProfile().getPeasantFamilyMinimalVital()*10) {
             believes.getPeasantProfile().discountDailyMoney();
         } else {
-            believes.getPeasantProfile().setFormalLoanSeason(true);
-            //believes.getPeasantProfile().decreaseHealth();
+            believes.setCurrentMoneyOrigin(MoneyOriginType.LOAN);
+            believes.getPeasantProfile().decreaseHealth();
         }
 
         // Check for the loan pay amount only on first day of month
@@ -89,8 +91,8 @@ public class DoVitalsTask extends Task {
                 wpsReport.error(ex);
             }
         }
-        wpsReport.info(believes.getPeasantProfile());
         checkWeek(parameters);
+        //wpsReport.debug(believes.toString());
         this.setTaskFinalized();
     }
 
@@ -100,7 +102,6 @@ public class DoVitalsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        //wpsReport.info("");
         this.setTaskFinalized();
     }
 
@@ -122,19 +123,15 @@ public class DoVitalsTask extends Task {
     public boolean checkFinish(Believes parameters) {
         ////wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().isNewDay()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !believes.isNewDay();
     }
 
     private void checkWeek(Believes parameters) {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getCurrentDay() % 7 == 0) {
+        if (believes.getCurrentDay() % 7 == 0) {
             try {
-                believes.getPeasantProfile().setWeekBlock();
-                wpsReport.warn(believes.getPeasantProfile().getWeekBlock());
+                believes.setWeekBlock();
+                wpsReport.warn(believes.getWeekBlock());
                 AdmBESA adm = AdmBESA.getInstance();
                 EventBESA eventBesa = new EventBESA(ControlAgentGuard.class.getName(), null);
                 AgHandlerBESA agHandler = adm.getHandlerByAlias(wpsStart.config.getControlAgentName());

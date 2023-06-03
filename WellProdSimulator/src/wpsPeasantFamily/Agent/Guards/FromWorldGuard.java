@@ -20,6 +20,8 @@ import BESA.Kernel.Agent.GuardBESA;
 import org.json.JSONObject;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import static wpsPeasantFamily.Agent.Guards.FromWorldMessageType.*;
+import wpsPeasantFamily.Data.CropCareType;
+import wpsPeasantFamily.Data.SeasonType;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -47,19 +49,18 @@ public class FromWorldGuard extends GuardBESA {
                     believes.getPeasantProfile().setCropHealth(0.5);
                     break;
                 case CROP_PESTICIDE:
-                    believes.getPeasantProfile().setPesticideSeason(true);
+                    believes.setCurrentCropCare(CropCareType.PESTICIDE);
                     //wpsReport.info("   🍙🤖   PESTICIDAAAAA  🤖 🍙  ");
                     break;
                 case NOTIFY_CROP_WATER_STRESS:
-                    believes.getPeasantProfile().setIrrigateSeason(true);
+                    believes.setCurrentCropCare(CropCareType.IRRIGATION);
                     break;
                 case CROP_INFORMATION_NOTIFICATION:
                     //believes.getPeasantProfile().setPesticideSeason(true);
                     //wpsReport.info("🍙🍙🍙: PESTICIDAAAAA");
                     break;
                 case NOTIFY_CROP_READY_HARVEST:
-                    believes.getPeasantProfile().setHarverstSeason(true);
-                    believes.getPeasantProfile().setGrowingSeason(false);
+                    believes.setCurrentSeason(SeasonType.HARVEST);
                     break;
                 case REQUEST_CROP_INFORMATION:
                     wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload());

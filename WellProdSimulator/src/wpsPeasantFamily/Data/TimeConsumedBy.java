@@ -38,22 +38,22 @@ public enum TimeConsumedBy {
     ProcessProductsTask(2),
     SellCropTask(2),
     SellProductsTask(2),
-    SpendFamilyTime(2),
+    SpendFamilyTimeTask(2),
     SpendFriendsTime(2),
-    GetTraining(2),
-    LookForALandTask(8),
+    GetTrainingTask(2),
+    ObtainALandTask(8),
     ObtainLivestockTask(4),
     ObtainPesticidesTask(4),
     ObtainSeedsTask(4),
     ObtainSuppliestask(4),
     ObtainToolsTask(4),
     ObtainWaterTask(4),
-    Communicate(1),
-    LookForCollaboration(1),
-    ProvideCollaboration(2),
-    PeasantLeisureTask(1),
-    FindNews(2),
-    WasteTimeAndResourcesGoal(1);
+    CommunicateTask(1),
+    LookForCollaborationTask(1),
+    ProvideCollaborationTask(2),
+    EngageInLeisureActivitiesTask(1),
+    FindNewsTask(2),
+    WasteTimeAndResourcesTask(1);
     
     private int time;
 

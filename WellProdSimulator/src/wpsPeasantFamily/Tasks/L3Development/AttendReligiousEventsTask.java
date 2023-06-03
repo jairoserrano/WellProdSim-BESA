@@ -18,7 +18,6 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Data.TimeConsumedBy;
-import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -26,14 +25,10 @@ import wpsViewer.Agent.wpsReport;
  */
 public class AttendReligiousEventsTask extends Task {
 
-    private boolean finished;
-
     /**
      *
      */
     public AttendReligiousEventsTask() {
-        //wpsReport.info("");
-        this.finished = false;
     }
 
     /**
@@ -44,25 +39,7 @@ public class AttendReligiousEventsTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().useTime(TimeConsumedBy.AttendReligiousEventsTask
-        );
-        this.setFinished();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        //wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
-     */
-    public void setFinished() {
-        this.finished = true;
+        believes.useTime(TimeConsumedBy.AttendReligiousEventsTask);
         this.setTaskFinalized();
     }
 
@@ -72,7 +49,7 @@ public class AttendReligiousEventsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        this.setFinished();
+        this.setTaskFinalized();
     }
 
     /**
@@ -81,15 +58,7 @@ public class AttendReligiousEventsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        this.setFinished();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isExecuted() {
-        return finished;
+        this.setTaskFinalized();
     }
 
     /**
@@ -99,6 +68,6 @@ public class AttendReligiousEventsTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        return isExecuted();
+        return true;
     }
 }

@@ -24,8 +24,6 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Tasks.L1Survival.DoVitalsTask;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Data.TimeConsumedBy;
-import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -38,18 +36,18 @@ public class DoVitalsGoal extends GoalBDI {
      * @return
      */
     public static DoVitalsGoal buildGoal() {
-        DoVitalsTask doVitalsTask = new DoVitalsTask();
-        Plan doVitalsPlan = new Plan();
-        doVitalsPlan.addTask(doVitalsTask);
-        RationalRole doVitalsRole = new RationalRole(
+        DoVitalsTask task = new DoVitalsTask();
+        Plan plan = new Plan();
+        plan.addTask(task);
+        RationalRole role = new RationalRole(
                 "DoVitalsTask",
-                doVitalsPlan);
-        DoVitalsGoal doVitalsGoal = new DoVitalsGoal(
+                plan);
+        DoVitalsGoal goal = new DoVitalsGoal(
                 wpsStart.getPlanID(),
-                doVitalsRole,
+                role,
                 "DoVitalsTask",
                 GoalBDITypes.SURVIVAL);
-        return doVitalsGoal;
+        return goal;
     }
 
     /**
@@ -90,8 +88,7 @@ public class DoVitalsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("isNewDay=" + believes.getPeasantProfile().isNewDay());
-        if (believes.getPeasantProfile().isNewDay()) {
+        if (believes.isNewDay()) {
             return 1;
         } else {
             return 0;
@@ -151,7 +148,7 @@ public class DoVitalsGoal extends GoalBDI {
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return !believes.getPeasantProfile().isNewDay();
+        return !believes.isNewDay();
     }
 
 }

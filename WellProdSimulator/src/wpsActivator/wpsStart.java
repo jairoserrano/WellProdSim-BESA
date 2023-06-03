@@ -42,8 +42,8 @@ public class wpsStart {
     private static int PLANID = 0;
     final private static double PASSWD = 0.91;
     public static wpsConfig config = wpsConfig.getInstance();
-    public static int peasantFamiliesAgents = 10;
-    private static int SIMTIME = 3;
+    public static int peasantFamiliesAgents = 5;
+    private static int SIMTIME = 5;
 
     /**
      * The main method to start the simulation.
@@ -123,7 +123,7 @@ public class wpsStart {
             for (PeasantFamilyBDIAgent peasantFamily : peasantFamilies) {
                 peasantFamily.start();
                 wpsReport.info(peasantFamily.getAlias() + " Started");
-                Thread.sleep(200);
+                Thread.sleep(50);
             }
             // first heart beat to families
             for (int i = 1; i <= peasantFamiliesAgents; i++) {
@@ -178,12 +178,15 @@ public class wpsStart {
                 AgHandlerBESA agHandler = adm.getHandlerByAlias("PeasantFamily_" + i);
                 agHandler.sendEvent(eventBesa);
             }
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (ExceptionBESA | InterruptedException ex) {
             wpsReport.error(ex);
         }
     }
 
+    /**
+     * Print header at Simulation begin
+     */
     public static void printHeader() {
 
         wpsReport.info(

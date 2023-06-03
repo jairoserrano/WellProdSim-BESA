@@ -46,7 +46,7 @@ public class ProcessProductsTask extends Task {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
         //believes.getPeasantProfile().increaseFarmReady();
-        believes.getPeasantProfile().useTime(TimeConsumedBy.ProcessProductsTask);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         this.setFinished();
     }
 

@@ -14,7 +14,7 @@
  */
 package wpsPeasantFamily.Goals.L4SkillsResources;
 
-import wpsPeasantFamily.Tasks.L4SkillsResources.LookForALandTask;
+import wpsPeasantFamily.Tasks.L4SkillsResources.ObtainALandTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -30,25 +30,25 @@ import wpsPeasantFamily.Data.TimeConsumedBy;
  *
  * @author jairo
  */
-public class LookForALandGoal extends GoalBDI {
+public class ObtainALandGoal extends GoalBDI {
 
     /**
      *
      * @return
      */
-    public static LookForALandGoal buildGoal() {
-        LookForALandTask lookForALandTask = new LookForALandTask();
-        Plan lookForALandPlan = new Plan();
-        lookForALandPlan.addTask(lookForALandTask);
-        RationalRole lookForALandRole = new RationalRole(
-                "LookForALandTask",
-                lookForALandPlan);
-        LookForALandGoal lookForALandGoal = new LookForALandGoal(
+    public static ObtainALandGoal buildGoal() {
+        ObtainALandTask task = new ObtainALandTask();
+        Plan plan = new Plan();
+        plan.addTask(task);
+        RationalRole role = new RationalRole(
+                "ObtainALandTask",
+                plan);
+        ObtainALandGoal goal = new ObtainALandGoal(
                 wpsStart.getPlanID(),
-                lookForALandRole,
-                "LookForALandTask",
+                role,
+                "ObtainALandTask",
                 GoalBDITypes.SKILLSRESOURCES);
-        return lookForALandGoal;
+        return goal;
     }
 
     /**
@@ -58,9 +58,8 @@ public class LookForALandGoal extends GoalBDI {
      * @param description
      * @param type
      */
-    public LookForALandGoal(long id, RationalRole role, String description, GoalBDITypes type) {
+    public ObtainALandGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        //wpsReport.info("");
     }
 
     /**
@@ -89,11 +88,10 @@ public class LookForALandGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("HaveAFarm=" + believes.getPeasantProfile().haveAFarm());
-        if (believes.getPeasantProfile().haveAFarm()) {
-            return 0;
-        } else {
+        if (believes.getPeasantProfile().getLand()) {
             return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -105,9 +103,8 @@ public class LookForALandGoal extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.LookForALandTask)) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.ObtainALandTask)) {
             return 1;
         } else {
             return 0;
@@ -122,7 +119,6 @@ public class LookForALandGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         return 1;
     }
 
@@ -134,7 +130,6 @@ public class LookForALandGoal extends GoalBDI {
      */
     @Override
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
         return believes.getPeasantProfile().getHealth() > 0;
     }
@@ -149,7 +144,7 @@ public class LookForALandGoal extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().haveAFarm();
+        return believes.getPeasantProfile().getLand();
     }
 
 }

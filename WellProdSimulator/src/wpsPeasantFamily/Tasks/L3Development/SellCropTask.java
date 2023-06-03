@@ -53,7 +53,7 @@ public class SellCropTask extends Task {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
-        believes.getPeasantProfile().useTime(TimeConsumedBy.SellCropTask);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         
         try {
             AdmBESA adm = AdmBESA.getInstance();

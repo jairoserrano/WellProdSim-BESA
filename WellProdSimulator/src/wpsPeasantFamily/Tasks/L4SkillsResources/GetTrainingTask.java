@@ -46,7 +46,7 @@ public class GetTrainingTask extends Task {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
         believes.getPeasantProfile().increaseTrainingLevel();
-        believes.getPeasantProfile().useTime(TimeConsumedBy.GetTraining);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         this.setFinished();
     }
 

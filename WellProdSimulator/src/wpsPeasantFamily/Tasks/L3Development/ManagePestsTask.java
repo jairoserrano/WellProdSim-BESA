@@ -24,6 +24,8 @@ import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.CropCareType;
+import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 import static wpsWorld.Messages.WorldMessageType.CROP_PESTICIDE;
@@ -52,8 +54,8 @@ public class ManagePestsTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().useTime(TimeConsumedBy.ManagePestsTask);
-        believes.getPeasantProfile().setPesticideSeason(false);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
+        believes.setCurrentCropCare(CropCareType.PESTICIDE);
         
         try {
             AdmBESA adm = AdmBESA.getInstance();
@@ -72,7 +74,7 @@ public class ManagePestsTask extends Task {
                     worldMessage);
             ah.sendEvent(ev);
             wpsCurrentDate.getInstance().setCurrentDate(
-                    believes.getPeasantProfile().getInternalCurrentDate());
+                    believes.getInternalCurrentDate());
             //this.setTaskWaitingForExecution();
 
         } catch (ExceptionBESA ex) {

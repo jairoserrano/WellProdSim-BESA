@@ -107,8 +107,7 @@ public class AttendToLivestockGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.AttendToLivestockTask
-        )) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.AttendToLivestockTask)) {
             return 1;
         } else {
             return 0;

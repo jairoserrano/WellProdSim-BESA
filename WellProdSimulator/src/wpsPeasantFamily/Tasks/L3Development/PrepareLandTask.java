@@ -17,6 +17,7 @@ package wpsPeasantFamily.Tasks.L3Development;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
@@ -26,14 +27,10 @@ import wpsViewer.Agent.wpsReport;
  */
 public class PrepareLandTask extends Task {
 
-    private boolean finished;
-
     /**
      *
      */
     public PrepareLandTask() {
-        ////wpsReport.info("");
-        this.finished = false;
     }
 
     /**
@@ -44,27 +41,9 @@ public class PrepareLandTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setPlantingSeason(true);
-        believes.getPeasantProfile().useTime(TimeConsumedBy.PrepareLandTask);
-        //this.setTaskWaitingForExecution();
-        this.setFinished();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        ////wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
-     */
-    public void setFinished() {
+        believes.setCurrentSeason(SeasonType.PLANTING);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         this.setTaskFinalized();
-        this.finished = true;
     }
 
     /**
@@ -73,8 +52,7 @@ public class PrepareLandTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished();
+        this.setTaskFinalized();
     }
 
     /**
@@ -83,18 +61,9 @@ public class PrepareLandTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished();
+        this.setTaskFinalized();
     }
 
-    /**
-     *
-     * @return
-     */
-    public boolean isExecuted() {
-        ////wpsReport.info("");
-        return finished;
-    }
 
     /**
      *
@@ -103,7 +72,6 @@ public class PrepareLandTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////wpsReport.info("");
-        return isExecuted();
+        return true;
     }
 }

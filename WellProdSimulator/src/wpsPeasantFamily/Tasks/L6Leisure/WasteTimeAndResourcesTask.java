@@ -45,7 +45,7 @@ public class WasteTimeAndResourcesTask extends Task {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //believes.getPeasantProfile().useLeisureOptions();
-        believes.getPeasantProfile().useTime(TimeConsumedBy.WasteTimeAndResourcesGoal);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         this.setFinished(true);
     }
 

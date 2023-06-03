@@ -45,7 +45,7 @@ public class FindNewsTask extends Task {
        // wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().useLeisureOptions();
-        believes.getPeasantProfile().useTime(TimeConsumedBy.FindNews);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         this.setFinished(true);
     }
 

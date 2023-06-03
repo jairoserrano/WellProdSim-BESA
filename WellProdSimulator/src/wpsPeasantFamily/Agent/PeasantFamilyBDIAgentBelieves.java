@@ -14,10 +14,19 @@
  */
 package wpsPeasantFamily.Agent;
 
+import java.util.HashMap;
+import java.util.Map;
 import wpsPeasantFamily.Data.PeasantFamilyProfile;
 import rational.data.InfoData;
 import rational.mapping.Believes;
+import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasant.EmotionalModel.EmotionalState;
+import wpsPeasantFamily.Data.CropCareType;
+import wpsPeasantFamily.Data.FarmingResource;
+import wpsPeasantFamily.Data.MoneyOriginType;
+import wpsPeasantFamily.Data.SeasonType;
+import wpsPeasantFamily.Data.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -27,15 +36,208 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
 
     private PeasantFamilyProfile peasantProfile;
     private EmotionalState peasantEmotionalState;
+    private SeasonType currentSeason;
+    private CropCareType currentCropCare;
+    private MoneyOriginType currentMoneyOrigin;
+    private int currentDay;
+    private double timeLeftOnDay;
+    private boolean newDay;
+    private boolean weekBlock;
+    private boolean busy;
+    private String internalCurrentDate;
+    private Map<String, FarmingResource> priceList = new HashMap<>();
 
     /**
      *
+     * @param alias
      * @param peasantProfile
      */
     public PeasantFamilyBDIAgentBelieves(String alias, PeasantFamilyProfile peasantProfile) {
         this.setPeasantProfile(peasantProfile);
+        this.internalCurrentDate = wpsCurrentDate.getInstance().getCurrentDate();
         this.peasantProfile.setPeasantFamilyAlias(alias);
         this.peasantEmotionalState = new EmotionalState();
+        this.busy = false;
+        this.currentDay = 1;
+        this.timeLeftOnDay = 24;
+        this.newDay = true;
+        this.weekBlock = false;
+        this.priceList.clear();
+
+    }
+
+    /**
+     *
+     * Make variable reset Every Day
+     */
+    public synchronized void makeNewDay() {
+        this.currentDay++;
+        this.timeLeftOnDay = 24;
+        this.newDay = true;
+        this.internalCurrentDate = wpsCurrentDate.getInstance().getDatePlusOneDayAndUpdate();
+        if (this.currentSeason == SeasonType.GROWING) {
+            this.currentCropCare = CropCareType.CHECK;
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getCurrentDay() {
+        return currentDay;
+    }
+
+    /**
+     *
+     * @param currentDay
+     */
+    public void setCurrentDay(int currentDay) {
+        this.currentDay = currentDay;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getTimeLeftOnDay() {
+        return timeLeftOnDay;
+    }
+
+    /**
+     *
+     * @param timeLeftOnDay
+     */
+    public void setTimeLeftOnDay(double timeLeftOnDay) {
+        this.timeLeftOnDay = timeLeftOnDay;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getInternalCurrentDate() {
+        return internalCurrentDate;
+    }
+
+    /**
+     *
+     * @param internalCurrentDate
+     */
+    public void setInternalCurrentDate(String internalCurrentDate) {
+        this.internalCurrentDate = internalCurrentDate;
+    }
+
+    /**
+     * Time unit defined by hours spent on activities.
+     *
+     * @param time
+     */
+    public synchronized void useTime(TimeConsumedBy time) {
+        double timeLeft = this.timeLeftOnDay - time.getTime();
+        this.timeLeftOnDay = timeLeft;
+        if (timeLeft <= 0) {
+            this.makeNewDay();
+        } else {
+            //wpsReport.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + wpsCurrentDate.getInstance().getCurrentDate());
+        }
+    }
+
+    /**
+     *
+     * @param time
+     * @return
+     */
+    public synchronized boolean haveTimeAvailable(TimeConsumedBy time) {
+        return this.timeLeftOnDay - time.getTime() >= 0;
+        //wpsReport.info("⏳🚩⏳🚩⏳ No alcanza le tiempo " + time.getTime() + " tiene " + this.timeLeftOnDay + " del día " + wpsCurrentDate.getInstance().getCurrentDate());
+        //wpsReport.info("⏳ ⏳ ⏳ Todavía tiene " + this.timeLeftOnDay + " en el día " + wpsCurrentDate.getInstance().getCurrentDate());
+    }
+
+    /**
+     * Check if is a new Day
+     *
+     * @return true if is a new day
+     */
+    public synchronized boolean isNewDay() {
+        return this.newDay;
+    }
+
+    /**
+     * Set a new Day false
+     */
+    public synchronized void setNewDay(boolean newDay) {
+        this.newDay = newDay;
+    }
+
+    /**
+     *
+     */
+    public void releaseWeekBlock() {
+        this.weekBlock = false;
+    }
+
+    /**
+     *
+     */
+    public void setWeekBlock() {
+        this.weekBlock = true;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean getWeekBlock() {
+        return this.weekBlock;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public SeasonType getCurrentSeason() {
+        return currentSeason;
+    }
+
+    /**
+     *
+     * @param currentSeason
+     */
+    public void setCurrentSeason(SeasonType currentSeason) {
+        this.currentSeason = currentSeason;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public CropCareType getCurrentCropCare() {
+        return currentCropCare;
+    }
+
+    /**
+     *
+     * @param currentCropCare
+     */
+    public void setCurrentCropCare(CropCareType currentCropCare) {
+        this.currentCropCare = currentCropCare;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public MoneyOriginType getCurrentMoneyOrigin() {
+        return currentMoneyOrigin;
+    }
+
+    /**
+     *
+     * @param currentMoneyOrigin
+     */
+    public void setCurrentMoneyOrigin(MoneyOriginType currentMoneyOrigin) {
+        this.currentMoneyOrigin = currentMoneyOrigin;
     }
 
     /**
@@ -74,12 +276,71 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
 
     /**
      *
+     * @param priceList
+     */
+    public synchronized void setPriceList(Map<String, FarmingResource> priceList) {
+        this.priceList = priceList;
+    }
+
+    /**
+     *
      * @return
-     * @throws CloneNotSupportedException
+     */
+    public synchronized Map<String, FarmingResource> getPriceList() {
+        return priceList;
+    }
+
+    /**
+     *
+     * @return @throws CloneNotSupportedException
      */
     @Override
     public Believes clone() throws CloneNotSupportedException {
         return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public synchronized boolean isFree() {
+        return !this.busy;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public synchronized boolean isBusy() {
+        return this.busy;
+    }
+
+    /**
+     *
+     * @param busy
+     */
+    public synchronized void setBusy(boolean busy) {
+        this.busy = busy;
+    }
+
+    @Override
+    public String toString() {
+        return "\n\n\n"
+                + " * ==========================================================================\n"
+                + " * wpsPeasantFamilyProfile: " + peasantProfile.getPeasantFamilyAlias() + "\n"
+                + " * ==========================================================================\n"
+                + " * PeasantEmotionalState: " + peasantEmotionalState + "\n"
+                + " * CurrentSeason: " + currentSeason + "\n"
+                + " * CurrentCropCare: " + currentCropCare + "\n"
+                + " * CurrentMoneyOrigin: " + currentMoneyOrigin + "\n"
+                + " * CurrentDay: " + currentDay + "\n"
+                + " * TimeLeftOnDay: " + timeLeftOnDay + "\n"
+                + " * NewDay: " + newDay + "\n"
+                + " * WeekBlock: " + weekBlock + "\n"
+                + " * Busy: " + busy + "\n"
+                + " * InternalCurrentDate: " + internalCurrentDate + "\n"
+                + " * ==========================================================================\n"
+                + peasantProfile.toString();
     }
 
 }

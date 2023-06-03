@@ -25,6 +25,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
@@ -52,10 +53,8 @@ public class PlantCropTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setGrowingSeason(true);
-        believes.getPeasantProfile().setPreparationSeason(false);
-        believes.getPeasantProfile().setPlantingSeason(false);
-        believes.getPeasantProfile().useTime(TimeConsumedBy.PlantCropTask);
+        believes.setCurrentSeason(SeasonType.GROWING);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
@@ -80,7 +79,7 @@ public class PlantCropTask extends Task {
             );
             // 2500 kilo * 20 kilos de semillas
             believes.getPeasantProfile().useMoney(
-                    believes.getPeasantProfile().getPriceList().get("seeds").getCost()
+                    believes.getPriceList().get("seeds").getCost()
                     * 20
             );
 

@@ -44,7 +44,7 @@ public class DoHealthCareTask extends Task {
     public synchronized void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().useTime(TimeConsumedBy.DoHealthCareTask);
+        believes.useTime(TimeConsumedBy.DoHealthCareTask);
         //believes.getPeasantProfile().increaseHealth();
         wpsReport.warn("⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️ MURIÓ -RIP- ⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️");
         

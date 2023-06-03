@@ -43,8 +43,8 @@ public class SeekPurposeTask extends Task {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.getPeasantProfile().setPurpose("farmer");
-        believes.getPeasantProfile().setBusy(false);
-        believes.getPeasantProfile().makeNewDay();
+        believes.setBusy(false);
+        believes.makeNewDay();
         this.setTaskFinalized();
     }
 

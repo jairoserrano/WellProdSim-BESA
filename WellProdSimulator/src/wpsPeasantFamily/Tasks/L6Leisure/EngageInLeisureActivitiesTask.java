@@ -18,7 +18,6 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Data.TimeConsumedBy;
-import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -32,7 +31,6 @@ public class EngageInLeisureActivitiesTask extends Task {
      *
      */
     public EngageInLeisureActivitiesTask() {
-        ////wpsReport.info("");
         this.finished = false;
     }
 
@@ -42,12 +40,10 @@ public class EngageInLeisureActivitiesTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //wpsReport.info("⚙️⚙️⚙️");
+        ////ReportBESA.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //believes.getPeasantProfile().useLeisureOptions();
-        believes.getPeasantProfile().useTime(TimeConsumedBy.PeasantLeisureTask);
-        this.setTaskWaitingForExecution();
-        //this.setFinished(true);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
+        this.setFinished(true);
     }
 
     /**
@@ -55,7 +51,6 @@ public class EngageInLeisureActivitiesTask extends Task {
      * @return
      */
     public boolean isFinished() {
-        ////wpsReport.info("");
         return finished;
     }
 
@@ -64,7 +59,7 @@ public class EngageInLeisureActivitiesTask extends Task {
      * @param finished
      */
     public void setFinished(boolean finished) {
-        ////wpsReport.info("");
+        this.setTaskFinalized();
         this.finished = finished;
     }
 
@@ -74,7 +69,6 @@ public class EngageInLeisureActivitiesTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -84,7 +78,6 @@ public class EngageInLeisureActivitiesTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
         this.setFinished(true);
     }
 
@@ -93,7 +86,6 @@ public class EngageInLeisureActivitiesTask extends Task {
      * @return
      */
     public boolean isExecuted() {
-        ////wpsReport.info("");
         return finished;
     }
 
@@ -104,7 +96,6 @@ public class EngageInLeisureActivitiesTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        ////wpsReport.info("");
         return isExecuted();
     }
 }

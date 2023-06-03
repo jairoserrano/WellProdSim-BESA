@@ -24,6 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Tasks.L3Development.CheckCropsTask;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.CropCareType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
@@ -73,7 +74,7 @@ public class CheckCropsGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().isFree()) {
+        if (believes.isFree()) {
             return 1;
         } else {
             return 0;
@@ -90,7 +91,7 @@ public class CheckCropsGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("FamilyTimeAvailability=" + believes.getPeasantProfile().getFamilyTimeAvailability());
-        if (believes.getPeasantProfile().isGrowingSeason()) {
+        if (believes.getCurrentCropCare() == CropCareType.CHECK) {
             return 1;
         } else {
             return 0;
@@ -107,8 +108,7 @@ public class CheckCropsGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.CheckCropsTask)
-                && !believes.getPeasantProfile().isCropCheckedToday()) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.CheckCropsTask)) {
             return 1;
         } else {
             return 0;
@@ -148,9 +148,7 @@ public class CheckCropsGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().isCropCheckedToday();
+        return true;
     }
 
 }

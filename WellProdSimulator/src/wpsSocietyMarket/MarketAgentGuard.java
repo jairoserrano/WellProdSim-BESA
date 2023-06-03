@@ -52,6 +52,7 @@ public class MarketAgentGuard extends GuardBESA {
             FromMarketMessage fromMarketMessage;
 
             if (messageType == ASK_FOR_PRICE_LIST) {
+                wpsReport.debug(marketMessage.getPeasantAlias() + " pidio lista de precios");
                 fromMarketMessageType = FromMarketMessageType.PRICE_LIST;
                 fromMarketMessage = new FromMarketMessage(
                         fromMarketMessageType,
@@ -68,7 +69,9 @@ public class MarketAgentGuard extends GuardBESA {
                         fromMarketMessageType,
                         marketMessage.getCropName(),
                         quantity,
-                        state.getResources().get(marketMessage.getCropName()).getCost() * quantity
+                        state.getResources().get(
+                                marketMessage.getCropName()
+                        ).getCost() * quantity
                 );
             } else {
                 String productType = switch (messageType) {
@@ -99,6 +102,7 @@ public class MarketAgentGuard extends GuardBESA {
                     FromMarketGuard.class.getName(),
                     fromMarketMessage);
             ah.sendEvent(ev);
+            wpsReport.debug(marketMessage.getPeasantAlias() + " enviada lista de precios");
 
         } catch (ExceptionBESA | IllegalArgumentException e) {
             wpsReport.error("Mensaje no reconocido de funcExecGuard");

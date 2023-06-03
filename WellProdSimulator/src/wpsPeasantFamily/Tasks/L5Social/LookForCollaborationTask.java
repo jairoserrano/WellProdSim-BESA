@@ -44,10 +44,7 @@ public class LookForCollaborationTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        /*believes.getPeasantProfile().increaseHealth();
-        believes.getPeasantProfile().increaseLeisureOptions();
-        believes.getPeasantProfile().useFamilyTimeAvailability();*/
-        believes.getPeasantProfile().useTime(TimeConsumedBy.LookForCollaboration);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         this.setFinished(true);
     }
 

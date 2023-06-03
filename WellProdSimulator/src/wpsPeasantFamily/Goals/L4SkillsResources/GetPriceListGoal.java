@@ -23,6 +23,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Tasks.L4SkillsResources.GetPriceListTask;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
@@ -71,7 +72,6 @@ public class GetPriceListGoal extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         return 1;
     }
@@ -85,8 +85,7 @@ public class GetPriceListGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.debug("Need a Price List: " + believes.getPeasantProfile().needAPriceList());
-        if (believes.getPeasantProfile().needAPriceList()) {
+        if (believes.getCurrentSeason() == SeasonType.PRICE_LIST) {
             return 1;
         } else {
             return 0;
@@ -101,9 +100,8 @@ public class GetPriceListGoal extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.GetPriceListTask)) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.GetPriceListTask)) {
             return 1;
         } else {
             return 0;
@@ -118,8 +116,7 @@ public class GetPriceListGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        return 1;
+        return 0.6;
     }
 
     /**
@@ -130,7 +127,6 @@ public class GetPriceListGoal extends GoalBDI {
      */
     @Override
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info(stateBDI.getMachineBDIParams().getPyramidGoals());
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
         return believes.getPeasantProfile().getHealth() > 0;
     }
@@ -143,9 +139,7 @@ public class GetPriceListGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().getSupplies() == 1;
+        return true;
     }
 
 }

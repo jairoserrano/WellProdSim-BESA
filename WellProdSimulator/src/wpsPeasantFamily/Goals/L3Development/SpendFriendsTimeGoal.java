@@ -109,9 +109,9 @@ public class SpendFriendsTimeGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        wpsReport.info("isBusy=" + believes.getPeasantProfile().isBusy());
-        if (believes.getPeasantProfile().isFree()
-                && believes.getPeasantProfile().haveTimeAvailable(
+        wpsReport.info("isBusy=" + believes.isBusy());
+        if (believes.isFree()
+                && believes.haveTimeAvailable(
                         TimeConsumedBy.SpendFriendsTime
                 )) {
             return 1;

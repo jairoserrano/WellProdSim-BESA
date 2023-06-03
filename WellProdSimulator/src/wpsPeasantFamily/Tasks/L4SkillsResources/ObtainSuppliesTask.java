@@ -53,6 +53,7 @@ public class ObtainSuppliesTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         //wpsReport.info("$ Asking for a LOAN to the Bank " + believes.getPeasantProfile().getMoney());
 
         // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.
@@ -69,8 +70,6 @@ public class ObtainSuppliesTask extends Task {
                     MarketAgentGuard.class.getName(),
                     marketMessage);
             ah.sendEvent(ev);
-
-            believes.getPeasantProfile().useTime(TimeConsumedBy.ObtainSuppliestask);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);

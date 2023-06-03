@@ -45,7 +45,7 @@ public class SellProductsTask extends Task {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
-        believes.getPeasantProfile().useTime(TimeConsumedBy.SellProductsTask);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         believes.getPeasantProfile().increaseFarmReady();
         this.setTaskFinalized();
         this.setFinished(true);

@@ -47,7 +47,7 @@ public class CommunicateTask extends Task {
         believes.getPeasantProfile().increaseHealth();
         believes.getPeasantProfile().useLeisureOptions();
         believes.getPeasantProfile().increaseFamilyTimeAvailability();
-        believes.getPeasantProfile().useTime(TimeConsumedBy.Communicate);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         this.setFinished(true);
         //wpsReport.info("new healt" + believes.getPeasantProfile().getHealth());
     }

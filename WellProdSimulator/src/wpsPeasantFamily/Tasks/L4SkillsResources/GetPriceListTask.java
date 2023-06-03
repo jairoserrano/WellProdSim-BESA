@@ -22,6 +22,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
@@ -34,14 +35,10 @@ import wpsViewer.Agent.wpsReport;
  */
 public class GetPriceListTask extends Task {
 
-    private boolean finished;
-
     /**
      *
      */
     public GetPriceListTask() {
-        ////wpsReport.info("");
-        this.finished = false;
     }
 
     /**
@@ -52,6 +49,8 @@ public class GetPriceListTask extends Task {
     public synchronized void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
+        believes.setCurrentSeason(SeasonType.NONE);
 
         // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.
         try {
@@ -68,27 +67,10 @@ public class GetPriceListTask extends Task {
                     marketMessage);
             ah.sendEvent(ev);
 
-            believes.getPeasantProfile().useTime(TimeConsumedBy.GetPriceListTask);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-        this.setFinished();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        return finished;
-    }
-
-    /**
-     *
-     */
-    public void setFinished() {
-        this.finished = true;
         this.setTaskFinalized();
     }
 
@@ -98,7 +80,7 @@ public class GetPriceListTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        this.setFinished();
+        this.setTaskFinalized();
     }
 
     /**
@@ -107,15 +89,7 @@ public class GetPriceListTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        this.setFinished();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isExecuted() {
-        return finished;
+        this.setTaskFinalized();
     }
 
     /**
@@ -125,6 +99,6 @@ public class GetPriceListTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes believes) {
-        return isExecuted();
+        return true;
     }
 }

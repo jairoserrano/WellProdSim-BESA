@@ -90,7 +90,7 @@ public class FindNewsGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("isBusy=" + believes.getPeasantProfile().isBusy());
-        if (believes.getPeasantProfile().isBusy()) {
+        if (believes.isBusy()) {
             return 0;
         } else {
             return 1;
@@ -108,9 +108,7 @@ public class FindNewsGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().getHealth() > 0
-                && believes.getPeasantProfile().haveTimeAvailable(
-                        TimeConsumedBy.FindNews
-                )) {
+                && believes.haveTimeAvailable(TimeConsumedBy.FindNewsTask)) {
             return 1;
         } else {
             return 0;

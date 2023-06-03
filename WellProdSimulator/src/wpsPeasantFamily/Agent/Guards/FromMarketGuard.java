@@ -53,7 +53,8 @@ public class FromMarketGuard extends GuardBESA {
                     //wpsReport.info("Vendido");
                     break;
                 case PRICE_LIST:
-                    believes.getPeasantProfile().setPriceList(
+                    wpsReport.debug(fromMarketMessage.getPriceList());
+                    believes.setPriceList(
                             fromMarketMessage.getPriceList()
                     );
                     break;
@@ -61,37 +62,37 @@ public class FromMarketGuard extends GuardBESA {
                     believes.getPeasantProfile().setSeeds(
                             fromMarketMessage.getQuantity()
                     );
-                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("seeds").getCost();
+                    discount = fromMarketMessage.getQuantity() * believes.getPriceList().get("seeds").getCost();
                     break;
                 case WATER:
                     believes.getPeasantProfile().setWaterAvailable(
                             fromMarketMessage.getQuantity()
                     );
-                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("water").getCost();
+                    discount = fromMarketMessage.getQuantity() * believes.getPriceList().get("water").getCost();
                     break;
                 case PESTICIDES:
                     believes.getPeasantProfile().setPesticidesAvailable(
                             fromMarketMessage.getQuantity()
                     );
-                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("pesticides").getCost();
+                    discount = fromMarketMessage.getQuantity() * believes.getPriceList().get("pesticides").getCost();
                     break;
                 case SUPPLIES:
                     believes.getPeasantProfile().setSupplies(
                             fromMarketMessage.getQuantity()
                     );
-                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("supplies").getCost();
+                    discount = fromMarketMessage.getQuantity() * believes.getPriceList().get("supplies").getCost();
                     break;
                 case TOOLS:
                     believes.getPeasantProfile().setTools(
                             fromMarketMessage.getQuantity()
                     );
-                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("tools").getCost();
+                    discount = fromMarketMessage.getQuantity() * believes.getPriceList().get("tools").getCost();
                     break;
                 case LIVESTOCK:
                     believes.getPeasantProfile().setLivestockNumber(
                             fromMarketMessage.getQuantity()
                     );
-                    discount = fromMarketMessage.getQuantity() * believes.getPeasantProfile().getPriceList().get("livestock").getCost();
+                    discount = fromMarketMessage.getQuantity() * believes.getPriceList().get("livestock").getCost();
                     break;
             }
             

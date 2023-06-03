@@ -22,6 +22,7 @@ import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.APPROBE
 import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.TERM_TO_PAY;
 import wpsViewer.Agent.wpsReport;
 import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.DENIED_FORMAL_LOAN;
+import wpsPeasantFamily.Data.MoneyOriginType;
 
 /**
  *
@@ -49,12 +50,11 @@ public class FromBankGuard extends GuardBESA {
                     believes.getPeasantProfile().increaseMoney(
                             fromBankMessage.getAmount()
                     );
-                    believes.getPeasantProfile().setFormalLoanSeason(false);
+                    believes.setCurrentMoneyOrigin(MoneyOriginType.NONE);
                     break;
                 case DENIED_FORMAL_LOAN:
                     // @TODO: Pedir prestado en otro lado? cancelar?
-                    believes.getPeasantProfile().setFormalLoanSeason(false);
-                    believes.getPeasantProfile().setInformalLoanSeason(true);
+                    believes.setCurrentMoneyOrigin(MoneyOriginType.INFORMAL);
                     break;
                 case TERM_TO_PAY:
                     believes.getPeasantProfile().setLoanAmountToPay(

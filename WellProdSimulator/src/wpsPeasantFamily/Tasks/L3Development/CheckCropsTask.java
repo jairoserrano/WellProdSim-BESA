@@ -24,6 +24,7 @@ import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.CropCareType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 import static wpsWorld.Messages.WorldMessageType.CROP_OBSERVE;
@@ -39,7 +40,6 @@ public class CheckCropsTask extends Task {
      *
      */
     public CheckCropsTask() {
-        ////wpsReport.info("");
     }
 
     /**
@@ -50,15 +50,14 @@ public class CheckCropsTask extends Task {
     public synchronized void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        String peasantFamilyAlias = believes.getPeasantProfile().getPeasantFamilyLandAlias();
         // @TODO: falta calcular el tiempo necesario para el cultivo
-        believes.getPeasantProfile().useTime(TimeConsumedBy.CheckCropsTask);
-        believes.getPeasantProfile().setCropCheckedToday();
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
+        believes.setCurrentCropCare(CropCareType.NONE);
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA ah = adm.getHandlerByAlias(
-                    believes.getPeasantProfile().getPeasantFamilyLandAlias()
-            );
+            AgHandlerBESA ah = adm.getHandlerByAlias(peasantFamilyAlias);
 
             WorldMessage worldMessage;
 
@@ -68,7 +67,7 @@ public class CheckCropsTask extends Task {
                         CROP_INFORMATION,
                         believes.getPeasantProfile().getCurrentCropName(),
                         wpsCurrentDate.getInstance().getCurrentDate(),
-                        believes.getPeasantProfile().getPeasantFamilyAlias()
+                        peasantFamilyAlias
                 );
                 wpsReport.warn("enviado CROP_INFORMATION");
             } else {
@@ -76,7 +75,7 @@ public class CheckCropsTask extends Task {
                         CROP_OBSERVE,
                         believes.getPeasantProfile().getCurrentCropName(),
                         wpsCurrentDate.getInstance().getCurrentDate(),
-                        believes.getPeasantProfile().getPeasantFamilyAlias()
+                        peasantFamilyAlias
                 );
                 wpsReport.warn("enviado CROP_OBSERVE");
             }

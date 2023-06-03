@@ -12,26 +12,40 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsViewer.Agent;
-
-import BESA.Kernel.Agent.Event.EventBESA;
-import BESA.Kernel.Agent.GuardBESA;
+package wpsPeasantFamily.Data;
 
 /**
  *
- * @author jairo
  */
-public class wpsViewerAgentGuard extends GuardBESA {
+public enum MoneyOriginType {
 
     /**
      *
-     * @param event
      */
-    @Override
-    public void funcExecGuard(EventBESA event) {
-        wpsViewerMessage viewerMessage = (wpsViewerMessage) event.getData();
-        // @TODO: SAVE
-        //System.out.println(viewerMessage.getPeasantAlias() + " " + viewerMessage.getPeasantMessage());
-    }
+    LOAN,
 
+    /**
+     *
+     */
+    INFORMAL,
+    
+    /**
+     *
+     */
+    AVANCE,
+    
+    /**
+     *
+     */
+    BENEFICENCIA,
+    
+    /**
+     *
+     */
+    ROBERY,
+    
+    /**
+     * 
+     */
+    NONE
 }

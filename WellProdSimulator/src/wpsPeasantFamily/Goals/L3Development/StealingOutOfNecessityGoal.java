@@ -23,6 +23,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.MoneyOriginType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsPeasantFamily.Tasks.L3Development.StealingOutOfNecessityTask;
 
@@ -91,7 +92,7 @@ public class StealingOutOfNecessityGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.debug("Preparation season: " + believes.getPeasantProfile().isPreparationSeason());
-        if (believes.getPeasantProfile().isInformalLoanNeeded()) {
+        if (believes.getCurrentMoneyOrigin() == MoneyOriginType.ROBERY) {
             return 1;
         } else {
             return 0;
@@ -107,7 +108,7 @@ public class StealingOutOfNecessityGoal extends GoalBDI {
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.StealingOutOfNecessityTask)) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.StealingOutOfNecessityTask)) {
             return 1;
         } else {
             return 1;

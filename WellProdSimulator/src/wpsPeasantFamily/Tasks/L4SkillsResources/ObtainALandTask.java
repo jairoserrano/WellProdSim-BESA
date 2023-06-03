@@ -39,8 +39,8 @@ import wpsWorld.layer.temperature.TemperatureLayer;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsActivator.wpsConfig;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
@@ -48,13 +48,12 @@ import wpsViewer.Agent.wpsReport;
  *
  * @author jairo
  */
-public class LookForALandTask extends Task {
+public class ObtainALandTask extends Task {
 
     /**
      *
      */
-    public LookForALandTask() {
-        //wpsReport.info("");
+    public ObtainALandTask() {
     }
 
     /**
@@ -65,12 +64,11 @@ public class LookForALandTask extends Task {
     public synchronized void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-
-        // @TODO: setPlantingSeason lo cambia el reloj global
-        believes.getPeasantProfile().useTime(TimeConsumedBy.LookForALandTask);
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
 
         // @TODO: setFarmName lo cambia el gobierno o el campesino
         believes.getPeasantProfile().setLand(true);
+        believes.setCurrentSeason(SeasonType.PRICE_LIST);
         believes.getPeasantProfile().setHousing(1);
         believes.getPeasantProfile().setServicesPresence(1);
         believes.getPeasantProfile().setHousingSize(1);
@@ -241,6 +239,6 @@ public class LookForALandTask extends Task {
     @Override
     public boolean checkFinish(Believes parameters) {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().haveAFarm();
+        return believes.getPeasantProfile().getLand();
     }
 }

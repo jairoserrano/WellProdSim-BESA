@@ -73,8 +73,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.AttendReligiousEventsTask
-        )) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.AttendReligiousEventsTask)) {
             return 1;
         } else {
             return 0;
@@ -105,7 +104,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().isBusy()) {
+        if (believes.isBusy()) {
             return 0;
         } else {
             return 1;
@@ -145,10 +144,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.getPeasantProfile().setGrowingSeason(true);
-        return believes.getPeasantProfile().getHarvestedWeight() == 0;
+        return true;
     }
 
 }
