@@ -91,7 +91,7 @@ public class ManagePestsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("getCropHealth=" + believes.getPeasantProfile().getCropHealth());
+        //wpsReport.info("getCropHealth=" + believes.getProfile().getCropHealth());
         if (believes.getCurrentCropCare() == CropCareType.PESTICIDE) {
             return 1;
         } else {

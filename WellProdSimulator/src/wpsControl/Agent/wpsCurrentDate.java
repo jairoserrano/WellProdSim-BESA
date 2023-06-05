@@ -46,20 +46,44 @@ public class wpsCurrentDate {
      * @return
      */
     public synchronized String getDatePlusOneDayAndUpdate() {
-        DateTime date = DateHelper.getDateInJoda(instance.getCurrentDate());        
+        DateTime date = DateHelper.getDateInJoda(instance.getCurrentDate());
         date = date.plusDays(1);
         String newDate = DateHelper.parseDateTimeToString(date);
-        this.setCurrentDate(newDate);        
+        this.setCurrentDate(newDate);
         return newDate;
     }
 
-    public boolean isFirstDayOfMonth() {
+    /**
+     *
+     * @return
+     */
+    public synchronized String getDatePlusXDaysAndUpdate(int days) {
         DateTime date = DateHelper.getDateInJoda(instance.getCurrentDate());
+        date = date.plusDays(days);
+        String newDate = DateHelper.parseDateTimeToString(date);
+        this.setCurrentDate(newDate);
+        return newDate;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getDatePlusOneDay(String remoteCurrentDate) {
+        DateTime date = DateHelper.getDateInJoda(remoteCurrentDate);
+        date = date.plusDays(1);
+        String newDate = DateHelper.parseDateTimeToString(date);
+        return newDate;
+    }
+
+    public boolean isFirstDayOfMonth(String remoteCurrentDate) {
+        DateTime date = DateHelper.getDateInJoda(remoteCurrentDate);
         DateTime.Property dayOfMonth = date.dayOfMonth();
         return dayOfMonth.get() == 1;
     }
-    public boolean isFirstDayOfWeek() {
-        DateTime date = DateHelper.getDateInJoda(instance.getCurrentDate());
+
+    public boolean isFirstDayOfWeek(String remoteCurrentDate) {
+        DateTime date = DateHelper.getDateInJoda(remoteCurrentDate);
         DateTime.Property dayOfWeek = date.dayOfWeek();
         return dayOfWeek.get() == 1;
     }

@@ -54,7 +54,7 @@ public class ObtainPesticidesTask extends Task {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
-        //wpsReport.info("$ Asking for a LOAN to the Bank " + believes.getPeasantProfile().getMoney());
+        //wpsReport.info("$ Asking for a LOAN to the Bank " + believes.getProfile().getMoney());
 
         // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.
         try {

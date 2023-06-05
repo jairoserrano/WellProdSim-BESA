@@ -150,7 +150,7 @@ public class ObtainLivestockGoal extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //believes.getPeasantProfile().setGrowingSeason(true);
+        //believes.getProfile().setGrowingSeason(true);
         return believes.getPeasantProfile().getTools() == 1;
     }
 

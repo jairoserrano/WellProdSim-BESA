@@ -19,7 +19,7 @@ public class WorldPeriodicGuard extends PeriodicGuardBESA {
      */
     @Override
     public void funcPeriodicExecGuard(EventBESA eventBESA) {
-        try {
+       /* try {
             AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAid(this.agent.getAid());
             wpsCurrentDate currentDate = wpsCurrentDate.getInstance();
             WorldMessage worldMessage = new WorldMessage(WorldMessageType.CROP_OBSERVE, null, currentDate.getCurrentDate(), null);
@@ -27,6 +27,6 @@ public class WorldPeriodicGuard extends PeriodicGuardBESA {
             ah.sendEvent(eventBESASend);
         } catch (ExceptionBESA exceptionBESA) {
             exceptionBESA.printStackTrace();
-        }
+        }*/
     }
 }

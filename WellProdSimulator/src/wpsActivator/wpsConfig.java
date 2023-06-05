@@ -103,7 +103,7 @@ public final class wpsConfig {
      *
      * @return
      */
-    public synchronized PeasantFamilyProfile getRegularFarmerProfile() {
+    public PeasantFamilyProfile getRegularFarmerProfile() {
         return regularFarmerProfile.clone();
     }
 
@@ -111,7 +111,7 @@ public final class wpsConfig {
      *
      * @return
      */
-    public synchronized PeasantFamilyProfile getLazyFarmerProfile() {
+    public PeasantFamilyProfile getLazyFarmerProfile() {
         return lazyFarmerProfile.clone();
     }
 
@@ -119,7 +119,7 @@ public final class wpsConfig {
      *
      * @return
      */
-    public synchronized PeasantFamilyProfile getProactiveFarmerProfile() {
+    public PeasantFamilyProfile getProactiveFarmerProfile() {
         return proactiveFarmerProfile.clone();
     }
 
@@ -143,7 +143,7 @@ public final class wpsConfig {
      *
      * @return
      */
-    public synchronized String getPeasantType() {
+    public String getPeasantType() {
         return peasantType;
     }
 
@@ -151,7 +151,7 @@ public final class wpsConfig {
      *
      * @param peasantType
      */
-    public synchronized void setPeasantType(String peasantType) {
+    public void setPeasantType(String peasantType) {
         this.peasantType = peasantType;
     }
 
@@ -159,7 +159,7 @@ public final class wpsConfig {
      *
      * @return
      */
-    public synchronized String getRainfallConditions() {
+    public String getRainfallConditions() {
         return rainfallConditions;
     }
 
@@ -167,7 +167,7 @@ public final class wpsConfig {
      *
      * @param rainfallConditions
      */
-    public synchronized void setRainfallConditions(String rainfallConditions) {
+    public void setRainfallConditions(String rainfallConditions) {
         this.rainfallConditions = rainfallConditions;
     }
 
@@ -175,7 +175,7 @@ public final class wpsConfig {
      *
      * @return
      */
-    public synchronized String getPerturbation() {
+    public String getPerturbation() {
         return perturbation;
     }
 
@@ -183,11 +183,11 @@ public final class wpsConfig {
      *
      * @param perturbation
      */
-    public synchronized void setPerturbation(String perturbation) {
+    public void setPerturbation(String perturbation) {
         this.perturbation = perturbation;
     }
 
-    public synchronized Map<String, FarmingResource> loadMarketConfig() {
+    public Map<String, FarmingResource> loadMarketConfig() {
 
         Map<String, FarmingResource> priceList = new HashMap<>();
         Properties properties = new Properties();
@@ -234,7 +234,7 @@ public final class wpsConfig {
         return null;
     }
 
-    private synchronized void loadWPSConfig() {
+    private void loadWPSConfig() {
 
         Properties properties = new Properties();
 
@@ -255,7 +255,7 @@ public final class wpsConfig {
         }
     }
 
-    private synchronized void loadPeasantConfig() {
+    private void loadPeasantConfig() {
         LoadSettings settings = LoadSettings.builder().build();
         Load load = new Load(settings);
         Map<String, Object> data;
@@ -293,11 +293,7 @@ public final class wpsConfig {
         }
     }
 
-    public synchronized String getUniqueFarmerName() {
-        return "PeasantFamily_" + peasantSerialID++;
-    }
-
-    public synchronized PeasantFamilyProfile getFarmerProfile() {
+    public PeasantFamilyProfile getFarmerProfile() {
         Random rand = new Random();
 
         switch (rand.nextInt(3)) {
@@ -310,6 +306,10 @@ public final class wpsConfig {
             default:
                 return this.getRegularFarmerProfile();
         }
+    }
+
+    public synchronized String getUniqueFarmerName() {
+        return "PeasantFamily_" + peasantSerialID++;
     }
 
 }

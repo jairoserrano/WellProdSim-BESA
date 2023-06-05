@@ -17,6 +17,7 @@ package wpsPeasantFamily.Tasks.L1Survival;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -25,13 +26,13 @@ import wpsViewer.Agent.wpsReport;
  */
 public class SeekPurposeTask extends Task {
 
-    private boolean finished = false;
+    private boolean finished;
 
     /**
      *
      */
     public SeekPurposeTask() {
-        ////wpsReport.info("");
+        finished = false;
     }
 
     /**
@@ -39,13 +40,13 @@ public class SeekPurposeTask extends Task {
      * @param parameters
      */
     @Override
-    public synchronized void executeTask(Believes parameters) {
+    public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         believes.getPeasantProfile().setPurpose("farmer");
-        believes.setBusy(false);
-        believes.makeNewDay();
         this.setTaskFinalized();
+        finished = true;
     }
 
     /**
@@ -54,7 +55,6 @@ public class SeekPurposeTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        this.setTaskFinalized();
     }
 
     /**
@@ -63,7 +63,6 @@ public class SeekPurposeTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        this.setTaskFinalized();
     }
 
     /**

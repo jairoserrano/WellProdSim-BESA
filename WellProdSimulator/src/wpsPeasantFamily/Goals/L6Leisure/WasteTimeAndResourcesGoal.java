@@ -60,7 +60,6 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
      */
     public WasteTimeAndResourcesGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        //wpsReport.info("");
     }
 
     /**
@@ -71,13 +70,6 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        /*if (believes.getPeasantProfile().getLeisureOptions() > 0) {
-            return 1;
-        } else {
-            return 0;
-        }*/
         return 1;
     }
 
@@ -90,7 +82,6 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("isFree=" + believes.getPeasantProfile().isFree());
         if (believes.isFree()
                 && believes.haveTimeAvailable(TimeConsumedBy.WasteTimeAndResourcesTask)) {
             return 1;
@@ -107,13 +98,7 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getHealth() > 0.0) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return 1;
     }
 
     /**
@@ -124,11 +109,10 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        return 1;
+        return 0.5;
     }
 
-     /**
+    /**
      *
      * @param stateBDI
      * @return
@@ -149,9 +133,7 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().getLeisureOptions() == 0;
+        return true;
     }
 
 }

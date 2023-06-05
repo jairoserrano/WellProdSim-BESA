@@ -14,7 +14,7 @@
  */
 package wpsPeasantFamily.Goals.L6Leisure;
 
-import wpsPeasantFamily.Tasks.L6Leisure.EngageInLeisureActivitiesTask;
+import wpsPeasantFamily.Tasks.L6Leisure.LeisureActivitiesTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -24,6 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.PeasantActivityType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
@@ -31,25 +32,25 @@ import wpsViewer.Agent.wpsReport;
  *
  * @author jairo
  */
-public class EngageInLeisureActivitiesGoal extends GoalBDI {
+public class LeisureActivitiesGoal extends GoalBDI {
 
     /**
      *
      * @return
      */
-    public static EngageInLeisureActivitiesGoal buildGoal() {
-        EngageInLeisureActivitiesTask task = new EngageInLeisureActivitiesTask();
-        Plan plan = new Plan();
-        plan.addTask(task);
-        RationalRole role = new RationalRole(
-                "EngageInLeisureActivitiesGoal",
-                plan);
-        EngageInLeisureActivitiesGoal goal = new EngageInLeisureActivitiesGoal(
+    public static LeisureActivitiesGoal buildGoal() {
+        LeisureActivitiesTask leisureActivitiesTask = new LeisureActivitiesTask();
+        Plan leisureActivitiesPlan = new Plan();
+        leisureActivitiesPlan.addTask(leisureActivitiesTask);
+        RationalRole leisureActivitiesRole = new RationalRole(
+                "LeisureActivitiesTask",
+                leisureActivitiesPlan);
+        LeisureActivitiesGoal leisureActivitiesGoalBDI = new LeisureActivitiesGoal(
                 wpsStart.getPlanID(),
-                role,
-                "EngageInLeisureActivitiesGoal",
+                leisureActivitiesRole,
+                "LeisureActivitiesTask",
                 GoalBDITypes.LEISURE);
-        return goal;
+        return leisureActivitiesGoalBDI;
     }
 
     /**
@@ -59,7 +60,7 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
      * @param description
      * @param type
      */
-    public EngageInLeisureActivitiesGoal(long id, RationalRole role, String description, GoalBDITypes type) {
+    public LeisureActivitiesGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
     }
 
@@ -100,9 +101,8 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        wpsReport.info("tiempo restante " + believes.getTimeLeftOnDay());
-        if (believes.haveTimeAvailable(TimeConsumedBy.EngageInLeisureActivitiesTask)) {
-            //wpsReport.info("evaluatePlausibility ok");
+        if (believes.haveTimeAvailable(TimeConsumedBy.LeisureActivitiesTask)) {
+            believes.setCurrentActivity(PeasantActivityType.LEISURE);
             return 1;
         } else {
             return 0;
@@ -117,8 +117,8 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        wpsReport.info("evaluateContribution " + stateBDI.getMachineBDIParams().getPyramidGoals().getCurrentIntentionGoal());
-        return 1;
+        //wpsReport.info("evaluateContribution " + stateBDI.getMachineBDIParams().getAttentionCycleThreshold());
+        return 0.6;
     }
 
     /**
@@ -130,7 +130,6 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
     @Override
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
-        //wpsReport.info("evaluateLegality " + believes.getPeasantProfile().getHealth());
         return believes.getPeasantProfile().getHealth() > 0;
     }
 
@@ -142,8 +141,7 @@ public class EngageInLeisureActivitiesGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().getLeisureOptions() == 0;
+        return true;
     }
 
 }

@@ -50,7 +50,7 @@ RegularPeasant:
   processedWeight: 0.0
   processingTime: 1.0
   currentCropName: "ñame"
-  startRiceSeason: "15/01/2022"
+  startRiceSeason: "04/01/2022"
   endRiceSeason: "30/05/2022"
   riceSeedsByHectare: 20
   #toolsAndSupplies:

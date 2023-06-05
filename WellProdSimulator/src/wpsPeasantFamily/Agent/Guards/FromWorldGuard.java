@@ -56,7 +56,7 @@ public class FromWorldGuard extends GuardBESA {
                     believes.setCurrentCropCare(CropCareType.IRRIGATION);
                     break;
                 case CROP_INFORMATION_NOTIFICATION:
-                    //believes.getPeasantProfile().setPesticideSeason(true);
+                    //believes.getProfile().setPesticideSeason(true);
                     //wpsReport.info("🍙🍙🍙: PESTICIDAAAAA");
                     break;
                 case NOTIFY_CROP_READY_HARVEST:
@@ -66,7 +66,7 @@ public class FromWorldGuard extends GuardBESA {
                     wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload());
                     break;
                 case CROP_INIT:
-                    //believes.getPeasantProfile().setPlantingSeason(true);
+                    //believes.getProfile().setPlantingSeason(true);
                     break;
                 case CROP_HARVEST:
                     JSONObject cropData = new JSONObject(

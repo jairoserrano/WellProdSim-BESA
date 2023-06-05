@@ -32,7 +32,6 @@ public class WasteTimeAndResourcesTask extends Task {
      *
      */
     public WasteTimeAndResourcesTask() {
-        ////wpsReport.info("");
         this.finished = false;
     }
 
@@ -42,9 +41,8 @@ public class WasteTimeAndResourcesTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //wpsReport.info("⚙️⚙️⚙️");
+        wpsReport.info("⚙️⚙️⚙️");  
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //believes.getPeasantProfile().useLeisureOptions();
         believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         this.setFinished(true);
     }

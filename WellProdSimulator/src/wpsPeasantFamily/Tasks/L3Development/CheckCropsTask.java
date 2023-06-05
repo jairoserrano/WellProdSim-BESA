@@ -20,7 +20,6 @@ import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
-import wpsControl.Agent.wpsCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
@@ -47,7 +46,7 @@ public class CheckCropsTask extends Task {
      * @param parameters
      */
     @Override
-    public synchronized void executeTask(Believes parameters) {
+    public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         String peasantFamilyAlias = believes.getPeasantProfile().getPeasantFamilyLandAlias();
@@ -66,7 +65,7 @@ public class CheckCropsTask extends Task {
                 worldMessage = new WorldMessage(
                         CROP_INFORMATION,
                         believes.getPeasantProfile().getCurrentCropName(),
-                        wpsCurrentDate.getInstance().getCurrentDate(),
+                        believes.getInternalCurrentDate(),
                         peasantFamilyAlias
                 );
                 wpsReport.warn("enviado CROP_INFORMATION");
@@ -74,7 +73,7 @@ public class CheckCropsTask extends Task {
                 worldMessage = new WorldMessage(
                         CROP_OBSERVE,
                         believes.getPeasantProfile().getCurrentCropName(),
-                        wpsCurrentDate.getInstance().getCurrentDate(),
+                        believes.getInternalCurrentDate(),
                         peasantFamilyAlias
                 );
                 wpsReport.warn("enviado CROP_OBSERVE");
@@ -117,7 +116,8 @@ public class CheckCropsTask extends Task {
      * @return
      */
     @Override
-    public boolean checkFinish(Believes believes) {
-        return true;
+    public boolean checkFinish(Believes parameters) {
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        return believes.getCurrentCropCare() == CropCareType.NONE;
     }
 }

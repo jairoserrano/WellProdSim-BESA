@@ -90,7 +90,7 @@ public class GetTrainingGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("getTrainingLevel=" + believes.getPeasantProfile().getTrainingLevel());
+        //wpsReport.info("getTrainingLevel=" + believes.getProfile().getTrainingLevel());
         if (believes.getPeasantProfile().getTrainingLevel() < 1) {
             return 1;
         } else {

@@ -49,7 +49,7 @@ public class HarvestCropsTask extends Task {
      * @param parameters
      */
     @Override
-    public synchronized void executeTask(Believes parameters) {
+    public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
@@ -64,7 +64,7 @@ public class HarvestCropsTask extends Task {
             WorldMessage worldMessage = new WorldMessage(
                     CROP_HARVEST,
                     believes.getPeasantProfile().getCurrentCropName(),
-                    wpsCurrentDate.getInstance().getCurrentDate(),
+                    believes.getInternalCurrentDate(),
                     believes.getPeasantProfile().getPeasantFamilyAlias());
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),

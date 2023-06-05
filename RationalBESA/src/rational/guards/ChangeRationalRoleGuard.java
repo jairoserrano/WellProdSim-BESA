@@ -25,7 +25,7 @@ public class ChangeRationalRoleGuard extends GuardBESA {
     public void funcExecGuard(EventBESA ebesa) {
         RationalState state = (RationalState) this.getAgent().getState();
         RationalRole newrole = (RationalRole) ebesa.getData();
-        //ReportBESA.debug("🟢 MainRole " + state.getMainRole() + " - Trying to change to rol 🟩 " + newrole.getRoleName());
+        ReportBESA.debug("🟢 MainRole " + state.getMainRole() + " - Trying to change to rol 🟩 " + newrole.getRoleName());
 
         if (state.getMainRole() != null && !state.getMainRole().getRoleName().equals(((RationalRole) ebesa.getData()).getRoleName())) {
             if (state.getMainRole() != null) {
@@ -34,21 +34,26 @@ public class ChangeRationalRoleGuard extends GuardBESA {
                     Iterator<Task> it = plan.getTasksInExecution().iterator();
                     while (it.hasNext()) {
                         Task task = it.next();
+                        ReportBESA.warn("Tarea en ejecución: " + task.toString());
                         if (task.isInExecution()) {
-                            //ReportBESA.warn("Tarea en ejecución: " + task.toString());
+                            ReportBESA.warn("Tarea en ejecución: " + task.toString());
                             //task.cancelTask(state.getBelieves());
                             while (task.isInExecution()) {
                                 try {
-                                    Thread.sleep(50); // espera medio segundo antes de verificar de nuevo
+                                    ReportBESA.warn("En espera");
+                                    Thread.sleep(500); // espera medio segundo antes de verificar de nuevo
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                     Thread.currentThread().interrupt();
                                 }
                             }
+                            ReportBESA.warn("Terminó la tarea");
                             it.remove();
                         } else if (task.isFinalized()) {
+                            ReportBESA.warn("isFinalized tarea");
                             it.remove();
                         }
+                        ReportBESA.warn("setTaskFinalized tarea");
                         task.setTaskFinalized();
                     }
                 }

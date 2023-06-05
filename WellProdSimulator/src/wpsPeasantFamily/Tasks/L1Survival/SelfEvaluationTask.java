@@ -40,7 +40,7 @@ public class SelfEvaluationTask extends Task {
      * @param parameters
      */
     @Override
-    public synchronized void executeTask(Believes parameters) {
+    public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         this.setTaskFinalized();

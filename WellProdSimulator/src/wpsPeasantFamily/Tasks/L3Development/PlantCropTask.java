@@ -23,7 +23,6 @@ import wpsWorld.Messages.WorldMessage;
 import static wpsWorld.Messages.WorldMessageType.CROP_INIT;
 import rational.mapping.Believes;
 import rational.mapping.Task;
-import wpsControl.Agent.wpsCurrentDate;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
@@ -65,7 +64,7 @@ public class PlantCropTask extends Task {
             WorldMessage worldMessage = new WorldMessage(
                     CROP_INIT,
                     believes.getPeasantProfile().getPeasantFamilyAlias(),
-                    wpsCurrentDate.getInstance().getCurrentDate(),
+                    believes.getInternalCurrentDate(),
                     believes.getPeasantProfile().getPeasantFamilyAlias()
             );
 

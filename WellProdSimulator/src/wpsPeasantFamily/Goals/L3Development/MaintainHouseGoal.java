@@ -73,7 +73,7 @@ public class MaintainHouseGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("getTools=" + believes.getPeasantProfile().getTools());
+        //wpsReport.info("getTools=" + believes.getProfile().getTools());
         if (believes.getPeasantProfile().getTools() > 0) {
             return 1;
         } else {
@@ -90,7 +90,7 @@ public class MaintainHouseGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("getHousingCondition=" + believes.getPeasantProfile().getHousingCondition());
+        //wpsReport.info("getHousingCondition=" + believes.getProfile().getHousingCondition());
         if (believes.getPeasantProfile().getHousingCondition() < 1) {
             return 1;
         } else {
@@ -108,7 +108,7 @@ public class MaintainHouseGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("isBusy=" + believes.getPeasantProfile().isBusy());
+        //wpsReport.info("isBusy=" + believes.getProfile().isBusy());
         if (believes.isBusy() 
                 && believes.haveTimeAvailable(TimeConsumedBy.MaintainHouseTask)) {
             return 0;
@@ -139,7 +139,7 @@ public class MaintainHouseGoal extends GoalBDI {
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
         //wpsReport.info(stateBDI.getMachineBDIParams().getPyramidGoals());
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
-        //wpsReport.info("getHealth=" + believes.getPeasantProfile().getHealth());
+        //wpsReport.info("getHealth=" + believes.getProfile().getHealth());
         return believes.getPeasantProfile().getHealth() > 0;
     }
 

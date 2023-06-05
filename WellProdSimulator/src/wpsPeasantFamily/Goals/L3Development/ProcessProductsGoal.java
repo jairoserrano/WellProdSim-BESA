@@ -89,8 +89,8 @@ public class ProcessProductsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("getHarvestedWeight=" + believes.getPeasantProfile().getHarvestedWeight());
-        /*if (believes.getPeasantProfile().getHarvestedWeight() > 0) {
+        //wpsReport.info("getHarvestedWeight=" + believes.getProfile().getHarvestedWeight());
+        /*if (believes.getProfile().getHarvestedWeight() > 0) {
             return 1;
         } else {
             return 0;

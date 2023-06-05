@@ -90,7 +90,7 @@ public class ObtainWaterGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("PlantingSeason=" + believes.getPeasantProfile().isPlantingSeason());
+        //wpsReport.info("PlantingSeason=" + believes.getProfile().isPlantingSeason());
         if (believes.getPeasantProfile().isWaterNeeded()
                 && believes.getCurrentCropCare() == CropCareType.IRRIGATION) {
             return 1;

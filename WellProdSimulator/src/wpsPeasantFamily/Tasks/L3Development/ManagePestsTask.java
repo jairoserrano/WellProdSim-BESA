@@ -67,7 +67,7 @@ public class ManagePestsTask extends Task {
             worldMessage = new WorldMessage(
                     CROP_PESTICIDE,
                     believes.getPeasantProfile().getCurrentCropName(),
-                    wpsCurrentDate.getInstance().getCurrentDate(),
+                    believes.getInternalCurrentDate(),
                     believes.getPeasantProfile().getPeasantFamilyAlias());
             EventBESA ev = new EventBESA(
                     WorldGuard.class.getName(),

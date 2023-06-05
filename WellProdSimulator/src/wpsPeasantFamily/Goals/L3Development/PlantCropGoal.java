@@ -26,6 +26,7 @@ import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -38,18 +39,18 @@ public class PlantCropGoal extends GoalBDI {
      * @return PlantCropGoal
      */
     public static PlantCropGoal buildGoal() {
-        PlantCropTask task = new PlantCropTask();
-        Plan plan = new Plan();
-        plan.addTask(task);
-        RationalRole role = new RationalRole(
+        PlantCropTask plantCropTask = new PlantCropTask();
+        Plan plantCropPlan = new Plan();
+        plantCropPlan.addTask(plantCropTask);
+        RationalRole plantCropRole = new RationalRole(
                 "PlantCropTask",
-                plan);
-        PlantCropGoal goal = new PlantCropGoal(
+                plantCropPlan);
+        PlantCropGoal plantCropGoal = new PlantCropGoal(
                 wpsStart.getPlanID(),
-                role,
+                plantCropRole,
                 "PlantCropTask",
                 GoalBDITypes.SKILLSRESOURCES);
-        return goal;
+        return plantCropGoal;
     }
 
     /**
@@ -72,11 +73,10 @@ public class PlantCropGoal extends GoalBDI {
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //>= believes.getPeasantProfile().getRiceSeedsByHectare()
-        //wpsReport.debug("tools: " + believes.getPeasantProfile().getTools());
-        //wpsReport.debug("seeds: " + believes.getPeasantProfile().getSeeds());
-        if (believes.getPeasantProfile().getTools() > 0
+        if (!believes.getPriceList().isEmpty()
+                && believes.getPeasantProfile().getTools() > 0
                 && believes.getPeasantProfile().getSeeds() > 0) {
+            wpsReport.warn("PLANTANDO VIABLE");
             return 1;
         } else {
             return 0;
@@ -92,8 +92,8 @@ public class PlantCropGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.debug("planting season: " + believes.getPeasantProfile().isPlantingSeason());
         if (believes.getCurrentSeason() == SeasonType.PLANTING) {
+            wpsReport.warn("PLANTANDO DETECTADO");
             return 1;
         } else {
             return 0;
@@ -109,10 +109,7 @@ public class PlantCropGoal extends GoalBDI {
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.debug("free: " + believes.getPeasantProfile().isFree());
-        //wpsReport.debug("time needed: " + TimeConsumedBy.PlantCropTask);
-        //wpsReport.debug("have time: " + believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.PlantCropTask));
-        if (believes.isFree() && believes.haveTimeAvailable(TimeConsumedBy.PlantCropTask)) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.PlantCropTask)) {
             return 1;
         } else {
             return 0;
@@ -150,7 +147,6 @@ public class PlantCropGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         return believes.getCurrentSeason() == SeasonType.GROWING;
     }

@@ -91,7 +91,7 @@ public class LookForLoanGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("isFormalLoanNeeded=" + believes.getPeasantProfile().isFormalLoanNeeded());
+        //wpsReport.info("isFormalLoanNeeded=" + believes.getProfile().isFormalLoanNeeded());
         if (believes.getCurrentMoneyOrigin() == MoneyOriginType.LOAN) {
             return 1;
         } else {

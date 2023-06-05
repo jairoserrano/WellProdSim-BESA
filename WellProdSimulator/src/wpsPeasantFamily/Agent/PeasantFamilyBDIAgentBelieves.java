@@ -24,6 +24,7 @@ import wpsPeasant.EmotionalModel.EmotionalState;
 import wpsPeasantFamily.Data.CropCareType;
 import wpsPeasantFamily.Data.FarmingResource;
 import wpsPeasantFamily.Data.MoneyOriginType;
+import wpsPeasantFamily.Data.PeasantActivityType;
 import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
@@ -39,6 +40,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
     private SeasonType currentSeason;
     private CropCareType currentCropCare;
     private MoneyOriginType currentMoneyOrigin;
+    private PeasantActivityType peasantActivityType;
     private int currentDay;
     private double timeLeftOnDay;
     private boolean newDay;
@@ -57,6 +59,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
         this.internalCurrentDate = wpsCurrentDate.getInstance().getCurrentDate();
         this.peasantProfile.setPeasantFamilyAlias(alias);
         this.peasantEmotionalState = new EmotionalState();
+
         this.busy = false;
         this.currentDay = 1;
         this.timeLeftOnDay = 24;
@@ -64,20 +67,28 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
         this.weekBlock = false;
         this.priceList.clear();
 
+        this.currentSeason = SeasonType.NONE;
+        this.currentCropCare = CropCareType.NONE;
+        this.currentMoneyOrigin = MoneyOriginType.NONE;
+        this.peasantActivityType = PeasantActivityType.NONE;
+
     }
 
     /**
      *
      * Make variable reset Every Day
      */
-    public synchronized void makeNewDay() {
+    public void makeNewDay() {
         this.currentDay++;
         this.timeLeftOnDay = 24;
         this.newDay = true;
-        this.internalCurrentDate = wpsCurrentDate.getInstance().getDatePlusOneDayAndUpdate();
+        //wpsReport.warn("internalCurrentDate= " + internalCurrentDate);
+        this.internalCurrentDate = wpsCurrentDate.getInstance().getDatePlusOneDay(internalCurrentDate);
+        //wpsReport.warn("internalCurrentDate2= " + internalCurrentDate);
         if (this.currentSeason == SeasonType.GROWING) {
             this.currentCropCare = CropCareType.CHECK;
         }
+        wpsReport.debug(this.peasantProfile.getPeasantFamilyAlias() + " -------- NEW DAY -------- " + internalCurrentDate);
     }
 
     /**
@@ -133,13 +144,14 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      *
      * @param time
      */
-    public synchronized void useTime(TimeConsumedBy time) {
+    public void useTime(TimeConsumedBy time) {
         double timeLeft = this.timeLeftOnDay - time.getTime();
         this.timeLeftOnDay = timeLeft;
         if (timeLeft <= 0) {
+            //wpsReport.info("⏳ NewDay");
             this.makeNewDay();
         } else {
-            //wpsReport.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + wpsCurrentDate.getInstance().getCurrentDate());
+            wpsReport.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + internalCurrentDate);
         }
     }
 
@@ -148,7 +160,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      * @param time
      * @return
      */
-    public synchronized boolean haveTimeAvailable(TimeConsumedBy time) {
+    public boolean haveTimeAvailable(TimeConsumedBy time) {
         return this.timeLeftOnDay - time.getTime() >= 0;
         //wpsReport.info("⏳🚩⏳🚩⏳ No alcanza le tiempo " + time.getTime() + " tiene " + this.timeLeftOnDay + " del día " + wpsCurrentDate.getInstance().getCurrentDate());
         //wpsReport.info("⏳ ⏳ ⏳ Todavía tiene " + this.timeLeftOnDay + " en el día " + wpsCurrentDate.getInstance().getCurrentDate());
@@ -159,14 +171,16 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      *
      * @return true if is a new day
      */
-    public synchronized boolean isNewDay() {
+    public boolean isNewDay() {
         return this.newDay;
     }
 
     /**
      * Set a new Day false
+     *
+     * @param newDay
      */
-    public synchronized void setNewDay(boolean newDay) {
+    public void setNewDay(boolean newDay) {
         this.newDay = newDay;
     }
 
@@ -240,6 +254,14 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
         this.currentMoneyOrigin = currentMoneyOrigin;
     }
 
+    public PeasantActivityType getCurrentActivity() {
+        return this.peasantActivityType;
+    }
+
+    public void setCurrentActivity(PeasantActivityType peasantActivityType) {
+        this.peasantActivityType = peasantActivityType;
+    }
+
     /**
      *
      * @return
@@ -252,7 +274,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      *
      * @return
      */
-    public synchronized PeasantFamilyProfile getPeasantProfile() {
+    public PeasantFamilyProfile getPeasantProfile() {
         return peasantProfile;
     }
 
@@ -278,7 +300,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      *
      * @param priceList
      */
-    public synchronized void setPriceList(Map<String, FarmingResource> priceList) {
+    public void setPriceList(Map<String, FarmingResource> priceList) {
         this.priceList = priceList;
     }
 
@@ -286,7 +308,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      *
      * @return
      */
-    public synchronized Map<String, FarmingResource> getPriceList() {
+    public Map<String, FarmingResource> getPriceList() {
         return priceList;
     }
 
@@ -303,7 +325,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      *
      * @return
      */
-    public synchronized boolean isFree() {
+    public boolean isFree() {
         return !this.busy;
     }
 
@@ -311,7 +333,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      *
      * @return
      */
-    public synchronized boolean isBusy() {
+    public boolean isBusy() {
         return this.busy;
     }
 
@@ -319,13 +341,17 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      *
      * @param busy
      */
-    public synchronized void setBusy(boolean busy) {
+    public void setBusy(boolean busy) {
         this.busy = busy;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
-        return "\n\n\n"
+        return "\n"
                 + " * ==========================================================================\n"
                 + " * wpsPeasantFamilyProfile: " + peasantProfile.getPeasantFamilyAlias() + "\n"
                 + " * ==========================================================================\n"
@@ -333,12 +359,14 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
                 + " * CurrentSeason: " + currentSeason + "\n"
                 + " * CurrentCropCare: " + currentCropCare + "\n"
                 + " * CurrentMoneyOrigin: " + currentMoneyOrigin + "\n"
+                + " * PeasantActivityType: " + peasantActivityType + "\n"
                 + " * CurrentDay: " + currentDay + "\n"
                 + " * TimeLeftOnDay: " + timeLeftOnDay + "\n"
                 + " * NewDay: " + newDay + "\n"
                 + " * WeekBlock: " + weekBlock + "\n"
                 + " * Busy: " + busy + "\n"
                 + " * InternalCurrentDate: " + internalCurrentDate + "\n"
+                + " * Price List: " + priceList  + "\n"
                 + " * ==========================================================================\n"
                 + peasantProfile.toString();
     }

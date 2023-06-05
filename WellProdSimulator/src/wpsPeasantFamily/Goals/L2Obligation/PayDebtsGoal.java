@@ -88,7 +88,7 @@ public class PayDebtsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("DebtPayment=" + believes.getPeasantProfile().getDebtPayment());
+        //wpsReport.info("DebtPayment=" + believes.getProfile().getDebtPayment());
         if (believes.getPeasantProfile().getLoanAmountToPay() > 0 ) {
             return 1;
         } else {

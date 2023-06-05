@@ -17,21 +17,20 @@ package wpsPeasantFamily.Tasks.L6Leisure;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.PeasantActivityType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
  * @author jairo
  */
-public class EngageInLeisureActivitiesTask extends Task {
-
-    private boolean finished;
+public class LeisureActivitiesTask extends Task {
 
     /**
      *
      */
-    public EngageInLeisureActivitiesTask() {
-        this.finished = false;
+    public LeisureActivitiesTask() {
     }
 
     /**
@@ -40,27 +39,11 @@ public class EngageInLeisureActivitiesTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        ////ReportBESA.info("");
+        //wpsReport.info("⚙️⚙️⚙️");  
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
-        this.setFinished(true);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        return finished;
-    }
-
-    /**
-     *
-     * @param finished
-     */
-    public void setFinished(boolean finished) {
+        believes.setCurrentActivity(PeasantActivityType.NONE);
         this.setTaskFinalized();
-        this.finished = finished;
     }
 
     /**
@@ -69,7 +52,7 @@ public class EngageInLeisureActivitiesTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        this.setFinished(true);
+        this.setTaskFinalized();
     }
 
     /**
@@ -78,24 +61,17 @@ public class EngageInLeisureActivitiesTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        this.setFinished(true);
+        this.setTaskFinalized();
     }
 
     /**
      *
-     * @return
-     */
-    public boolean isExecuted() {
-        return finished;
-    }
-
-    /**
-     *
-     * @param believes
+     * @param parameters
      * @return
      */
     @Override
-    public boolean checkFinish(Believes believes) {
-        return isExecuted();
+    public boolean checkFinish(Believes parameters) {
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        return believes.getCurrentActivity() == PeasantActivityType.NONE;
     }
 }

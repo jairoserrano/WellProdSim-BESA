@@ -40,6 +40,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.PeasantActivityType;
 import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
@@ -61,14 +62,14 @@ public class ObtainALandTask extends Task {
      * @param parameters
      */
     @Override
-    public synchronized void executeTask(Believes parameters) {
+    public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
 
         // @TODO: setFarmName lo cambia el gobierno o el campesino
         believes.getPeasantProfile().setLand(true);
-        believes.setCurrentSeason(SeasonType.PRICE_LIST);
+        believes.setCurrentActivity(PeasantActivityType.PRICE_LIST);
         believes.getPeasantProfile().setHousing(1);
         believes.getPeasantProfile().setServicesPresence(1);
         believes.getPeasantProfile().setHousingSize(1);
@@ -88,7 +89,8 @@ public class ObtainALandTask extends Task {
             );
             initialWorldStateInitialization(
                     worldAgent,
-                    believes.getPeasantProfile().getPeasantFamilyAlias()
+                    believes.getPeasantProfile().getPeasantFamilyAlias(),
+                    believes.getInternalCurrentDate()
             );
 
             worldAgent.start();
@@ -162,12 +164,12 @@ public class ObtainALandTask extends Task {
                 rainfallLayer);
     }
 
-    private static void initialWorldStateInitialization(WorldAgent worldAgent, String agentAlias) {
+    private static void initialWorldStateInitialization(WorldAgent worldAgent, String agentAlias, String currentDate) {
         AdmBESA adm = AdmBESA.getInstance();
         WorldMessage worldMessage = new WorldMessage(
                 WorldMessageType.CROP_INIT,
                 null,
-                wpsCurrentDate.getInstance().getCurrentDate(),
+                currentDate,
                 agentAlias);
         try {
             AgHandlerBESA ah = adm.getHandlerByAid(worldAgent.getAid());

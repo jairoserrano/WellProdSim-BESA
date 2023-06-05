@@ -71,7 +71,8 @@ public class PrepareLandTask extends Task {
      * @return
      */
     @Override
-    public boolean checkFinish(Believes believes) {
-        return true;
+    public boolean checkFinish(Believes parameters) {
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        return believes.getCurrentSeason() == SeasonType.PLANTING;
     }
 }

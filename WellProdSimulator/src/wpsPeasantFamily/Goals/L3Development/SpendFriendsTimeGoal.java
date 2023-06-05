@@ -74,7 +74,7 @@ public class SpendFriendsTimeGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("getTools=" + believes.getPeasantProfile().getTools());
+        //wpsReport.info("getTools=" + believes.getProfile().getTools());
         if (believes.getPeasantProfile().getTools() > 0) {
             return 1;
         } else {
@@ -142,7 +142,7 @@ public class SpendFriendsTimeGoal extends GoalBDI {
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
         //wpsReport.info(stateBDI.getMachineBDIParams().getPyramidGoals());
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
-        //wpsReport.info("getHealth=" + believes.getPeasantProfile().getHealth());
+        //wpsReport.info("getHealth=" + believes.getProfile().getHealth());
         return believes.getPeasantProfile().getHealth() > 0;
     }
 

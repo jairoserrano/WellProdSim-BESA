@@ -14,7 +14,7 @@
  */
 package wpsPeasantFamily.Goals.L6Leisure;
 
-import wpsPeasantFamily.Tasks.L6Leisure.EngageInLeisureActivitiesTask;
+import wpsPeasantFamily.Tasks.L6Leisure.LeisureActivitiesTask;
 import BESA.BDI.AgentStructuralModel.GoalBDI;
 import BESA.BDI.AgentStructuralModel.GoalBDITypes;
 import BESA.BDI.AgentStructuralModel.StateBDI;
@@ -37,7 +37,7 @@ public class FindNewsGoal extends GoalBDI {
      * @return
      */
     public static FindNewsGoal buildGoal() {
-        EngageInLeisureActivitiesTask peasantLeisureTask = new EngageInLeisureActivitiesTask();
+        LeisureActivitiesTask peasantLeisureTask = new LeisureActivitiesTask();
         Plan peasantLeisurePlan = new Plan();
         peasantLeisurePlan.addTask(peasantLeisureTask);
         RationalRole peasantLeisureRole = new RationalRole(
@@ -89,7 +89,7 @@ public class FindNewsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("isBusy=" + believes.getPeasantProfile().isBusy());
+        //wpsReport.info("isBusy=" + believes.getProfile().isBusy());
         if (believes.isBusy()) {
             return 0;
         } else {

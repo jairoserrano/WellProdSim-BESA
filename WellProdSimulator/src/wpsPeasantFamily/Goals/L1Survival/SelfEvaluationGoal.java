@@ -97,7 +97,7 @@ public class SelfEvaluationGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        /*if (believes.getPeasantProfile().getHealth() > 0.0) {
+        /*if (believes.getProfile().getHealth() > 0.0) {
             return 1;
         } else {
             return 0;
@@ -139,7 +139,7 @@ public class SelfEvaluationGoal extends GoalBDI {
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("getHealth=" + believes.getPeasantProfile().getHealth());
+        //wpsReport.info("getHealth=" + believes.getProfile().getHealth());
         return believes.getPeasantProfile().getHealth() == 1;
     }
 

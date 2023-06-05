@@ -89,7 +89,7 @@ public class AttendReligiousEventsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("getHarvestedWeight=" + believes.getPeasantProfile().getHarvestedWeight());
+        //wpsReport.info("getHarvestedWeight=" + believes.getProfile().getHarvestedWeight());
         // @TODO: Revisar si la iglesia o templo está abierto
         return 0;
     }

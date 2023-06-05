@@ -41,9 +41,10 @@ public class wpsStart {
 
     private static int PLANID = 0;
     final private static double PASSWD = 0.91;
-    public static wpsConfig config = wpsConfig.getInstance();
-    public static int peasantFamiliesAgents = 5;
-    private static int SIMTIME = 5;
+    public static wpsConfig config;
+    public static int peasantFamiliesAgents = 1;
+    private final static int SIMTIME = 5;
+    public final static int daysToCheck = 7;
 
     /**
      * The main method to start the simulation.
@@ -53,6 +54,7 @@ public class wpsStart {
     public static void main(String[] args) {
 
         printHeader();
+        config = wpsConfig.getInstance();
 
         // Set init date of simulation
         wpsCurrentDate.getInstance().setCurrentDate(config.getStartSimulationDate());
@@ -148,7 +150,7 @@ public class wpsStart {
      */
     public static void stopSimulation() throws ExceptionBESA {
 
-        // Closing simulation after 5 minutes
+        // Closing simulation after X minutes
         try {
             Thread.sleep((60 * SIMTIME) * 1000);
             getStatus();
@@ -203,7 +205,7 @@ public class wpsStart {
                 + " * families. It is event oriented, high concurrency, heterogeneous time     *\n"
                 + " * management and emotional reasoning BDI.                                  *\n"
                 + " * ==========================================================================\n"
-                + " \n\n"
+                + " \n"
         );
     }
 

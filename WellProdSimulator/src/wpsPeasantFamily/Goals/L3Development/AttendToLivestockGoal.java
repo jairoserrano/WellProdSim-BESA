@@ -89,7 +89,7 @@ public class AttendToLivestockGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("getLivestockNumber=" + believes.getPeasantProfile().getLivestockNumber());
+        //wpsReport.info("getLivestockNumber=" + believes.getProfile().getLivestockNumber());
         if (believes.getPeasantProfile().getLivestockNumber() > 0) {
             return 1;
         } else {

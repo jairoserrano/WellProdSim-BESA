@@ -88,7 +88,7 @@ public class SeekPurposeGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("Purpose=" + believes.getPeasantProfile().getPurpose());
+        //wpsReport.info("Purpose=" + believes.getProfile().getPurpose());
         if (believes.getPeasantProfile().getPurpose().isBlank()) {
             return 1;
         } else {

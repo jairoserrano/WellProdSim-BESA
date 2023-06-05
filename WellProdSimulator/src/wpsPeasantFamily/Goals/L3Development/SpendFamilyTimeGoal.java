@@ -92,7 +92,7 @@ public class SpendFamilyTimeGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("FamilyTimeAvailability=" + believes.getPeasantProfile().getFamilyTimeAvailability());
+        //wpsReport.info("FamilyTimeAvailability=" + believes.getProfile().getFamilyTimeAvailability());
         if (believes.getPeasantProfile().getFamilyTimeAvailability() > 0) {
             return 1;
         } else {
@@ -111,7 +111,7 @@ public class SpendFamilyTimeGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         return 1;
-        /*if (believes.getPeasantProfile().getHealth() > 0.0) {
+        /*if (believes.getProfile().getHealth() > 0.0) {
             return 1;
         } else {
             return 0;

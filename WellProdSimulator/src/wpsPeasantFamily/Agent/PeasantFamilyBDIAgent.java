@@ -67,7 +67,7 @@ import wpsPeasantFamily.Goals.L4SkillsResources.ObtainWaterGoal;
 import wpsPeasantFamily.Goals.L5Social.CommunicateGoal;
 import wpsPeasantFamily.Goals.L5Social.LookForCollaborationGoal;
 import wpsPeasantFamily.Goals.L5Social.ProvideCollaborationGoal;
-import wpsPeasantFamily.Goals.L6Leisure.EngageInLeisureActivitiesGoal;
+import wpsPeasantFamily.Goals.L6Leisure.LeisureActivitiesGoal;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -146,7 +146,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         goals.add(ProvideCollaborationGoal.buildGoal());
 
         //Level 6 Goals: Leisure
-        goals.add(EngageInLeisureActivitiesGoal.buildGoal());
+        goals.add(LeisureActivitiesGoal.buildGoal());
         goals.add(SpendFamilyTimeGoal.buildGoal());
 
         return goals;
@@ -184,7 +184,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
     /**
      *
      */
-    public synchronized void BDIPulse() {
+    public void BDIPulse() {
         if (executor == null) {
             executor = Executors.newScheduledThreadPool(1);
         }
@@ -196,7 +196,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
     /**
      *
      */
-    private synchronized void executePulseTask() {
+    private void executePulseTask() {
 
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) ((StateBDI) this.getState()).getBelieves();
 
@@ -208,7 +208,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
             AgHandlerBESA agHandler = AdmBESA.getInstance().getHandlerByAlias(this.getAlias());
             EventBESA eventBesa = new EventBESA(InformationFlowGuard.class.getName(), null);
             agHandler.sendEvent(eventBesa);
-            //wpsReport.info("💞 Peasant Family Heart Beat 💞");
+            //wpsReport.info("💞 " + this.getAlias() + " Heart Beat 💞");
         } catch (ExceptionBESA e) {
             wpsReport.error(e);
         } catch (InterruptedException ex) {
@@ -216,16 +216,17 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         }
 
         int waitTime = getUpdatedWaitTime();
-        wpsReport.debug(this.getAlias() + " durmiendo " + waitTime);
+        //wpsReport.debug(this.getAlias() + " durmiendo " + waitTime);
         futureTask = executor.schedule(this::executePulseTask, waitTime, TimeUnit.MILLISECONDS);
     }
 
-    private synchronized int getUpdatedWaitTime() {
+    private int getUpdatedWaitTime() {
         StateBDI believes = (StateBDI) this.state;
         if (believes.getMainRole() != null) {
-            //wpsReport.debug(this.getAlias() + " MAIN ROLE " + believes.getMainRole().getRoleName());
+            int sleepTime = TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 100;
+            //wpsReport.debug(this.getAlias() + " MAIN ROLE " + believes.getMainRole().getRoleName() + " durmiendo " + sleepTime + "ms");
             //wpsReport.warn(this.getAlias() + " MAIN Intention " + believes.getMachineBDIParams().getIntention());
-            return TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 100;
+            return sleepTime;
         } else {
             //wpsReport.debug(this.getAlias() + " MAIN ROLE NULL");
             return 100;

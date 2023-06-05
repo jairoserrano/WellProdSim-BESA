@@ -75,7 +75,8 @@ public class PrepareLandGoal extends GoalBDI {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().getTools() > 0
-                && believes.getPeasantProfile().getSupplies() > 0) {
+                && believes.getPeasantProfile().getSupplies() > 0
+                && believes.getPeasantProfile().getLand()) {
             return 1;
         } else {
             return 0;
@@ -147,9 +148,7 @@ public class PrepareLandGoal extends GoalBDI {
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //believes.getPeasantProfile().setGrowingSeason(true);
-        return believes.getPeasantProfile().getFarmReady() == 1;
+        return true;
     }
 
 }

@@ -47,7 +47,7 @@ public class LookForLoanTask extends Task {
      * @param parameters
      */
     @Override
-    public synchronized void executeTask(Believes parameters) {
+    public void executeTask(Believes parameters) {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.useTime(TimeConsumedBy.LookForLoanTask);
         MoneyOriginType currentMoneyOrigin = believes.getCurrentMoneyOrigin();

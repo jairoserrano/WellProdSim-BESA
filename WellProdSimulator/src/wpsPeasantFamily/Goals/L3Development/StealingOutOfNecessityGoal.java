@@ -91,7 +91,7 @@ public class StealingOutOfNecessityGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.debug("Preparation season: " + believes.getPeasantProfile().isPreparationSeason());
+        //wpsReport.debug("Preparation season: " + believes.getProfile().isPreparationSeason());
         if (believes.getCurrentMoneyOrigin() == MoneyOriginType.ROBERY) {
             return 1;
         } else {
@@ -150,7 +150,7 @@ public class StealingOutOfNecessityGoal extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //believes.getPeasantProfile().setGrowingSeason(true);
+        //believes.getProfile().setGrowingSeason(true);
         return believes.getPeasantProfile().getFarmReady() == 1;
     }
 

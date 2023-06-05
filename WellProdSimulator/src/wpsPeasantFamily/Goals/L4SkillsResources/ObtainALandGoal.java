@@ -89,9 +89,9 @@ public class ObtainALandGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().getLand()) {
-            return 1;
-        } else {
             return 0;
+        } else {
+            return 1;
         }
     }
 

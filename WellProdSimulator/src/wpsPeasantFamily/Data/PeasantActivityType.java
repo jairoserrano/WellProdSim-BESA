@@ -17,36 +17,31 @@ package wpsPeasantFamily.Data;
 /**
  *
  */
-public enum SeasonType {
+public enum PeasantActivityType {
 
     /**
      *
      */
-    PREPARATION,
+    FREE,
 
     /**
      *
      */
-    PLANTING,
+    BUSY,
     
     /**
      *
-     */
-    GROWING,
-    
-    /**
-     *
-     */
-    HARVEST,
-    
-    /**
-     * 
      */
     NONE,
     
     /**
      * 
      */
-    SELL_CROP
+    LEISURE,
+    
+    /**
+     * 
+     */    
+    PRICE_LIST
     
 }

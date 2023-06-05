@@ -49,7 +49,7 @@ public class CommunicateTask extends Task {
         believes.getPeasantProfile().increaseFamilyTimeAvailability();
         believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         this.setFinished(true);
-        //wpsReport.info("new healt" + believes.getPeasantProfile().getHealth());
+        //wpsReport.info("new healt" + believes.getProfile().getHealth());
     }
 
     /**

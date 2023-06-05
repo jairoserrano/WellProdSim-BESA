@@ -90,7 +90,7 @@ public class HarvestCropsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.info("PlantingSeason=" + believes.getPeasantProfile().isPlantingSeason());
+        //wpsReport.info("PlantingSeason=" + believes.getProfile().isPlantingSeason());
         if (believes.getCurrentSeason() == SeasonType.HARVEST) {
             return 1;
         } else {
@@ -152,8 +152,8 @@ public class HarvestCropsGoal extends GoalBDI {
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //believes.getPeasantProfile().setGrowingSeason(true);
-        //return believes.getPeasantProfile()
+        //believes.getProfile().setGrowingSeason(true);
+        //return believes.getProfile()
         // @TODO: Fix cierre de temporada 
         return true;
     }

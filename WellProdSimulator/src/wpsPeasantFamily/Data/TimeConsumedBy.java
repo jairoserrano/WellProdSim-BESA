@@ -22,7 +22,7 @@ public enum TimeConsumedBy {
 
     LookForLoanTask(4),
     StealingOutOfNecessityTask(6),
-    SeekPurposeTask(24),
+    SeekPurposeTask(12),
     GetPriceListTask(2),
     DoHealthCareTask(4),
     DoVitalsTask(12),
@@ -51,7 +51,7 @@ public enum TimeConsumedBy {
     CommunicateTask(1),
     LookForCollaborationTask(1),
     ProvideCollaborationTask(2),
-    EngageInLeisureActivitiesTask(1),
+    LeisureActivitiesTask(1),
     FindNewsTask(2),
     WasteTimeAndResourcesTask(1);
     

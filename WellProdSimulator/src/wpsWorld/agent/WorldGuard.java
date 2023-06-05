@@ -44,7 +44,7 @@ public class WorldGuard extends GuardBESA {
             case CROP_INIT:
                 //wpsReport.info("Start event, initialize first layers state");
                 worldState.lazyUpdateCropsForDate(worldMessage.getDate());
-                wpsCurrentDate.getInstance().getDatePlusOneDayAndUpdate();
+                //wpsCurrentDate.getInstance().getDatePlusOneDayAndUpdate();
                 peasantMessage = new FromWorldMessage(
                         FromWorldMessageType.CROP_INIT,
                         worldMessage.getPeasantAgentAlias(),

@@ -36,18 +36,18 @@ public class DoVitalsGoal extends GoalBDI {
      * @return
      */
     public static DoVitalsGoal buildGoal() {
-        DoVitalsTask task = new DoVitalsTask();
-        Plan plan = new Plan();
-        plan.addTask(task);
-        RationalRole role = new RationalRole(
+        DoVitalsTask doVitalsTask = new DoVitalsTask();
+        Plan doVitalsPlan = new Plan();
+        doVitalsPlan.addTask(doVitalsTask);
+        RationalRole doVitalsRole = new RationalRole(
                 "DoVitalsTask",
-                plan);
-        DoVitalsGoal goal = new DoVitalsGoal(
+                doVitalsPlan);
+        DoVitalsGoal doVitalsGoalBDI = new DoVitalsGoal(
                 wpsStart.getPlanID(),
-                role,
+                doVitalsRole,
                 "DoVitalsTask",
                 GoalBDITypes.SURVIVAL);
-        return goal;
+        return doVitalsGoalBDI;
     }
 
     /**
@@ -105,7 +105,7 @@ public class DoVitalsGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         /*PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().haveTimeAvailable(TimeConsumedBy.DoVitalsTask)) {
+        if (believes.getProfile().haveTimeAvailable(TimeConsumedBy.DoVitalsTask)) {
             return 1;
         } else {
             return 0;
@@ -148,6 +148,7 @@ public class DoVitalsGoal extends GoalBDI {
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        //wpsReport.warn("goalSucceeded..." + !believes.isNewDay());
         return !believes.isNewDay();
     }
 

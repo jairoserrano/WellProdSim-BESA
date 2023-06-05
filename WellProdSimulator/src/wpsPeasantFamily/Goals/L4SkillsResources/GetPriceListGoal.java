@@ -23,7 +23,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
-import wpsPeasantFamily.Data.SeasonType;
+import wpsPeasantFamily.Data.PeasantActivityType;
 import wpsPeasantFamily.Tasks.L4SkillsResources.GetPriceListTask;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
@@ -38,9 +38,9 @@ public class GetPriceListGoal extends GoalBDI {
      * @return
      */
     public static GetPriceListGoal buildGoal() {
-        GetPriceListTask getPriceListGoalTask = new GetPriceListTask();
+        GetPriceListTask getPriceListTask = new GetPriceListTask();
         Plan getPriceListPlan = new Plan();
-        getPriceListPlan.addTask(getPriceListGoalTask);
+        getPriceListPlan.addTask(getPriceListTask);
         RationalRole getPriceListRole = new RationalRole(
                 "GetPriceListTask",
                 getPriceListPlan);
@@ -61,7 +61,6 @@ public class GetPriceListGoal extends GoalBDI {
      */
     public GetPriceListGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        //wpsReport.info("");
     }
 
     /**
@@ -72,7 +71,6 @@ public class GetPriceListGoal extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         return 1;
     }
 
@@ -85,7 +83,7 @@ public class GetPriceListGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getCurrentSeason() == SeasonType.PRICE_LIST) {
+        if (believes.getCurrentActivity() == PeasantActivityType.PRICE_LIST) {
             return 1;
         } else {
             return 0;
@@ -116,7 +114,7 @@ public class GetPriceListGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        return 0.6;
+        return 1;
     }
 
     /**
