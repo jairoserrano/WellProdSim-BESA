@@ -93,7 +93,7 @@ public class CheckCropsTask extends Task {
         
         believes.setCurrentCropCare(CropCareType.NONE);
         //this.setFinished();
-        //this.setTaskFinalized();
+        this.setTaskFinalized();
     }
 
     /**
@@ -127,6 +127,9 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        believes.setCurrentCropCare(CropCareType.NONE);
+        this.setTaskFinalized();
     }
 
     /**

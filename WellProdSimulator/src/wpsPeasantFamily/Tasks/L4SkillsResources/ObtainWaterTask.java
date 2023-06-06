@@ -61,7 +61,7 @@ public class ObtainWaterTask extends Task {
             MarketMessage marketMessage = new MarketMessage(
                     BUY_WATER,
                     believes.getPeasantProfile().getPeasantFamilyAlias(),
-                    100
+                    1000
             );
 
             EventBESA ev = new EventBESA(
@@ -94,6 +94,8 @@ public class ObtainWaterTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
+        ((PeasantFamilyBDIAgentBelieves) parameters).setCurrentResourceNeededType(ResourceNeededType.NONE);
+        this.setTaskFinalized();
     }
 
     /**

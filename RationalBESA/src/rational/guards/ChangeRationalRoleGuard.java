@@ -38,14 +38,14 @@ public class ChangeRationalRoleGuard extends GuardBESA {
                         if (task.isInExecution()) {
                             ReportBESA.warn("Tarea en ejecución: " + task.getClass().getSimpleName().toString());
                             task.cancelTask(state.getBelieves());
-                            while (task.isInExecution()) {
+                            //while (task.isInExecution()) {
                                 try {
                                     ReportBESA.warn("En espera");
                                     Thread.sleep(500);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                            }
+                            //}
                             ReportBESA.warn("Terminó la tarea");
                             it.remove();
                         } else if (task.isFinalized()) {

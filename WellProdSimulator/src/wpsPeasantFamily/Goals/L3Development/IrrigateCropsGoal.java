@@ -76,7 +76,7 @@ public class IrrigateCropsGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getWaterAvailable() > 0) {
+        if (believes.getPeasantProfile().getWaterAvailable() > 50) {
             return 1;
         } else {
             believes.setCurrentResourceNeededType(ResourceNeededType.WATER);

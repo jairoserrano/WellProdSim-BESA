@@ -70,7 +70,7 @@ public class IrrigateCropsTask extends Task {
                     worldMessage);
             ah.sendEvent(ev);
             
-            believes.getPeasantProfile().useWater(50);
+            believes.getPeasantProfile().useWater(10);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
@@ -96,6 +96,8 @@ public class IrrigateCropsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
+        ((PeasantFamilyBDIAgentBelieves) parameters).setCurrentCropCare(CropCareType.NONE);
+        this.setTaskFinalized();
     }
 
     /**
@@ -104,8 +106,8 @@ public class IrrigateCropsTask extends Task {
      * @return
      */
     @Override
-    public boolean checkFinish(Believes believes) {
+    public boolean checkFinish(Believes parameters) {
         ////wpsReport.info("");
-        return finished;
+        return ((PeasantFamilyBDIAgentBelieves) parameters).getCurrentCropCare() == CropCareType.NONE;
     }
 }

@@ -225,7 +225,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
     private int getUpdatedWaitTime() {
         StateBDI believes = (StateBDI) this.state;
         if (believes.getMainRole() != null) {
-            int sleepTime = TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 200;
+            int sleepTime = TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 100;
             wpsReport.debug(this.getAlias() + " MAIN ROLE " + believes.getMainRole().getRoleName() + " durmiendo " + sleepTime + "ms");
             //wpsReport.warn(this.getAlias() + " MAIN Intention " + believes.getMachineBDIParams().getIntention());
             return sleepTime;
