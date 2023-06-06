@@ -52,7 +52,7 @@ public class DoVitalsTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");        
+        //wpsReport.info("⚙️⚙️⚙️");        
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         believes.setNewDay(false);
@@ -78,7 +78,7 @@ public class DoVitalsTask extends Task {
         if (believes.getCurrentSeason() == SeasonType.GROWING) {
             believes.setCurrentCropCare(CropCareType.CHECK);
         }
-        wpsReport.debug(believes.toString());
+        //wpsReport.debug(believes.toString());
         //this.setTaskFinalized();
     }
 

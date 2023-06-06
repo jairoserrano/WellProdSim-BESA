@@ -39,7 +39,7 @@ public class WasteTimeAndResourcesTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         believes.useTime(believes.getTimeLeftOnDay());

@@ -43,7 +43,7 @@ public class wpsStart {
     final private static double PASSWD = 0.91;
     public static wpsConfig config;
     public static int peasantFamiliesAgents = 1;
-    private final static int SIMTIME = 10;
+    private final static int SIMTIME = 5;
     public final static int DAYSTOCHECK = 7;
 
     /**

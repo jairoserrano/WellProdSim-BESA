@@ -20,39 +20,39 @@ public class ChangeRationalRoleGuard extends GuardBESA {
         RationalState state = (RationalState) this.getAgent().getState();
         RationalRole newrole = (RationalRole) ebesa.getData();
 
-        if (state.getMainRole() != null) {
+        /*if (state.getMainRole() != null) {
             ReportBESA.debug("🟢 MainRole " + state.getMainRole().getRoleName() + " 🟢 Trying to change to rol 🟩 " + newrole.getRoleName());
         } else {
             ReportBESA.debug("🟢🟢 New Rol " + newrole.getRoleName());
-        }
+        }*/
 
         if (state.getMainRole() != null && !state.getMainRole().getRoleName().equals(((RationalRole) ebesa.getData()).getRoleName())) {
             if (state.getMainRole() != null) {
                 Plan plan = state.getMainRole().getRolePlan();
                 if (plan != null) {
                     Iterator<Task> it = plan.getTasksInExecution().iterator();
-                    ReportBESA.warn("🔸 " + plan.getTasks().size() + " plans " + plan.getTasks());
+                    //ReportBESA.warn("🔸 " + plan.getTasks().size() + " plans " + plan.getTasks());
                     while (it.hasNext()) {
                         Task task = it.next();
-                        ReportBESA.warn("Revisando si la tarea está en ejecución: " + task.toString());
+                        //ReportBESA.warn("Revisando si la tarea está en ejecución: " + task.toString());
                         if (task.isInExecution()) {
-                            ReportBESA.warn("Tarea en ejecución: " + task.getClass().getSimpleName().toString());
+                            //ReportBESA.warn("Tarea en ejecución: " + task.getClass().getSimpleName().toString());
                             task.cancelTask(state.getBelieves());
                             //while (task.isInExecution()) {
                                 try {
-                                    ReportBESA.warn("En espera");
+                                    ReportBESA.warn("En espera " + task.toString());
                                     Thread.sleep(500);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
                             //}
-                            ReportBESA.warn("Terminó la tarea");
+                            //ReportBESA.warn("Terminó la tarea");
                             it.remove();
                         } else if (task.isFinalized()) {
-                            ReportBESA.warn("isFinalized tarea");
+                            //ReportBESA.warn("isFinalized tarea");
                             it.remove();
                         }
-                        ReportBESA.warn("setTaskFinalized tarea");
+                        //ReportBESA.warn("setTaskFinalized tarea");
                         task.setTaskFinalized();
                     }
                 }
@@ -60,13 +60,13 @@ public class ChangeRationalRoleGuard extends GuardBESA {
             newrole.resetPlan();
             state.setMainRole(newrole);
         } else if (state.getMainRole() == null) {
-            ReportBESA.warn("NUEVO ROL ASIGNADO");
+            //ReportBESA.warn("NUEVO ROL ASIGNADO");
             newrole.resetPlan();
             state.setMainRole(newrole);
         } else if (!state.getMainRole().getRolePlan().inExecution()) {
             ReportBESA.warn("NO HAY NADA EJECUTANDOSE");
-            ReportBESA.warn("getTasksWaitingForExecution " + state.getMainRole().getRolePlan().getTasksWaitingForExecution());
-            ReportBESA.warn("getTasks " + state.getMainRole().getRolePlan().getTasks());
+            //ReportBESA.warn("getTasksWaitingForExecution " + state.getMainRole().getRolePlan().getTasksWaitingForExecution());
+            //ReportBESA.warn("getTasks " + state.getMainRole().getRolePlan().getTasks());
             state.getMainRole().getRolePlan().reset();
         }
     }
