@@ -24,6 +24,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.ResourceNeededType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
@@ -73,11 +74,12 @@ public class ObtainToolsGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getToolsAvailability() > 0) {
+        return 1;
+        /*if (believes.getPeasantProfile().getToolsAvailability() > 0) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
     }
 
     /**
@@ -90,7 +92,7 @@ public class ObtainToolsGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("PlantingSeason=" + believes.getProfile().isPlantingSeason());
-        if (believes.getPeasantProfile().getTools() < 1) {
+        if (believes.getCurrentResourceNeededType() == ResourceNeededType.TOOLS) {
             return 1;
         } else {
             return 0;
@@ -107,9 +109,7 @@ public class ObtainToolsGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.isFree()
-                && believes.haveTimeAvailable(TimeConsumedBy.ObtainToolsTask
-                )) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.ObtainToolsTask)) {
             return 1;
         } else {
             return 0;

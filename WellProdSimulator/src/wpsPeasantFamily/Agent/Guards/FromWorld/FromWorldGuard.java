@@ -12,14 +12,14 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Agent.Guards;
+package wpsPeasantFamily.Agent.Guards.FromWorld;
 
 import BESA.BDI.AgentStructuralModel.StateBDI;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
 import org.json.JSONObject;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import static wpsPeasantFamily.Agent.Guards.FromWorldMessageType.*;
+import static wpsPeasantFamily.Agent.Guards.FromWorld.FromWorldMessageType.*;
 import wpsPeasantFamily.Data.CropCareType;
 import wpsPeasantFamily.Data.SeasonType;
 import wpsViewer.Agent.wpsReport;
@@ -47,20 +47,23 @@ public class FromWorldGuard extends GuardBESA {
             switch (messageType) {
                 case NOTIFY_CROP_DISEASE:
                     believes.getPeasantProfile().setCropHealth(0.5);
+                    wpsReport.info("🍙🍙🍙: NOTIFY_CROP_DISEASE");
                     break;
                 case CROP_PESTICIDE:
                     believes.setCurrentCropCare(CropCareType.PESTICIDE);
-                    //wpsReport.info("   🍙🤖   PESTICIDAAAAA  🤖 🍙  ");
+                    wpsReport.info("🍙🍙🍙: CROP_PESTICIDE");
                     break;
                 case NOTIFY_CROP_WATER_STRESS:
                     believes.setCurrentCropCare(CropCareType.IRRIGATION);
+                    wpsReport.info("🍙🍙🍙: NOTIFY_CROP_WATER_STRESS");
                     break;
                 case CROP_INFORMATION_NOTIFICATION:
                     //believes.getProfile().setPesticideSeason(true);
-                    //wpsReport.info("🍙🍙🍙: PESTICIDAAAAA");
+                    wpsReport.info("🍙🍙🍙: CROP_INFORMATION_NOTIFICATION");
                     break;
                 case NOTIFY_CROP_READY_HARVEST:
                     believes.setCurrentSeason(SeasonType.HARVEST);
+                    wpsReport.info("🍙🍙🍙: NOTIFY_CROP_READY_HARVEST");
                     break;
                 case REQUEST_CROP_INFORMATION:
                     wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload());
@@ -69,6 +72,7 @@ public class FromWorldGuard extends GuardBESA {
                     //believes.getProfile().setPlantingSeason(true);
                     break;
                 case CROP_HARVEST:
+                    wpsReport.info("🍙🍙🍙: CROP_HARVEST");
                     JSONObject cropData = new JSONObject(
                             peasantCommMessage.getPayload()
                     );

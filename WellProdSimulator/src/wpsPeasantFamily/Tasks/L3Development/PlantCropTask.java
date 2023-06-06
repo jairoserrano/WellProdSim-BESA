@@ -34,14 +34,10 @@ import wpsViewer.Agent.wpsReport;
  */
 public class PlantCropTask extends Task {
 
-    private boolean finished;
-
     /**
      *
      */
     public PlantCropTask() {
-        ////wpsReport.info("");
-        this.finished = false;
     }
 
     /**
@@ -52,7 +48,6 @@ public class PlantCropTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.setCurrentSeason(SeasonType.GROWING);
         believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
 
         try {
@@ -85,24 +80,7 @@ public class PlantCropTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-        this.setFinished();
-        //this.setTaskWaitingForExecution();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        return finished;
-    }
-
-    /**
-     *
-     */
-    public void setFinished() {
-        ////wpsReport.info("");
-        this.finished = true;
+        believes.setCurrentSeason(SeasonType.GROWING);
         this.setTaskFinalized();
     }
 
@@ -112,8 +90,6 @@ public class PlantCropTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished();
     }
 
     /**
@@ -122,27 +98,16 @@ public class PlantCropTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished();
     }
 
     /**
      *
-     * @return
-     */
-    public boolean isExecuted() {
-        ////wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
-     * @param believes
+     * @param parameters
      * @return
      */
     @Override
-    public boolean checkFinish(Believes believes) {
-        ////wpsReport.info("");
-        return isExecuted();
+    public boolean checkFinish(Believes parameters) {
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        return believes.getCurrentSeason() == SeasonType.GROWING;
     }
 }

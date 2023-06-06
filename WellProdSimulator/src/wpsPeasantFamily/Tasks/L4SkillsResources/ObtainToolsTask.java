@@ -26,6 +26,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.ResourceNeededType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
@@ -79,6 +80,7 @@ public class ObtainToolsTask extends Task {
             wpsReport.error(ex);
         }
         //this.setTaskWaitingForExecution();
+        believes.setCurrentResourceNeededType(ResourceNeededType.NONE);
         this.setFinished();
     }
 

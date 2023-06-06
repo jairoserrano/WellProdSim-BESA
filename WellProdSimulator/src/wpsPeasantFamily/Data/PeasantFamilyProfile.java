@@ -1388,14 +1388,6 @@ public class PeasantFamilyProfile implements Serializable, Cloneable {
 
     /**
      *
-     * @return
-     */
-    public boolean isWaterNeeded() {
-        return this.waterAvailable == 0;
-    }
-
-    /**
-     *
      */
     public void decreaseHealth() {
         this.health -= 5;

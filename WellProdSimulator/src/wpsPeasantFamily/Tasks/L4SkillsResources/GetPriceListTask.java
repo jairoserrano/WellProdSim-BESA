@@ -23,7 +23,6 @@ import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Data.PeasantActivityType;
-import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
@@ -72,7 +71,6 @@ public class GetPriceListTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-        this.setTaskFinalized();
     }
 
     /**
@@ -81,7 +79,6 @@ public class GetPriceListTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        this.setTaskFinalized();
     }
 
     /**
@@ -90,7 +87,6 @@ public class GetPriceListTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        this.setTaskFinalized();
     }
 
     /**

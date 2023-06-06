@@ -44,7 +44,7 @@ public class wpsStart {
     public static wpsConfig config;
     public static int peasantFamiliesAgents = 1;
     private final static int SIMTIME = 5;
-    public final static int daysToCheck = 7;
+    public final static int DAYSTOCHECK = 7;
 
     /**
      * The main method to start the simulation.
@@ -125,7 +125,6 @@ public class wpsStart {
             for (PeasantFamilyBDIAgent peasantFamily : peasantFamilies) {
                 peasantFamily.start();
                 wpsReport.info(peasantFamily.getAlias() + " Started");
-                Thread.sleep(50);
             }
             // first heart beat to families
             for (int i = 1; i <= peasantFamiliesAgents; i++) {
@@ -135,7 +134,7 @@ public class wpsStart {
                 agHandler.sendEvent(eventBesa);
             }
 
-        } catch (ExceptionBESA | InterruptedException ex) {
+        } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
 

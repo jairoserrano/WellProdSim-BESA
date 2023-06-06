@@ -16,6 +16,7 @@ package wpsPeasantFamily.Agent;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import wpsPeasantFamily.Data.PeasantFamilyProfile;
 import rational.data.InfoData;
 import rational.mapping.Believes;
@@ -25,6 +26,8 @@ import wpsPeasantFamily.Data.CropCareType;
 import wpsPeasantFamily.Data.FarmingResource;
 import wpsPeasantFamily.Data.MoneyOriginType;
 import wpsPeasantFamily.Data.PeasantActivityType;
+import wpsPeasantFamily.Data.PeasantLeisureType;
+import wpsPeasantFamily.Data.ResourceNeededType;
 import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
@@ -40,12 +43,16 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
     private SeasonType currentSeason;
     private CropCareType currentCropCare;
     private MoneyOriginType currentMoneyOrigin;
-    private PeasantActivityType peasantActivityType;
+    private PeasantActivityType currentPeasantActivityType;
+    private PeasantLeisureType currentPeasantLeisureType;
+    private ResourceNeededType currentResourceNeededType;
+
     private int currentDay;
     private double timeLeftOnDay;
     private boolean newDay;
     private boolean weekBlock;
     private boolean busy;
+
     private String internalCurrentDate;
     private Map<String, FarmingResource> priceList = new HashMap<>();
 
@@ -70,7 +77,8 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
         this.currentSeason = SeasonType.NONE;
         this.currentCropCare = CropCareType.NONE;
         this.currentMoneyOrigin = MoneyOriginType.NONE;
-        this.peasantActivityType = PeasantActivityType.NONE;
+        this.currentPeasantActivityType = PeasantActivityType.NONE;
+        this.currentPeasantLeisureType = PeasantLeisureType.NONE;
 
     }
 
@@ -85,10 +93,10 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
         //wpsReport.warn("internalCurrentDate= " + internalCurrentDate);
         this.internalCurrentDate = wpsCurrentDate.getInstance().getDatePlusOneDay(internalCurrentDate);
         //wpsReport.warn("internalCurrentDate2= " + internalCurrentDate);
-        if (this.currentSeason == SeasonType.GROWING) {
+        /*if (this.currentSeason == SeasonType.GROWING) {
             this.currentCropCare = CropCareType.CHECK;
-        }
-        wpsReport.debug(this.peasantProfile.getPeasantFamilyAlias() + " -------- NEW DAY -------- " + internalCurrentDate);
+        }*/
+        wpsReport.debug(this.peasantProfile.getPeasantFamilyAlias() + " NEW DAY internalCurrentDate: " + internalCurrentDate);
     }
 
     /**
@@ -145,10 +153,25 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      * @param time
      */
     public void useTime(TimeConsumedBy time) {
+        //wpsReport.warn("time " + time.getTime());
         double timeLeft = this.timeLeftOnDay - time.getTime();
         this.timeLeftOnDay = timeLeft;
+        //wpsReport.warn("time " + timeLeft);
         if (timeLeft <= 0) {
-            //wpsReport.info("⏳ NewDay");
+            wpsReport.info("⏳ NewDay");
+            this.makeNewDay();
+        } else {
+            wpsReport.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + internalCurrentDate);
+        }
+    }
+
+    public void useTime(double time) {
+        //wpsReport.warn("time " + time.getTime());
+        double timeLeft = this.timeLeftOnDay - time;
+        this.timeLeftOnDay = timeLeft;
+        //wpsReport.warn("time " + timeLeft);
+        if (timeLeft <= 0) {
+            wpsReport.info("⏳ NewDay");
             this.makeNewDay();
         } else {
             wpsReport.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + internalCurrentDate);
@@ -210,6 +233,59 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      *
      * @return
      */
+    public ResourceNeededType getCurrentResourceNeededType() {
+        return currentResourceNeededType;
+    }
+
+    /**
+     *
+     *
+     */
+    public void setCurrentResourceNeededType(ResourceNeededType currentResourceNeededType) {
+        this.currentResourceNeededType = currentResourceNeededType;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public PeasantLeisureType getCurrentPeasantLeisureType() {
+        return currentPeasantLeisureType;
+    }
+
+    /**
+     *
+     *
+     * @param currentPeasantLeisureType
+     */
+    public void setCurrentPeasantLeisureType(PeasantLeisureType currentPeasantLeisureType) {
+        this.currentPeasantLeisureType = currentPeasantLeisureType;
+    }
+
+    /**
+     *
+     *
+     */
+    public void setRandomCurrentPeasantLeisureType() {
+        Random rand = new Random();
+
+        switch (rand.nextInt(2)) {
+            case 0:
+                this.currentPeasantLeisureType = PeasantLeisureType.LEISURE;
+                break;
+            case 1:
+                this.currentPeasantLeisureType = PeasantLeisureType.WASTERESOURCE;
+                break;
+            case 2:
+                this.currentPeasantLeisureType = PeasantLeisureType.WASTERESOURCE;
+                break;
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
     public SeasonType getCurrentSeason() {
         return currentSeason;
     }
@@ -255,11 +331,11 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
     }
 
     public PeasantActivityType getCurrentActivity() {
-        return this.peasantActivityType;
+        return this.currentPeasantActivityType;
     }
 
     public void setCurrentActivity(PeasantActivityType peasantActivityType) {
-        this.peasantActivityType = peasantActivityType;
+        this.currentPeasantActivityType = peasantActivityType;
     }
 
     /**
@@ -359,14 +435,15 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
                 + " * CurrentSeason: " + currentSeason + "\n"
                 + " * CurrentCropCare: " + currentCropCare + "\n"
                 + " * CurrentMoneyOrigin: " + currentMoneyOrigin + "\n"
-                + " * PeasantActivityType: " + peasantActivityType + "\n"
+                + " * PeasantActivityType: " + currentPeasantActivityType + "\n"
+                + " * PeasantActivityType: " + currentPeasantLeisureType + "\n"
                 + " * CurrentDay: " + currentDay + "\n"
                 + " * TimeLeftOnDay: " + timeLeftOnDay + "\n"
                 + " * NewDay: " + newDay + "\n"
                 + " * WeekBlock: " + weekBlock + "\n"
                 + " * Busy: " + busy + "\n"
                 + " * InternalCurrentDate: " + internalCurrentDate + "\n"
-                + " * Price List: " + priceList  + "\n"
+                + " * Price List: " + priceList + "\n"
                 + " * ==========================================================================\n"
                 + peasantProfile.toString();
     }

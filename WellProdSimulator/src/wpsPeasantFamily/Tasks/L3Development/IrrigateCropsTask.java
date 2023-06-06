@@ -40,7 +40,6 @@ public class IrrigateCropsTask extends Task {
      *
      */
     public IrrigateCropsTask() {
-        ////wpsReport.info("");
         this.finished = false;
     }
 
@@ -52,8 +51,6 @@ public class IrrigateCropsTask extends Task {
     public void executeTask(Believes parameters) {
         //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.setCurrentCropCare(CropCareType.NONE);
-        believes.getPeasantProfile().useWater(50);
         believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
 
         try {
@@ -73,32 +70,17 @@ public class IrrigateCropsTask extends Task {
                     worldMessage);
             ah.sendEvent(ev);
             
-            //this.setTaskWaitingForExecution();
+            believes.getPeasantProfile().useWater(50);
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
         
-        this.setFinished();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        ////wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
-     */
-    public void setFinished() {
-        ////wpsReport.info("");
+        believes.setCurrentCropCare(CropCareType.NONE);
         this.finished = true;
         this.setTaskFinalized();
     }
+
 
     /**
      *
@@ -106,8 +88,6 @@ public class IrrigateCropsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished();
     }
 
     /**
@@ -116,17 +96,6 @@ public class IrrigateCropsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isExecuted() {
-        ////wpsReport.info("");
-        return finished;
     }
 
     /**
@@ -137,6 +106,6 @@ public class IrrigateCropsTask extends Task {
     @Override
     public boolean checkFinish(Believes believes) {
         ////wpsReport.info("");
-        return isExecuted();
+        return finished;
     }
 }

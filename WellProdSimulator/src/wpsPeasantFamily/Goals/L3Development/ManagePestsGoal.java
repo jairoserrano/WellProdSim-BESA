@@ -25,6 +25,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Data.CropCareType;
+import wpsPeasantFamily.Data.ResourceNeededType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
@@ -78,6 +79,7 @@ public class ManagePestsGoal extends GoalBDI {
                 && believes.getPeasantProfile().getSupplies() > 0) {
             return 1;
         } else {
+            believes.setCurrentResourceNeededType(ResourceNeededType.PESTICIDE);
             return 0;
         }
     }

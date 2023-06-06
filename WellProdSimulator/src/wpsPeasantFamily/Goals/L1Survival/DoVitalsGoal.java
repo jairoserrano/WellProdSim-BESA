@@ -59,7 +59,6 @@ public class DoVitalsGoal extends GoalBDI {
      */
     public DoVitalsGoal(long id, RationalRole role, String description, GoalBDITypes type) {
         super(id, role, description, type);
-        //wpsReport.info("");
     }
 
     /**

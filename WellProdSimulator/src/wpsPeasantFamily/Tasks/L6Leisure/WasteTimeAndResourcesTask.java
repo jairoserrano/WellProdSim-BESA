@@ -17,6 +17,7 @@ package wpsPeasantFamily.Tasks.L6Leisure;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.PeasantLeisureType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
@@ -26,13 +27,10 @@ import wpsViewer.Agent.wpsReport;
  */
 public class WasteTimeAndResourcesTask extends Task {
 
-    private boolean finished;
-
     /**
      *
      */
     public WasteTimeAndResourcesTask() {
-        this.finished = false;
     }
 
     /**
@@ -41,28 +39,12 @@ public class WasteTimeAndResourcesTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        wpsReport.info("⚙️⚙️⚙️");  
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
-        this.setFinished(true);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        ////wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
-     * @param finished
-     */
-    public void setFinished(boolean finished) {
-        ////wpsReport.info("");
-        this.finished = finished;
+        //believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
+        believes.useTime(believes.getTimeLeftOnDay());
+        believes.setCurrentPeasantLeisureType(PeasantLeisureType.NONE);
+        this.setTaskFinalized();
     }
 
     /**
@@ -71,8 +53,6 @@ public class WasteTimeAndResourcesTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
     }
 
     /**
@@ -81,17 +61,6 @@ public class WasteTimeAndResourcesTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        ////wpsReport.info("");
-        this.setFinished(true);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isExecuted() {
-        ////wpsReport.info("");
-        return finished;
     }
 
     /**
@@ -100,8 +69,9 @@ public class WasteTimeAndResourcesTask extends Task {
      * @return
      */
     @Override
-    public boolean checkFinish(Believes believes) {
-        ////wpsReport.info("");
-        return isExecuted();
+    public boolean checkFinish(Believes parameters) {
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        //wpsReport.debug("check: " + believes.getCurrentPeasantLeisureType());
+        return believes.getCurrentPeasantLeisureType() == PeasantLeisureType.NONE;
     }
 }

@@ -35,10 +35,13 @@ import static wpsWorld.Messages.WorldMessageType.CROP_INFORMATION;
  */
 public class CheckCropsTask extends Task {
 
+    private boolean finished;
+
     /**
      *
      */
     public CheckCropsTask() {
+        finished = false;
     }
 
     /**
@@ -52,7 +55,6 @@ public class CheckCropsTask extends Task {
         String peasantFamilyAlias = believes.getPeasantProfile().getPeasantFamilyLandAlias();
         // @TODO: falta calcular el tiempo necesario para el cultivo
         believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
-        believes.setCurrentCropCare(CropCareType.NONE);
 
         try {
             AdmBESA adm = AdmBESA.getInstance();
@@ -85,11 +87,30 @@ public class CheckCropsTask extends Task {
             );
             ah.sendEvent(event);
 
-            this.setTaskFinalized();
-
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
+        
+        believes.setCurrentCropCare(CropCareType.NONE);
+        //this.setFinished();
+        //this.setTaskFinalized();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isFinished() {
+        ////wpsReport.info("");
+        return finished;
+    }
+
+    /**
+     *
+     */
+    public void setFinished() {
+        this.finished = true;
+        //this.setTaskFinalized();
     }
 
     /**
@@ -98,7 +119,6 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        this.setTaskFinalized();
     }
 
     /**
@@ -107,7 +127,6 @@ public class CheckCropsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        this.setTaskFinalized();
     }
 
     /**
@@ -119,5 +138,6 @@ public class CheckCropsTask extends Task {
     public boolean checkFinish(Believes parameters) {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         return believes.getCurrentCropCare() == CropCareType.NONE;
+        //return isFinished();
     }
 }

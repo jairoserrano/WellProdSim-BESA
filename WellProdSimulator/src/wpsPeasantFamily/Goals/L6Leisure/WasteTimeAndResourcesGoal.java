@@ -23,8 +23,11 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.PeasantActivityType;
+import wpsPeasantFamily.Data.PeasantLeisureType;
 import wpsPeasantFamily.Tasks.L6Leisure.WasteTimeAndResourcesTask;
 import wpsPeasantFamily.Data.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -82,8 +85,8 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.isFree()
-                && believes.haveTimeAvailable(TimeConsumedBy.WasteTimeAndResourcesTask)) {
+        if (believes.getCurrentPeasantLeisureType() == PeasantLeisureType.WASTERESOURCE) {
+            //wpsReport.debug("Detectó");
             return 1;
         } else {
             return 0;
@@ -98,7 +101,13 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        return 1;
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        if (believes.haveTimeAvailable(TimeConsumedBy.WasteTimeAndResourcesTask)) {
+            //wpsReport.warn("SI ES POSIBLE");
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -109,7 +118,7 @@ public class WasteTimeAndResourcesGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        return 0.5;
+        return 0.8;
     }
 
     /**

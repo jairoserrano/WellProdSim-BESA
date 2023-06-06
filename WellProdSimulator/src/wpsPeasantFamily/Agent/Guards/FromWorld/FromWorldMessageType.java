@@ -1,4 +1,4 @@
-package wpsPeasantFamily.Agent.Guards;
+package wpsPeasantFamily.Agent.Guards.FromWorld;
 
 /**
  *

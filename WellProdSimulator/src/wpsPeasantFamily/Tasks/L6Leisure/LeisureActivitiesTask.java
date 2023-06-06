@@ -18,6 +18,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Data.PeasantActivityType;
+import wpsPeasantFamily.Data.PeasantLeisureType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
@@ -39,11 +40,13 @@ public class LeisureActivitiesTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //wpsReport.info("⚙️⚙️⚙️");  
+        // TODO: Realmente debería avanzar 1 hora y dar espacio a otra actividad.
+        // Por ahora toma todo el día restante del campesino.
+        //wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
-        believes.setCurrentActivity(PeasantActivityType.NONE);
-        this.setTaskFinalized();
+        //believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
+        believes.useTime(believes.getTimeLeftOnDay());
+        believes.setCurrentPeasantLeisureType(PeasantLeisureType.NONE);
     }
 
     /**
@@ -52,7 +55,6 @@ public class LeisureActivitiesTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        this.setTaskFinalized();
     }
 
     /**
@@ -61,7 +63,6 @@ public class LeisureActivitiesTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        this.setTaskFinalized();
     }
 
     /**
@@ -72,6 +73,7 @@ public class LeisureActivitiesTask extends Task {
     @Override
     public boolean checkFinish(Believes parameters) {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getCurrentActivity() == PeasantActivityType.NONE;
+        //wpsReport.debug("check: " + believes.getCurrentPeasantLeisureType());
+        return believes.getCurrentPeasantLeisureType() == PeasantLeisureType.NONE;
     }
 }

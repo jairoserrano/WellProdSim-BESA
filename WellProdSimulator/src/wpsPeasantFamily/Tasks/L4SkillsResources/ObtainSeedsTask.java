@@ -22,6 +22,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.ResourceNeededType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
@@ -74,6 +75,7 @@ public class ObtainSeedsTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
+        believes.setCurrentResourceNeededType(ResourceNeededType.NONE);
         this.setFinished();
         //this.setTaskWaitingForExecution();
     }
@@ -92,7 +94,7 @@ public class ObtainSeedsTask extends Task {
      */
     public void setFinished() {
         this.finished = true;
-        this.setTaskFinalized();
+        //this.setTaskFinalized();
     }
 
     /**
@@ -101,7 +103,6 @@ public class ObtainSeedsTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        this.setFinished();
     }
 
     /**
@@ -110,7 +111,6 @@ public class ObtainSeedsTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        this.setFinished();
     }
 
     /**

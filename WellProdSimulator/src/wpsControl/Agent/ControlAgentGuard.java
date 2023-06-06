@@ -57,7 +57,7 @@ public class ControlAgentGuard extends GuardBESA {
             }
 
             ((ControlAgentState) this.getAgent().getState()).resetActiveAgents();
-            String currentDate = wpsCurrentDate.getInstance().getDatePlusXDaysAndUpdate(wpsStart.daysToCheck);
+            String currentDate = wpsCurrentDate.getInstance().getDatePlusXDaysAndUpdate(wpsStart.DAYSTOCHECK);
         }
 
     }

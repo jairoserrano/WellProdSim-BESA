@@ -32,7 +32,7 @@ import rational.guards.InformationFlowGuard;
 import wpsPeasantFamily.Agent.Guards.FromBank.FromBankGuard;
 import wpsPeasantFamily.Agent.Guards.FromControlGuard;
 import wpsPeasantFamily.Agent.Guards.FromMarketGuard;
-import wpsPeasantFamily.Agent.Guards.FromWorldGuard;
+import wpsPeasantFamily.Agent.Guards.FromWorld.FromWorldGuard;
 import wpsPeasantFamily.Agent.Guards.StatusGuard;
 import wpsPeasantFamily.Data.PeasantFamilyProfile;
 import wpsPeasantFamily.Data.TimeConsumedBy;
@@ -68,6 +68,7 @@ import wpsPeasantFamily.Goals.L5Social.CommunicateGoal;
 import wpsPeasantFamily.Goals.L5Social.LookForCollaborationGoal;
 import wpsPeasantFamily.Goals.L5Social.ProvideCollaborationGoal;
 import wpsPeasantFamily.Goals.L6Leisure.LeisureActivitiesGoal;
+import wpsPeasantFamily.Goals.L6Leisure.WasteTimeAndResourcesGoal;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -148,6 +149,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         //Level 6 Goals: Leisure
         goals.add(LeisureActivitiesGoal.buildGoal());
         goals.add(SpendFamilyTimeGoal.buildGoal());
+        goals.add(WasteTimeAndResourcesGoal.buildGoal());
 
         return goals;
     }
@@ -223,8 +225,8 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
     private int getUpdatedWaitTime() {
         StateBDI believes = (StateBDI) this.state;
         if (believes.getMainRole() != null) {
-            int sleepTime = TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 100;
-            //wpsReport.debug(this.getAlias() + " MAIN ROLE " + believes.getMainRole().getRoleName() + " durmiendo " + sleepTime + "ms");
+            int sleepTime = TimeConsumedBy.valueOf(believes.getMainRole().getRoleName()).getTime() * 200;
+            wpsReport.debug(this.getAlias() + " MAIN ROLE " + believes.getMainRole().getRoleName() + " durmiendo " + sleepTime + "ms");
             //wpsReport.warn(this.getAlias() + " MAIN Intention " + believes.getMachineBDIParams().getIntention());
             return sleepTime;
         } else {

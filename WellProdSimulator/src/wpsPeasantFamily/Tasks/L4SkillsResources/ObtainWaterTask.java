@@ -22,6 +22,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.ResourceNeededType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
@@ -40,7 +41,6 @@ public class ObtainWaterTask extends Task {
      *
      */
     public ObtainWaterTask() {
-        ////wpsReport.info("");
         this.finished = false;
     }
 
@@ -72,27 +72,12 @@ public class ObtainWaterTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
-        this.setFinished();
+        //this.setFinished();
         //this.setTaskWaitingForExecution();
-
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        ////wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
-     */
-    public void setFinished() {
-        ////wpsReport.info("");
+        believes.setCurrentResourceNeededType(ResourceNeededType.NONE);
         this.finished = true;
-        this.setTaskFinalized();
+        
+
     }
 
     /**
@@ -101,7 +86,6 @@ public class ObtainWaterTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
-        this.setFinished();
     }
 
     /**
@@ -110,15 +94,6 @@ public class ObtainWaterTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        this.setFinished();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isExecuted() {
-        return finished;
     }
 
     /**
@@ -127,8 +102,9 @@ public class ObtainWaterTask extends Task {
      * @return
      */
     @Override
-    public boolean checkFinish(Believes believes) {
+    public boolean checkFinish(Believes parameters) {
         ////wpsReport.info("");
-        return isExecuted();
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        return believes.getPeasantProfile().getWaterAvailable() > 0;
     }
 }

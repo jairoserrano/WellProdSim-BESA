@@ -25,6 +25,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Data.CropCareType;
+import wpsPeasantFamily.Data.ResourceNeededType;
 import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
@@ -78,6 +79,7 @@ public class IrrigateCropsGoal extends GoalBDI {
         if (believes.getPeasantProfile().getWaterAvailable() > 0) {
             return 1;
         } else {
+            believes.setCurrentResourceNeededType(ResourceNeededType.WATER);
             return 0;
         }
     }
@@ -91,8 +93,7 @@ public class IrrigateCropsGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getCurrentCropCare() == CropCareType.IRRIGATION
-                && believes.getCurrentSeason() == SeasonType.GROWING) {
+        if (believes.getCurrentCropCare() == CropCareType.IRRIGATION) {
             return 1;
         } else {
             return 0;

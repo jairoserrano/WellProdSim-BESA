@@ -17,8 +17,8 @@ package wpsPeasantFamily.Tasks.L1Survival;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.PeasantActivityType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
-import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -26,13 +26,10 @@ import wpsViewer.Agent.wpsReport;
  */
 public class SeekPurposeTask extends Task {
 
-    private boolean finished;
-
     /**
      *
      */
     public SeekPurposeTask() {
-        finished = false;
     }
 
     /**
@@ -45,8 +42,7 @@ public class SeekPurposeTask extends Task {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
         believes.getPeasantProfile().setPurpose("farmer");
-        this.setTaskFinalized();
-        finished = true;
+        //believes.setCurrentActivity(PeasantActivityType.LEISURE);
     }
 
     /**

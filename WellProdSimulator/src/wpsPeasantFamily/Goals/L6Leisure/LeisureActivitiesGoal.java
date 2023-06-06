@@ -25,12 +25,13 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Data.PeasantActivityType;
+import wpsPeasantFamily.Data.PeasantLeisureType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
 
 /**
  *
- * @author jairo
+ *
  */
 public class LeisureActivitiesGoal extends GoalBDI {
 
@@ -72,7 +73,12 @@ public class LeisureActivitiesGoal extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        return 1;
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        if (believes.getPeasantProfile().getMoney() > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -84,8 +90,8 @@ public class LeisureActivitiesGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.warn("libre? " + believes.isFree());
-        if (believes.isFree()) {
+        if (believes.getCurrentPeasantLeisureType() == PeasantLeisureType.LEISURE) {
+            //wpsReport.debug("Detectó");
             return 1;
         } else {
             return 0;
@@ -102,7 +108,7 @@ public class LeisureActivitiesGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.haveTimeAvailable(TimeConsumedBy.LeisureActivitiesTask)) {
-            believes.setCurrentActivity(PeasantActivityType.LEISURE);
+            //wpsReport.warn("SI ES POSIBLE");
             return 1;
         } else {
             return 0;
@@ -118,7 +124,7 @@ public class LeisureActivitiesGoal extends GoalBDI {
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("evaluateContribution " + stateBDI.getMachineBDIParams().getAttentionCycleThreshold());
-        return 0.6;
+        return 1;
     }
 
     /**
@@ -141,6 +147,7 @@ public class LeisureActivitiesGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
+        wpsReport.debug("goalSucceededgoalSucceeded");
         return true;
     }
 

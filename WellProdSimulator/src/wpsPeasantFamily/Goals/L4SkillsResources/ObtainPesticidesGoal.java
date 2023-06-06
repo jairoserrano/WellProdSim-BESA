@@ -23,6 +23,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.ResourceNeededType;
 import wpsPeasantFamily.Tasks.L4SkillsResources.ObtainPesticidesTask;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
@@ -90,7 +91,7 @@ public class ObtainPesticidesGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("PlantingSeason=" + believes.getProfile().isPlantingSeason());
-        if (believes.getPeasantProfile().getSupplies() < 1) {
+        if (believes.getCurrentResourceNeededType() == ResourceNeededType.PESTICIDE) {
             return 1;
         } else {
             return 0;
@@ -107,9 +108,7 @@ public class ObtainPesticidesGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.isFree()
-                && believes.haveTimeAvailable(TimeConsumedBy.ObtainPesticidesTask
-                )) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.ObtainPesticidesTask)) {
             return 1;
         } else {
             return 0;
@@ -149,9 +148,7 @@ public class ObtainPesticidesGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().getSupplies() == 1;
+        return true;
     }
 
 }

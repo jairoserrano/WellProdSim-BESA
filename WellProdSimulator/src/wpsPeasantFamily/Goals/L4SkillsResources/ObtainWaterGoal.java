@@ -24,6 +24,7 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Data.CropCareType;
+import wpsPeasantFamily.Data.ResourceNeededType;
 import wpsPeasantFamily.Tasks.L4SkillsResources.ObtainWaterTask;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
@@ -74,11 +75,12 @@ public class ObtainWaterGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getSuppliesAvailability() > 0) {
+        /*if (believes.getPeasantProfile().getSuppliesAvailability() > 0) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
+        return 1;
     }
 
     /**
@@ -91,8 +93,7 @@ public class ObtainWaterGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("PlantingSeason=" + believes.getProfile().isPlantingSeason());
-        if (believes.getPeasantProfile().isWaterNeeded()
-                && believes.getCurrentCropCare() == CropCareType.IRRIGATION) {
+        if (believes.getCurrentResourceNeededType() == ResourceNeededType.WATER) {
             return 1;
         } else {
             return 0;
@@ -109,9 +110,7 @@ public class ObtainWaterGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.isFree()
-                && believes.haveTimeAvailable(TimeConsumedBy.ObtainWaterTask
-                )) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.ObtainWaterTask)) {
             return 1;
         } else {
             return 0;

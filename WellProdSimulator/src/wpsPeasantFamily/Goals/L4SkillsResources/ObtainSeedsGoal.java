@@ -23,6 +23,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.ResourceNeededType;
 import wpsPeasantFamily.Tasks.L4SkillsResources.ObtainSeedsTask;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
@@ -72,12 +73,13 @@ public class ObtainSeedsGoal extends GoalBDI {
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        /*PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         if (believes.getPeasantProfile().getSuppliesAvailability() > 0) {
             return 1;
         } else {
             return 0;
-        }
+        }*/
+        return 1;
     }
 
     /**
@@ -90,7 +92,7 @@ public class ObtainSeedsGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("PlantingSeason=" + believes.getProfile().isPlantingSeason());
-        if (believes.getPeasantProfile().getSupplies() < 1) {
+        if (believes.getCurrentResourceNeededType() == ResourceNeededType.SEEDS) {
             return 1;
         } else {
             return 0;
@@ -107,9 +109,7 @@ public class ObtainSeedsGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.isFree()
-                && believes.haveTimeAvailable(TimeConsumedBy.ObtainSeedsTask
-                )) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.ObtainSeedsTask)) {
             return 1;
         } else {
             return 0;
@@ -150,8 +150,9 @@ public class ObtainSeedsGoal extends GoalBDI {
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().getSupplies() == 1;
+        //PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        //return believes.getPeasantProfile().getSupplies() == 1;
+        return true;
     }
 
 }

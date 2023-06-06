@@ -22,6 +22,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.ResourceNeededType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
@@ -75,6 +76,7 @@ public class ObtainPesticidesTask extends Task {
             wpsReport.error(ex);
         }
         this.setFinished();
+        believes.setCurrentResourceNeededType(ResourceNeededType.NONE);
         //this.setTaskWaitingForExecution();
     }
 
