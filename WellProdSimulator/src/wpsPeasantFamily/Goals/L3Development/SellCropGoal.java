@@ -23,6 +23,7 @@ import rational.mapping.Believes;
 import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
+import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Tasks.L3Development.SellCropTask;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsViewer.Agent.wpsReport;
@@ -73,8 +74,8 @@ public class SellCropGoal extends GoalBDI {
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.debug("Tools: " + believes.getProfile().getTools());
         if (believes.getPeasantProfile().getTools() > 0) {
+            wpsReport.debug("Viable ------");
             return 1;
         } else {
             return 0;
@@ -90,9 +91,8 @@ public class SellCropGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.debug(believes.getProfile());
-        if (believes.getPeasantProfile().getHarvestedWeight() > 0) {
-            //wpsReport.warn("PROFILE=" + believes.getProfile());
+        if (believes.getCurrentSeason() == SeasonType.SELL_CROP) {
+            wpsReport.debug("Detectado ------");
             return 1;
         } else {
             return 0;
@@ -107,11 +107,9 @@ public class SellCropGoal extends GoalBDI {
      */
     @Override
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.isFree()
-                && believes.haveTimeAvailable(TimeConsumedBy.SellCropTask
-                )) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.SellCropTask)) {
+            wpsReport.debug("Plausible ------");
             return 1;
         } else {
             return 0;
@@ -126,8 +124,6 @@ public class SellCropGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        //wpsReport.warn(stateBDI.getMachineBDIParams().getIntention());
         return 1;
     }
 
@@ -153,8 +149,7 @@ public class SellCropGoal extends GoalBDI {
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().getHarvestedWeight() == 0;
+        return true;
     }
     
 }

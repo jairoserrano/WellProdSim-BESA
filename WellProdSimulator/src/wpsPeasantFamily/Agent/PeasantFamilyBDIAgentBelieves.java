@@ -158,10 +158,10 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
         this.timeLeftOnDay = timeLeft;
         //wpsReport.warn("time " + timeLeft);
         if (timeLeft <= 0) {
-            wpsReport.info("⏳ NewDay");
+            wpsReport.info("⏳ NewDay para " + this.peasantProfile.getPeasantFamilyAlias());
             this.makeNewDay();
         } else {
-            wpsReport.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + internalCurrentDate);
+            wpsReport.info("⏳⏳ " + this.peasantProfile.getPeasantFamilyAlias() + " Le quedan " + timeLeft + " horas del día " + internalCurrentDate);
         }
     }
 
@@ -171,10 +171,13 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
         this.timeLeftOnDay = timeLeft;
         //wpsReport.warn("time " + timeLeft);
         if (timeLeft <= 0) {
-            wpsReport.info("⏳ NewDay");
+            wpsReport.info("⏳ NewDay para " + this.peasantProfile.getPeasantFamilyAlias());
             this.makeNewDay();
         } else {
-            wpsReport.info("⏳⏳ Le quedan " + timeLeft + " horas del día " + internalCurrentDate);
+            wpsReport.info("⏳⏳ " + this.peasantProfile.getPeasantFamilyAlias()
+                    
+                    
+                    + " Le quedan " + timeLeft + " horas del día " + internalCurrentDate);
         }
     }
 

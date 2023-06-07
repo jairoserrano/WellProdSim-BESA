@@ -89,6 +89,7 @@ public class PeasantFamilyProfile implements Serializable, Cloneable {
     private int riceSeedsByHectare;
     private int seeds;
     private int harvestedWeight;
+    private double totalHarvestedWeight;
     private String startRiceSeason;
     private String endRiceSeason;
     private String currentCropName;
@@ -1408,26 +1409,27 @@ public class PeasantFamilyProfile implements Serializable, Cloneable {
     @Override
     public synchronized String toString() {
         return ""
-            + " * Health: " + health + "\n"
-            + " * Land: " + land + "\n"
-            + " * Money: " + money + "\n"
-            + " * Loan Amount To Pay: " + loanAmountToPay + "\n"
-            + " * Harvested Weight: " + harvestedWeight + "\n"
-            + " * Crop Health: " + cropHealth + "\n"
-            + " * Processed Weight: " + processedWeight + "\n"
-            + " * Diseased Crop: " + diseasedCrop + "\n"
-            + " * Weed Control: " + weedControl + "\n"
-            + " * Infested Crop: " + infestedCrop + "\n"
-            + " * Sell Done: " + sellDone + "\n"
-            + " * Water Available: " + waterAvailable + "\n"
-            + " * Pesticides Available: " + pesticidesAvailable + "\n"
-            + " * Tools: " + tools + "\n"
-            + " * Supplies: " + supplies + "\n"
-            + " * Seeds: " + seeds + "\n"
-            + " * Start Rice Season: " + startRiceSeason + "\n"
-            + " * Current Crop Name: " + currentCropName + "\n"
-            + " * ==========================================================================\n"
-            + " \n";
+                + " * Health: " + health + "\n"
+                + " * Land: " + land + "\n"
+                + " * Money: " + money + "\n"
+                + " * Total Harvested Weight: " + totalHarvestedWeight + "\n"
+                + " * Loan Amount To Pay: " + loanAmountToPay + "\n"
+                + " * Harvested Weight: " + harvestedWeight + "\n"
+                + " * Crop Health: " + cropHealth + "\n"
+                + " * Processed Weight: " + processedWeight + "\n"
+                + " * Diseased Crop: " + diseasedCrop + "\n"
+                + " * Weed Control: " + weedControl + "\n"
+                + " * Infested Crop: " + infestedCrop + "\n"
+                + " * Sell Done: " + sellDone + "\n"
+                + " * Water Available: " + waterAvailable + "\n"
+                + " * Pesticides Available: " + pesticidesAvailable + "\n"
+                + " * Tools: " + tools + "\n"
+                + " * Supplies: " + supplies + "\n"
+                + " * Seeds: " + seeds + "\n"
+                + " * Start Ñame Season: " + startRiceSeason + "\n"
+                + " * Current Crop Name: " + currentCropName + "\n"
+                + " * ==========================================================================\n"
+                + " \n";
     }
 
     @Override
@@ -1437,6 +1439,10 @@ public class PeasantFamilyProfile implements Serializable, Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+    public void setTotalHarvestedWeight(double harvested) {
+        this.totalHarvestedWeight += harvested;
     }
 
 }

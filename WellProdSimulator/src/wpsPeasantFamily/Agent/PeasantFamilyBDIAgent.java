@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 import rational.guards.InformationFlowGuard;
 import wpsPeasantFamily.Agent.Guards.FromBank.FromBankGuard;
 import wpsPeasantFamily.Agent.Guards.FromControlGuard;
-import wpsPeasantFamily.Agent.Guards.FromMarketGuard;
+import wpsPeasantFamily.Agent.Guards.FromMarket.FromMarketGuard;
 import wpsPeasantFamily.Agent.Guards.FromWorld.FromWorldGuard;
 import wpsPeasantFamily.Agent.Guards.StatusGuard;
 import wpsPeasantFamily.Data.PeasantFamilyProfile;

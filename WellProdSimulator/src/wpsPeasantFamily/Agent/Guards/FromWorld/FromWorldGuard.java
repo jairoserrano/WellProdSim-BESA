@@ -72,12 +72,20 @@ public class FromWorldGuard extends GuardBESA {
                     //believes.getProfile().setPlantingSeason(true);
                     break;
                 case CROP_HARVEST:
-                    wpsReport.info("🍙🍙🍙: CROP_HARVEST");
+                    wpsReport.info("🍙🍙🍙: CROP_HARVEST OK");
                     JSONObject cropData = new JSONObject(
                             peasantCommMessage.getPayload()
                     );
+                    wpsReport.warn(cropData);
                     believes.getPeasantProfile().setHarvestedWeight(
-                            Integer.parseInt(
+                            (int) Math.round(
+                                    Double.parseDouble(
+                                            cropData.get("aboveGroundBiomass").toString()
+                                    )
+                            )
+                    );
+                    believes.getPeasantProfile().setTotalHarvestedWeight(
+                            Double.parseDouble(
                                     cropData.get("aboveGroundBiomass").toString()
                             )
                     );
@@ -87,7 +95,8 @@ public class FromWorldGuard extends GuardBESA {
                     break;
             }
         } catch (IllegalArgumentException e) {
-            wpsReport.error(e.getStackTrace());
+            wpsReport.warn("error?" + e.getStackTrace());
+            wpsReport.error(e);
         }
 
     }

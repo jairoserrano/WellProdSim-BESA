@@ -37,12 +37,13 @@ public class ControlAgentGuard extends GuardBESA {
      */
     @Override
     public void funcExecGuard(EventBESA event) {
+        String currentDate = "";
         wpsReport.warn("Llegada al ControlAgent desde " + event.getSenderAgId());
-
+        
         ((ControlAgentState) this.getAgent().getState()).increaseActiveAgents();
         
         wpsReport.warn("Completados " + ((ControlAgentState) this.getAgent().getState()).getActiveAgents());
-
+        
         if (((ControlAgentState) this.getAgent().getState()).getActiveAgentsReady()) {
             
             try {
@@ -55,11 +56,19 @@ public class ControlAgentGuard extends GuardBESA {
             } catch (ExceptionBESA ex) {
                 Logger.getLogger(wpsStart.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            
             ((ControlAgentState) this.getAgent().getState()).resetActiveAgents();
-            String currentDate = wpsCurrentDate.getInstance().getDatePlusXDaysAndUpdate(wpsStart.DAYSTOCHECK);
+            currentDate = wpsCurrentDate.getInstance().getDatePlusXDaysAndUpdate(wpsStart.DAYSTOCHECK);
         }
-
+        
+        if (currentDate.contains("2023")) {
+            try {
+                wpsStart.stopSimulation();
+            } catch (ExceptionBESA ex) {
+                wpsReport.error(ex);
+            }
+        }
+        
     }
-
+    
 }

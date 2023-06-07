@@ -22,6 +22,7 @@ import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsSocietyMarket.MarketAgentGuard;
 import wpsSocietyMarket.MarketMessage;
@@ -50,7 +51,7 @@ public class SellCropTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //wpsReport.info("⚙️⚙️⚙️");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         // @TODO: Cambiar a la venta real con el agente social market
         believes.useTime(TimeConsumedBy.valueOf(this.getClass().getSimpleName()));
@@ -74,8 +75,8 @@ public class SellCropTask extends Task {
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
         }
+        believes.setCurrentSeason(SeasonType.NONE);
         this.setFinished();
-        //this.setTaskWaitingForExecution();
     }
 
     /**
@@ -132,6 +133,6 @@ public class SellCropTask extends Task {
     @Override
     public boolean checkFinish(Believes believes) {
         ////wpsReport.info("");
-        return isExecuted();
+        return ((PeasantFamilyBDIAgentBelieves) believes).getPeasantProfile().getHarvestedWeight() == 0;
     }
 }

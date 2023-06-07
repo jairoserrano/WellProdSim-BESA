@@ -12,15 +12,15 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Agent.Guards;
+package wpsPeasantFamily.Agent.Guards.FromMarket;
 
 import BESA.BDI.AgentStructuralModel.StateBDI;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import static wpsPeasantFamily.Agent.Guards.FromMarketMessageType.PRICE_LIST;
+import static wpsPeasantFamily.Agent.Guards.FromMarket.FromMarketMessageType.PRICE_LIST;
 import wpsViewer.Agent.wpsReport;
-import static wpsPeasantFamily.Agent.Guards.FromMarketMessageType.SEEDS;
+import static wpsPeasantFamily.Agent.Guards.FromMarket.FromMarketMessageType.SEEDS;
 
 /**
  *
@@ -50,7 +50,7 @@ public class FromMarketGuard extends GuardBESA {
                             believes.getPeasantProfile().getHarvestedWeight()
                              - fromMarketMessage.getQuantity()
                     );
-                    //wpsReport.info("Vendido");
+                    wpsReport.info("----- Vendido");
                     break;
                 case PRICE_LIST:
                     wpsReport.debug(fromMarketMessage.getPriceList());

@@ -54,13 +54,13 @@ public class wpsReport {
         String callingClassName = stackTrace[3].getClassName();
         String callingMethodName = stackTrace[3].getMethodName();
         String simpleClassName = callingClassName.substring(callingClassName.lastIndexOf('.') + 1);
-        if (simpleClassName.contains("DoVitalsTask")) {
-            return Thread.currentThread().getName()
-                    +"\n-------------------------------------------------------------------------------------------------\n" 
-                    + String.format("%23s:%-20s %-65s", simpleClassName, callingMethodName, message);
-        } else {
+        //if (simpleClassName.contains("DoVitalsTask")) {
+        //    return Thread.currentThread().getName()
+       //             +"\n-------------------------------------------------------------------------------------------------\n" 
+       //             + String.format("%23s:%-20s %-65s", simpleClassName, callingMethodName, message);
+       // } else {
             return Thread.currentThread().getName() + " " + String.format("%23s:%-20s %-65s", simpleClassName, callingMethodName, message);
-        }
+       // }
     }
 
 }

@@ -70,12 +70,13 @@ public class HarvestCropsTask extends Task {
                     WorldGuard.class.getName(),
                     worldMessage);
             ah.sendEvent(ev);
+            wpsReport.debug("enviando mensaje de corte");
 
         } catch (ExceptionBESA ex) {
             wpsReport.error(ex);
-        }
-        this.setTaskFinalized();
+        }        
         this.setFinished();
+        this.setTaskFinalized();
     }
 
     /**
@@ -119,6 +120,6 @@ public class HarvestCropsTask extends Task {
     @Override
     public boolean checkFinish(Believes believes) {
         ////wpsReport.info("");
-        return this.finished;
+        return ((PeasantFamilyBDIAgentBelieves) believes).getCurrentSeason() == SeasonType.SELL_CROP;
     }
 }

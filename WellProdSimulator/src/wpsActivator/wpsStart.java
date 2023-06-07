@@ -42,8 +42,8 @@ public class wpsStart {
     private static int PLANID = 0;
     final private static double PASSWD = 0.91;
     public static wpsConfig config;
-    public static int peasantFamiliesAgents = 1;
-    private final static int SIMTIME = 5;
+    public static int peasantFamiliesAgents = 5;
+    private final static int SIMTIME = 7;
     public final static int DAYSTOCHECK = 7;
 
     /**
@@ -138,7 +138,7 @@ public class wpsStart {
             wpsReport.error(ex);
         }
 
-        stopSimulation();
+        //stopSimulation();
 
     }
 
@@ -150,8 +150,8 @@ public class wpsStart {
     public static void stopSimulation() throws ExceptionBESA {
 
         // Closing simulation after X minutes
-        try {
-            Thread.sleep((60 * SIMTIME) * 1000);
+        //try {
+            //Thread.sleep((60 * SIMTIME) * 1000);
             getStatus();
             AdmBESA adm = AdmBESA.getInstance();
             Enumeration enumeration = adm.getIdList();
@@ -161,9 +161,9 @@ public class wpsStart {
             adm.kill(0.09);
             wpsReport.info("Simulation finished.\n\n\n\n");
             System.exit(0);
-        } catch (InterruptedException e) {
-            wpsReport.error(e.getMessage());
-        }
+        //} catch (InterruptedException e) {
+        //    wpsReport.error(e.getMessage());
+        //}
 
     }
 
