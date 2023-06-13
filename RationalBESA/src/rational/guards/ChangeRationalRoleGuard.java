@@ -31,7 +31,7 @@ public class ChangeRationalRoleGuard extends GuardBESA {
                 Plan plan = state.getMainRole().getRolePlan();
                 if (plan != null) {
                     Iterator<Task> it = plan.getTasksInExecution().iterator();
-                    //ReportBESA.warn("🔸 " + plan.getTasks().size() + " plans " + plan.getTasks());
+                    ReportBESA.warn("🔸 " + plan.getTasks().size() + " plans " + plan.getTasks());
                     while (it.hasNext()) {
                         Task task = it.next();
                         //ReportBESA.warn("Revisando si la tarea está en ejecución: " + task.toString());
@@ -41,7 +41,7 @@ public class ChangeRationalRoleGuard extends GuardBESA {
                             //while (task.isInExecution()) {
                                 try {
                                     ReportBESA.warn("En espera " + task.toString());
-                                    Thread.sleep(500);
+                                    Thread.sleep(100);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }

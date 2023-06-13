@@ -17,6 +17,8 @@ package wpsPeasantFamily.Tasks.L3Development;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
+import wpsPeasantFamily.Data.MoneyOriginType;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -30,7 +32,6 @@ public class StealingOutOfNecessityTask extends Task {
      *
      */
     public StealingOutOfNecessityTask() {
-        //wpsReport.info("");
         this.finished = false;
     }
 
@@ -40,30 +41,21 @@ public class StealingOutOfNecessityTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        //wpsReport.info("⚙️⚙️⚙️");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        /*believes.getPeasantProfile().increaseHealth();
-        believes.getPeasantProfile().increaseLeisureOptions();
-        believes.getPeasantProfile().useFamilyTimeAvailability();*/
-        this.setFinished();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFinished() {
-        //wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
-     */
-    public void setFinished() {
-        //wpsReport.info("");
+        believes.useTime(believes.getTimeLeftOnDay());
+        believes.increaseRoberyAccount();
+        if (Math.random() < 0.4) {
+            believes.getPeasantProfile().increaseMoney(65000);
+        }else{
+            believes.getPeasantProfile().increaseMoney(130000);
+        }
+        if (Math.random() < 0.6) {
+            believes.getPeasantProfile().decreaseHealth();
+        }
+        believes.setCurrentMoneyOrigin(MoneyOriginType.ROBERY);
         this.finished = true;
-        this.setTaskFinalized();
+        //this.setTaskFinalized();
     }
 
     /**
@@ -73,7 +65,8 @@ public class StealingOutOfNecessityTask extends Task {
     @Override
     public void interruptTask(Believes parameters) {
         //wpsReport.info("");
-        this.setFinished();
+        ((PeasantFamilyBDIAgentBelieves) parameters).setCurrentMoneyOrigin(MoneyOriginType.ROBERY);
+        this.setTaskFinalized();
     }
 
     /**
@@ -82,27 +75,17 @@ public class StealingOutOfNecessityTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
-        //wpsReport.info("");
-        this.setFinished();
+        ((PeasantFamilyBDIAgentBelieves) parameters).setCurrentMoneyOrigin(MoneyOriginType.ROBERY);
+        this.setTaskFinalized();
     }
 
     /**
      *
-     * @return
-     */
-    public boolean isExecuted() {
-        //wpsReport.info("");
-        return finished;
-    }
-
-    /**
-     *
-     * @param believes
+     * @param parameters
      * @return
      */
     @Override
-    public boolean checkFinish(Believes believes) {
-        //wpsReport.info("");
-        return isExecuted();
+    public boolean checkFinish(Believes parameters) {
+        return this.finished;
     }
 }

@@ -65,7 +65,8 @@ public class ObtainSeedsTask extends Task {
             MarketMessage marketMessage = new MarketMessage(
                     BUY_SEEDS,
                     believes.getPeasantProfile().getPeasantFamilyAlias(),
-                    10);
+                    10
+            );
 
             EventBESA ev = new EventBESA(
                     MarketAgentGuard.class.getName(),

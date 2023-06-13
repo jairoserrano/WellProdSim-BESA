@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import wpsControl.Agent.ControlAgent;
-import wpsControl.Agent.wpsCurrentDate;
+import wpsControl.Agent.ControlCurrentDate;
 import wpsPeasantFamily.Agent.Guards.StatusGuard;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgent;
 import wpsPeasantFamily.Agent.HeartBeatGuard;
@@ -43,7 +43,7 @@ public class wpsStart {
     final private static double PASSWD = 0.91;
     public static wpsConfig config;
     public static int peasantFamiliesAgents = 5;
-    private final static int SIMTIME = 7;
+    private final static int SIMTIME = 10;
     public final static int DAYSTOCHECK = 7;
 
     /**
@@ -57,7 +57,7 @@ public class wpsStart {
         config = wpsConfig.getInstance();
 
         // Set init date of simulation
-        wpsCurrentDate.getInstance().setCurrentDate(config.getStartSimulationDate());
+        ControlCurrentDate.getInstance().setCurrentDate(config.getStartSimulationDate());
 
         List<PeasantFamilyBDIAgent> peasantFamilyBDIAgents = new ArrayList<>();
 
@@ -124,7 +124,7 @@ public class wpsStart {
             // Starting families agents
             for (PeasantFamilyBDIAgent peasantFamily : peasantFamilies) {
                 peasantFamily.start();
-                wpsReport.info(peasantFamily.getAlias() + " Started");
+                //wpsReport.info(peasantFamily.getAlias() + " Started");
             }
             // first heart beat to families
             for (int i = 1; i <= peasantFamiliesAgents; i++) {
@@ -138,8 +138,7 @@ public class wpsStart {
             wpsReport.error(ex);
         }
 
-        //stopSimulation();
-
+        stopSimulationByTime();
     }
 
     /**
@@ -148,22 +147,27 @@ public class wpsStart {
      * @throws ExceptionBESA if there is an exception while stopping the agents
      */
     public static void stopSimulation() throws ExceptionBESA {
+        getStatus();
+        AdmBESA adm = AdmBESA.getInstance();
+        Enumeration enumeration = adm.getIdList();
+        while (enumeration.hasMoreElements()) {
+            adm.killAgent((String) enumeration.nextElement(), PASSWD);
+        }
+        adm.kill(0.09);
+        wpsReport.info("Simulation finished.\n\n\n\n");
+        System.exit(0);
+
+    }
+
+    public static void stopSimulationByTime() throws ExceptionBESA {
 
         // Closing simulation after X minutes
-        //try {
-            //Thread.sleep((60 * SIMTIME) * 1000);
-            getStatus();
-            AdmBESA adm = AdmBESA.getInstance();
-            Enumeration enumeration = adm.getIdList();
-            while (enumeration.hasMoreElements()) {
-                adm.killAgent((String) enumeration.nextElement(), PASSWD);
-            }
-            adm.kill(0.09);
-            wpsReport.info("Simulation finished.\n\n\n\n");
-            System.exit(0);
-        //} catch (InterruptedException e) {
-        //    wpsReport.error(e.getMessage());
-        //}
+        try {
+            Thread.sleep((60 * SIMTIME) * 1000);
+            stopSimulation();
+        } catch (InterruptedException e) {
+            wpsReport.error(e.getMessage());
+        }
 
     }
 
@@ -179,7 +183,7 @@ public class wpsStart {
                 AgHandlerBESA agHandler = adm.getHandlerByAlias("PeasantFamily_" + i);
                 agHandler.sendEvent(eventBesa);
             }
-            Thread.sleep(10000);
+            Thread.sleep(5000);
         } catch (ExceptionBESA | InterruptedException ex) {
             wpsReport.error(ex);
         }

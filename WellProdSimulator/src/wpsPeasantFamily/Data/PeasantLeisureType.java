@@ -18,7 +18,6 @@ package wpsPeasantFamily.Data;
  *
  */
 public enum PeasantLeisureType {
-
     /**
      *
      */
@@ -37,7 +36,9 @@ public enum PeasantLeisureType {
     /**
      * 
      */    
-    WASTERESOURCE
-    
-    
+    WASTERESOURCE,
+    /**
+     * 
+     */
+    OFF
 }

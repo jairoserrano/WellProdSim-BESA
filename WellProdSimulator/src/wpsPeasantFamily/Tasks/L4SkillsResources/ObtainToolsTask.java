@@ -21,7 +21,7 @@ import BESA.Kernel.System.Directory.AgHandlerBESA;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
 import static wpsWorld.Messages.WorldMessageType.CROP_IRRIGATION;
-import wpsControl.Agent.wpsCurrentDate;
+import wpsControl.Agent.ControlCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;

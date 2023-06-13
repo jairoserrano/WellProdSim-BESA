@@ -31,7 +31,7 @@ public class wpsViewerAgentGuard extends GuardBESA {
     public void funcExecGuard(EventBESA event) {
         wpsViewerMessage viewerMessage = (wpsViewerMessage) event.getData();
         // @TODO: SAVE
-        //System.out.println(viewerMessage.getPeasantAlias() + " " + viewerMessage.getPeasantMessage());
+        wpsReport.trace(viewerMessage.getPeasantAlias() + " " + viewerMessage.getPeasantMessage());
     }
 
 }

@@ -70,7 +70,7 @@ public class CheckCropsTask extends Task {
                         believes.getInternalCurrentDate(),
                         peasantFamilyAlias
                 );
-                wpsReport.warn("enviado CROP_INFORMATION");
+                //wpsReport.warn("enviado CROP_INFORMATION");
             } else {
                 worldMessage = new WorldMessage(
                         CROP_OBSERVE,
@@ -78,7 +78,7 @@ public class CheckCropsTask extends Task {
                         believes.getInternalCurrentDate(),
                         peasantFamilyAlias
                 );
-                wpsReport.warn("enviado CROP_OBSERVE");
+                //wpsReport.warn("enviado CROP_OBSERVE");
             }
 
             EventBESA event = new EventBESA(

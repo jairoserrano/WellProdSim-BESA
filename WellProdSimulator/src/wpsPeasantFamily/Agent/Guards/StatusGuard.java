@@ -49,7 +49,7 @@ public class StatusGuard extends GuardBESA {
 
             wpsViewerMessage viewerMessage = new wpsViewerMessage(
                     this.agent.getAlias(),
-                    believes.toString()
+                    believes.toJson()
             );
             EventBESA ev = new EventBESA(
                     wpsViewerAgentGuard.class.getName(),

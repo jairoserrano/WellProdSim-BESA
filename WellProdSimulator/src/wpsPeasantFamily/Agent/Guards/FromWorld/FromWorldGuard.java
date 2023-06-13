@@ -37,7 +37,7 @@ public class FromWorldGuard extends GuardBESA {
     @Override
     public void funcExecGuard(EventBESA event) {
         FromWorldMessage peasantCommMessage = (FromWorldMessage) event.getData();
-        wpsReport.warn("🤖🤖🤖 Recibido: " + peasantCommMessage.getPeasantAlias() + " getType=" + peasantCommMessage.getPayload());
+        //wpsReport.warn("🤖🤖🤖 Recibido: " + peasantCommMessage.getPeasantAlias() + " getType=" + peasantCommMessage.getPayload());
         StateBDI state = (StateBDI) this.agent.getState();
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
         FromWorldMessageType messageType = peasantCommMessage.getMessageType();
@@ -47,32 +47,32 @@ public class FromWorldGuard extends GuardBESA {
             switch (messageType) {
                 case NOTIFY_CROP_DISEASE:
                     believes.getPeasantProfile().setCropHealth(0.5);
-                    wpsReport.info("🍙🍙🍙: NOTIFY_CROP_DISEASE");
+                    //wpsReport.info("🍙🍙🍙: NOTIFY_CROP_DISEASE");
                     break;
                 case CROP_PESTICIDE:
                     believes.setCurrentCropCare(CropCareType.PESTICIDE);
-                    wpsReport.info("🍙🍙🍙: CROP_PESTICIDE");
+                    //wpsReport.info("🍙🍙🍙: CROP_PESTICIDE");
                     break;
                 case NOTIFY_CROP_WATER_STRESS:
                     believes.setCurrentCropCare(CropCareType.IRRIGATION);
-                    wpsReport.info("🍙🍙🍙: NOTIFY_CROP_WATER_STRESS");
+                    //wpsReport.info("🍙🍙🍙: NOTIFY_CROP_WATER_STRESS");
                     break;
                 case CROP_INFORMATION_NOTIFICATION:
                     //believes.getProfile().setPesticideSeason(true);
-                    wpsReport.info("🍙🍙🍙: CROP_INFORMATION_NOTIFICATION");
+                    //wpsReport.info("🍙🍙🍙: CROP_INFORMATION_NOTIFICATION");
                     break;
                 case NOTIFY_CROP_READY_HARVEST:
                     believes.setCurrentSeason(SeasonType.HARVEST);
-                    wpsReport.info("🍙🍙🍙: NOTIFY_CROP_READY_HARVEST");
+                    //wpsReport.info("🍙🍙🍙: NOTIFY_CROP_READY_HARVEST");
                     break;
                 case REQUEST_CROP_INFORMATION:
-                    wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload());
+                    //wpsReport.info("🍙🍙🍙: " + peasantCommMessage.getPayload());
                     break;
                 case CROP_INIT:
                     //believes.getProfile().setPlantingSeason(true);
                     break;
                 case CROP_HARVEST:
-                    wpsReport.info("🍙🍙🍙: CROP_HARVEST OK");
+                    //wpsReport.info("🍙🍙🍙: CROP_HARVEST OK");
                     JSONObject cropData = new JSONObject(
                             peasantCommMessage.getPayload()
                     );

@@ -1,5 +1,7 @@
 package rational.mapping;
 
+import BESA.Log.ReportBESA;
+
 /**
  * Abstract Task class representing a task within a BDI rational agent.
  */
@@ -81,11 +83,16 @@ public abstract class Task {
      * @param believes Agent beliefs.
      */
     public synchronized void run(Believes believes) {
+        ReportBESA.debug("revisando tarea " + this.toString());
         if (this.checkFinish(believes)) {
+            ReportBESA.debug("finalizada tarea " + this.toString());
             this.setTaskFinalized();
         } else {
+            ReportBESA.debug("Revisando ejecución tarea " + this.toString());
             if (!this.isInExecution()) {
+                ReportBESA.debug("marcando tarea a ejecutar" + this.toString());
                 this.setTaskInExecution();
+                ReportBESA.debug("execute tarea " + this.toString());
                 this.executeTask(believes);
             }
         }

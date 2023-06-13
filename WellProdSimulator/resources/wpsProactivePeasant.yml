@@ -13,6 +13,7 @@
 ---
 ProactivePeasant:
   #Peasant
+  peasantKind: ProactivePeasant
   purpose: ""
   health: 100
   productivity: 0.0
@@ -69,7 +70,7 @@ ProactivePeasant:
   housingQuailty: 1.0
   timeSpentOnMaintenance: 1.0
   #finance:
-  money: 1000000
+  money: 2000000
   totalIncome: 0.0
   debtPayment: 0.0
   #training:

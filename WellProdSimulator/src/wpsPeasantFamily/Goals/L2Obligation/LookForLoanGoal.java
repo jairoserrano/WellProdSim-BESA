@@ -26,6 +26,7 @@ import wpsActivator.wpsStart;
 import wpsPeasantFamily.Data.MoneyOriginType;
 import wpsPeasantFamily.Tasks.L2Obligation.LookForLoanTask;
 import wpsPeasantFamily.Data.TimeConsumedBy;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -74,8 +75,7 @@ public class LookForLoanGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.haveTimeAvailable(TimeConsumedBy.LookForLoanTask)
-                && believes.getPeasantProfile().getHealth() > 0) {
+        if (believes.haveTimeAvailable(TimeConsumedBy.LookForLoanTask)) {
             return 1;
         } else {
             return 0;
@@ -91,8 +91,10 @@ public class LookForLoanGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        //wpsReport.info(believes.getCurrentMoneyOrigin());
         //wpsReport.info("isFormalLoanNeeded=" + believes.getProfile().isFormalLoanNeeded());
-        if (believes.getCurrentMoneyOrigin() == MoneyOriginType.LOAN) {
+        if (believes.getPeasantProfile().getMoney() <= 65000
+                && believes.getCurrentMoneyOrigin() != MoneyOriginType.LOAN) {
             return 1;
         } else {
             return 0;
@@ -109,7 +111,7 @@ public class LookForLoanGoal extends GoalBDI {
     public double evaluatePlausibility(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getHealth() > 0.0) {
+        if (believes.getPeasantProfile().getHealth() > 0) {
             return 1;
         } else {
             return 0;
@@ -149,8 +151,6 @@ public class LookForLoanGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         return true;
     }
 

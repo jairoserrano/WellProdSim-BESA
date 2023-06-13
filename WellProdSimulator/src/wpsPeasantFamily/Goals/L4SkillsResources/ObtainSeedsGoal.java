@@ -73,13 +73,12 @@ public class ObtainSeedsGoal extends GoalBDI {
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
-        /*PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getSuppliesAvailability() > 0) {
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        if (believes.getPeasantProfile().getMoney() > 20000) {
             return 1;
         } else {
             return 0;
-        }*/
-        return 1;
+        }
     }
 
     /**

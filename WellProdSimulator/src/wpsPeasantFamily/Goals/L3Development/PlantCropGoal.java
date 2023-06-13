@@ -78,7 +78,7 @@ public class PlantCropGoal extends GoalBDI {
                 && believes.getPeasantProfile().getTools() > 0
                 && believes.getPeasantProfile().getSeeds() > 0
                 && believes.getPeasantProfile().getWaterAvailable() > 0) {
-            wpsReport.warn("PLANTANDO VIABLE");
+            //wpsReport.warn("PLANTANDO VIABLE");
             return 1;
         } else {
             if (believes.getPeasantProfile().getTools() <= 50){

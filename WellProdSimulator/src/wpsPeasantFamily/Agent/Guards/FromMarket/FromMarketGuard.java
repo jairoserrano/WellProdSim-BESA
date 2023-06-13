@@ -50,7 +50,7 @@ public class FromMarketGuard extends GuardBESA {
                             believes.getPeasantProfile().getHarvestedWeight()
                              - fromMarketMessage.getQuantity()
                     );
-                    wpsReport.info("----- Vendido");
+                    //wpsReport.info("----- Vendido");
                     break;
                 case PRICE_LIST:
                     wpsReport.debug(fromMarketMessage.getPriceList());

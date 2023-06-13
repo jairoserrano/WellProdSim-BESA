@@ -73,13 +73,7 @@ public class ObtainWaterGoal extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        /*if (believes.getPeasantProfile().getSuppliesAvailability() > 0) {
-            return 1;
-        } else {
-            return 0;
-        }*/
         return 1;
     }
 
@@ -93,7 +87,8 @@ public class ObtainWaterGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("PlantingSeason=" + believes.getProfile().isPlantingSeason());
-        if (believes.getCurrentResourceNeededType() == ResourceNeededType.WATER) {
+        if (believes.getCurrentResourceNeededType() == ResourceNeededType.WATER
+                && believes.getPeasantProfile().getMoney() > 20000) {
             return 1;
         } else {
             return 0;

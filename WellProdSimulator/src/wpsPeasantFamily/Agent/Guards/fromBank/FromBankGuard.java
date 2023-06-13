@@ -17,12 +17,12 @@ package wpsPeasantFamily.Agent.Guards.FromBank;
 import BESA.BDI.AgentStructuralModel.StateBDI;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
-import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.APPROBED_LOAN;
-import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.TERM_TO_PAY;
-import wpsViewer.Agent.wpsReport;
 import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.DENIED_FORMAL_LOAN;
+import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.TERM_TO_PAY;
+import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Data.MoneyOriginType;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -39,22 +39,37 @@ public class FromBankGuard extends GuardBESA {
         FromBankMessage fromBankMessage = (FromBankMessage) event.getData();
         StateBDI state = (StateBDI) this.agent.getState();
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
-        
+
         FromBankMessageType fromBankMessageType = fromBankMessage.getMessageType();
-        
+
         try {
-            
+
             switch (fromBankMessageType) {
                 case APPROBED_LOAN:
-                    wpsReport.info("Incrementó el dinero en: " + fromBankMessage.getAmount());
+                    wpsReport.info(believes.getPeasantProfile().getPeasantFamilyAlias() + " incrementó el dinero con prestamo en: " + fromBankMessage.getAmount());
                     believes.getPeasantProfile().increaseMoney(
                             fromBankMessage.getAmount()
                     );
-                    believes.setCurrentMoneyOrigin(MoneyOriginType.NONE);
+                    believes.setCurrentMoneyOrigin(MoneyOriginType.LOAN);
+                    break;
+                case APPROBED_SOCIAL:
+                    wpsReport.info(believes.getPeasantProfile().getPeasantFamilyAlias() + " incrementó el dinero en de social para: " + fromBankMessage.getAmount());
+                    believes.getPeasantProfile().increaseMoney(
+                            fromBankMessage.getAmount()
+                    );
+                    believes.setCurrentMoneyOrigin(MoneyOriginType.BENEFICENCIA);
                     break;
                 case DENIED_FORMAL_LOAN:
                     // @TODO: Pedir prestado en otro lado? cancelar?
-                    believes.setCurrentMoneyOrigin(MoneyOriginType.INFORMAL);
+                    wpsReport.info("Denegado DENIED_FORMAL_LOAN");
+                    believes.setCurrentMoneyOrigin(MoneyOriginType.LOAN_DENIED);
+                    break;
+                case DENIED_INFORMAL_LOAN:
+                    // @TODO: Pedir prestado en otro lado? cancelar?
+                    //if (Math.random() < 0.2) {
+                    //believes.setCurrentMoneyOrigin(MoneyOriginType.BENEFICENCIA);
+                    wpsReport.info("Denegado DENIED_INFORMAL_LOAN");
+                    believes.setCurrentMoneyOrigin(MoneyOriginType.INFORMAL_DENIED);
                     break;
                 case TERM_TO_PAY:
                     believes.getPeasantProfile().setLoanAmountToPay(
@@ -62,13 +77,14 @@ public class FromBankGuard extends GuardBESA {
                     );
                     break;
                 case TERM_PAYED:
+                    believes.setCurrentMoneyOrigin(MoneyOriginType.NONE);
                     believes.getPeasantProfile().setLoanAmountToPay(0);
                     break;
             }
         } catch (IllegalArgumentException e) {
             wpsReport.error("Mensaje no reconocido de FromWorldMessageType");
         }
-        
+
     }
-    
+
 }

@@ -20,7 +20,7 @@ import java.util.Random;
 import wpsPeasantFamily.Data.PeasantFamilyProfile;
 import rational.data.InfoData;
 import rational.mapping.Believes;
-import wpsControl.Agent.wpsCurrentDate;
+import wpsControl.Agent.ControlCurrentDate;
 import wpsPeasant.EmotionalModel.EmotionalState;
 import wpsPeasantFamily.Data.CropCareType;
 import wpsPeasantFamily.Data.FarmingResource;
@@ -48,12 +48,16 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
     private ResourceNeededType currentResourceNeededType;
 
     private int currentDay;
+    private int roberyAccount;
+
     private double timeLeftOnDay;
     private boolean newDay;
     private boolean weekBlock;
     private boolean busy;
 
     private String internalCurrentDate;
+    private String ptwDate;
+
     private Map<String, FarmingResource> priceList = new HashMap<>();
 
     /**
@@ -63,7 +67,7 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      */
     public PeasantFamilyBDIAgentBelieves(String alias, PeasantFamilyProfile peasantProfile) {
         this.setPeasantProfile(peasantProfile);
-        this.internalCurrentDate = wpsCurrentDate.getInstance().getCurrentDate();
+        this.internalCurrentDate = ControlCurrentDate.getInstance().getCurrentDate();
         this.peasantProfile.setPeasantFamilyAlias(alias);
         this.peasantEmotionalState = new EmotionalState();
 
@@ -81,6 +85,18 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
         this.currentPeasantLeisureType = PeasantLeisureType.NONE;
 
     }
+    public int getRoberyAccount() {
+        return roberyAccount;
+    }
+    public void increaseRoberyAccount() {
+        this.roberyAccount++;
+    }
+    public String getPtwDate() {
+        return ptwDate;
+    }
+    public void setPtwDate(String ptwDate) {
+        this.ptwDate = ptwDate;
+    }
 
     /**
      *
@@ -91,12 +107,12 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
         this.timeLeftOnDay = 24;
         this.newDay = true;
         //wpsReport.warn("internalCurrentDate= " + internalCurrentDate);
-        this.internalCurrentDate = wpsCurrentDate.getInstance().getDatePlusOneDay(internalCurrentDate);
+        this.internalCurrentDate = ControlCurrentDate.getInstance().getDatePlusOneDay(internalCurrentDate);
         //wpsReport.warn("internalCurrentDate2= " + internalCurrentDate);
         /*if (this.currentSeason == SeasonType.GROWING) {
             this.currentCropCare = CropCareType.CHECK;
         }*/
-        wpsReport.debug(this.peasantProfile.getPeasantFamilyAlias() + " NEW DAY internalCurrentDate: " + internalCurrentDate);
+        //wpsReport.debug(this.peasantProfile.getPeasantFamilyAlias() + " NEW DAY internalCurrentDate: " + internalCurrentDate);
     }
 
     /**
@@ -153,31 +169,46 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      * @param time
      */
     public void useTime(TimeConsumedBy time) {
-        //wpsReport.warn("time " + time.getTime());
-        double timeLeft = this.timeLeftOnDay - time.getTime();
-        this.timeLeftOnDay = timeLeft;
-        //wpsReport.warn("time " + timeLeft);
-        if (timeLeft <= 0) {
-            wpsReport.info("⏳ NewDay para " + this.peasantProfile.getPeasantFamilyAlias());
-            this.makeNewDay();
-        } else {
-            wpsReport.info("⏳⏳ " + this.peasantProfile.getPeasantFamilyAlias() + " Le quedan " + timeLeft + " horas del día " + internalCurrentDate);
-        }
+        decreaseTime(time.getTime());
     }
 
+    /**
+     * Time unit defined by hours spent on activities.
+     *
+     * @param time
+     */
     public void useTime(double time) {
+        decreaseTime(time);
+    }
+
+    /**
+     * Time unit defined by hours spent on activities.
+     *
+     * @param time
+     */
+    public void decreaseTime(double time) {
         //wpsReport.warn("time " + time.getTime());
-        double timeLeft = this.timeLeftOnDay - time;
-        this.timeLeftOnDay = timeLeft;
+        this.timeLeftOnDay = this.timeLeftOnDay - time;
         //wpsReport.warn("time " + timeLeft);
-        if (timeLeft <= 0) {
-            wpsReport.info("⏳ NewDay para " + this.peasantProfile.getPeasantFamilyAlias());
+        if (this.timeLeftOnDay <= 0) {
+            wpsReport.info("⏳ NewDay para "
+                    + this.peasantProfile.getPeasantFamilyAlias()
+                    + " con "
+                    + this.peasantProfile.getHealth()
+                    + " de Salud."
+            );
             this.makeNewDay();
         } else {
-            wpsReport.info("⏳⏳ " + this.peasantProfile.getPeasantFamilyAlias()
-                    
-                    
-                    + " Le quedan " + timeLeft + " horas del día " + internalCurrentDate);
+            wpsReport.info("⏳⏳ "
+                    + this.peasantProfile.getPeasantFamilyAlias()
+                    + " Le quedan "
+                    + this.timeLeftOnDay
+                    + " horas del día "
+                    + internalCurrentDate
+                    + " con "
+                    + this.peasantProfile.getHealth()
+                    + " de Salud."
+            );
         }
     }
 
@@ -428,6 +459,23 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
      *
      * @return
      */
+    public String toJson() {
+        return "PeasantFamilyBDIAgentBelieves{" + "peasantProfile=" + peasantProfile.getPeasantFamilyAlias()
+                + ", peasantEmotionalState=" + peasantEmotionalState + ", currentSeason="
+                + currentSeason + ", currentCropCare=" + currentCropCare
+                + ", roberyAccount=" + roberyAccount + ", ptwDate="+ ptwDate
+                + ", currentMoneyOrigin=" + currentMoneyOrigin + ", currentPeasantActivityType="
+                + currentPeasantActivityType + ", currentPeasantLeisureType=" + currentPeasantLeisureType
+                + ", currentResourceNeededType=" + currentResourceNeededType + ", currentDay="
+                + currentDay + ", timeLeftOnDay=" + timeLeftOnDay
+                + ", newDay=" + newDay + ", weekBlock="
+                + weekBlock + ", busy=" + busy
+                + ", internalCurrentDate=" + internalCurrentDate + ", priceList="
+                + priceList
+                + peasantProfile.toJson()
+                + '}';
+    }
+
     @Override
     public String toString() {
         return "\n"
@@ -439,7 +487,9 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
                 + " * CurrentCropCare: " + currentCropCare + "\n"
                 + " * CurrentMoneyOrigin: " + currentMoneyOrigin + "\n"
                 + " * PeasantActivityType: " + currentPeasantActivityType + "\n"
-                + " * PeasantActivityType: " + currentPeasantLeisureType + "\n"
+                + " * currentPeasantLeisureType: " + currentPeasantLeisureType + "\n"
+                + " * roberyAccount: " + roberyAccount + "\n"
+                + " * ptwDate: " + ptwDate + "\n"
                 + " * CurrentDay: " + currentDay + "\n"
                 + " * TimeLeftOnDay: " + timeLeftOnDay + "\n"
                 + " * NewDay: " + newDay + "\n"

@@ -24,7 +24,7 @@ import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Agent.WorldState;
 import wpsWorld.Messages.WorldMessage;
 import wpsWorld.Messages.WorldMessageType;
-import wpsControl.Agent.wpsCurrentDate;
+import wpsControl.Agent.ControlCurrentDate;
 import wpsWorld.Helper.Hemisphere;
 import wpsWorld.Helper.Soil;
 import wpsWorld.Helper.WorldConfiguration;

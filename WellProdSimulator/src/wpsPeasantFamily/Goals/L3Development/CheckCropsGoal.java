@@ -25,7 +25,6 @@ import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsPeasantFamily.Tasks.L3Development.CheckCropsTask;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Data.CropCareType;
-import wpsPeasantFamily.Data.SeasonType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 
 /**
@@ -73,13 +72,7 @@ public class CheckCropsGoal extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.isFree()) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return 1;
     }
 
     /**

@@ -13,8 +13,9 @@
 ---
 LazyPeasant:
   #Peasant
+  peasantKind: LazyPeasant
   purpose: ""
-  health: 100
+  health: 10
   productivity: 0.0
   wellBeging: 1.0
   worker: true
@@ -69,7 +70,7 @@ LazyPeasant:
   housingQuailty: 1.0
   timeSpentOnMaintenance: 1.0
   #finance:
-  money: 1000000
+  money: 50000
   totalIncome: 0.0
   debtPayment: 0.0
   #training:

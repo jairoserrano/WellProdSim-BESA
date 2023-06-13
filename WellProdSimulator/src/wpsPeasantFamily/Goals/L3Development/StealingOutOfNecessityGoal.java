@@ -24,8 +24,10 @@ import rational.mapping.Plan;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Data.MoneyOriginType;
+import wpsPeasantFamily.Data.PeasantActivityType;
 import wpsPeasantFamily.Data.TimeConsumedBy;
 import wpsPeasantFamily.Tasks.L3Development.StealingOutOfNecessityTask;
+import wpsViewer.Agent.wpsReport;
 
 /**
  *
@@ -72,10 +74,10 @@ public class StealingOutOfNecessityGoal extends GoalBDI {
      */
     @Override
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getTools() > 0
-                && believes.getPeasantProfile().getSupplies() > 0) {
+        if (believes.getCurrentMoneyOrigin() == MoneyOriginType.LOAN_DENIED
+                || believes.getCurrentMoneyOrigin() == MoneyOriginType.INFORMAL_DENIED) {
+            //wpsReport.warn("Detectado");
             return 1;
         } else {
             return 0;
@@ -91,8 +93,10 @@ public class StealingOutOfNecessityGoal extends GoalBDI {
     @Override
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //wpsReport.debug("Preparation season: " + believes.getProfile().isPreparationSeason());
-        if (believes.getCurrentMoneyOrigin() == MoneyOriginType.ROBERY) {
+        if (believes.getPeasantProfile().getMoney()
+                <= believes.getPeasantProfile().getPeasantFamilyMinimalVital()
+                && believes.getCurrentActivity() != PeasantActivityType.PTW) {
+            //wpsReport.warn("Detectado");
             return 1;
         } else {
             return 0;
@@ -111,7 +115,7 @@ public class StealingOutOfNecessityGoal extends GoalBDI {
         if (believes.haveTimeAvailable(TimeConsumedBy.StealingOutOfNecessityTask)) {
             return 1;
         } else {
-            return 1;
+            return 0;
         }
     }
 
@@ -123,7 +127,6 @@ public class StealingOutOfNecessityGoal extends GoalBDI {
      */
     @Override
     public double evaluateContribution(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
         return 1;
     }
 
@@ -135,7 +138,6 @@ public class StealingOutOfNecessityGoal extends GoalBDI {
      */
     @Override
     public boolean evaluateLegality(StateBDI stateBDI) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info(stateBDI.getMachineBDIParams().getPyramidGoals());
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) stateBDI.getBelieves();
         return believes.getPeasantProfile().getHealth() > 0;
     }
@@ -148,10 +150,7 @@ public class StealingOutOfNecessityGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        //believes.getProfile().setGrowingSeason(true);
-        return believes.getPeasantProfile().getFarmReady() == 1;
+        return true;
     }
 
 }

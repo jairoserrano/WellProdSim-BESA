@@ -72,10 +72,11 @@ public class PayDebtsGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        if (believes.getPeasantProfile().getMoney() > 0) {
-            return 0;
-        } else {
+        if (believes.getPeasantProfile().getMoney() 
+                >= believes.getPeasantProfile().getLoanAmountToPay()) {
             return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -146,9 +147,7 @@ public class PayDebtsGoal extends GoalBDI {
      */
     @Override
     public boolean goalSucceeded(Believes parameters) throws KernellAgentEventExceptionBESA {
-        //wpsReport.info("");
-        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return believes.getPeasantProfile().getLoanAmountToPay() == 0;
+        return true;
     }
 
 }

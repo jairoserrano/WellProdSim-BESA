@@ -23,29 +23,32 @@ public enum MoneyOriginType {
      *
      */
     LOAN,
-
     /**
      *
      */
     INFORMAL,
-    
     /**
      *
      */
     AVANCE,
-    
     /**
      *
      */
     BENEFICENCIA,
-    
     /**
      *
      */
     ROBERY,
-    
     /**
-     * 
+     *
      */
-    NONE
+    LOAN_DENIED,
+    /**
+     *
+     */
+    NONE,
+    /**
+     *
+     */
+    INFORMAL_DENIED
 }

@@ -21,15 +21,9 @@ import BESA.Kernel.System.Directory.AgHandlerBESA;
 import wpsPeasantFamily.Agent.Guards.FromBank.FromBankGuard;
 import wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessage;
 import wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType;
-import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.APPROBED_LOAN;
-import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.TERM_PAYED;
-import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.TERM_TO_PAY;
-import static wpsSocietyBank.Agent.BankMessageType.PAY_LOAN_TERM;
+import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.*;
+import static wpsSocietyBank.Agent.BankMessageType.*;
 import wpsViewer.Agent.wpsReport;
-import static wpsSocietyBank.Agent.BankMessageType.ASK_FOR_FORMAL_LOAN;
-import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.DENIED_FORMAL_LOAN;
-import static wpsPeasantFamily.Agent.Guards.FromBank.FromBankMessageType.DENIED_INFORMAL_LOAN;
-import static wpsSocietyBank.Agent.BankMessageType.ASK_FOR_INFORMAL_LOAN;
 
 /**
  *
@@ -50,7 +44,7 @@ public class BankAgentGuard extends GuardBESA {
         BankMessageType messageType = bankMessage.getMessageType();
 
         try {
-
+            //wpsReport.info("$ uno ");
             AgHandlerBESA ah = this.agent.getAdmLocal().getHandlerByAlias(
                     bankMessage.getPeasantAlias()
             );
@@ -64,10 +58,10 @@ public class BankAgentGuard extends GuardBESA {
                             bankMessage.getPeasantAlias(),
                             bankMessage.getAmount()
                     )) {
-                        //wpsReport.info("$$$ APPROBED Bank to " + bankMessage.getPeasantAlias());
+                        wpsReport.info("$$$ APPROBED Bank to " + bankMessage.getPeasantAlias());
                         fromBankMessageType = APPROBED_LOAN;
                     } else {
-                        //wpsReport.info("$$$ DENIED Bank to " + bankMessage.getPeasantAlias());
+                        wpsReport.info("$$$ DENIED Bank to " + bankMessage.getPeasantAlias());
                         fromBankMessageType = DENIED_FORMAL_LOAN;
                     }
                     amount = bankMessage.getAmount();
@@ -78,10 +72,10 @@ public class BankAgentGuard extends GuardBESA {
                             bankMessage.getPeasantAlias(),
                             bankMessage.getAmount()
                     )) {
-                        //wpsReport.info("$$$ APPROBED Bank to " + bankMessage.getPeasantAlias());
-                        fromBankMessageType = APPROBED_LOAN;
+                        wpsReport.info("$$$ APPROBED Bank to " + bankMessage.getPeasantAlias());
+                        fromBankMessageType = APPROBED_INFORMAL_LOAN;
                     } else {
-                        //wpsReport.info("$$$ DENIED Bank to " + bankMessage.getPeasantAlias());
+                        wpsReport.info("$$$ DENIED Bank to " + bankMessage.getPeasantAlias());
                         fromBankMessageType = DENIED_INFORMAL_LOAN;
                     }
                     amount = bankMessage.getAmount();
@@ -98,13 +92,15 @@ public class BankAgentGuard extends GuardBESA {
                             bankMessage.getAmount()
                     );
                     fromBankMessageType = TERM_PAYED;
+                    wpsReport.info(bankMessage.getPeasantAlias() + " Pagó " + amount + " - " + bankMessage.getMessageType());
                     break;
             }
 
             FromBankMessage fromBankMessage = new FromBankMessage(
                     fromBankMessageType,
                     amount);
-
+            wpsReport.info("Llegó " + bankMessage.getPeasantAlias() + " " + bankMessage.getMessageType());
+            wpsReport.info("Enviado " + fromBankMessage.getMessageType());
             EventBESA ev = new EventBESA(
                     FromBankGuard.class.getName(),
                     fromBankMessage);

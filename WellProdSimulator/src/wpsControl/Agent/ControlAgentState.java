@@ -16,37 +16,61 @@ package wpsControl.Agent;
 
 import BESA.Kernel.Agent.StateBESA;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import wpsActivator.wpsStart;
+import wpsViewer.Agent.wpsReport;
 
-/**
- *
- * @author jairo
- */
 public class ControlAgentState extends StateBESA implements Serializable {
 
-    int activeAgents;
+    private int activeAgentsCount;
+    private Map<String, Boolean> agentMap = new HashMap<>();
+    private Timer timer;
 
-    /**
-     *
-     */
     public ControlAgentState() {
         super();
-        this.activeAgents = 0;
+        this.activeAgentsCount = 0;
+        this.timer = new Timer();
     }
 
     public boolean getActiveAgentsReady() {
-        return (this.activeAgents == wpsStart.peasantFamiliesAgents);
+        return (this.activeAgentsCount == wpsStart.peasantFamiliesAgents);
     }
 
-    public int getActiveAgents() {
-        return this.activeAgents;
+    public int getActiveAgentsCount() {
+        return this.activeAgentsCount;
     }
 
     public void resetActiveAgents() {
-        this.activeAgents = 0;
+        this.activeAgentsCount = 0;
     }
 
     public synchronized void increaseActiveAgents() {
-        this.activeAgents++;
+        this.activeAgentsCount++;
+    }
+    
+    public synchronized void clearAgentMap(){
+        this.agentMap.clear();
+    }
+
+    public synchronized void modifyAgentMap(String agentName, boolean status) {
+        this.agentMap.put(agentName, status);
+        // Reschedule the timer to execute checkAgentsAlive in 5 minutes
+        this.timer.schedule(new CheckAgentsAliveTask(), 4 * 60 * 1000);
+    }
+
+    private class CheckAgentsAliveTask extends TimerTask {
+
+        @Override
+        public void run() {
+            checkAgentsAlive();
+        }
+    }
+
+    private void checkAgentsAlive() {
+        wpsStart.getStatus();
+        wpsReport.info("--- agentMap ---" + this.agentMap);
     }
 }

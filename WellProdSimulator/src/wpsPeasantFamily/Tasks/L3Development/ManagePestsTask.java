@@ -20,7 +20,7 @@ import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
 import wpsWorld.Agent.WorldGuard;
 import wpsWorld.Messages.WorldMessage;
-import wpsControl.Agent.wpsCurrentDate;
+import wpsControl.Agent.ControlCurrentDate;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
@@ -73,7 +73,7 @@ public class ManagePestsTask extends Task {
                     WorldGuard.class.getName(),
                     worldMessage);
             ah.sendEvent(ev);
-            wpsCurrentDate.getInstance().setCurrentDate(
+            ControlCurrentDate.getInstance().setCurrentDate(
                     believes.getInternalCurrentDate());
             //this.setTaskWaitingForExecution();
 

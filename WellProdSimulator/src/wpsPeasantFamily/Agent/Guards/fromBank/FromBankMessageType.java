@@ -18,30 +18,32 @@ package wpsPeasantFamily.Agent.Guards.FromBank;
  *
  */
 public enum FromBankMessageType {
-
     /**
      *
      */
     APPROBED_LOAN,
-
+    /**
+     *
+     */
+    APPROBED_INFORMAL_LOAN,
     /**
      *
      */
     DENIED_FORMAL_LOAN,
-    
     /**
      *
      */
     DENIED_INFORMAL_LOAN,
-    
     /**
      *
      */
     TERM_TO_PAY,
-    
     /**
      *
      */
-    TERM_PAYED
-    
+    TERM_PAYED,
+    /**
+     *
+     */
+    APPROBED_SOCIAL
 }

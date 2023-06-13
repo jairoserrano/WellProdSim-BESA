@@ -74,12 +74,11 @@ public class ObtainToolsGoal extends GoalBDI {
     public double evaluateViability(Believes parameters) throws KernellAgentEventExceptionBESA {
         //wpsReport.info("");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
-        return 1;
-        /*if (believes.getPeasantProfile().getToolsAvailability() > 0) {
+        if (believes.getPeasantProfile().getMoney() > 20000) {
             return 1;
         } else {
             return 0;
-        }*/
+        }
     }
 
     /**

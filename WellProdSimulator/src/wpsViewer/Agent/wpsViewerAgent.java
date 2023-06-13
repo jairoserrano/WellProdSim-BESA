@@ -14,7 +14,6 @@
  */
 package wpsViewer.Agent;
 
-import wpsSocietyMarket.*;
 import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.AgentBESA;
 import BESA.Kernel.Agent.KernelAgentExceptionBESA;

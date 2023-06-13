@@ -12,7 +12,7 @@
  * management and emotional reasoning BDI.                                  *
  * ==========================================================================
  */
-package wpsPeasantFamily.Tasks.L2Obligation;
+package wpsPeasantFamily.Tasks.L1Survival;
 
 import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
@@ -21,25 +21,26 @@ import BESA.Kernel.System.Directory.AgHandlerBESA;
 import rational.mapping.Believes;
 import rational.mapping.Task;
 import wpsActivator.wpsStart;
+import wpsControl.Agent.ControlAgentGuard;
+import wpsPeasantFamily.Agent.Guards.ToControlMessage;
 import wpsPeasantFamily.Agent.PeasantFamilyBDIAgentBelieves;
-import wpsPeasantFamily.Data.MoneyOriginType;
-import wpsSocietyBank.Agent.BankAgentGuard;
-import wpsSocietyBank.Agent.BankMessage;
+import wpsPeasantFamily.Data.CropCareType;
+import wpsPeasantFamily.Data.PeasantActivityType;
+import wpsPeasantFamily.Data.PeasantLeisureType;
 import wpsViewer.Agent.wpsReport;
-import static wpsSocietyBank.Agent.BankMessageType.ASK_FOR_FORMAL_LOAN;
 
 /**
  *
  * @author jairo
  */
-public class LookForLoanTask extends Task {
-    
-    boolean finished;
+public class PeasantOffTask extends Task {
+
+    private boolean finished;
 
     /**
      *
      */
-    public LookForLoanTask() {
+    public PeasantOffTask() {
         this.finished = false;
     }
 
@@ -49,32 +50,37 @@ public class LookForLoanTask extends Task {
      */
     @Override
     public void executeTask(Believes parameters) {
-        wpsReport.info("");
+        wpsReport.info("⚙️⚙️⚙️");
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        
+        believes.setCurrentActivity(PeasantActivityType.PTW);
+        believes.setCurrentPeasantLeisureType(PeasantLeisureType.NONE);
+        believes.setCurrentCropCare(CropCareType.NONE);    
+        believes.setNewDay(false);
         believes.useTime(believes.getTimeLeftOnDay());
-
-        // @TODO: Se debe calcular cuanto necesitas prestar hasta que se coseche.
-        try {
-            AdmBESA adm = AdmBESA.getInstance();
-            AgHandlerBESA ah = adm.getHandlerByAlias(wpsStart.config.getBankAgentName());
-            
-            wpsReport.info("Pidiendo prestamo formal");
-            BankMessage bankMessage = new BankMessage(
-                    ASK_FOR_FORMAL_LOAN,
-                    believes.getPeasantProfile().getPeasantFamilyAlias(),
-                    100000);
-            
-            EventBESA ev = new EventBESA(
-                    BankAgentGuard.class.getName(),
-                    bankMessage);
-            ah.sendEvent(ev);
-            
-        } catch (ExceptionBESA ex) {
-            wpsReport.error(ex);
+        
+        if (believes.getCurrentDay() % wpsStart.DAYSTOCHECK == 0) {
+            try {
+                believes.setWeekBlock();
+                wpsReport.warn(believes.getWeekBlock());
+                AdmBESA adm = AdmBESA.getInstance();
+                ToControlMessage toControlMessage = new ToControlMessage(
+                        believes.getPeasantProfile().getPeasantFamilyAlias(),
+                        believes.getCurrentDay(),
+                        believes.getPeasantProfile().getHealth() <= 0
+                );
+                EventBESA eventBesa = new EventBESA(
+                        ControlAgentGuard.class.getName(),
+                        toControlMessage
+                );
+                AgHandlerBESA agHandler = adm.getHandlerByAlias(wpsStart.config.getControlAgentName());
+                agHandler.sendEvent(eventBesa);
+            } catch (ExceptionBESA ex) {
+                wpsReport.error(ex);
+            }
         }
         this.finished = true;
         this.setTaskFinalized();
-        
     }
 
     /**
@@ -83,6 +89,8 @@ public class LookForLoanTask extends Task {
      */
     @Override
     public void interruptTask(Believes parameters) {
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        believes.setCurrentActivity(PeasantActivityType.PTW);
         this.setTaskFinalized();
     }
 
@@ -92,6 +100,8 @@ public class LookForLoanTask extends Task {
      */
     @Override
     public void cancelTask(Believes parameters) {
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        believes.setCurrentActivity(PeasantActivityType.PTW);
         this.setTaskFinalized();
     }
 
@@ -102,6 +112,11 @@ public class LookForLoanTask extends Task {
      */
     @Override
     public boolean checkFinish(Believes parameters) {
-        return this.finished;
+        PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
+        if (believes.isNewDay()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

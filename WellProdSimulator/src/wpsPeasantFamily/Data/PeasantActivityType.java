@@ -23,25 +23,25 @@ public enum PeasantActivityType {
      *
      */
     FREE,
-
     /**
      *
      */
     BUSY,
-    
     /**
      *
      */
     NONE,
-    
     /**
-     * 
+     *
      */
     LEISURE,
-    
     /**
-     * 
-     */    
-    PRICE_LIST
-    
+     *
+     */
+    PRICE_LIST,
+    /**
+     *
+     */
+    PTW
+
 }

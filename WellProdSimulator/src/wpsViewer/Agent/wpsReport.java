@@ -59,7 +59,7 @@ public class wpsReport {
        //             +"\n-------------------------------------------------------------------------------------------------\n" 
        //             + String.format("%23s:%-20s %-65s", simpleClassName, callingMethodName, message);
        // } else {
-            return Thread.currentThread().getName() + " " + String.format("%23s:%-20s %-65s", simpleClassName, callingMethodName, message);
+            return Thread.currentThread().getName() + " " + String.format("%31s:%-20s %-65s", simpleClassName, callingMethodName, message);
        // }
     }
 

@@ -53,7 +53,8 @@ public enum TimeConsumedBy {
     ProvideCollaborationTask(2),
     LeisureActivitiesTask(1),
     FindNewsTask(2),
-    WasteTimeAndResourcesTask(1);
+    WasteTimeAndResourcesTask(1),
+    peasantOffTask(24);
     
     private int time;
 

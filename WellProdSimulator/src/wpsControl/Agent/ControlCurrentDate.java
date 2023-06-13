@@ -6,21 +6,21 @@ import org.joda.time.DateTime;
  *
  * @author jairo
  */
-public class wpsCurrentDate {
+public class ControlCurrentDate {
 
-    private static wpsCurrentDate instance = null;
+    private static ControlCurrentDate instance = null;
     private String currentDate = null;
 
-    private wpsCurrentDate() {
+    private ControlCurrentDate() {
     }
 
     /**
      *
      * @return
      */
-    public synchronized static wpsCurrentDate getInstance() {
+    public synchronized static ControlCurrentDate getInstance() {
         if (instance == null) {
-            instance = new wpsCurrentDate();
+            instance = new ControlCurrentDate();
         }
         return instance;
     }

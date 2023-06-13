@@ -19,10 +19,9 @@ import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.GuardBESA;
 import BESA.Kernel.System.AdmBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import wpsActivator.wpsStart;
 import wpsPeasantFamily.Agent.Guards.FromControlGuard;
+import wpsPeasantFamily.Agent.Guards.ToControlMessage;
 import wpsViewer.Agent.wpsReport;
 
 /**
@@ -38,14 +37,19 @@ public class ControlAgentGuard extends GuardBESA {
     @Override
     public void funcExecGuard(EventBESA event) {
         String currentDate = "";
-        wpsReport.warn("Llegada al ControlAgent desde " + event.getSenderAgId());
-        
+        ToControlMessage toControlMessage = (ToControlMessage) event.getData();
+        wpsReport.warn("Llegada al ControlAgent desde " + toControlMessage.getPeasantFamilyAlias() + " - " + toControlMessage.getDays());
+
         ((ControlAgentState) this.getAgent().getState()).increaseActiveAgents();
-        
-        wpsReport.warn("Completados " + ((ControlAgentState) this.getAgent().getState()).getActiveAgents());
-        
+        ((ControlAgentState) this.getAgent().getState()).modifyAgentMap(
+                toControlMessage.getPeasantFamilyAlias(),
+                true
+        );
+
+        wpsReport.warn("Completados " + ((ControlAgentState) this.getAgent().getState()).getActiveAgentsCount());
+
         if (((ControlAgentState) this.getAgent().getState()).getActiveAgentsReady()) {
-            
+
             try {
                 for (int i = 1; i <= wpsStart.peasantFamiliesAgents; i++) {
                     AdmBESA adm = AdmBESA.getInstance();
@@ -54,13 +58,13 @@ public class ControlAgentGuard extends GuardBESA {
                     agHandler.sendEvent(eventBesa);
                 }
             } catch (ExceptionBESA ex) {
-                Logger.getLogger(wpsStart.class.getName()).log(Level.SEVERE, null, ex);
+                wpsReport.error(ex);
             }
-            
+
             ((ControlAgentState) this.getAgent().getState()).resetActiveAgents();
-            currentDate = wpsCurrentDate.getInstance().getDatePlusXDaysAndUpdate(wpsStart.DAYSTOCHECK);
+            currentDate = ControlCurrentDate.getInstance().getDatePlusXDaysAndUpdate(wpsStart.DAYSTOCHECK);
         }
-        
+
         if (currentDate.contains("2023")) {
             try {
                 wpsStart.stopSimulation();
@@ -68,7 +72,7 @@ public class ControlAgentGuard extends GuardBESA {
                 wpsReport.error(ex);
             }
         }
-        
+
     }
-    
+
 }

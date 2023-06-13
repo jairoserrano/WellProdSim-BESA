@@ -68,6 +68,7 @@ import wpsPeasantFamily.Goals.L5Social.CommunicateGoal;
 import wpsPeasantFamily.Goals.L5Social.LookForCollaborationGoal;
 import wpsPeasantFamily.Goals.L5Social.ProvideCollaborationGoal;
 import wpsPeasantFamily.Goals.L6Leisure.LeisureActivitiesGoal;
+import wpsPeasantFamily.Goals.L1Survival.PeasantOffGoal;
 import wpsPeasantFamily.Goals.L6Leisure.WasteTimeAndResourcesGoal;
 import wpsViewer.Agent.wpsReport;
 
@@ -109,8 +110,9 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
         //Level 1 Goals: Survival        
         goals.add(DoVitalsGoal.buildGoal());
         goals.add(SeekPurposeGoal.buildGoal());
-        goals.add(DoHealthCareGoal.buildGoal());
+        //goals.add(DoHealthCareGoal.buildGoal());
         goals.add(SelfEvaluationGoal.buildGoal());
+        goals.add(PeasantOffGoal.buildGoal());
 
         //Level 2 Goals: Obligations
         goals.add(LookForLoanGoal.buildGoal());
@@ -162,6 +164,7 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
      */
     public PeasantFamilyBDIAgent(String alias, PeasantFamilyProfile peasantProfile) throws ExceptionBESA {
         super(alias, createBelieves(alias, peasantProfile), createGoals(), BDITHRESHOLD, createStruct(new StructBESA()));
+        wpsReport.info("Starting " + alias + " " + peasantProfile.getPeasantKind());
     }
 
     /**
@@ -204,11 +207,14 @@ public class PeasantFamilyBDIAgent extends AgentBDI {
 
         try {
             while (believes.getWeekBlock()) {
-                wpsReport.debug("Bloqueado Beat para " + this.getAlias());
+                //wpsReport.debug("Bloqueado Beat para " + this.getAlias());
                 Thread.sleep(1000);
             }
             AgHandlerBESA agHandler = AdmBESA.getInstance().getHandlerByAlias(this.getAlias());
-            EventBESA eventBesa = new EventBESA(InformationFlowGuard.class.getName(), null);
+            EventBESA eventBesa = new EventBESA(
+                    InformationFlowGuard.class.getName(), 
+                    null
+            );
             agHandler.sendEvent(eventBesa);
             //wpsReport.info("💞 " + this.getAlias() + " Heart Beat 💞");
         } catch (ExceptionBESA e) {

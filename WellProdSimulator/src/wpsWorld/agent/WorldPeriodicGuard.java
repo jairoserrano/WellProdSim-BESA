@@ -4,7 +4,7 @@ import BESA.ExceptionBESA;
 import BESA.Kernel.Agent.Event.EventBESA;
 import BESA.Kernel.Agent.PeriodicGuardBESA;
 import BESA.Kernel.System.Directory.AgHandlerBESA;
-import wpsControl.Agent.wpsCurrentDate;
+import wpsControl.Agent.ControlCurrentDate;
 import wpsWorld.Messages.WorldMessage;
 import wpsWorld.Messages.WorldMessageType;
 

@@ -298,7 +298,8 @@ public final class wpsConfig {
 
         switch (rand.nextInt(3)) {
             case 0:
-                return this.getRegularFarmerProfile();
+                //getLazyFarmerProfile
+                return this.getLazyFarmerProfile();
             case 1:
                 return this.getProactiveFarmerProfile();
             case 2:

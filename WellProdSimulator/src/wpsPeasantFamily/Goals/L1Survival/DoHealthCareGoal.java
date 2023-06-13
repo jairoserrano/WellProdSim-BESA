@@ -89,7 +89,7 @@ public class DoHealthCareGoal extends GoalBDI {
     public double detectGoal(Believes parameters) throws KernellAgentEventExceptionBESA {
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) parameters;
         //wpsReport.info("getHealth=" + believes.getProfile().getHealth());
-        if (believes.getPeasantProfile().getHealth() ==0 ) {
+        if (believes.getPeasantProfile().getHealth() == 0) {
             return 1;
         } else {
             return 0;
