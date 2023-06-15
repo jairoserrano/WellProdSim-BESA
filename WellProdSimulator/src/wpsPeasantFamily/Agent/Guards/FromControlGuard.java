@@ -35,7 +35,7 @@ public class FromControlGuard extends GuardBESA {
         StateBDI state = (StateBDI) this.agent.getState();
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
         //wpsReport.warn("desbloqueando " + believes.getPeasantProfile().getPeasantFamilyAlias());
-        
+        wpsReport.trace(believes.getPeasantProfile().getPeasantFamilyAlias() + " " + believes.toJson());
         believes.releaseWeekBlock();
 
     }

@@ -40,7 +40,7 @@ public class StatusGuard extends GuardBESA {
     public void funcExecGuard(EventBESA event) {
         StateBDI state = (StateBDI) this.agent.getState();
         PeasantFamilyBDIAgentBelieves believes = (PeasantFamilyBDIAgentBelieves) state.getBelieves();
-        wpsReport.info(believes.toString());
+        //wpsReport.info(believes.toString());
         try {
             AdmBESA adm = AdmBESA.getInstance();
             AgHandlerBESA ah = adm.getHandlerByAlias(

@@ -158,18 +158,18 @@ public class DesireToIntentionInstantiationGuard extends GuardBESA {
             }
 
             paramsBDI.setIntention(paramsBDI.getPyramidGoals().getCurrentIntentionGoal());
-            ReportBESA.warn("1 Evaluando " + paramsBDI.getPyramidGoals().getCurrentIntentionGoal());
+            //ReportBESA.warn("1 Evaluando " + paramsBDI.getPyramidGoals().getCurrentIntentionGoal());
             if (paramsBDI.getIntention() != null) {
-                ReportBESA.warn("2 Si es diferente de nulo");
+                //ReportBESA.warn("2 Si es diferente de nulo");
                 if (paramsBDI.getIntention().evaluateMappingViability(paramsBDI, believes)) {
-                    ReportBESA.warn("3 Evaluando legalidad de " + paramsBDI.getIntention().toString());
+                    //ReportBESA.warn("3 Evaluando legalidad de " + paramsBDI.getIntention().toString());
                     if (paramsBDI.getIntention().evaluateLegality(stateBDI)) {
-                        ReportBESA.warn("4 La meta es legal " + paramsBDI.getIntention().getRole());
+                        //ReportBESA.warn("4 La meta es legal " + paramsBDI.getIntention().getRole());
                         EventBESA eventBesa = new EventBESA(ChangeRationalRoleGuard.class.getName(), paramsBDI.getIntention().getRole());
                         AgHandlerBESA agHandlerBESA = agentBDI.getAdmLocal().getHandlerByAlias(agentBDI.getAlias());
                         agHandlerBESA.sendEvent(eventBesa);
                     }else{
-                        ReportBESA.warn("4 La meta NO es legal " + paramsBDI.getIntention().getRole());
+                        //ReportBESA.warn("4 La meta NO es legal " + paramsBDI.getIntention().getRole());
                     }
                 }
             }

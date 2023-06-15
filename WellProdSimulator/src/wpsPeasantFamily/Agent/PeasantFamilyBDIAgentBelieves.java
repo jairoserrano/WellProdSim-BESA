@@ -470,10 +470,8 @@ public class PeasantFamilyBDIAgentBelieves implements Believes {
                 + currentDay + ", timeLeftOnDay=" + timeLeftOnDay
                 + ", newDay=" + newDay + ", weekBlock="
                 + weekBlock + ", busy=" + busy
-                + ", internalCurrentDate=" + internalCurrentDate + ", priceList="
-                + priceList
-                + peasantProfile.toJson()
-                + '}';
+                + ", internalCurrentDate=" + internalCurrentDate + ", priceList=" + priceList
+                + peasantProfile.toJson();
     }
 
     @Override

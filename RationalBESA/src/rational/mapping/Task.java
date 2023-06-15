@@ -83,16 +83,16 @@ public abstract class Task {
      * @param believes Agent beliefs.
      */
     public synchronized void run(Believes believes) {
-        ReportBESA.debug("revisando tarea " + this.toString());
+        //ReportBESA.debug("revisando tarea " + this.toString());
         if (this.checkFinish(believes)) {
-            ReportBESA.debug("finalizada tarea " + this.toString());
+            //ReportBESA.debug("finalizada tarea " + this.toString());
             this.setTaskFinalized();
         } else {
-            ReportBESA.debug("Revisando ejecución tarea " + this.toString());
+            //ReportBESA.debug("Revisando ejecución tarea " + this.toString());
             if (!this.isInExecution()) {
-                ReportBESA.debug("marcando tarea a ejecutar" + this.toString());
+                //ReportBESA.debug("marcando tarea a ejecutar" + this.toString());
                 this.setTaskInExecution();
-                ReportBESA.debug("execute tarea " + this.toString());
+                //ReportBESA.debug("execute tarea " + this.toString());
                 this.executeTask(believes);
             }
         }

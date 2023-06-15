@@ -69,7 +69,8 @@ public class DoVitalsTask extends Task {
             believes.setCurrentActivity(PeasantActivityType.PTW);
             believes.setPtwDate(believes.getInternalCurrentDate());
         } else {
-            //wpsReport.info("is OK");
+            // increase health after rest
+            believes.getPeasantProfile().increaseHealth();
             // Check crop season
             if (DateHelper.differenceDaysBetweenTwoDates(
                     believes.getInternalCurrentDate(),

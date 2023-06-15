@@ -23,7 +23,7 @@ ProactivePeasant:
   peasantQualityFactor: 0.7
   peasantFamilyConf: 1.0
   peasantConsumption: 1.0
-  peasantFamilyMinimalVital: 4833
+  peasantFamilyMinimalVital: 12000
   liveStockAffinity: 0.7
   #Farm:
   farm: false

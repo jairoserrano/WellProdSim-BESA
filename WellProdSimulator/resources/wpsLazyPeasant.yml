@@ -15,7 +15,7 @@ LazyPeasant:
   #Peasant
   peasantKind: LazyPeasant
   purpose: ""
-  health: 10
+  health: 50
   productivity: 0.0
   wellBeging: 1.0
   worker: true
@@ -35,7 +35,7 @@ LazyPeasant:
   seeds: 1.0
   cropHealth: 1
   irrigation: 0.0
-  waterAvailable: 0.0
+  waterAvailable: 500
   irrigationTime: 1.0
   pestControl: 0.0
   diseasedCrop: 0.0

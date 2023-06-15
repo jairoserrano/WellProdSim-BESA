@@ -84,7 +84,7 @@ public class FromWorldGuard extends GuardBESA {
                                     )
                             )
                     );
-                    believes.getPeasantProfile().setTotalHarvestedWeight(
+                    believes.getPeasantProfile().increaseTotalHarvestedWeight(
                             Double.parseDouble(
                                     cropData.get("aboveGroundBiomass").toString()
                             )

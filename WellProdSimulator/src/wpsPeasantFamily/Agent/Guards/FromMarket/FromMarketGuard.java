@@ -46,10 +46,20 @@ public class FromMarketGuard extends GuardBESA {
         try {
             switch (fromMarketMessageType) {
                 case SOLD_CROP:
+                    // Incrementa el dinero
+                    believes.getPeasantProfile().increaseMoney(
+                            believes.getPeasantProfile().getHarvestedWeight()
+                            * believes.getPriceList().get("ñame").getCost()
+                    );
+                    // Incrementa el total
+                    believes.getPeasantProfile().increaseTotalHarvestedWeight(
+                            believes.getPeasantProfile().getHarvestedWeight()
+                    );
+                    // descontar
                     believes.getPeasantProfile().setHarvestedWeight(
                             believes.getPeasantProfile().getHarvestedWeight()
                              - fromMarketMessage.getQuantity()
-                    );
+                    );                    
                     //wpsReport.info("----- Vendido");
                     break;
                 case PRICE_LIST:
